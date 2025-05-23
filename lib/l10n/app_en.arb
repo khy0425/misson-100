@@ -1,0 +1,905 @@
+{
+  "@@locale": "en",
+  
+  "appTitle": "⚡ ALPHA BATTLEGROUND ⚡",
+  "@appTitle": {
+    "description": "App bar title"
+  },
+
+  "repLogMessage": "WEAK RECORD NUMBERS. STRONG MAKE HISTORY 💪",
+  "@repLogMessage": {
+    "description": "Rep input guidance message"
+  },
+
+  "targetRepsLabel": "TARGET: {count} REPS",
+  "@targetRepsLabel": {
+    "description": "Target reps display",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "performanceGodTier": "GOD MODE UNLOCKED! 👑",
+  "@performanceGodTier": {
+    "description": "Message when 100% target achieved"
+  },
+
+  "performanceStrong": "IRON BOWS TO YOUR MIGHT! 🔱",
+  "@performanceStrong": {
+    "description": "Message when 80%+ target achieved"
+  },
+
+  "performanceMedium": "WEAKNESS FLEES FROM YOU! ⚡",
+  "@performanceMedium": {
+    "description": "Message when 50%+ target achieved"
+  },
+
+  "performanceStart": "LEGEND HAS BEGUN! 🦍",
+  "@performanceStart": {
+    "description": "Message when starting workout"
+  },
+
+  "performanceMotivation": "YOU CAN DO IT, JUST DO IT! 🔥",
+  "@performanceMotivation": {
+    "description": "Basic motivation message"
+  },
+
+  "motivationGod": "YOUR MUSCLES HAVE REACHED DIVINE REALM. WEAKNESS IS DEAD ⚡👑",
+  "@motivationGod": {
+    "description": "Ultimate motivation when target achieved"
+  },
+
+  "motivationStrong": "QUITTING IS EXCUSE FOR THE WEAK. GO HARDER! 🔱💪",
+  "@motivationStrong": {
+    "description": "Strong motivation for 80%+ achievement"
+  },
+
+  "motivationMedium": "YOUR LIMITS ARE JUST YOUR THOUGHTS. DESTROY THEM! 🦍⚡",
+  "@motivationMedium": {
+    "description": "Medium motivation for 50%+ achievement"
+  },
+
+  "motivationGeneral": "TODAY'S SWEAT IS TOMORROW'S GLORY. NEVER GIVE UP! 🔥💪",
+  "@motivationGeneral": {
+    "description": "General motivation message"
+  },
+
+  "setCompletedSuccess": "ANOTHER MYTH IS BORN! 🔥👑",
+  "@setCompletedSuccess": {
+    "description": "Message when set completed with target achieved"
+  },
+
+  "setCompletedGood": "ANOTHER LIMIT DESTROYED! ⚡🔱",
+  "@setCompletedGood": {
+    "description": "Message when set completed below target"
+  },
+
+  "resultFormat": "LEGEND RANK: {reps} REPS ({percentage}%) 🏆",
+  "@resultFormat": {
+    "description": "Workout result display format",
+    "placeholders": {
+      "reps": {
+        "type": "int"
+      },
+      "percentage": {
+        "type": "int"
+      }
+    }
+  },
+
+  "quickInputPerfect": "GOD TIER",
+  "@quickInputPerfect": {
+    "description": "Perfect target achievement button"
+  },
+
+  "quickInputStrong": "ALPHA POWER",
+  "@quickInputStrong": {
+    "description": "80% target button"
+  },
+
+  "quickInputMedium": "TITAN STEPS",
+  "@quickInputMedium": {
+    "description": "60% target button"
+  },
+
+  "quickInputStart": "WARRIOR CRY",
+  "@quickInputStart": {
+    "description": "50% target button"
+  },
+
+  "quickInputBeast": "LIMIT BREAKER",
+  "@quickInputBeast": {
+    "description": "Above target button"
+  },
+
+  "restTimeTitle": "ALPHA RECHARGE TIME ⚡",
+  "@restTimeTitle": {
+    "description": "Rest time title"
+  },
+
+  "restMessage": "REST IS ALSO GROWTH. NEXT WILL BE MORE DESTRUCTIVE 🦍",
+  "@restMessage": {
+    "description": "Rest period message"
+  },
+
+  "skipRestButton": "REST? ONLY FOR THE WEAK! BRING THE NEXT VICTIM!",
+  "@skipRestButton": {
+    "description": "Skip rest button"
+  },
+
+  "nextSetButton": "UNIVERSE CONQUERED!",
+  "@nextSetButton": {
+    "description": "Final set completion button"
+  },
+
+  "nextSetContinue": "BRING THE NEXT SACRIFICE!",
+  "@nextSetContinue": {
+    "description": "Next set continuation button"
+  },
+
+  "guidanceMessage": "YOUR BODY OBEYS YOUR COMMANDS! 🔱",
+  "@guidanceMessage": {
+    "description": "Set progress guidance message"
+  },
+
+  "completeSetButton": "ASCEND TO LEGEND!",
+  "@completeSetButton": {
+    "description": "Final set completion button"
+  },
+
+  "completeSetContinue": "DESTROY ANOTHER ONE!",
+  "@completeSetContinue": {
+    "description": "Regular set completion button"
+  },
+
+  "exitDialogTitle": "RETREAT FROM BATTLE?",
+  "@exitDialogTitle": {
+    "description": "Exit dialog title"
+  },
+
+  "exitDialogMessage": "WARRIORS NEVER QUIT MID-BATTLE!\nYOUR CONQUEST WILL BE LOST!",
+  "@exitDialogMessage": {
+    "description": "Exit dialog content"
+  },
+
+  "exitDialogContinue": "KEEP FIGHTING!",
+  "@exitDialogContinue": {
+    "description": "Continue workout button"
+  },
+
+  "exitDialogRetreat": "RETREAT...",
+  "@exitDialogRetreat": {
+    "description": "Exit workout button"
+  },
+
+  "workoutCompleteTitle": "🔥 BEAST MODE COMPLETED! 👑",
+  "@workoutCompleteTitle": {
+    "description": "Workout completion dialog title"
+  },
+
+  "workoutCompleteMessage": "{title} COMPLETELY DESTROYED!\nTOTAL POWER UNLEASHED: {totalReps} REPS! ⚡",
+  "@workoutCompleteMessage": {
+    "description": "Workout completion message",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "totalReps": {
+        "type": "int"
+      }
+    }
+  },
+
+  "workoutCompleteButton": "LEGENDARY!",
+  "@workoutCompleteButton": {
+    "description": "Workout completion confirmation button"
+  },
+
+  "setFormat": "SET {current}/{total}",
+  "@setFormat": {
+    "description": "Set display format",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+
+  "levelSelectionTitle": "💪 LEVEL CHECK",
+  "@levelSelectionTitle": {
+    "description": "Level selection screen title"
+  },
+
+  "levelSelectionHeader": "🏋️‍♂️ CHOOSE YOUR LEVEL NOW!",
+  "@levelSelectionHeader": {
+    "description": "Level selection header"
+  },
+
+  "levelSelectionDescription": "Select your current max pushup count level!\nCustom 6-week program for goal achievement!",
+  "@levelSelectionDescription": {
+    "description": "Level selection description"
+  },
+
+  "rookieLevelTitle": "BEGINNER (STARTING PUSH)",
+  "@rookieLevelTitle": {
+    "description": "Rookie level title"
+  },
+
+  "rookieLevelSubtitle": "Under 6 pushups - Build from basics",
+  "@rookieLevelSubtitle": {
+    "description": "Rookie level subtitle"
+  },
+
+  "rookieLevelDescription": "Pushups still hard? No problem! Every chad starts here!",
+  "@rookieLevelDescription": {
+    "description": "Rookie level description"
+  },
+
+  "rookieFeature1": "Start with knee pushups",
+  "@rookieFeature1": {
+    "description": "Rookie feature 1"
+  },
+
+  "rookieFeature2": "Form-focused training",
+  "@rookieFeature2": {
+    "description": "Rookie feature 2"
+  },
+
+  "rookieFeature3": "Gradual intensity increase",
+  "@rookieFeature3": {
+    "description": "Rookie feature 3"
+  },
+
+  "rookieFeature4": "Build basic fitness",
+  "@rookieFeature4": {
+    "description": "Rookie feature 4"
+  },
+
+  "risingLevelTitle": "INTERMEDIATE (ALPHA WANNABE)",
+  "@risingLevelTitle": {
+    "description": "Rising level title"
+  },
+
+  "risingLevelSubtitle": "6-10 pushups - Growing into chad",
+  "@risingLevelSubtitle": {
+    "description": "Rising level subtitle"
+  },
+
+  "risingLevelDescription": "Got the basics! Time to train like a real chad!",
+  "@risingLevelDescription": {
+    "description": "Rising level description"
+  },
+
+  "risingFeature1": "Master standard pushups",
+  "@risingFeature1": {
+    "description": "Rising feature 1"
+  },
+
+  "risingFeature2": "Various training types",
+  "@risingFeature2": {
+    "description": "Rising feature 2"
+  },
+
+  "risingFeature3": "Build muscle endurance",
+  "@risingFeature3": {
+    "description": "Rising feature 3"
+  },
+
+  "risingFeature4": "Systematic progression",
+  "@risingFeature4": {
+    "description": "Rising feature 4"
+  },
+
+  "alphaLevelTitle": "ADVANCED (CHAD TERRITORY)",
+  "@alphaLevelTitle": {
+    "description": "Alpha level title"
+  },
+
+  "alphaLevelSubtitle": "11+ pushups - Already chad material",
+  "@alphaLevelSubtitle": {
+    "description": "Alpha level subtitle"
+  },
+
+  "alphaLevelDescription": "Already this good? You're on the chad path! Let's reach giga chad!",
+  "@alphaLevelDescription": {
+    "description": "Alpha level description"
+  },
+
+  "alphaFeature1": "Advanced pushup variations",
+  "@alphaFeature1": {
+    "description": "Alpha feature 1"
+  },
+
+  "alphaFeature2": "Explosive power training",
+  "@alphaFeature2": {
+    "description": "Alpha feature 2"
+  },
+
+  "alphaFeature3": "Plyometric exercises",
+  "@alphaFeature3": {
+    "description": "Alpha feature 3"
+  },
+
+  "alphaFeature4": "Complete giga chad course",
+  "@alphaFeature4": {
+    "description": "Alpha feature 4"
+  },
+
+  "selectLevelButton": "CHOOSE YOUR LEVEL!",
+  "@selectLevelButton": {
+    "description": "Level selection request button"
+  },
+
+  "startWithLevel": "START AS {level}!",
+  "@startWithLevel": {
+    "description": "Start with selected level button",
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+
+  "profileCreated": "CHAD PROFILE CREATED! ({sessions} sessions ready!)",
+  "@profileCreated": {
+    "description": "Profile creation complete message",
+    "placeholders": {
+      "sessions": {
+        "type": "int"
+      }
+    }
+  },
+
+  "profileCreationError": "PROFILE CREATION FAILED! TRY AGAIN! ERROR: {error}",
+  "@profileCreationError": {
+    "description": "Profile creation error message",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "rookieShort": "PUSH",
+  "@rookieShort": {
+    "description": "Rookie short notation"
+  },
+
+  "risingShort": "ALPHA WANNABE",
+  "@risingShort": {
+    "description": "Rising short notation"
+  },
+
+  "alphaShort": "CHAD",
+  "@alphaShort": {
+    "description": "Alpha short notation"
+  },
+
+  "gigaShort": "GIGA CHAD",
+  "@gigaShort": {
+    "description": "Giga short notation"
+  },
+
+  "homeTitle": "CHAD DASHBOARD",
+  "@homeTitle": {
+    "description": "Home screen title"
+  },
+
+  "welcomeMessage": "WELCOME, 만삣삐!",
+  "@welcomeMessage": {
+    "description": "Home screen welcome message"
+  },
+
+  "dailyMotivation": "START ANOTHER DAY OF GETTING STRONGER!",
+  "@dailyMotivation": {
+    "description": "Daily motivation message"
+  },
+
+  "startTodayWorkout": "START TODAY'S WORKOUT",
+  "@startTodayWorkout": {
+    "description": "Start today's workout button"
+  },
+
+  "weekProgress": "THIS WEEK'S PROGRESS",
+  "@weekProgress": {
+    "description": "Weekly progress title"
+  },
+
+  "progressWeekDay": "WEEK {week} - {completedDays} of {totalDays} DAYS COMPLETED",
+  "@progressWeekDay": {
+    "description": "Progress details",
+    "placeholders": {
+      "week": {
+        "type": "int"
+      },
+      "totalDays": {
+        "type": "int"
+      },
+      "completedDays": {
+        "type": "int"
+      }
+    }
+  },
+
+  "bottomMotivation": "💪 GROW LITTLE BY LITTLE, CONSISTENTLY EVERY DAY!",
+  "@bottomMotivation": {
+    "description": "Bottom motivation message"
+  },
+
+  "workoutStartError": "CANNOT START WORKOUT: {error}",
+  "@workoutStartError": {
+    "description": "Workout start error message",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "errorGeneral": "AN ERROR OCCURRED. PLEASE TRY AGAIN.",
+  "@errorGeneral": {
+    "description": "General error message"
+  },
+
+  "errorDatabase": "DATABASE ERROR OCCURRED.",
+  "@errorDatabase": {
+    "description": "Database error message"
+  },
+
+  "errorNetwork": "PLEASE CHECK YOUR NETWORK CONNECTION.",
+  "@errorNetwork": {
+    "description": "Network error message"
+  },
+
+  "errorNotFound": "DATA NOT FOUND.",
+  "@errorNotFound": {
+    "description": "Data not found error message"
+  },
+
+  "successWorkoutCompleted": "WORKOUT COMPLETED! ONE STEP CLOSER TO CHAD.",
+  "@successWorkoutCompleted": {
+    "description": "Workout completion success message"
+  },
+
+  "successProfileSaved": "PROFILE SAVED.",
+  "@successProfileSaved": {
+    "description": "Profile save success message"
+  },
+
+  "successSettingsSaved": "SETTINGS SAVED.",
+  "@successSettingsSaved": {
+    "description": "Settings save success message"
+  },
+
+  "firstWorkoutMessage": "THE CHAD JOURNEY BEGINS WITH YOUR FIRST WORKOUT!",
+  "@firstWorkoutMessage": {
+    "description": "First workout special message"
+  },
+
+  "weekCompletedMessage": "WEEK COMPLETED! CHAD POWER ASCENDING!",
+  "@weekCompletedMessage": {
+    "description": "Weekly completion special message"
+  },
+
+  "programCompletedMessage": "CONGRATULATIONS! YOU'VE BECOME A TRUE GIGA CHAD!",
+  "@programCompletedMessage": {
+    "description": "Program completion special message"
+  },
+
+  "streakStartMessage": "CHAD STREAK HAS BEGUN!",
+  "@streakStartMessage": {
+    "description": "Streak start message"
+  },
+
+  "streakContinueMessage": "CHAD STREAK CONTINUES!",
+  "@streakContinueMessage": {
+    "description": "Streak continue message"
+  },
+
+  "streakBrokenMessage": "STREAK IS BROKEN, BUT CHAD RISES AGAIN!",
+  "@streakBrokenMessage": {
+    "description": "Streak broken message"
+  },
+
+  "chadTitleSleepy": "SLEEPY CHAD",
+  "@chadTitleSleepy": {
+    "description": "Sleepy Chad title"
+  },
+
+  "chadTitleBasic": "BASIC CHAD",
+  "@chadTitleBasic": {
+    "description": "Basic Chad title"
+  },
+
+  "chadTitleCoffee": "COFFEE CHAD",
+  "@chadTitleCoffee": {
+    "description": "Coffee Chad title"
+  },
+
+  "chadTitleFront": "FRONT CHAD",
+  "@chadTitleFront": {
+    "description": "Front Chad title"
+  },
+
+  "chadTitleCool": "COOL CHAD",
+  "@chadTitleCool": {
+    "description": "Cool Chad title"
+  },
+
+  "chadTitleLaser": "LASER CHAD",
+  "@chadTitleLaser": {
+    "description": "Laser Chad title"
+  },
+
+  "chadTitleDouble": "DOUBLE CHAD",
+  "@chadTitleDouble": {
+    "description": "Double Chad title"
+  },
+
+  "levelNameRookie": "ROOKIE CHAD",
+  "@levelNameRookie": {
+    "description": "Rookie chad name"
+  },
+
+  "levelNameRising": "RISING CHAD",
+  "@levelNameRising": {
+    "description": "Rising chad name"
+  },
+
+  "levelNameAlpha": "ALPHA CHAD",
+  "@levelNameAlpha": {
+    "description": "Alpha chad name"
+  },
+
+  "levelNameGiga": "GIGA CHAD",
+  "@levelNameGiga": {
+    "description": "Giga chad name"
+  },
+
+  "levelDescRookie": "ROOKIE CHAD STARTING THE PUSH-UP JOURNEY.\nGET STRONGER WITH CONSISTENT PRACTICE!",
+  "@levelDescRookie": {
+    "description": "Rookie level description"
+  },
+
+  "levelDescRising": "RISING CHAD WITH SOLID FUNDAMENTALS.\nMOVING TOWARDS HIGHER GOALS!",
+  "@levelDescRising": {
+    "description": "Rising level description"
+  },
+
+  "levelDescAlpha": "ALPHA CHAD WITH CONSIDERABLE SKILLS.\nALREADY ACHIEVED GREAT PROGRESS!",
+  "@levelDescAlpha": {
+    "description": "Alpha level description"
+  },
+
+  "levelDescGiga": "ULTIMATE GIGA CHAD LEVEL.\nAMAZING SKILLS POSSESSED!",
+  "@levelDescGiga": {
+    "description": "Giga level description"
+  },
+
+  "levelMotivationRookie": "ALL CHADS START HERE!\nEXPERIENCE AMAZING TRANSFORMATION AFTER 6 WEEKS!",
+  "@levelMotivationRookie": {
+    "description": "Rookie motivation message"
+  },
+
+  "levelMotivationRising": "GOOD START!\nBECOME A STRONGER CHAD!",
+  "@levelMotivationRising": {
+    "description": "Rising motivation message"
+  },
+
+  "levelMotivationAlpha": "EXCELLENT SKILLS!\nRUN TO 100 TARGET, FXXK IDIOT!",
+  "@levelMotivationAlpha": {
+    "description": "Alpha motivation message"
+  },
+
+  "levelMotivationGiga": "ALREADY A POWERFUL CHAD!\nGO FOR PERFECT 100!",
+  "@levelMotivationGiga": {
+    "description": "Giga motivation message"
+  },
+
+  "levelGoalRookie": "GOAL: 100 CONSECUTIVE PUSH-UPS AFTER 6 WEEKS!",
+  "@levelGoalRookie": {
+    "description": "Rookie goal message"
+  },
+
+  "levelGoalRising": "GOAL: GROW INTO A STRONGER CHAD!",
+  "@levelGoalRising": {
+    "description": "Rising goal message"
+  },
+
+  "levelGoalAlpha": "GOAL: PERFECT FORM 100 REPS!",
+  "@levelGoalAlpha": {
+    "description": "Alpha goal message"
+  },
+
+  "levelGoalGiga": "GOAL: BECOME CHAD MASTER!",
+  "@levelGoalGiga": {
+    "description": "Giga goal message"
+  },
+
+  "workoutButtonUltimate": "CLAIM ULTIMATE VICTORY!",
+  "@workoutButtonUltimate": {
+    "description": "Ultimate set completion button"
+  },
+
+  "workoutButtonConquer": "CONQUER THIS SET!",
+  "@workoutButtonConquer": {
+    "description": "Regular set completion button"
+  },
+
+  "motivationMessage1": "REAL CHADS DON'T MAKE EXCUSES, FXXK IDIOT",
+  "@motivationMessage1": {
+    "description": "Motivation message 1"
+  },
+
+  "motivationMessage2": "PUSH LIKE A CHAD, REST LIKE A SIGMA",
+  "@motivationMessage2": {
+    "description": "Motivation message 2"
+  },
+
+  "motivationMessage3": "EVERY REP BRINGS YOU CLOSER TO CHAD",
+  "@motivationMessage3": {
+    "description": "Motivation message 3"
+  },
+
+  "motivationMessage4": "CHAD ENERGY IS BUILDING UP",
+  "@motivationMessage4": {
+    "description": "Motivation message 4"
+  },
+
+  "motivationMessage5": "YOU'RE EVOLVING INTO A CHAD, FXXK YEAH!",
+  "@motivationMessage5": {
+    "description": "Motivation message 5"
+  },
+
+  "motivationMessage6": "CHAD MODE: ACTIVATED 💪",
+  "@motivationMessage6": {
+    "description": "Motivation message 6"
+  },
+
+  "motivationMessage7": "THIS IS HOW CHADS ARE MADE",
+  "@motivationMessage7": {
+    "description": "Motivation message 7"
+  },
+
+  "motivationMessage8": "FEEL THE CHAD POWER FLOWING",
+  "@motivationMessage8": {
+    "description": "Motivation message 8"
+  },
+
+  "motivationMessage9": "CHAD TRANSFORMATION IN PROGRESS, YOU IDIOT",
+  "@motivationMessage9": {
+    "description": "Motivation message 9"
+  },
+
+  "motivationMessage10": "WELCOME TO THE CHAD BROTHERHOOD",
+  "@motivationMessage10": {
+    "description": "Motivation message 10"
+  },
+
+  "completionMessage1": "THAT'S WHAT I'M TALKING ABOUT, FXXK YEAH!",
+  "@completionMessage1": {
+    "description": "Completion message 1"
+  },
+
+  "completionMessage2": "CHAD VIBES ARE STRONG TODAY",
+  "@completionMessage2": {
+    "description": "Completion message 2"
+  },
+
+  "completionMessage3": "ANOTHER STEP CLOSER TO CHAD",
+  "@completionMessage3": {
+    "description": "Completion message 3"
+  },
+
+  "completionMessage4": "YOU'RE BECOMING MORE CHAD-LIKE, YOU IDIOT",
+  "@completionMessage4": {
+    "description": "Completion message 4"
+  },
+
+  "completionMessage5": "CHAD ENERGY LEVEL: RISING ⚡",
+  "@completionMessage5": {
+    "description": "Completion message 5"
+  },
+
+  "completionMessage6": "RESPECT. YOU EARNED IT",
+  "@completionMessage6": {
+    "description": "Completion message 6"
+  },
+
+  "completionMessage7": "CHAD APPROVES THIS WORKOUT",
+  "@completionMessage7": {
+    "description": "Completion message 7"
+  },
+
+  "completionMessage8": "YOU JUST LEVELED UP YOUR CHAD GAME, FXXK IDIOT",
+  "@completionMessage8": {
+    "description": "Completion message 8"
+  },
+
+  "completionMessage9": "PURE CHAD PERFORMANCE RIGHT THERE",
+  "@completionMessage9": {
+    "description": "Completion message 9"
+  },
+
+  "completionMessage10": "WELCOME TO ANOTHER DAY OF BEING CHAD",
+  "@completionMessage10": {
+    "description": "Completion message 10"
+  },
+
+  "encouragementMessage1": "EVEN CHADS HAVE TOUGH DAYS",
+  "@encouragementMessage1": {
+    "description": "Encouragement message 1"
+  },
+
+  "encouragementMessage2": "TOMORROW IS ANOTHER CHANCE TO BE CHAD",
+  "@encouragementMessage2": {
+    "description": "Encouragement message 2"
+  },
+
+  "encouragementMessage3": "CHAD DOESN'T GIVE UP, FXXK IDIOT",
+  "@encouragementMessage3": {
+    "description": "Encouragement message 3"
+  },
+
+  "encouragementMessage4": "THIS IS JUST CHAD TRAINING MODE",
+  "@encouragementMessage4": {
+    "description": "Encouragement message 4"
+  },
+
+  "encouragementMessage5": "REAL CHADS KEEP PUSHING",
+  "@encouragementMessage5": {
+    "description": "Encouragement message 5"
+  },
+
+  "encouragementMessage6": "CHAD SPIRIT NEVER DIES",
+  "@encouragementMessage6": {
+    "description": "Encouragement message 6"
+  },
+
+  "encouragementMessage7": "YOU'RE STILL ON THE CHAD PATH, YOU IDIOT",
+  "@encouragementMessage7": {
+    "description": "Encouragement message 7"
+  },
+
+  "encouragementMessage8": "CHAD COMEBACK INCOMING",
+  "@encouragementMessage8": {
+    "description": "Encouragement message 8"
+  },
+
+  "encouragementMessage9": "EVERY CHAD FACES CHALLENGES",
+  "@encouragementMessage9": {
+    "description": "Encouragement message 9"
+  },
+
+  "encouragementMessage10": "CHAD RESILIENCE IS YOUR STRENGTH, FXXK YEAH!",
+  "@encouragementMessage10": {
+    "description": "Encouragement message 10"
+  },
+
+  "chadMessage0": "TIME TO WAKE UP",
+  "@chadMessage0": {
+    "description": "Stage 0 chad message"
+  },
+
+  "chadMessage1": "NOW IT BEGINS, YOU IDIOT",
+  "@chadMessage1": {
+    "description": "Stage 1 chad message"
+  },
+
+  "chadMessage2": "ENERGY IS CHARGED, FXXK YEAH!",
+  "@chadMessage2": {
+    "description": "Stage 2 chad message"
+  },
+
+  "chadMessage3": "CONFIDENCE IS BUILDING",
+  "@chadMessage3": {
+    "description": "Stage 3 chad message"
+  },
+
+  "chadMessage4": "NOW YOU LOOK COOL, YOU IDIOT",
+  "@chadMessage4": {
+    "description": "Stage 4 chad message"
+  },
+
+  "chadMessage5": "CHAD AURA IS DETECTED",
+  "@chadMessage5": {
+    "description": "Stage 5 chad message"
+  },
+
+  "chadMessage6": "TRUE GIGA CHAD IS BORN, FXXK IDIOT!",
+
+  "tutorialTitle": "CHAD PUSHUP DOJO",
+  "tutorialSubtitle": "REAL CHADS START WITH PERFECT FORM! 💪",
+  "tutorialButton": "BECOME PUSHUP MASTER",
+  "difficultyBeginner": "BEGINNER - STARTING CHADS",
+  "difficultyIntermediate": "INTERMEDIATE - GROWING CHADS", 
+  "difficultyAdvanced": "ADVANCED - POWERFUL CHADS",
+  "difficultyExtreme": "EXTREME - GIGA CHAD TERRITORY",
+  "targetMuscleChest": "CHEST",
+  "targetMuscleTriceps": "TRICEPS", 
+  "targetMuscleShoulders": "SHOULDERS",
+  "targetMuscleCore": "CORE",
+  "targetMuscleFull": "FULL BODY",
+  "caloriesPerRep": "{calories}kcal/rep",
+  "tutorialDetailTitle": "MASTER CHAD FORM",
+  "benefitsSection": "💪 HOW YOU GET STRONGER",
+  "instructionsSection": "⚡ CHAD EXECUTION",
+  "mistakesSection": "❌ WEAKLING MISTAKES",
+  "breathingSection": "🌪️ CHAD BREATHING",
+  "chadMotivationSection": "🔥 CHAD'S ADVICE",
+  "pushupStandardName": "STANDARD PUSHUP",
+  "pushupStandardDesc": "THE STARTING POINT OF ALL CHADS. PERFECT BASICS ARE TRUE STRENGTH!",
+  "pushupStandardBenefits": "• FULL CHEST DEVELOPMENT\\n• TRICEPS AND SHOULDER STRENGTH\\n• BASIC FITNESS IMPROVEMENT\\n• FOUNDATION FOR ALL PUSHUPS, YOU IDIOT!",
+  "pushupStandardInstructions": "1. START IN PLANK POSITION\\n2. HANDS SHOULDER-WIDTH APART\\n3. KEEP BODY IN STRAIGHT LINE\\n4. LOWER CHEST TO FLOOR\\n5. PUSH UP POWERFULLY, CHAD STYLE!",
+  "pushupStandardMistakes": "• BUTT STICKING UP - WEAKLING MOVE\\n• NOT LOWERING CHEST FULLY\\n• NECK FORWARD\\n• WRISTS AHEAD OF SHOULDERS\\n• INCONSISTENT TEMPO, FXXK IDIOT!",
+  "pushupStandardBreathing": "INHALE DOWN, EXHALE UP POWERFULLY. BREATHING IS POWER!",
+  "pushupStandardChad": "BASICS ARE THE HARDEST, YOU IDIOT. ONE PERFECT REP BEATS TEN SLOPPY ONES!",
+  "pushupKneeName": "KNEE PUSHUP",
+  "pushupKneeDesc": "FIRST STEP OF CHAD JOURNEY. DON'T BE ASHAMED, ALL LEGENDS START HERE!",
+  "pushupKneeBenefits": "• BASIC STRENGTH IMPROVEMENT\\n• LEARN PROPER PUSHUP FORM\\n• SHOULDER AND ARM STABILITY\\n• PROGRESSION TO STANDARD PUSHUP",
+  "pushupKneeInstructions": "1. START ON KNEES\\n2. LIFT ANKLES UP\\n3. UPPER BODY SAME AS STANDARD\\n4. STRAIGHT LINE FROM KNEES TO HEAD\\n5. MOVE SLOWLY AND SURELY!",
+  "pushupKneeMistakes": "• BUTT SAGGING BACK\\n• KNEES TOO FAR FORWARD\\n• ONLY MOVING UPPER BODY\\n• MOVING TOO FAST",
+  "pushupKneeBreathing": "SMOOTH, STEADY BREATHING TO START. DON'T RUSH!",
+  "pushupKneeChad": "STARTING IS HALF THE BATTLE, YOU IDIOT! MASTER KNEE PUSHUPS WITH PERFECT FORM FIRST!",
+  "pushupInclineName": "INCLINE PUSHUP",
+  "pushupInclineDesc": "HANDS ON HIGH SURFACE. CLIMB THE STAIRS TO CHAD STATUS!",
+  "pushupInclineBenefits": "• REDUCED LOAD FOR FORM PERFECTION\\n• LOWER CHEST STRENGTHENING\\n• SHOULDER STABILITY\\n• BRIDGE TO STANDARD PUSHUP",
+  "pushupInclineInstructions": "1. HANDS ON BENCH OR CHAIR\\n2. LEAN BODY AT ANGLE\\n3. STRAIGHT LINE TOE TO HEAD\\n4. HIGHER = EASIER\\n5. GRADUALLY GO LOWER!",
+  "pushupInclineMistakes": "• BUTT STICKING UP\\n• TOO MUCH WEIGHT ON WRISTS\\n• UNSTABLE SUPPORT\\n• LOWERING ANGLE TOO QUICKLY",
+  "pushupInclineBreathing": "COMFORTABLE BREATHING WITH EASIER ANGLE. BUT MAXIMUM FOCUS, YOU IDIOT!",
+  "pushupInclineChad": "ADJUST HEIGHT, MAXIMIZE INTENSITY! 20 PERFECT REPS MEANS YOU'RE READY FOR FLOOR!",
+  "pushupWideGripName": "WIDE GRIP PUSHUP",
+  "pushupWideGripDesc": "SPREAD HANDS WIDE FOR BROADER CHEST. BUILD THAT CHAD CHEST PLATE!",
+  "pushupWideGripBenefits": "• OUTER CHEST FOCUS\\n• SHOULDER STABILITY\\n• CHEST WIDTH EXPANSION\\n• OVERALL UPPER BODY BALANCE",
+  "pushupWideGripInstructions": "1. HANDS 1.5X SHOULDER WIDTH\\n2. FINGERS SLIGHTLY OUTWARD\\n3. CHEST TO FLOOR\\n4. ELBOWS AT 45 DEGREES\\n5. PUSH WITH WIDE CHEST!",
+  "pushupWideGripMistakes": "• HANDS TOO WIDE\\n• ELBOWS COMPLETELY OUT\\n• SHOULDER STRAIN\\n• NOT LOWERING CHEST ENOUGH",
+  "pushupWideGripBreathing": "BREATHE DEEP WITH WIDE CHEST. FEEL THE EXPANSION, YOU IDIOT!",
+  "pushupWideGripChad": "WIDE CHEST IS CHAD SYMBOL! BUILD THAT MANLY CHEST WITH WIDE GRIP!",
+  "pushupDiamondName": "DIAMOND PUSHUP",
+  "pushupDiamondDesc": "HANDS IN DIAMOND SHAPE. MAKE TRICEPS DIAMOND-HARD!",
+  "pushupDiamondBenefits": "• TRICEPS FOCUS\\n• INNER CHEST DEVELOPMENT\\n• FULL ARM STRENGTH\\n• CORE STABILITY INCREASE",
+  "pushupDiamondInstructions": "1. MAKE DIAMOND WITH THUMBS AND FINGERS\\n2. HANDS BELOW CHEST CENTER\\n3. ELBOWS CLOSE TO BODY\\n4. CHEST TO HANDS\\n5. PUSH WITH TRICEPS POWER!",
+  "pushupDiamondMistakes": "• EXCESSIVE WRIST PRESSURE\\n• ELBOWS TOO WIDE\\n• BODY TWISTING\\n• INACCURATE DIAMOND SHAPE",
+  "pushupDiamondBreathing": "FOCUSED BREATHING. FEEL THE TRICEPS BURN, YOU IDIOT!",
+  "pushupDiamondChad": "MAKE ARMS DIAMOND-HARD! 10 PERFECT REPS GETS REAL CHAD RECOGNITION!",
+  "pushupDeclineName": "DECLINE PUSHUP",
+  "pushupDeclineDesc": "FEET ELEVATED HIGH. REAL CHADS DEFEAT GRAVITY!",
+  "pushupDeclineBenefits": "• UPPER CHEST FOCUS\\n• FRONT SHOULDER STRENGTHENING\\n• MAXIMUM CORE STABILITY\\n• FULL BODY STRENGTH",
+  "pushupDeclineInstructions": "1. FEET ON BENCH OR CHAIR\\n2. HANDS DIRECTLY UNDER SHOULDERS\\n3. STRAIGHT LINE ANGLED DOWN\\n4. OVERCOME GRAVITY'S RESISTANCE\\n5. PUSH UP POWERFULLY!",
+  "pushupDeclineMistakes": "• UNSTABLE FOOT POSITION\\n• BUTT SAGGING DOWN\\n• NECK STRAIN\\n• LOSING BALANCE",
+  "pushupDeclineBreathing": "STABLE BREATHING WHILE FIGHTING GRAVITY. REAL POWER COMES FROM HERE, YOU IDIOT!",
+  "pushupDeclineChad": "IGNORE GRAVITY AND PUSH UP! MASTER DECLINE AND YOUR SHOULDERS BECOME ROCKS!",
+  "pushupArcherName": "ARCHER PUSHUP",
+  "pushupArcherDesc": "LEAN TO ONE SIDE LIKE DRAWING A BOW. ACCURACY AND POWER COMBINED!",
+  "pushupArcherBenefits": "• ONE ARM FOCUS\\n• LEFT-RIGHT BALANCE\\n• ONE-ARM PUSHUP PREPARATION\\n• CORE ROTATIONAL STABILITY",
+  "pushupArcherInstructions": "1. START WITH WIDE GRIP\\n2. LEAN WEIGHT TO ONE SIDE\\n3. ONE ARM BENT, OTHER STRAIGHT\\n4. PRECISE LIKE BOWSTRING\\n5. ALTERNATE BOTH SIDES!",
+  "pushupArcherMistakes": "• BODY TWISTING\\n• FORCE IN STRAIGHT ARM\\n• UNEVEN LEFT-RIGHT MOVEMENT\\n• CORE SHAKING",
+  "pushupArcherBreathing": "FOCUSED BREATHING LIKE DRAWING BOW. ACCURACY IS LIFE, YOU IDIOT!",
+  "pushupArcherChad": "PRECISE ARCHER IS THE SHORTCUT TO ONE-ARM! MASTER BOTH SIDES EQUALLY!",
+  "pushupPikeName": "PIKE PUSHUP", 
+  "pushupPikeDesc": "INVERTED TRIANGLE POSITION. CHAD'S SECRET TO ROCK SHOULDERS!",
+  "pushupPikeBenefits": "• FULL SHOULDER STRENGTHENING\\n• HANDSTAND PUSHUP PREPARATION\\n• VERTICAL UPPER BODY POWER\\n• CORE AND BALANCE IMPROVEMENT",
+  "pushupPikeInstructions": "1. START IN DOWNWARD DOG\\n2. BUTT AS HIGH AS POSSIBLE\\n3. HEAD CLOSE TO FLOOR\\n4. PUSH WITH SHOULDER POWER ONLY\\n5. MAINTAIN INVERTED TRIANGLE!",
+  "pushupPikeMistakes": "• BUTT NOT HIGH ENOUGH\\n• ELBOWS OUT TO SIDES\\n• SUPPORTING WITH HEAD ONLY\\n• FEET TOO FAR OR CLOSE",
+  "pushupPikeBreathing": "STABLE BREATHING IN INVERTED POSITION. FOCUS ON SHOULDERS, YOU IDIOT!",
+  "pushupPikeChad": "MASTER PIKE AND HANDSTAND IS NO PROBLEM! EVOLVE INTO SHOULDER CHAD!",
+  "pushupClapName": "CLAP PUSHUP",
+  "pushupClapDesc": "EXPLOSIVE POWER TO CLAP. REAL POWER IS PROVEN HERE!",
+  "pushupClapBenefits": "• EXPLOSIVE STRENGTH DEVELOPMENT\\n• FULL BODY POWER\\n• INSTANT REACTION SPEED\\n• PROOF OF REAL CHAD",
+  "pushupClapInstructions": "1. START IN STANDARD POSITION\\n2. EXPLODE UP\\n3. CLAP IN AIR\\n4. LAND SAFELY\\n5. TRY CONSECUTIVELY!",
+  "pushupClapMistakes": "• NOT ENOUGH HEIGHT\\n• WRIST INJURY RISK ON LANDING\\n• FORM BREAKDOWN\\n• EXCESSIVE CONSECUTIVE ATTEMPTS",
+  "pushupClapBreathing": "EXPLOSIVE EXHALE UP, QUICK BREATHING RESET AFTER LANDING. RHYTHM IS KEY, YOU IDIOT!",
+  "pushupClapChad": "CLAP PUSHUP IS PROOF OF REAL POWER! ONE SUCCESS MAKES YOU ALREADY CHAD!",
+  "pushupOneArmName": "ONE-ARM PUSHUP",
+  "pushupOneArmDesc": "ULTIMATE PUSHUP WITH ONE HAND. ONLY GIGA CHADS CAN REACH THIS REALM!",
+  "pushupOneArmBenefits": "• ULTIMATE UPPER BODY STRENGTH\\n• PERFECT CORE CONTROL\\n• FULL BODY BALANCE AND COORDINATION\\n• GIGA CHAD COMPLETION",
+  "pushupOneArmInstructions": "1. SPREAD LEGS WIDE FOR BALANCE\\n2. ONE HAND BEHIND BACK\\n3. FOCUS ALL POWER IN CORE\\n4. SLOW AND SURE\\n5. PROVE YOUR GIGA CHAD QUALIFICATION!",
+  "pushupOneArmMistakes": "• LEGS TOO NARROW\\n• BODY TWISTING AND ROTATING\\n• SUPPORTING WITH OTHER HAND\\n• INJURY FROM EXCESSIVE ATTEMPT",
+  "pushupOneArmBreathing": "DEEP, STABLE BREATHING FOR MAXIMUM FOCUS. UNITE ALL ENERGY, YOU IDIOT!",
+  "pushupOneArmChad": "ONE-ARM PUSHUP IS THE ULTIMATE CHAD FORM! DO THIS ONCE AND YOU'RE A TRUE GIGA CHAD, FXXK YEAH!"
+} 

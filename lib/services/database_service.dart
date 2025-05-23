@@ -1,0 +1,269 @@
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
+import '../models/user_profile.dart';
+import '../models/workout_session.dart';
+
+class DatabaseService {
+  static final DatabaseService _instance = DatabaseService._internal();
+  factory DatabaseService() => _instance;
+  DatabaseService._internal();
+
+  static Database? _database;
+
+  Future<Database> get database async {
+    if (_database != null) return _database!;
+    _database = await _initDatabase();
+    return _database!;
+  }
+
+  Future<Database> _initDatabase() async {
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, 'mission100_chad.db');
+
+    return await openDatabase(path, version: 1, onCreate: _onCreate);
+  }
+
+  Future<void> _onCreate(Database db, int version) async {
+    // UserProfile 테이블 생성
+    await db.execute('''
+      CREATE TABLE user_profile (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        level TEXT NOT NULL,
+        initial_max_reps INTEGER NOT NULL,
+        start_date TEXT NOT NULL,
+        chad_level INTEGER DEFAULT 0,
+        reminder_enabled INTEGER DEFAULT 0,
+        reminder_time TEXT
+      )
+    ''');
+
+    // WorkoutSession 테이블 생성
+    await db.execute('''
+      CREATE TABLE workout_session (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        date TEXT NOT NULL,
+        week INTEGER NOT NULL,
+        day INTEGER NOT NULL,
+        target_reps TEXT NOT NULL,
+        completed_reps TEXT,
+        is_completed INTEGER DEFAULT 0,
+        total_reps INTEGER DEFAULT 0,
+        total_time INTEGER DEFAULT 0,
+        UNIQUE(date, week, day)
+      )
+    ''');
+
+    // 인덱스 생성
+    await db.execute('CREATE INDEX idx_workout_date ON workout_session(date)');
+    await db.execute(
+      'CREATE INDEX idx_workout_week_day ON workout_session(week, day)',
+    );
+  }
+
+  // UserProfile CRUD 작업
+  Future<int> insertUserProfile(UserProfile profile) async {
+    final db = await database;
+    return await db.insert('user_profile', profile.toMap());
+  }
+
+  Future<UserProfile?> getUserProfile() async {
+    final db = await database;
+    final maps = await db.query('user_profile', limit: 1);
+
+    if (maps.isNotEmpty) {
+      return UserProfile.fromMap(maps.first);
+    }
+    return null;
+  }
+
+  Future<int> updateUserProfile(UserProfile profile) async {
+    final db = await database;
+    return await db.update(
+      'user_profile',
+      profile.toMap(),
+      where: 'id = ?',
+      whereArgs: [profile.id],
+    );
+  }
+
+  Future<int> deleteUserProfile(int id) async {
+    final db = await database;
+    return await db.delete('user_profile', where: 'id = ?', whereArgs: [id]);
+  }
+
+  // WorkoutSession CRUD 작업
+  Future<int> insertWorkoutSession(WorkoutSession session) async {
+    final db = await database;
+    return await db.insert(
+      'workout_session',
+      session.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Future<List<WorkoutSession>> getAllWorkoutSessions() async {
+    final db = await database;
+    final maps = await db.query(
+      'workout_session',
+      orderBy: 'date DESC, week DESC, day DESC',
+    );
+
+    return List.generate(maps.length, (i) {
+      return WorkoutSession.fromMap(maps[i]);
+    });
+  }
+
+  Future<List<WorkoutSession>> getWorkoutSessionsByWeek(int week) async {
+    final db = await database;
+    final maps = await db.query(
+      'workout_session',
+      where: 'week = ?',
+      whereArgs: [week],
+      orderBy: 'day',
+    );
+
+    return List.generate(maps.length, (i) {
+      return WorkoutSession.fromMap(maps[i]);
+    });
+  }
+
+  Future<List<WorkoutSession>> getWorkoutSessionsByUserId(int userId) async {
+    final db = await database;
+    final maps = await db.query(
+      'workout_session',
+      where: 'user_id = ?',
+      whereArgs: [userId],
+      orderBy: 'date DESC, week DESC, day DESC',
+    );
+
+    return List.generate(maps.length, (i) {
+      return WorkoutSession.fromMap(maps[i]);
+    });
+  }
+
+  Future<WorkoutSession?> getWorkoutSession(int week, int day) async {
+    final db = await database;
+    final maps = await db.query(
+      'workout_session',
+      where: 'week = ? AND day = ?',
+      whereArgs: [week, day],
+      limit: 1,
+    );
+
+    if (maps.isNotEmpty) {
+      return WorkoutSession.fromMap(maps.first);
+    }
+    return null;
+  }
+
+  Future<WorkoutSession?> getTodayWorkoutSession() async {
+    final db = await database;
+    final today = DateTime.now().toIso8601String().split('T')[0];
+    final maps = await db.query(
+      'workout_session',
+      where: 'date = ?',
+      whereArgs: [today],
+      limit: 1,
+    );
+
+    if (maps.isNotEmpty) {
+      return WorkoutSession.fromMap(maps.first);
+    }
+    return null;
+  }
+
+  Future<int> updateWorkoutSession(WorkoutSession session) async {
+    final db = await database;
+    return await db.update(
+      'workout_session',
+      session.toMap(),
+      where: 'id = ?',
+      whereArgs: [session.id],
+    );
+  }
+
+  Future<int> deleteWorkoutSession(int id) async {
+    final db = await database;
+    return await db.delete('workout_session', where: 'id = ?', whereArgs: [id]);
+  }
+
+  // 통계 메서드
+  Future<int> getTotalPushups() async {
+    final db = await database;
+    final result = await db.rawQuery(
+      'SELECT SUM(total_reps) as total FROM workout_session WHERE is_completed = 1',
+    );
+    return result.first['total'] as int? ?? 0;
+  }
+
+  Future<int> getCompletedWorkouts() async {
+    final db = await database;
+    final result = await db.rawQuery(
+      'SELECT COUNT(*) as count FROM workout_session WHERE is_completed = 1',
+    );
+    return result.first['count'] as int? ?? 0;
+  }
+
+  Future<List<WorkoutSession>> getRecentWorkouts({int limit = 7}) async {
+    final db = await database;
+    final maps = await db.query(
+      'workout_session',
+      where: 'is_completed = 1',
+      orderBy: 'date DESC',
+      limit: limit,
+    );
+
+    return List.generate(maps.length, (i) {
+      return WorkoutSession.fromMap(maps[i]);
+    });
+  }
+
+  // 연속 운동일 계산
+  Future<int> getConsecutiveDays() async {
+    final db = await database;
+    final maps = await db.query(
+      'workout_session',
+      where: 'is_completed = 1',
+      orderBy: 'date DESC',
+    );
+
+    if (maps.isEmpty) return 0;
+
+    int consecutiveDays = 0;
+    DateTime? lastDate;
+
+    for (var map in maps) {
+      final currentDate = DateTime.parse(map['date'] as String);
+
+      if (lastDate == null) {
+        // 첫 번째 운동 날짜
+        lastDate = currentDate;
+        consecutiveDays = 1;
+      } else {
+        // 하루 차이가 나는지 확인
+        if (lastDate.difference(currentDate).inDays == 1) {
+          consecutiveDays++;
+          lastDate = currentDate;
+        } else {
+          // 연속성이 깨짐
+          break;
+        }
+      }
+    }
+
+    return consecutiveDays;
+  }
+
+  // 데이터베이스 닫기
+  Future<void> close() async {
+    final db = await database;
+    db.close();
+  }
+
+  // 데이터베이스 초기화 (설정에서 사용)
+  Future<void> resetDatabase() async {
+    final db = await database;
+    await db.delete('user_profile');
+    await db.delete('workout_session');
+  }
+}

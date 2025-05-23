@@ -1,0 +1,1268 @@
+{
+  "@@locale": "ko",
+  
+  "appTitle": "⚡ 알파 전장 ⚡",
+  "@appTitle": {
+    "description": "앱 바 제목"
+  },
+
+  "repLogMessage": "기록해라, 만삣삐. 약자는 숫자를 센다, 강자는 전설을 만든다 💪",
+  "@repLogMessage": {
+    "description": "운동 횟수 입력 안내 메시지"
+  },
+
+  "targetRepsLabel": "목표: {count}회",
+  "@targetRepsLabel": {
+    "description": "목표 횟수 표시",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "performanceGodTier": "굿 잡, 만삣삐! 신의 영역 도달했다 👑",
+  "@performanceGodTier": {
+    "description": "목표 100% 달성시 메시지"
+  },
+
+  "performanceStrong": "철봉이 무릎꿇는 소리 들리냐? 더 강하게 가자 🔱",
+  "@performanceStrong": {
+    "description": "목표 80% 이상 달성시 메시지"
+  },
+
+  "performanceMedium": "not bad, 만삣삐. 약함이 도망가고 있어 ⚡",
+  "@performanceMedium": {
+    "description": "목표 50% 이상 달성시 메시지"
+  },
+
+  "performanceStart": "시작이 반이다, you idiot. 전설의 첫 걸음 🦍",
+  "@performanceStart": {
+    "description": "운동 시작시 메시지"
+  },
+
+  "performanceMotivation": "할 수 있어, 만삣삐. 그냥 해버려 🔥",
+  "@performanceMotivation": {
+    "description": "기본 동기부여 메시지"
+  },
+
+  "motivationGod": "완벽하다, 만삣삐. 너의 근육이 신급 도달했어. 약함은 이미 떠났다. ⚡👑",
+  "@motivationGod": {
+    "description": "목표 달성시 최고 동기부여 메시지"
+  },
+
+  "motivationStrong": "포기? 그건 약자나 하는 거야. 더 강하게, 만삣삐! 🔱💪",
+  "@motivationStrong": {
+    "description": "목표 80% 이상시 동기부여 메시지"
+  },
+
+  "motivationMedium": "한계는 너의 머릿속에만 있어, you idiot. 부숴버려! 🦍⚡",
+  "@motivationMedium": {
+    "description": "목표 50% 이상시 동기부여 메시지"
+  },
+
+  "motivationGeneral": "오늘 흘린 땀은 내일의 영광이야, 만삣삐. 절대 포기하지 마 🔥💪",
+  "@motivationGeneral": {
+    "description": "일반 동기부여 메시지"
+  },
+
+  "setCompletedSuccess": "굿 잡, 만삣삐! 또 하나의 신화가 탄생했어 🔥👑",
+  "@setCompletedSuccess": {
+    "description": "목표 달성하고 세트 완료시"
+  },
+
+  "setCompletedGood": "not bad, 만삣삐! 또 하나의 한계를 부숴버렸어 ⚡🔱",
+  "@setCompletedGood": {
+    "description": "목표 미달성이지만 세트 완료시"
+  },
+
+  "resultFormat": "전설 등급: {reps}회 ({percentage}%) 🏆",
+  "@resultFormat": {
+    "description": "운동 결과 표시 형식",
+    "placeholders": {
+      "reps": {
+        "type": "int"
+      },
+      "percentage": {
+        "type": "int"
+      }
+    }
+  },
+
+  "quickInputPerfect": "신급 달성",
+  "@quickInputPerfect": {
+    "description": "목표 달성 버튼"
+  },
+
+  "quickInputStrong": "강자의 여유",
+  "@quickInputStrong": {
+    "description": "목표 80% 버튼"
+  },
+
+  "quickInputMedium": "거인의 발걸음",
+  "@quickInputMedium": {
+    "description": "목표 60% 버튼"
+  },
+
+  "quickInputStart": "시작의 함성",
+  "@quickInputStart": {
+    "description": "목표 50% 버튼"
+  },
+
+  "quickInputBeast": "한계 파괴",
+  "@quickInputBeast": {
+    "description": "목표 초과 버튼"
+  },
+
+  "restTimeTitle": "강자들의 재충전 타임, 만삣삐 ⚡",
+  "@restTimeTitle": {
+    "description": "휴식시간 제목"
+  },
+
+  "restMessage": "쉬는 것도 성장이야. 다음은 더 파괴적으로 가자, 만삣삐 🦍",
+  "@restMessage": {
+    "description": "휴식 중 메시지"
+  },
+
+  "skipRestButton": "휴식? 약자나 해라, 만삣삐! 다음 희생양 가져와!",
+  "@skipRestButton": {
+    "description": "휴식 건너뛰기 버튼"
+  },
+
+  "nextSetButton": "굿 잡! 우주 정복 완료!",
+  "@nextSetButton": {
+    "description": "마지막 세트 완료 버튼"
+  },
+
+  "nextSetContinue": "다음 희생양을 가져와라, 만삣삐!",
+  "@nextSetContinue": {
+    "description": "다음 세트 진행 버튼"
+  },
+
+  "guidanceMessage": "네 몸은 네가 명령하는 대로 따를 뿐이야, you idiot! 🔱",
+  "@guidanceMessage": {
+    "description": "세트 진행 중 안내 메시지"
+  },
+
+  "completeSetButton": "전설 등극, 만삣삐!",
+  "@completeSetButton": {
+    "description": "마지막 세트 완료 버튼"
+  },
+
+  "completeSetContinue": "또 하나 박살내기!",
+  "@completeSetContinue": {
+    "description": "일반 세트 완료 버튼"
+  },
+
+  "exitDialogTitle": "전투에서 후퇴하겠어, 만삣삐?",
+  "@exitDialogTitle": {
+    "description": "종료 다이얼로그 제목"
+  },
+
+  "exitDialogMessage": "전사는 절대 전투 중에 포기하지 않아!\n너의 정복이 사라질 거야, you idiot!",
+  "@exitDialogMessage": {
+    "description": "종료 다이얼로그 내용"
+  },
+
+  "exitDialogContinue": "계속 싸운다, 만삣삐!",
+  "@exitDialogContinue": {
+    "description": "계속하기 버튼"
+  },
+
+  "exitDialogRetreat": "후퇴한다...",
+  "@exitDialogRetreat": {
+    "description": "종료하기 버튼"
+  },
+
+  "workoutCompleteTitle": "🔥 굿 잡, 만삣삐! 야수 모드 완료! 👑",
+  "@workoutCompleteTitle": {
+    "description": "운동 완료 다이얼로그 제목"
+  },
+
+  "workoutCompleteMessage": "{title} 완전 파괴!\n총 파워 해방: {totalReps}회! you did it! ⚡",
+  "@workoutCompleteMessage": {
+    "description": "운동 완료 메시지",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "totalReps": {
+        "type": "int"
+      }
+    }
+  },
+
+  "workoutCompleteButton": "레전드다, 만삣삐!",
+  "@workoutCompleteButton": {
+    "description": "운동 완료 확인 버튼"
+  },
+
+  "setFormat": "SET {current}/{total}",
+  "@setFormat": {
+    "description": "세트 표시 형식",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+
+  "levelSelectionTitle": "💪 레벨 체크",
+  "@levelSelectionTitle": {
+    "description": "레벨 선택 화면 제목"
+  },
+
+  "levelSelectionHeader": "🏋️‍♂️ 너의 레벨을 선택해라, 만삣삐!",
+  "@levelSelectionHeader": {
+    "description": "레벨 선택 헤더"
+  },
+
+  "levelSelectionDescription": "현재 푸시업 최대 횟수에 맞는 레벨을 선택해라!\n6주 후 목표 달성을 위한 맞춤 프로그램이 제공된다!",
+  "@levelSelectionDescription": {
+    "description": "레벨 선택 설명"
+  },
+
+  "rookieLevelTitle": "초급 (푸시 시작)",
+  "@rookieLevelTitle": {
+    "description": "초급 레벨 제목"
+  },
+
+  "rookieLevelSubtitle": "푸시업 6개 미만 - 기초부터 차근차근",
+  "@rookieLevelSubtitle": {
+    "description": "초급 레벨 부제목"
+  },
+
+  "rookieLevelDescription": "아직 푸시업이 어렵다고? 괜찮다! 모든 차드의 시작은 여기부터다, 만삣삐!",
+  "@rookieLevelDescription": {
+    "description": "초급 레벨 설명"
+  },
+
+  "rookieFeature1": "무릎 푸시업부터 시작",
+  "@rookieFeature1": {
+    "description": "초급 특징 1"
+  },
+
+  "rookieFeature2": "폼 교정 중심 훈련",
+  "@rookieFeature2": {
+    "description": "초급 특징 2"
+  },
+
+  "rookieFeature3": "점진적 강도 증가",
+  "@rookieFeature3": {
+    "description": "초급 특징 3"
+  },
+
+  "rookieFeature4": "기초 체력 향상",
+  "@rookieFeature4": {
+    "description": "초급 특징 4"
+  },
+
+  "risingLevelTitle": "중급 (알파 지망생)",
+  "@risingLevelTitle": {
+    "description": "중급 레벨 제목"
+  },
+
+  "risingLevelSubtitle": "푸시업 6-10개 - 차드로 성장 중",
+  "@risingLevelSubtitle": {
+    "description": "중급 레벨 부제목"
+  },
+
+  "risingLevelDescription": "기본기는 있다! 이제 진짜 차드가 되기 위한 훈련을 시작하자, 만삣삐!",
+  "@risingLevelDescription": {
+    "description": "중급 레벨 설명"
+  },
+
+  "risingFeature1": "표준 푸시업 마스터",
+  "@risingFeature1": {
+    "description": "중급 특징 1"
+  },
+
+  "risingFeature2": "다양한 변형 훈련",
+  "@risingFeature2": {
+    "description": "중급 특징 2"
+  },
+
+  "risingFeature3": "근지구력 향상",
+  "@risingFeature3": {
+    "description": "중급 특징 3"
+  },
+
+  "risingFeature4": "체계적 진급 프로그램",
+  "@risingFeature4": {
+    "description": "중급 특징 4"
+  },
+
+  "alphaLevelTitle": "고급 (차드 영역)",
+  "@alphaLevelTitle": {
+    "description": "고급 레벨 제목"
+  },
+
+  "alphaLevelSubtitle": "푸시업 11개 이상 - 이미 차드의 자질",
+  "@alphaLevelSubtitle": {
+    "description": "고급 레벨 부제목"
+  },
+
+  "alphaLevelDescription": "벌써 이 정도라고? 진짜 차드의 길에 한 발 걸쳤구나! 기가차드까지 달려보자!",
+  "@alphaLevelDescription": {
+    "description": "고급 레벨 설명"
+  },
+
+  "alphaFeature1": "고급 변형 푸시업",
+  "@alphaFeature1": {
+    "description": "고급 특징 1"
+  },
+
+  "alphaFeature2": "폭발적 파워 훈련",
+  "@alphaFeature2": {
+    "description": "고급 특징 2"
+  },
+
+  "alphaFeature3": "플라이오메트릭 운동",
+  "@alphaFeature3": {
+    "description": "고급 특징 3"
+  },
+
+  "alphaFeature4": "기가차드 완성 코스",
+  "@alphaFeature4": {
+    "description": "고급 특징 4"
+  },
+
+  "rookieShort": "푸시",
+  "@rookieShort": {
+    "description": "초급 짧은 이름"
+  },
+
+  "risingShort": "알파 지망생",
+  "@risingShort": {
+    "description": "중급 짧은 이름"
+  },
+
+  "alphaShort": "차드",
+  "@alphaShort": {
+    "description": "고급 짧은 이름"
+  },
+
+  "gigaShort": "기가차드",
+  "@gigaShort": {
+    "description": "최고급 짧은 이름"
+  },
+
+  "homeTitle": "Chad Dashboard",
+  "@homeTitle": {
+    "description": "홈 화면 제목"
+  },
+
+  "welcomeMessage": "환영합니다, 만삣삐!",
+  "@welcomeMessage": {
+    "description": "홈 화면 환영 메시지"
+  },
+
+  "dailyMotivation": "오늘도 강해지는 하루를 시작해보세요!",
+  "@dailyMotivation": {
+    "description": "일일 동기부여 메시지"
+  },
+
+  "startTodayWorkout": "오늘의 워크아웃 시작",
+  "@startTodayWorkout": {
+    "description": "오늘 운동 시작 버튼"
+  },
+
+  "weekProgress": "이번 주 진행 상황",
+  "@weekProgress": {
+    "description": "주간 진행 상황 제목"
+  },
+
+  "progressWeekDay": "{week}주차 - {totalDays}일 중 {completedDays}일 완료",
+  "@progressWeekDay": {
+    "description": "진행 상황 상세",
+    "placeholders": {
+      "week": {
+        "type": "int"
+      },
+      "totalDays": {
+        "type": "int"
+      },
+      "completedDays": {
+        "type": "int"
+      }
+    }
+  },
+
+  "bottomMotivation": "💪 매일 조금씩, 꾸준히 성장하세요!",
+  "@bottomMotivation": {
+    "description": "하단 동기부여 메시지"
+  },
+
+  "workoutStartError": "워크아웃을 시작할 수 없습니다: {error}",
+  "@workoutStartError": {
+    "description": "운동 시작 오류 메시지",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "errorGeneral": "오류가 발생했습니다. 다시 시도해주세요.",
+  "@errorGeneral": {
+    "description": "일반 오류 메시지"
+  },
+
+  "errorDatabase": "데이터베이스 오류가 발생했습니다.",
+  "@errorDatabase": {
+    "description": "데이터베이스 오류 메시지"
+  },
+
+  "errorNetwork": "네트워크 연결을 확인해주세요.",
+  "@errorNetwork": {
+    "description": "네트워크 오류 메시지"
+  },
+
+  "errorNotFound": "데이터를 찾을 수 없습니다.",
+  "@errorNotFound": {
+    "description": "데이터 없음 오류 메시지"
+  },
+
+  "successWorkoutCompleted": "운동 완료! 차드에 한 걸음 더 가까워졌습니다.",
+  "@successWorkoutCompleted": {
+    "description": "운동 완료 성공 메시지"
+  },
+
+  "successProfileSaved": "프로필이 저장되었습니다.",
+  "@successProfileSaved": {
+    "description": "프로필 저장 성공 메시지"
+  },
+
+  "successSettingsSaved": "설정이 저장되었습니다.",
+  "@successSettingsSaved": {
+    "description": "설정 저장 성공 메시지"
+  },
+
+  "firstWorkoutMessage": "첫 운동을 시작하는 차드의 여정이 시작됩니다!",
+  "@firstWorkoutMessage": {
+    "description": "첫 운동 특별 메시지"
+  },
+
+  "weekCompletedMessage": "한 주를 완주했습니다! 차드 파워가 상승합니다!",
+  "@weekCompletedMessage": {
+    "description": "주간 완료 특별 메시지"
+  },
+
+  "programCompletedMessage": "축하합니다! 진정한 기가 차드가 되었습니다!",
+  "@programCompletedMessage": {
+    "description": "프로그램 완료 특별 메시지"
+  },
+
+  "streakStartMessage": "차드 스트릭이 시작되었습니다!",
+  "@streakStartMessage": {
+    "description": "스트릭 시작 메시지"
+  },
+
+  "streakContinueMessage": "차드 스트릭이 계속됩니다!",
+  "@streakContinueMessage": {
+    "description": "스트릭 지속 메시지"
+  },
+
+  "streakBrokenMessage": "스트릭이 끊어졌지만, 차드는 다시 일어납니다!",
+  "@streakBrokenMessage": {
+    "description": "스트릭 중단 메시지"
+  },
+
+  "chadTitleSleepy": "Sleepy Chad",
+  "@chadTitleSleepy": {
+    "description": "수면모자차드 타이틀"
+  },
+
+  "chadTitleBasic": "Basic Chad",
+  "@chadTitleBasic": {
+    "description": "기본차드 타이틀"
+  },
+
+  "chadTitleCoffee": "Coffee Chad",
+  "@chadTitleCoffee": {
+    "description": "커피차드 타이틀"
+  },
+
+  "chadTitleFront": "Front Chad",
+  "@chadTitleFront": {
+    "description": "정면차드 타이틀"
+  },
+
+  "chadTitleCool": "Cool Chad",
+  "@chadTitleCool": {
+    "description": "썬글차드 타이틀"
+  },
+
+  "chadTitleLaser": "Laser Chad",
+  "@chadTitleLaser": {
+    "description": "눈빨차드 타이틀"
+  },
+
+  "chadTitleDouble": "Double Chad",
+  "@chadTitleDouble": {
+    "description": "더블차드 타이틀"
+  },
+
+  "levelNameRookie": "Rookie Chad",
+  "@levelNameRookie": {
+    "description": "초급 차드 이름"
+  },
+
+  "levelNameRising": "Rising Chad",
+  "@levelNameRising": {
+    "description": "중급 차드 이름"
+  },
+
+  "levelNameAlpha": "Alpha Chad",
+  "@levelNameAlpha": {
+    "description": "고급 차드 이름"
+  },
+
+  "levelNameGiga": "기가 차드",
+  "@levelNameGiga": {
+    "description": "최고급 차드 이름"
+  },
+
+  "levelDescRookie": "푸시업 여정을 시작하는 초보 차드다.\n꾸준한 연습으로 더 강해질 수 있어, 만삣삐!",
+  "@levelDescRookie": {
+    "description": "초급 레벨 설명"
+  },
+
+  "levelDescRising": "기본기를 갖춘 상승하는 차드다.\n더 높은 목표를 향해 나아가고 있어, 만삣삐!",
+  "@levelDescRising": {
+    "description": "중급 레벨 설명"
+  },
+
+  "levelDescAlpha": "상당한 실력을 갖춘 알파 차드다.\n이미 많은 발전을 이루었어, 만삣삐!",
+  "@levelDescAlpha": {
+    "description": "고급 레벨 설명"
+  },
+
+  "levelDescGiga": "최고 수준의 기가 차드다.\n놀라운 실력을 가지고 있어, 만삣삐!",
+  "@levelDescGiga": {
+    "description": "최고급 레벨 설명"
+  },
+
+  "levelMotivationRookie": "모든 차드는 여기서 시작한다!\n6주 후 놀라운 변화를 경험하라, 만삣삐!",
+  "@levelMotivationRookie": {
+    "description": "초급 격려 메시지"
+  },
+
+  "levelMotivationRising": "좋은 시작이다!\n더 강한 차드가 되어라, 만삣삐!",
+  "@levelMotivationRising": {
+    "description": "중급 격려 메시지"
+  },
+
+  "levelMotivationAlpha": "훌륭한 실력이다!\n100개 목표까지 달려라, fxxk idiot!",
+  "@levelMotivationAlpha": {
+    "description": "고급 격려 메시지"
+  },
+
+  "levelMotivationGiga": "이미 강력한 차드군!\n완벽한 100개를 향해 가라, 만삣삐!",
+  "@levelMotivationGiga": {
+    "description": "최고급 격려 메시지"
+  },
+
+  "levelGoalRookie": "목표: 6주 후 연속 100개 푸시업!",
+  "@levelGoalRookie": {
+    "description": "초급 목표 메시지"
+  },
+
+  "levelGoalRising": "목표: 더 강한 차드로 성장하기!",
+  "@levelGoalRising": {
+    "description": "중급 목표 메시지"
+  },
+
+  "levelGoalAlpha": "목표: 완벽한 폼으로 100개!",
+  "@levelGoalAlpha": {
+    "description": "고급 목표 메시지"
+  },
+
+  "levelGoalGiga": "목표: 차드 마스터가 되기!",
+  "@levelGoalGiga": {
+    "description": "최고급 목표 메시지"
+  },
+
+  "workoutButtonUltimate": "궁극의 승리 차지하라!",
+  "@workoutButtonUltimate": {
+    "description": "마지막 세트 완료 버튼"
+  },
+
+  "workoutButtonConquer": "이 세트를 정복하라, 만삣삐!",
+  "@workoutButtonConquer": {
+    "description": "일반 세트 완료 버튼"
+  },
+
+  "motivationMessage1": "진짜 차드는 변명 따위 안 만든다, fxxk idiot",
+  "@motivationMessage1": {
+    "description": "동기부여 메시지 1"
+  },
+
+  "motivationMessage2": "차드처럼 밀어붙이고, 시그마처럼 휴식하라",
+  "@motivationMessage2": {
+    "description": "동기부여 메시지 2"
+  },
+
+  "motivationMessage3": "모든 반복이 너를 차드에 가깝게 만든다",
+  "@motivationMessage3": {
+    "description": "동기부여 메시지 3"
+  },
+
+  "motivationMessage4": "차드 에너지가 충전되고 있다, 만삣삐",
+  "@motivationMessage4": {
+    "description": "동기부여 메시지 4"
+  },
+
+  "motivationMessage5": "차드로 진화하고 있어, fxxk yeah!",
+  "@motivationMessage5": {
+    "description": "동기부여 메시지 5"
+  },
+
+  "motivationMessage6": "차드 모드: 활성화됨 💪",
+  "@motivationMessage6": {
+    "description": "동기부여 메시지 6"
+  },
+
+  "motivationMessage7": "이렇게 차드들이 만들어진다, 만삣삐",
+  "@motivationMessage7": {
+    "description": "동기부여 메시지 7"
+  },
+
+  "motivationMessage8": "차드 파워가 흐르는 걸 느껴라",
+  "@motivationMessage8": {
+    "description": "동기부여 메시지 8"
+  },
+
+  "motivationMessage9": "차드 변신 진행 중이다, you idiot",
+  "@motivationMessage9": {
+    "description": "동기부여 메시지 9"
+  },
+
+  "motivationMessage10": "차드 브라더후드에 환영한다, 만삣삐",
+  "@motivationMessage10": {
+    "description": "동기부여 메시지 10"
+  },
+
+  "completionMessage1": "바로 그거야, fxxk yeah!",
+  "@completionMessage1": {
+    "description": "완료 메시지 1"
+  },
+
+  "completionMessage2": "오늘 차드 바이브가 강하다, 만삣삐",
+  "@completionMessage2": {
+    "description": "완료 메시지 2"
+  },
+
+  "completionMessage3": "차드에 한 걸음 더 가까워졌어",
+  "@completionMessage3": {
+    "description": "완료 메시지 3"
+  },
+
+  "completionMessage4": "더욱 차드답게 되고 있다, you idiot",
+  "@completionMessage4": {
+    "description": "완료 메시지 4"
+  },
+
+  "completionMessage5": "차드 에너지 레벨: 상승 중 ⚡",
+  "@completionMessage5": {
+    "description": "완료 메시지 5"
+  },
+
+  "completionMessage6": "존경한다. 그럴 자격이 있어, 만삣삐",
+  "@completionMessage6": {
+    "description": "완료 메시지 6"
+  },
+
+  "completionMessage7": "차드가 이 운동을 승인했다",
+  "@completionMessage7": {
+    "description": "완료 메시지 7"
+  },
+
+  "completionMessage8": "차드 게임을 레벨업했어, fxxk idiot",
+  "@completionMessage8": {
+    "description": "완료 메시지 8"
+  },
+
+  "completionMessage9": "순수한 차드 퍼포먼스였다",
+  "@completionMessage9": {
+    "description": "완료 메시지 9"
+  },
+
+  "completionMessage10": "또 다른 차드의 하루에 환영한다, 만삣삐",
+  "@completionMessage10": {
+    "description": "완료 메시지 10"
+  },
+
+  "encouragementMessage1": "차드도 힘든 날이 있다, 만삣삐",
+  "@encouragementMessage1": {
+    "description": "격려 메시지 1"
+  },
+
+  "encouragementMessage2": "내일은 또 다른 차드가 될 기회다",
+  "@encouragementMessage2": {
+    "description": "격려 메시지 2"
+  },
+
+  "encouragementMessage3": "차드는 포기하지 않는다, fxxk idiot",
+  "@encouragementMessage3": {
+    "description": "격려 메시지 3"
+  },
+
+  "encouragementMessage4": "이건 그냥 차드 트레이닝 모드야",
+  "@encouragementMessage4": {
+    "description": "격려 메시지 4"
+  },
+
+  "encouragementMessage5": "진짜 차드는 계속 밀어붙인다, 만삣삐",
+  "@encouragementMessage5": {
+    "description": "격려 메시지 5"
+  },
+
+  "encouragementMessage6": "차드 정신은 절대 죽지 않아",
+  "@encouragementMessage6": {
+    "description": "격려 메시지 6"
+  },
+
+  "encouragementMessage7": "아직 차드의 길 위에 있어, you idiot",
+  "@encouragementMessage7": {
+    "description": "격려 메시지 7"
+  },
+
+  "encouragementMessage8": "차드 컴백이 오고 있다",
+  "@encouragementMessage8": {
+    "description": "격려 메시지 8"
+  },
+
+  "encouragementMessage9": "모든 차드는 도전에 직면한다, 만삣삐",
+  "@encouragementMessage9": {
+    "description": "격려 메시지 9"
+  },
+
+  "encouragementMessage10": "차드 회복력이 너의 힘이다, fxxk yeah!",
+  "@encouragementMessage10": {
+    "description": "격려 메시지 10"
+  },
+
+  "chadMessage0": "일어나야 할 때다, 만삣삐",
+  "@chadMessage0": {
+    "description": "0단계 차드 메시지"
+  },
+
+  "chadMessage1": "이제 시작이야, you idiot",
+  "@chadMessage1": {
+    "description": "1단계 차드 메시지"
+  },
+
+  "chadMessage2": "에너지가 충전됐다, fxxk yeah!",
+  "@chadMessage2": {
+    "description": "2단계 차드 메시지"
+  },
+
+  "chadMessage3": "자신감이 생겼어, 만삣삐",
+  "@chadMessage3": {
+    "description": "3단계 차드 메시지"
+  },
+
+  "chadMessage4": "이제 좀 멋져 보이는군, you idiot",
+  "@chadMessage4": {
+    "description": "4단계 차드 메시지"
+  },
+
+  "chadMessage5": "차드의 아우라가 느껴진다, 만삣삐",
+  "@chadMessage5": {
+    "description": "5단계 차드 메시지"
+  },
+
+  "chadMessage6": "진정한 기가 차드 탄생, fxxk idiot!",
+  "@chadMessage6": {
+    "description": "6단계 차드 메시지"
+  },
+
+  "tutorialTitle": "차드 푸시업 도장",
+  "@tutorialTitle": {
+    "description": "튜토리얼 메인 타이틀"
+  },
+
+  "tutorialSubtitle": "진짜 차드는 자세부터 다르다, 만삣삐! 💪",
+  "@tutorialSubtitle": {
+    "description": "튜토리얼 서브타이틀"
+  },
+
+  "tutorialButton": "푸시업 마스터되기",
+  "@tutorialButton": {
+    "description": "홈에서 튜토리얼로 가는 버튼"
+  },
+
+  "difficultyBeginner": "푸시 - 시작하는 만삣삐들",
+  "@difficultyBeginner": {
+    "description": "초급 난이도"
+  },
+
+  "difficultyIntermediate": "알파 지망생 - 성장하는 차드들",
+  "@difficultyIntermediate": {
+    "description": "중급 난이도"
+  },
+
+  "difficultyAdvanced": "차드 - 강력한 기가들",
+  "@difficultyAdvanced": {
+    "description": "고급 난이도"
+  },
+
+  "difficultyExtreme": "기가 차드 - 전설의 영역",
+  "@difficultyExtreme": {
+    "description": "극한 난이도"
+  },
+
+  "targetMuscleChest": "가슴",
+  "@targetMuscleChest": {
+    "description": "타겟 근육 - 가슴"
+  },
+
+  "targetMuscleTriceps": "삼두근",
+  "@targetMuscleTriceps": {
+    "description": "타겟 근육 - 삼두근"
+  },
+
+  "targetMuscleShoulders": "어깨",
+  "@targetMuscleShoulders": {
+    "description": "타겟 근육 - 어깨"
+  },
+
+  "targetMuscleCore": "코어",
+  "@targetMuscleCore": {
+    "description": "타겟 근육 - 코어"
+  },
+
+  "targetMuscleFull": "전신",
+  "@targetMuscleFull": {
+    "description": "타겟 근육 - 전신"
+  },
+
+  "caloriesPerRep": "{calories}kcal/회",
+  "@caloriesPerRep": {
+    "description": "회당 칼로리 소모량",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+
+  "tutorialDetailTitle": "차드 자세 마스터하기",
+  "@tutorialDetailTitle": {
+    "description": "튜토리얼 상세 화면 제목"
+  },
+
+  "benefitsSection": "💪 이렇게 강해진다",
+  "@benefitsSection": {
+    "description": "효과 섹션 제목"
+  },
+
+  "instructionsSection": "⚡ 차드 실행법",
+  "@instructionsSection": {
+    "description": "실행 방법 섹션 제목"
+  },
+
+  "mistakesSection": "❌ 약자들의 실수",
+  "@mistakesSection": {
+    "description": "일반적인 실수 섹션 제목"
+  },
+
+  "breathingSection": "🌪️ 차드 호흡법",
+  "@breathingSection": {
+    "description": "호흡법 섹션 제목"
+  },
+
+  "chadMotivationSection": "🔥 차드의 조언",
+  "@chadMotivationSection": {
+    "description": "차드 격려 메시지 섹션 제목"
+  },
+
+  "pushupStandardName": "기본 푸시업",
+  "@pushupStandardName": {
+    "description": "기본 푸시업 이름"
+  },
+
+  "pushupStandardDesc": "모든 차드의 시작점. 완벽한 기본기가 진짜 강함이다, 만삣삐!",
+  "@pushupStandardDesc": {
+    "description": "기본 푸시업 설명"
+  },
+
+  "pushupStandardBenefits": "• 가슴근육 전체 발달\\n• 삼두근과 어깨 강화\\n• 기본 체력 향상\\n• 모든 푸시업의 기초가 된다, you idiot!",
+  "@pushupStandardBenefits": {
+    "description": "기본 푸시업 효과"
+  },
+
+  "pushupStandardInstructions": "1. 플랭크 자세로 시작한다, 만삣삐\\n2. 손은 어깨 너비로 벌려라\\n3. 몸은 일직선으로 유지해라, 흐트러지지 말고\\n4. 가슴이 바닥에 닿을 때까지 내려가라\\n5. 강하게 밀어올려라, 차드답게!",
+  "@pushupStandardInstructions": {
+    "description": "기본 푸시업 실행법"
+  },
+
+  "pushupStandardMistakes": "• 엉덩이가 위로 솟음 - 약자들이나 하는 짓이야\\n• 가슴을 끝까지 내리지 않음\\n• 목을 앞으로 빼고 함\\n• 손목이 어깨보다 앞에 위치\\n• 일정한 속도를 유지하지 않음, fxxk idiot!",
+  "@pushupStandardMistakes": {
+    "description": "기본 푸시업 일반적인 실수"
+  },
+
+  "pushupStandardBreathing": "내려갈 때 숨을 마시고, 올라올 때 강하게 내뱉어라. 호흡이 파워다, 만삣삐!",
+  "@pushupStandardBreathing": {
+    "description": "기본 푸시업 호흡법"
+  },
+
+  "pushupStandardChad": "기본이 제일 어려운 거야, you idiot. 완벽한 폼으로 하나 하는 게 대충 열 개보다 낫다, 만삣삐!",
+  "@pushupStandardChad": {
+    "description": "기본 푸시업 차드 메시지"
+  },
+
+  "pushupKneeName": "무릎 푸시업",
+  "@pushupKneeName": {
+    "description": "무릎 푸시업 이름"
+  },
+
+  "pushupKneeDesc": "차드 여정의 첫 걸음. 부끄러워하지 마라, 모든 전설은 여기서 시작된다!",
+  "@pushupKneeDesc": {
+    "description": "무릎 푸시업 설명"
+  },
+
+  "pushupKneeBenefits": "• 기본 근력 향상\\n• 올바른 푸시업 폼 학습\\n• 어깨와 팔 안정성 강화\\n• 기본 푸시업으로의 단계적 진행",
+  "@pushupKneeBenefits": {
+    "description": "무릎 푸시업 효과"
+  },
+
+  "pushupKneeInstructions": "1. 무릎을 바닥에 대고 시작하라\\n2. 발목을 들어올려라\\n3. 상체는 기본 푸시업과 동일하게\\n4. 무릎에서 머리까지 일직선 유지\\n5. 천천히 확실하게 움직여라, 만삣삐!",
+  "@pushupKneeInstructions": {
+    "description": "무릎 푸시업 실행법"
+  },
+
+  "pushupKneeMistakes": "• 엉덩이가 뒤로 빠짐\\n• 무릎 위치가 너무 앞쪽\\n• 상체만 움직이고 코어 사용 안 함\\n• 너무 빠르게 동작함",
+  "@pushupKneeMistakes": {
+    "description": "무릎 푸시업 일반적인 실수"
+  },
+
+  "pushupKneeBreathing": "부드럽고 꾸준한 호흡으로 시작해라. 급하게 하지 마라, 만삣삐!",
+  "@pushupKneeBreathing": {
+    "description": "무릎 푸시업 호흡법"
+  },
+
+  "pushupKneeChad": "시작이 반이다, you idiot! 완벽한 폼으로 무릎 푸시업부터 마스터해라. 기초가 탄탄해야 차드가 된다!",
+  "@pushupKneeChad": {
+    "description": "무릎 푸시업 차드 메시지"
+  },
+
+  "pushupInclineName": "인클라인 푸시업",
+  "@pushupInclineName": {
+    "description": "인클라인 푸시업 이름"
+  },
+
+  "pushupInclineDesc": "높은 곳에 손을 올리고 하는 푸시업. 계단을 올라가듯 차드로 진화한다!",
+  "@pushupInclineDesc": {
+    "description": "인클라인 푸시업 설명"
+  },
+
+  "pushupInclineBenefits": "• 부담을 줄여 폼 완성\\n• 하부 가슴근육 강화\\n• 어깨 안정성 향상\\n• 기본 푸시업으로의 징검다리",
+  "@pushupInclineBenefits": {
+    "description": "인클라인 푸시업 효과"
+  },
+
+  "pushupInclineInstructions": "1. 벤치나 의자에 손을 올려라\\n2. 몸을 비스듬히 기울여라\\n3. 발가락부터 머리까지 일직선\\n4. 높을수록 쉬워진다, 만삣삐\\n5. 점차 낮은 곳으로 도전해라!",
+  "@pushupInclineInstructions": {
+    "description": "인클라인 푸시업 실행법"
+  },
+
+  "pushupInclineMistakes": "• 엉덩이가 위로 솟음\\n• 손목에 과도한 체중\\n• 불안정한 지지대 사용\\n• 각도를 너무 급하게 낮춤",
+  "@pushupInclineMistakes": {
+    "description": "인클라인 푸시업 일반적인 실수"
+  },
+
+  "pushupInclineBreathing": "각도가 편해진 만큼 호흡도 편안하게. 하지만 집중력은 최고로, you idiot!",
+  "@pushupInclineBreathing": {
+    "description": "인클라인 푸시업 호흡법"
+  },
+
+  "pushupInclineChad": "높이는 조절하고 강도는 최대로! 완벽한 폼으로 20개 하면 바닥으로 내려갈 준비 완료다, 만삣삐!",
+  "@pushupInclineChad": {
+    "description": "인클라인 푸시업 차드 메시지"
+  },
+
+  "pushupWideGripName": "와이드 그립 푸시업",
+  "@pushupWideGripName": {
+    "description": "와이드 그립 푸시업 이름"
+  },
+
+  "pushupWideGripDesc": "손 간격을 넓혀서 가슴을 더 넓게 만드는 푸시업. 차드의 가슴판을 키운다!",
+  "@pushupWideGripDesc": {
+    "description": "와이드 그립 푸시업 설명"
+  },
+
+  "pushupWideGripBenefits": "• 가슴 바깥쪽 근육 집중 발달\\n• 어깨 안정성 향상\\n• 가슴 넓이 확장\\n• 상체 전체적인 균형 발달",
+  "@pushupWideGripBenefits": {
+    "description": "와이드 그립 푸시업 효과"
+  },
+
+  "pushupWideGripInstructions": "1. 손을 어깨보다 1.5배 넓게 벌려라\\n2. 손가락은 약간 바깥쪽을 향하게\\n3. 가슴이 바닥에 닿을 때까지\\n4. 팔꿈치는 45도 각도 유지\\n5. 넓은 가슴으로 밀어올려라, 만삣삐!",
+  "@pushupWideGripInstructions": {
+    "description": "와이드 그립 푸시업 실행법"
+  },
+
+  "pushupWideGripMistakes": "• 손을 너무 넓게 벌림\\n• 팔꿈치가 완전히 바깥쪽\\n• 어깨에 무리가 가는 자세\\n• 가슴을 충분히 내리지 않음",
+  "@pushupWideGripMistakes": {
+    "description": "와이드 그립 푸시업 일반적인 실수"
+  },
+
+  "pushupWideGripBreathing": "넓은 가슴으로 깊게 숨쉬어라. 가슴이 확장되는 걸 느껴라, you idiot!",
+  "@pushupWideGripBreathing": {
+    "description": "와이드 그립 푸시업 호흡법"
+  },
+
+  "pushupWideGripChad": "넓은 가슴은 차드의 상징이다! 와이드 그립으로 진짜 남자다운 가슴을 만들어라, 만삣삐!",
+  "@pushupWideGripChad": {
+    "description": "와이드 그립 푸시업 차드 메시지"
+  },
+
+  "pushupDiamondName": "다이아몬드 푸시업",
+  "@pushupDiamondName": {
+    "description": "다이아몬드 푸시업 이름"
+  },
+
+  "pushupDiamondDesc": "손가락으로 다이아몬드를 만들어 하는 푸시업. 삼두근을 다이아몬드처럼 단단하게!",
+  "@pushupDiamondDesc": {
+    "description": "다이아몬드 푸시업 설명"
+  },
+
+  "pushupDiamondBenefits": "• 삼두근 집중 강화\\n• 가슴 안쪽 근육 발달\\n• 팔 전체 근력 향상\\n• 코어 안정성 증가",
+  "@pushupDiamondBenefits": {
+    "description": "다이아몬드 푸시업 효과"
+  },
+
+  "pushupDiamondInstructions": "1. 엄지와 검지로 다이아몬드 모양 만들어라\\n2. 가슴 중앙 아래에 손 위치\\n3. 팔꿈치는 몸에 가깝게 유지\\n4. 가슴이 손에 닿을 때까지\\n5. 삼두근 힘으로 밀어올려라, 만삣삐!",
+  "@pushupDiamondInstructions": {
+    "description": "다이아몬드 푸시업 실행법"
+  },
+
+  "pushupDiamondMistakes": "• 손목에 과도한 압력\\n• 팔꿈치가 너무 벌어짐\\n• 몸이 비틀어짐\\n• 다이아몬드 모양이 부정확함",
+  "@pushupDiamondMistakes": {
+    "description": "다이아몬드 푸시업 일반적인 실수"
+  },
+
+  "pushupDiamondBreathing": "집중해서 호흡해라. 삼두근이 불타는 걸 느껴라, you idiot!",
+  "@pushupDiamondBreathing": {
+    "description": "다이아몬드 푸시업 호흡법"
+  },
+
+  "pushupDiamondChad": "다이아몬드만큼 단단한 팔을 만들어라! 이거 10개만 완벽하게 해도 진짜 차드 인정, 만삣삐!",
+  "@pushupDiamondChad": {
+    "description": "다이아몬드 푸시업 차드 메시지"
+  },
+
+  "pushupDeclineName": "디클라인 푸시업",
+  "@pushupDeclineName": {
+    "description": "디클라인 푸시업 이름"
+  },
+
+  "pushupDeclineDesc": "발을 높이 올리고 하는 푸시업. 중력을 이겨내는 진짜 차드들의 운동!",
+  "@pushupDeclineDesc": {
+    "description": "디클라인 푸시업 설명"
+  },
+
+  "pushupDeclineBenefits": "• 상부 가슴근육 집중 발달\\n• 어깨 전면 강화\\n• 코어 안정성 최대 강화\\n• 전신 근력 향상",
+  "@pushupDeclineBenefits": {
+    "description": "디클라인 푸시업 효과"
+  },
+
+  "pushupDeclineInstructions": "1. 발을 벤치나 의자에 올려라\\n2. 손은 어깨 아래 정확히\\n3. 몸은 아래쪽으로 기울어진 직선\\n4. 중력의 저항을 이겨내라\\n5. 강하게 밀어올려라, 만삣삐!",
+  "@pushupDeclineInstructions": {
+    "description": "디클라인 푸시업 실행법"
+  },
+
+  "pushupDeclineMistakes": "• 발 위치가 불안정\\n• 엉덩이가 아래로 처짐\\n• 목에 무리가 가는 자세\\n• 균형을 잃고 비틀어짐",
+  "@pushupDeclineMistakes": {
+    "description": "디클라인 푸시업 일반적인 실수"
+  },
+
+  "pushupDeclineBreathing": "중력과 싸우면서도 안정된 호흡을 유지해라. 진짜 파워는 여기서 나온다, you idiot!",
+  "@pushupDeclineBreathing": {
+    "description": "디클라인 푸시업 호흡법"
+  },
+
+  "pushupDeclineChad": "중력따위 개무시하고 밀어올려라! 디클라인 마스터하면 어깨가 바위가 된다, 만삣삐!",
+  "@pushupDeclineChad": {
+    "description": "디클라인 푸시업 차드 메시지"
+  },
+
+  "pushupArcherName": "아처 푸시업",
+  "@pushupArcherName": {
+    "description": "아처 푸시업 이름"
+  },
+
+  "pushupArcherDesc": "활을 당기듯 한쪽으로 기울여 하는 푸시업. 정확성과 파워를 동시에!",
+  "@pushupArcherDesc": {
+    "description": "아처 푸시업 설명"
+  },
+
+  "pushupArcherBenefits": "• 한쪽 팔 집중 강화\\n• 좌우 균형 발달\\n• 원핸드 푸시업 준비\\n• 코어 회전 안정성 강화",
+  "@pushupArcherBenefits": {
+    "description": "아처 푸시업 효과"
+  },
+
+  "pushupArcherInstructions": "1. 와이드 그립으로 시작하라\\n2. 한쪽으로 체중을 기울여라\\n3. 한 팔은 굽히고 다른 팔은 쭉\\n4. 활시위 당기듯 정확하게\\n5. 양쪽을 번갈아가며, 만삣삐!",
+  "@pushupArcherInstructions": {
+    "description": "아처 푸시업 실행법"
+  },
+
+  "pushupArcherMistakes": "• 몸이 비틀어짐\\n• 쭉 편 팔에도 힘이 들어감\\n• 좌우 동작이 불균등\\n• 코어가 흔들림",
+  "@pushupArcherMistakes": {
+    "description": "아처 푸시업 일반적인 실수"
+  },
+
+  "pushupArcherBreathing": "활시위 당기듯 집중해서 호흡해라. 정확성이 생명이다, you idiot!",
+  "@pushupArcherBreathing": {
+    "description": "아처 푸시업 호흡법"
+  },
+
+  "pushupArcherChad": "정확한 아처가 원핸드로 가는 지름길이다! 양쪽 균등하게 마스터해라, 만삣삐!",
+  "@pushupArcherChad": {
+    "description": "아처 푸시업 차드 메시지"
+  },
+
+  "pushupPikeName": "파이크 푸시업",
+  "@pushupPikeName": {
+    "description": "파이크 푸시업 이름"
+  },
+
+  "pushupPikeDesc": "역삼각형 자세로 하는 푸시업. 어깨를 바위로 만드는 차드의 비밀!",
+  "@pushupPikeDesc": {
+    "description": "파이크 푸시업 설명"
+  },
+
+  "pushupPikeBenefits": "• 어깨 전체 근육 강화\\n• 핸드스탠드 푸시업 준비\\n• 상체 수직 힘 발달\\n• 코어와 균형감 향상",
+  "@pushupPikeBenefits": {
+    "description": "파이크 푸시업 효과"
+  },
+
+  "pushupPikeInstructions": "1. 다운독 자세로 시작하라\\n2. 엉덩이를 최대한 위로\\n3. 머리가 바닥에 가까워질 때까지\\n4. 어깨 힘으로만 밀어올려라\\n5. 역삼각형을 유지하라, 만삣삐!",
+  "@pushupPikeInstructions": {
+    "description": "파이크 푸시업 실행법"
+  },
+
+  "pushupPikeMistakes": "• 엉덩이가 충분히 올라가지 않음\\n• 팔꿈치가 옆으로 벌어짐\\n• 머리로만 지탱하려 함\\n• 발 위치가 너무 멀거나 가까움",
+  "@pushupPikeMistakes": {
+    "description": "파이크 푸시업 일반적인 실수"
+  },
+
+  "pushupPikeBreathing": "거꾸로 된 자세에서도 안정된 호흡. 어깨에 집중해라, you idiot!",
+  "@pushupPikeBreathing": {
+    "description": "파이크 푸시업 호흡법"
+  },
+
+  "pushupPikeChad": "파이크 마스터하면 핸드스탠드도 문제없다! 어깨 차드로 진화하라, 만삣삐!",
+  "@pushupPikeChad": {
+    "description": "파이크 푸시업 차드 메시지"
+  },
+
+  "pushupClapName": "박수 푸시업",
+  "@pushupClapName": {
+    "description": "박수 푸시업 이름"
+  },
+
+  "pushupClapDesc": "폭발적인 힘으로 박수를 치는 푸시업. 진짜 파워는 여기서 증명된다!",
+  "@pushupClapDesc": {
+    "description": "박수 푸시업 설명"
+  },
+
+  "pushupClapBenefits": "• 폭발적인 근력 발달\\n• 전신 파워 향상\\n• 순간 반응속도 증가\\n• 진짜 차드의 증명",
+  "@pushupClapBenefits": {
+    "description": "박수 푸시업 효과"
+  },
+
+  "pushupClapInstructions": "1. 기본 푸시업 자세로 시작\\n2. 폭발적으로 밀어올려라\\n3. 공중에서 박수를 쳐라\\n4. 안전하게 착지하라\\n5. 연속으로 도전해라, 만삣삐!",
+  "@pushupClapInstructions": {
+    "description": "박수 푸시업 실행법"
+  },
+
+  "pushupClapMistakes": "• 충분한 높이로 올라가지 않음\\n• 착지할 때 손목 부상 위험\\n• 폼이 흐트러짐\\n• 무리한 연속 시도",
+  "@pushupClapMistakes": {
+    "description": "박수 푸시업 일반적인 실수"
+  },
+
+  "pushupClapBreathing": "폭발할 때 강하게 내뱉고, 착지 후 빠르게 호흡 정리. 리듬이 중요하다, you idiot!",
+  "@pushupClapBreathing": {
+    "description": "박수 푸시업 호흡법"
+  },
+
+  "pushupClapChad": "박수 푸시업은 진짜 파워의 증명이다! 한 번이라도 성공하면 너는 이미 차드, 만삣삐!",
+  "@pushupClapChad": {
+    "description": "박수 푸시업 차드 메시지"
+  },
+
+  "pushupOneArmName": "원핸드 푸시업",
+  "@pushupOneArmName": {
+    "description": "원핸드 푸시업 이름"
+  },
+
+  "pushupOneArmDesc": "한 손으로만 하는 궁극의 푸시업. 기가 차드만이 도달할 수 있는 영역!",
+  "@pushupOneArmDesc": {
+    "description": "원핸드 푸시업 설명"
+  },
+
+  "pushupOneArmBenefits": "• 궁극의 상체 근력\\n• 완벽한 코어 컨트롤\\n• 전신 균형과 조정력\\n• 기가 차드의 완성",
+  "@pushupOneArmBenefits": {
+    "description": "원핸드 푸시업 효과"
+  },
+
+  "pushupOneArmInstructions": "1. 다리를 넓게 벌려 균형잡아라\\n2. 한 손은 등 뒤로\\n3. 코어에 모든 힘을 집중\\n4. 천천히 확실하게\\n5. 기가 차드의 자격을 증명하라!",
+  "@pushupOneArmInstructions": {
+    "description": "원핸드 푸시업 실행법"
+  },
+
+  "pushupOneArmMistakes": "• 다리가 너무 좁음\\n• 몸이 비틀어지며 회전\\n• 반대 손으로 지탱\\n• 무리한 도전으로 부상",
+  "@pushupOneArmMistakes": {
+    "description": "원핸드 푸시업 일반적인 실수"
+  },
+
+  "pushupOneArmBreathing": "깊고 안정된 호흡으로 집중력을 최고조로. 모든 에너지를 하나로, you idiot!",
+  "@pushupOneArmBreathing": {
+    "description": "원핸드 푸시업 호흡법"
+  },
+
+  "pushupOneArmChad": "원핸드 푸시업은 차드의 완성형이다! 이거 한 번이라도 하면 진짜 기가 차드 인정, fxxk yeah!",
+  "@pushupOneArmChad": {
+    "description": "원핸드 푸시업 차드 메시지"
+  },
+
+  "selectLevelButton": "레벨을 선택해라, 만삣삐!",
+  "@selectLevelButton": {
+    "description": "레벨 선택 요청 버튼"
+  },
+
+  "startWithLevel": "{level}로 차드 되기 시작!",
+  "@startWithLevel": {
+    "description": "선택한 레벨로 시작하기 버튼",
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+
+  "profileCreated": "차드 프로필 생성 완료! ({sessions}개 세션 준비됨, 만삣삐!)",
+  "@profileCreated": {
+    "description": "프로필 생성 완료 메시지",
+    "placeholders": {
+      "sessions": {
+        "type": "int"
+      }
+    }
+  },
+
+  "profileCreationError": "프로필 생성 실패, 다시 해봐! 오류: {error}",
+  "@profileCreationError": {
+    "description": "프로필 생성 오류 메시지",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  }
+} 
