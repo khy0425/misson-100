@@ -45,7 +45,11 @@ dependencies:
   shared_preferences: ^2.2.2
   
   # 알림
-  # flutter_local_notifications: ^16.3.2
+  flutter_local_notifications: ^16.3.2
+  timezone: ^0.9.2
+  
+  # 캘린더
+  table_calendar: ^3.1.2
   
   # 차트 및 시각화
   fl_chart: ^0.66.2
@@ -68,6 +72,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  # 테스트용 패키지
+  sqflite_common_ffi: ^2.3.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

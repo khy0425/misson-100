@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../generated/app_localizations.dart';
 import '../utils/constants.dart';
-import '../utils/workout_data.dart';
 import '../services/workout_program_service.dart';
-import '../services/database_service.dart';
 import '../services/ad_service.dart';
 import '../models/user_profile.dart';
 import 'workout_screen.dart';
@@ -23,7 +21,7 @@ class HomeScreen extends StatelessWidget {
         isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       ),
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.homeTitle),
+        title: Text(AppLocalizations.of(context).homeTitle),
         centerTitle: true,
         automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
       ),
@@ -69,7 +67,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: AppConstants.paddingM),
                           Text(
-                            AppLocalizations.of(context)!.welcomeMessage,
+                            AppLocalizations.of(context).welcomeMessage,
                             style: theme.textTheme.titleLarge?.copyWith(
                               color: const Color(AppColors.primaryColor),
                               fontWeight: FontWeight.bold,
@@ -77,7 +75,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: AppConstants.paddingS),
                           Text(
-                            AppLocalizations.of(context)!.dailyMotivation,
+                            AppLocalizations.of(context).dailyMotivation,
                             style: theme.textTheme.bodyMedium?.copyWith(
                               color: Colors.grey,
                             ),
@@ -113,7 +111,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           const SizedBox(width: AppConstants.paddingS),
                           Text(
-                            AppLocalizations.of(context)!.startTodayWorkout,
+                            AppLocalizations.of(context).startTodayWorkout,
                             style: theme.textTheme.titleMedium?.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -149,7 +147,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           const SizedBox(width: AppConstants.paddingS),
                           Text(
-                            AppLocalizations.of(context)!.tutorialButton,
+                            AppLocalizations.of(context).tutorialButton,
                             style: theme.textTheme.titleMedium?.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -178,7 +176,7 @@ class HomeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            AppLocalizations.of(context)!.weekProgress,
+                            AppLocalizations.of(context).weekProgress,
                             style: theme.textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -186,7 +184,7 @@ class HomeScreen extends StatelessWidget {
                           const SizedBox(height: AppConstants.paddingM),
                           LinearProgressIndicator(
                             value: 0.3, // 임시 값
-                            backgroundColor: Colors.grey.withOpacity(0.3),
+                            backgroundColor: Colors.grey.withValues(alpha: 0.3),
                             valueColor: const AlwaysStoppedAnimation<Color>(
                               Color(AppColors.primaryColor),
                             ),
@@ -195,7 +193,7 @@ class HomeScreen extends StatelessWidget {
                           Text(
                             AppLocalizations.of(
                               context,
-                            )!.progressWeekDay(1, 3, 1),
+                            ).progressWeekDay(1, 3, 1),
                             style: theme.textTheme.bodyMedium?.copyWith(
                               color: Colors.grey,
                             ),
@@ -208,7 +206,7 @@ class HomeScreen extends StatelessWidget {
 
                     // 하단 정보
                     Text(
-                      AppLocalizations.of(context)!.bottomMotivation,
+                      AppLocalizations.of(context).bottomMotivation,
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: const Color(AppColors.primaryColor),
                         fontWeight: FontWeight.w600,
@@ -262,7 +260,7 @@ class HomeScreen extends StatelessWidget {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            AppLocalizations.of(context)!.workoutStartError(e.toString()),
+            AppLocalizations.of(context).workoutStartError(e.toString()),
           ),
           backgroundColor: const Color(AppColors.errorColor),
         ),

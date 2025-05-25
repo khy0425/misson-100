@@ -109,6 +109,6 @@ class WorkoutSession {
 
   // 운동 키 (주-일 조합)
   String get workoutKey {
-    return 'W${week}D${day}';
+    return 'W${week}D$day';
   }
 }

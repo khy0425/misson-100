@@ -288,10 +288,10 @@ class TodayWorkout {
   double get averageRepsPerSet => totalReps / setCount;
 
   /// 워크아웃 제목
-  String get title => '${week}주차 - ${day}일차';
+  String get title => '$week주차 - $day일차';
 
   /// 워크아웃 설명
-  String get description => '$setCount세트, 총 ${totalReps}회';
+  String get description => '$setCount세트, 총 $totalReps회';
 
   @override
   String toString() {

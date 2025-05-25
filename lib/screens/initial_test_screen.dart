@@ -3,11 +3,10 @@ import 'package:flutter/services.dart';
 import 'dart:async';
 import '../generated/app_localizations.dart';
 import '../utils/constants.dart';
-import '../utils/level_classifier.dart';
 import '../utils/workout_data.dart';
+import '../models/user_profile.dart';
 import '../services/database_service.dart';
 import '../services/workout_program_service.dart';
-import '../models/user_profile.dart';
 
 class InitialTestScreen extends StatefulWidget {
   const InitialTestScreen({super.key});
@@ -105,7 +104,7 @@ class _InitialTestScreenState extends State<InitialTestScreen>
     if (_selectedLevel == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(AppLocalizations.of(context)!.selectLevelButton),
+          content: Text(AppLocalizations.of(context).selectLevelButton),
           backgroundColor: const Color(AppColors.errorColor),
           duration: const Duration(seconds: 3),
         ),
@@ -145,7 +144,7 @@ class _InitialTestScreenState extends State<InitialTestScreen>
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              AppLocalizations.of(context)!.profileCreated(sessionsCreated),
+              AppLocalizations.of(context).profileCreated(sessionsCreated),
             ),
             backgroundColor: const Color(AppColors.successColor),
             duration: const Duration(seconds: 2),
@@ -160,7 +159,7 @@ class _InitialTestScreenState extends State<InitialTestScreen>
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              AppLocalizations.of(context)!.profileCreationError(e.toString()),
+              AppLocalizations.of(context).profileCreationError(e.toString()),
             ),
             backgroundColor: const Color(AppColors.errorColor),
             duration: const Duration(seconds: 3),
@@ -206,7 +205,7 @@ class _InitialTestScreenState extends State<InitialTestScreen>
         padding: const EdgeInsets.all(AppConstants.paddingL),
         decoration: BoxDecoration(
           color: isSelected
-              ? levelColor.withOpacity(0.15)
+              ? levelColor.withValues(alpha: 0.15)
               : Color(isDark ? AppColors.surfaceDark : AppColors.surfaceLight),
           borderRadius: BorderRadius.circular(AppConstants.radiusL),
           border: Border.all(
@@ -216,7 +215,7 @@ class _InitialTestScreenState extends State<InitialTestScreen>
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: levelColor.withOpacity(0.3),
+                    color: levelColor.withValues(alpha: 0.3),
                     blurRadius: 10,
                     offset: const Offset(0, 5),
                   ),
@@ -231,7 +230,7 @@ class _InitialTestScreenState extends State<InitialTestScreen>
                 Container(
                   padding: const EdgeInsets.all(AppConstants.paddingM),
                   decoration: BoxDecoration(
-                    color: levelColor.withOpacity(0.2),
+                    color: levelColor.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(AppConstants.radiusM),
                   ),
                   child: Icon(icon, color: levelColor, size: 32),
@@ -271,31 +270,25 @@ class _InitialTestScreenState extends State<InitialTestScreen>
               ),
             ),
             const SizedBox(height: AppConstants.paddingM),
-            ...features
-                .map(
-                  (feature) => Padding(
-                    padding: const EdgeInsets.only(bottom: 4),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.fiber_manual_record,
-                          color: levelColor,
-                          size: 8,
+            ...features.map(
+              (feature) => Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Row(
+                  children: [
+                    Icon(Icons.fiber_manual_record, color: levelColor, size: 8),
+                    const SizedBox(width: AppConstants.paddingS),
+                    Expanded(
+                      child: Text(
+                        feature,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: Colors.grey[600],
                         ),
-                        const SizedBox(width: AppConstants.paddingS),
-                        Expanded(
-                          child: Text(
-                            feature,
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              color: Colors.grey[600],
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
-                )
-                .toList(),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -312,7 +305,7 @@ class _InitialTestScreenState extends State<InitialTestScreen>
         isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       ),
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.levelSelectionTitle),
+        title: Text(AppLocalizations.of(context).levelSelectionTitle),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -327,13 +320,15 @@ class _InitialTestScreenState extends State<InitialTestScreen>
                 Container(
                   padding: const EdgeInsets.all(AppConstants.paddingL),
                   decoration: BoxDecoration(
-                    color: const Color(AppColors.primaryColor).withOpacity(0.1),
+                    color: const Color(
+                      AppColors.primaryColor,
+                    ).withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(AppConstants.radiusM),
                   ),
                   child: Column(
                     children: [
                       Text(
-                        AppLocalizations.of(context)!.levelSelectionHeader,
+                        AppLocalizations.of(context).levelSelectionHeader,
                         style: theme.textTheme.titleLarge?.copyWith(
                           color: const Color(AppColors.primaryColor),
                           fontWeight: FontWeight.bold,
@@ -342,7 +337,7 @@ class _InitialTestScreenState extends State<InitialTestScreen>
                       ),
                       const SizedBox(height: AppConstants.paddingS),
                       Text(
-                        AppLocalizations.of(context)!.levelSelectionDescription,
+                        AppLocalizations.of(context).levelSelectionDescription,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           color: Colors.grey[700],
                         ),
@@ -363,42 +358,42 @@ class _InitialTestScreenState extends State<InitialTestScreen>
                       children: [
                         _buildLevelCard(
                           UserLevel.rookie,
-                          AppLocalizations.of(context)!.rookieLevelTitle,
-                          AppLocalizations.of(context)!.rookieLevelSubtitle,
-                          AppLocalizations.of(context)!.rookieLevelDescription,
+                          AppLocalizations.of(context).rookieLevelTitle,
+                          AppLocalizations.of(context).rookieLevelSubtitle,
+                          AppLocalizations.of(context).rookieLevelDescription,
                           [
-                            AppLocalizations.of(context)!.rookieFeature1,
-                            AppLocalizations.of(context)!.rookieFeature2,
-                            AppLocalizations.of(context)!.rookieFeature3,
-                            AppLocalizations.of(context)!.rookieFeature4,
+                            AppLocalizations.of(context).rookieFeature1,
+                            AppLocalizations.of(context).rookieFeature2,
+                            AppLocalizations.of(context).rookieFeature3,
+                            AppLocalizations.of(context).rookieFeature4,
                           ],
                           Icons.directions_walk,
                         ),
 
                         _buildLevelCard(
                           UserLevel.rising,
-                          AppLocalizations.of(context)!.risingLevelTitle,
-                          AppLocalizations.of(context)!.risingLevelSubtitle,
-                          AppLocalizations.of(context)!.risingLevelDescription,
+                          AppLocalizations.of(context).risingLevelTitle,
+                          AppLocalizations.of(context).risingLevelSubtitle,
+                          AppLocalizations.of(context).risingLevelDescription,
                           [
-                            AppLocalizations.of(context)!.risingFeature1,
-                            AppLocalizations.of(context)!.risingFeature2,
-                            AppLocalizations.of(context)!.risingFeature3,
-                            AppLocalizations.of(context)!.risingFeature4,
+                            AppLocalizations.of(context).risingFeature1,
+                            AppLocalizations.of(context).risingFeature2,
+                            AppLocalizations.of(context).risingFeature3,
+                            AppLocalizations.of(context).risingFeature4,
                           ],
                           Icons.directions_run,
                         ),
 
                         _buildLevelCard(
                           UserLevel.alpha,
-                          AppLocalizations.of(context)!.alphaLevelTitle,
-                          AppLocalizations.of(context)!.alphaLevelSubtitle,
-                          AppLocalizations.of(context)!.alphaLevelDescription,
+                          AppLocalizations.of(context).alphaLevelTitle,
+                          AppLocalizations.of(context).alphaLevelSubtitle,
+                          AppLocalizations.of(context).alphaLevelDescription,
                           [
-                            AppLocalizations.of(context)!.alphaFeature1,
-                            AppLocalizations.of(context)!.alphaFeature2,
-                            AppLocalizations.of(context)!.alphaFeature3,
-                            AppLocalizations.of(context)!.alphaFeature4,
+                            AppLocalizations.of(context).alphaFeature1,
+                            AppLocalizations.of(context).alphaFeature2,
+                            AppLocalizations.of(context).alphaFeature3,
+                            AppLocalizations.of(context).alphaFeature4,
                           ],
                           Icons.flash_on,
                         ),
@@ -428,8 +423,8 @@ class _InitialTestScreenState extends State<InitialTestScreen>
                       _selectedLevel != null
                           ? AppLocalizations.of(
                               context,
-                            )!.startWithLevel(_getLevelTitle(_selectedLevel!))
-                          : AppLocalizations.of(context)!.selectLevelButton,
+                            ).startWithLevel(_getLevelTitle(_selectedLevel!))
+                          : AppLocalizations.of(context).selectLevelButton,
                       style: theme.textTheme.titleMedium?.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -448,13 +443,13 @@ class _InitialTestScreenState extends State<InitialTestScreen>
   String _getLevelTitle(UserLevel level) {
     switch (level) {
       case UserLevel.rookie:
-        return AppLocalizations.of(context)!.rookieShort;
+        return AppLocalizations.of(context).rookieShort;
       case UserLevel.rising:
-        return AppLocalizations.of(context)!.risingShort;
+        return AppLocalizations.of(context).risingShort;
       case UserLevel.alpha:
-        return AppLocalizations.of(context)!.alphaShort;
+        return AppLocalizations.of(context).alphaShort;
       case UserLevel.giga:
-        return AppLocalizations.of(context)!.gigaShort;
+        return AppLocalizations.of(context).gigaShort;
     }
   }
 }

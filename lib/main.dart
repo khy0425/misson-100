@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'generated/app_localizations.dart';
 import 'utils/theme.dart';
 import 'utils/constants.dart';
 import 'screens/initial_test_screen.dart';
 import 'screens/home_screen.dart';
 import 'providers/locale_provider.dart';
-import 'services/ad_service.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // 광고 서비스 초기화
-  await AdService.initialize();
-
-  runApp(ProviderScope(child: Mission100App()));
+  runApp(const ProviderScope(child: Mission100App()));
 }
 
 class Mission100App extends ConsumerWidget {
+  const Mission100App({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = ref.watch(localeProvider);
@@ -30,7 +27,7 @@ class Mission100App extends ConsumerWidget {
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system,
       locale: locale, // 동적 언어 설정
-      home: SplashScreen(),
+      home: const SplashScreen(),
       routes: {
         '/initial-test': (context) => InitialTestScreen(),
         '/home': (context) => HomeScreen(),
@@ -46,6 +43,8 @@ class Mission100App extends ConsumerWidget {
 
 // 임시 스플래시 화면 (추후 별도 파일로 분리)
 class SplashScreen extends ConsumerWidget {
+  const SplashScreen({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localeShort = ref.watch(localeShortProvider);
@@ -75,7 +74,7 @@ class SplashScreen extends ConsumerWidget {
                       await ref.read(localeProvider.notifier).toggleLocale();
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white.withOpacity(0.2),
+                      backgroundColor: Colors.white.withValues(alpha: 0.2),
                       foregroundColor: Colors.white,
                       padding: EdgeInsets.symmetric(
                         horizontal: AppConstants.paddingM,
@@ -129,7 +128,7 @@ class SplashScreen extends ConsumerWidget {
                                 width: 200,
                                 height: 200,
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.2),
+                                  color: Colors.white.withValues(alpha: 0.2),
                                   borderRadius: BorderRadius.circular(
                                     AppConstants.radiusXL,
                                   ),
@@ -167,7 +166,7 @@ class SplashScreen extends ConsumerWidget {
                             style: TextStyle(
                               fontSize: AppConstants.fontSizeL,
                               fontWeight: FontWeight.w500,
-                              color: Colors.white.withOpacity(0.9),
+                              color: Colors.white.withValues(alpha: 0.9),
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -177,7 +176,7 @@ class SplashScreen extends ConsumerWidget {
                             style: TextStyle(
                               fontSize: AppConstants.fontSizeM,
                               fontStyle: FontStyle.italic,
-                              color: Colors.white.withOpacity(0.8),
+                              color: Colors.white.withValues(alpha: 0.8),
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -223,7 +222,7 @@ class SplashScreen extends ConsumerWidget {
                             style: TextStyle(
                               fontSize: AppConstants.fontSizeS,
                               fontStyle: FontStyle.italic,
-                              color: Colors.white.withOpacity(0.7),
+                              color: Colors.white.withValues(alpha: 0.7),
                             ),
                             textAlign: TextAlign.center,
                           ),

@@ -234,66 +234,62 @@ class WorkoutData {
 
   // 차드 레벨별 메시지 (국제화)
   static List<String> getChadMessages(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return [
-      l10n.chadMessage0, // 0단계
-      l10n.chadMessage1, // 1단계
-      l10n.chadMessage2, // 2단계
-      l10n.chadMessage3, // 3단계
-      l10n.chadMessage4, // 4단계
-      l10n.chadMessage5, // 5단계
-      l10n.chadMessage6, // 6단계
+      AppLocalizations.of(context).chadMessage0, // 0단계
+      AppLocalizations.of(context).chadMessage1, // 1단계
+      AppLocalizations.of(context).chadMessage2, // 2단계
+      AppLocalizations.of(context).chadMessage3, // 3단계
+      AppLocalizations.of(context).chadMessage4, // 4단계
+      AppLocalizations.of(context).chadMessage5, // 5단계
+      AppLocalizations.of(context).chadMessage6, // 6단계
     ];
   }
 
   // 동기부여 메시지들 (국제화)
   static List<String> getMotivationalMessages(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return [
-      l10n.motivationMessage1,
-      l10n.motivationMessage2,
-      l10n.motivationMessage3,
-      l10n.motivationMessage4,
-      l10n.motivationMessage5,
-      l10n.motivationMessage6,
-      l10n.motivationMessage7,
-      l10n.motivationMessage8,
-      l10n.motivationMessage9,
-      l10n.motivationMessage10,
+      AppLocalizations.of(context).motivationMessage1,
+      AppLocalizations.of(context).motivationMessage2,
+      AppLocalizations.of(context).motivationMessage3,
+      AppLocalizations.of(context).motivationMessage4,
+      AppLocalizations.of(context).motivationMessage5,
+      AppLocalizations.of(context).motivationMessage6,
+      AppLocalizations.of(context).motivationMessage7,
+      AppLocalizations.of(context).motivationMessage8,
+      AppLocalizations.of(context).motivationMessage9,
+      AppLocalizations.of(context).motivationMessage10,
     ];
   }
 
   // 운동 완료 시 메시지 (국제화)
   static List<String> getCompletionMessages(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return [
-      l10n.completionMessage1,
-      l10n.completionMessage2,
-      l10n.completionMessage3,
-      l10n.completionMessage4,
-      l10n.completionMessage5,
-      l10n.completionMessage6,
-      l10n.completionMessage7,
-      l10n.completionMessage8,
-      l10n.completionMessage9,
-      l10n.completionMessage10,
+      AppLocalizations.of(context).completionMessage1,
+      AppLocalizations.of(context).completionMessage2,
+      AppLocalizations.of(context).completionMessage3,
+      AppLocalizations.of(context).completionMessage4,
+      AppLocalizations.of(context).completionMessage5,
+      AppLocalizations.of(context).completionMessage6,
+      AppLocalizations.of(context).completionMessage7,
+      AppLocalizations.of(context).completionMessage8,
+      AppLocalizations.of(context).completionMessage9,
+      AppLocalizations.of(context).completionMessage10,
     ];
   }
 
   // 실패/격려 메시지 (국제화)
   static List<String> getEncouragementMessages(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return [
-      l10n.encouragementMessage1,
-      l10n.encouragementMessage2,
-      l10n.encouragementMessage3,
-      l10n.encouragementMessage4,
-      l10n.encouragementMessage5,
-      l10n.encouragementMessage6,
-      l10n.encouragementMessage7,
-      l10n.encouragementMessage8,
-      l10n.encouragementMessage9,
-      l10n.encouragementMessage10,
+      AppLocalizations.of(context).encouragementMessage1,
+      AppLocalizations.of(context).encouragementMessage2,
+      AppLocalizations.of(context).encouragementMessage3,
+      AppLocalizations.of(context).encouragementMessage4,
+      AppLocalizations.of(context).encouragementMessage5,
+      AppLocalizations.of(context).encouragementMessage6,
+      AppLocalizations.of(context).encouragementMessage7,
+      AppLocalizations.of(context).encouragementMessage8,
+      AppLocalizations.of(context).encouragementMessage9,
+      AppLocalizations.of(context).encouragementMessage10,
     ];
   }
 }

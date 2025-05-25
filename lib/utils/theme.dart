@@ -131,7 +131,7 @@ class AppTheme {
       // 프로그레스 인디케이터 테마
       progressIndicatorTheme: ProgressIndicatorThemeData(
         color: Color(AppColors.primaryColor),
-        linearTrackColor: Color(AppColors.primaryColor).withOpacity(0.2),
+        linearTrackColor: Color(AppColors.primaryColor).withValues(alpha: 0.2),
       ),
 
       // 스낵바 테마
@@ -290,7 +290,7 @@ class AppTheme {
       // 프로그레스 인디케이터 테마
       progressIndicatorTheme: ProgressIndicatorThemeData(
         color: Color(AppColors.primaryColor),
-        linearTrackColor: Color(AppColors.primaryColor).withOpacity(0.2),
+        linearTrackColor: Color(AppColors.primaryColor).withValues(alpha: 0.2),
       ),
 
       // 스낵바 테마

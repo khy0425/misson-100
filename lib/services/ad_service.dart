@@ -1,13 +1,8 @@
 import 'dart:io';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:flutter/foundation.dart';
 
 class AdService {
-  // 광고 ID들
-  static const String _bannerAdUnitId =
-      'ca-app-pub-1075071967728463/9498612269';
-  static const String _interstitialAdUnitId =
-      'ca-app-pub-1075071967728463/7039728635';
-
   // 테스트 광고 ID들 (개발 중 사용)
   static const String _testBannerAdUnitId =
       'ca-app-pub-3940256099942544/6300978111';
@@ -53,16 +48,16 @@ class AdService {
       request: const AdRequest(),
       listener: BannerAdListener(
         onAdLoaded: (ad) {
-          print('배너 광고 로드 완료');
+          debugPrint('배너 광고 로드 완료');
           _isBannerAdLoaded = true;
         },
         onAdFailedToLoad: (ad, error) {
-          print('배너 광고 로드 실패: $error');
+          debugPrint('배너 광고 로드 실패: $error');
           ad.dispose();
           _isBannerAdLoaded = false;
         },
-        onAdOpened: (ad) => print('배너 광고 열림'),
-        onAdClosed: (ad) => print('배너 광고 닫힘'),
+        onAdOpened: (ad) => debugPrint('배너 광고 열림'),
+        onAdClosed: (ad) => debugPrint('배너 광고 닫힘'),
       ),
     );
 
@@ -76,22 +71,22 @@ class AdService {
       request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
-          print('전면 광고 로드 완료');
+          debugPrint('전면 광고 로드 완료');
           _interstitialAd = ad;
           _isInterstitialAdLoaded = true;
 
           // 전면 광고 이벤트 설정
           _interstitialAd?.fullScreenContentCallback =
               FullScreenContentCallback(
-                onAdShowedFullScreenContent: (ad) => print('전면 광고 표시'),
+                onAdShowedFullScreenContent: (ad) => debugPrint('전면 광고 표시'),
                 onAdDismissedFullScreenContent: (ad) {
-                  print('전면 광고 닫힘');
+                  debugPrint('전면 광고 닫힘');
                   ad.dispose();
                   _isInterstitialAdLoaded = false;
                   _loadInterstitialAd(); // 새 광고 로드
                 },
                 onAdFailedToShowFullScreenContent: (ad, error) {
-                  print('전면 광고 표시 실패: $error');
+                  debugPrint('전면 광고 표시 실패: $error');
                   ad.dispose();
                   _isInterstitialAdLoaded = false;
                   _loadInterstitialAd(); // 새 광고 로드
@@ -99,7 +94,7 @@ class AdService {
               );
         },
         onAdFailedToLoad: (error) {
-          print('전면 광고 로드 실패: $error');
+          debugPrint('전면 광고 로드 실패: $error');
           _isInterstitialAdLoaded = false;
         },
       ),
@@ -111,12 +106,28 @@ class AdService {
     return _isBannerAdLoaded ? _bannerAd : null;
   }
 
+  /// 새로운 배너 광고 생성 (화면별 개별 배너용)
+  static BannerAd createBannerAd() {
+    return BannerAd(
+      adUnitId: bannerAdUnitId,
+      size: AdSize.banner,
+      request: const AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (ad) => debugPrint('개별 배너 광고 로드 완료'),
+        onAdFailedToLoad: (ad, error) {
+          debugPrint('개별 배너 광고 로드 실패: $error');
+          ad.dispose();
+        },
+      ),
+    );
+  }
+
   /// 전면 광고 표시
   static void showInterstitialAd() {
     if (_isInterstitialAdLoaded && _interstitialAd != null) {
       _interstitialAd?.show();
     } else {
-      print('전면 광고가 준비되지 않음');
+      debugPrint('전면 광고가 준비되지 않음');
       _loadInterstitialAd(); // 광고 다시 로드 시도
     }
   }

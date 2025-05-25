@@ -20,7 +20,6 @@ class PushupTutorialDetailScreen extends StatefulWidget {
 class _PushupTutorialDetailScreenState
     extends State<PushupTutorialDetailScreen> {
   YoutubePlayerController? _controller;
-  bool _isPlayerReady = false;
   bool _showPlayer = false; // 플레이어 표시 여부
   final _encouragementService = ChadEncouragementService();
 
@@ -39,23 +38,21 @@ class _PushupTutorialDetailScreenState
   }
 
   void _initializePlayer() {
-    if (_controller == null) {
-      _controller = YoutubePlayerController(
-        initialVideoId: widget.pushupType.youtubeVideoId,
-        flags: const YoutubePlayerFlags(
-          mute: false,
-          autoPlay: true, // 사용자가 재생 버튼을 눌렀을 때는 자동재생
-          disableDragSeek: false,
-          loop: true, // 반복재생 활성화 - 쇼츠 영상에 최적화
-          isLive: false,
-          forceHD: false,
-          enableCaption: true,
-          hideControls: false,
-          controlsVisibleAtStart: true,
-          showLiveFullscreenButton: false,
-        ),
-      );
-    }
+    _controller ??= YoutubePlayerController(
+      initialVideoId: widget.pushupType.youtubeVideoId,
+      flags: const YoutubePlayerFlags(
+        mute: false,
+        autoPlay: true, // 사용자가 재생 버튼을 눌렀을 때는 자동재생
+        disableDragSeek: false,
+        loop: true, // 반복재생 활성화 - 쇼츠 영상에 최적화
+        isLive: false,
+        forceHD: false,
+        enableCaption: true,
+        hideControls: false,
+        controlsVisibleAtStart: true,
+        showLiveFullscreenButton: false,
+      ),
+    );
     setState(() {
       _showPlayer = true;
     });
@@ -143,7 +140,7 @@ class _PushupTutorialDetailScreenState
 
   Widget _buildVideoSection() {
     if (_showPlayer && _controller != null) {
-      return Container(
+      return SizedBox(
         height: 220, // 고정 높이
         child: YoutubePlayerBuilder(
           onExitFullScreen: () {
@@ -159,9 +156,7 @@ class _PushupTutorialDetailScreenState
               handleColor: Color(0xFF4DABF7),
             ),
             onReady: () {
-              setState(() {
-                _isPlayerReady = true;
-              });
+              // _isPlayerReady = true;
             },
             onEnded: (data) {
               // 영상 종료 시 반복재생을 위한 처리
@@ -194,7 +189,7 @@ class _PushupTutorialDetailScreenState
                   ),
                   fit: BoxFit.cover,
                   colorFilter: ColorFilter.mode(
-                    Colors.black.withOpacity(0.4),
+                    Colors.black.withValues(alpha: 0.4),
                     BlendMode.darken,
                   ),
                 ),
@@ -212,11 +207,13 @@ class _PushupTutorialDetailScreenState
                       width: 80,
                       height: 80,
                       decoration: BoxDecoration(
-                        color: const Color(0xFF4DABF7).withOpacity(0.9),
+                        color: const Color(0xFF4DABF7).withValues(alpha: 0.9),
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: const Color(0xFF4DABF7).withOpacity(0.3),
+                            color: const Color(
+                              0xFF4DABF7,
+                            ).withValues(alpha: 0.3),
                             blurRadius: 20,
                             spreadRadius: 5,
                           ),
@@ -461,7 +458,7 @@ class _PushupTutorialDetailScreenState
           decoration: BoxDecoration(
             color: const Color(0xFF1A1A1A),
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: color.withOpacity(0.3), width: 1),
+            border: Border.all(color: color.withValues(alpha: 0.3), width: 1),
           ),
           child: Text(
             content,
@@ -599,7 +596,7 @@ class _PushupTutorialDetailScreenState
           color: const Color(0xFF1A1A1A),
           border: Border(
             top: BorderSide(
-              color: const Color(0xFF4DABF7).withOpacity(0.3),
+              color: const Color(0xFF4DABF7).withValues(alpha: 0.3),
               width: 1,
             ),
           ),
@@ -616,7 +613,7 @@ class _PushupTutorialDetailScreenState
         color: const Color(0xFF1A1A1A),
         border: Border(
           top: BorderSide(
-            color: const Color(0xFF4DABF7).withOpacity(0.3),
+            color: const Color(0xFF4DABF7).withValues(alpha: 0.3),
             width: 1,
           ),
         ),
@@ -627,14 +624,14 @@ class _PushupTutorialDetailScreenState
           children: [
             Icon(
               Icons.ads_click,
-              color: const Color(0xFF4DABF7).withOpacity(0.6),
+              color: const Color(0xFF4DABF7).withValues(alpha: 0.6),
               size: adHeight * 0.4,
             ),
             const SizedBox(width: 8),
             Text(
               'Advertisement',
               style: TextStyle(
-                color: const Color(0xFF4DABF7).withOpacity(0.6),
+                color: const Color(0xFF4DABF7).withValues(alpha: 0.6),
                 fontSize: adHeight * 0.25,
                 fontWeight: FontWeight.bold,
               ),

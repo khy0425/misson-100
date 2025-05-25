@@ -26,31 +26,29 @@ class LevelClassifier {
 
   /// 사용자 레벨에 따른 이름을 반환합니다.
   static String getLevelName(BuildContext context, UserLevel level) {
-    final l10n = AppLocalizations.of(context)!;
     switch (level) {
       case UserLevel.rookie:
-        return l10n.levelNameRookie;
+        return AppLocalizations.of(context).levelNameRookie;
       case UserLevel.rising:
-        return l10n.levelNameRising;
+        return AppLocalizations.of(context).levelNameRising;
       case UserLevel.alpha:
-        return l10n.levelNameAlpha;
+        return AppLocalizations.of(context).levelNameAlpha;
       case UserLevel.giga:
-        return l10n.levelNameGiga;
+        return AppLocalizations.of(context).levelNameGiga;
     }
   }
 
   /// 사용자 레벨에 따른 설명을 반환합니다.
   static String getLevelDescription(BuildContext context, UserLevel level) {
-    final l10n = AppLocalizations.of(context)!;
     switch (level) {
       case UserLevel.rookie:
-        return l10n.levelDescRookie;
+        return AppLocalizations.of(context).levelDescRookie;
       case UserLevel.rising:
-        return l10n.levelDescRising;
+        return AppLocalizations.of(context).levelDescRising;
       case UserLevel.alpha:
-        return l10n.levelDescAlpha;
+        return AppLocalizations.of(context).levelDescAlpha;
       case UserLevel.giga:
-        return l10n.levelDescGiga;
+        return AppLocalizations.of(context).levelDescGiga;
     }
   }
 
@@ -87,31 +85,29 @@ class LevelClassifier {
     BuildContext context,
     UserLevel level,
   ) {
-    final l10n = AppLocalizations.of(context)!;
     switch (level) {
       case UserLevel.rookie:
-        return l10n.levelMotivationRookie;
+        return AppLocalizations.of(context).levelMotivationRookie;
       case UserLevel.rising:
-        return l10n.levelMotivationRising;
+        return AppLocalizations.of(context).levelMotivationRising;
       case UserLevel.alpha:
-        return l10n.levelMotivationAlpha;
+        return AppLocalizations.of(context).levelMotivationAlpha;
       case UserLevel.giga:
-        return l10n.levelMotivationGiga;
+        return AppLocalizations.of(context).levelMotivationGiga;
     }
   }
 
   /// 레벨별 목표 메시지를 반환합니다.
   static String getLevelGoalMessage(BuildContext context, UserLevel level) {
-    final l10n = AppLocalizations.of(context)!;
     switch (level) {
       case UserLevel.rookie:
-        return l10n.levelGoalRookie;
+        return AppLocalizations.of(context).levelGoalRookie;
       case UserLevel.rising:
-        return l10n.levelGoalRising;
+        return AppLocalizations.of(context).levelGoalRising;
       case UserLevel.alpha:
-        return l10n.levelGoalAlpha;
+        return AppLocalizations.of(context).levelGoalAlpha;
       case UserLevel.giga:
-        return l10n.levelGoalGiga;
+        return AppLocalizations.of(context).levelGoalGiga;
     }
   }
 

@@ -111,7 +111,7 @@ class _PushupTutorialScreenState extends State<PushupTutorialScreen> {
                         difficulty,
                         pushups,
                       );
-                    }).toList(),
+                    }),
 
                     // 배너 광고 공간 확보용 여백
                     SizedBox(height: adHeight + 16),
@@ -158,7 +158,7 @@ class _PushupTutorialScreenState extends State<PushupTutorialScreen> {
         const SizedBox(height: 12),
 
         // 푸시업 카드들
-        ...pushups.map((pushup) => _buildPushupCard(context, pushup)).toList(),
+        ...pushups.map((pushup) => _buildPushupCard(context, pushup)),
 
         const SizedBox(height: 24),
       ],
@@ -196,7 +196,7 @@ class _PushupTutorialScreenState extends State<PushupTutorialScreen> {
             color: const Color(0xFF1A1A1A),
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: difficultyColor.withOpacity(0.3),
+              color: difficultyColor.withValues(alpha: 0.3),
               width: 1,
             ),
           ),
@@ -207,7 +207,7 @@ class _PushupTutorialScreenState extends State<PushupTutorialScreen> {
                 width: 50,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: difficultyColor.withOpacity(0.2),
+                  color: difficultyColor.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(
@@ -388,7 +388,7 @@ class _PushupTutorialScreenState extends State<PushupTutorialScreen> {
           color: const Color(0xFF1A1A1A),
           border: Border(
             top: BorderSide(
-              color: const Color(0xFF4DABF7).withOpacity(0.3),
+              color: const Color(0xFF4DABF7).withValues(alpha: 0.3),
               width: 1,
             ),
           ),
@@ -405,7 +405,7 @@ class _PushupTutorialScreenState extends State<PushupTutorialScreen> {
         color: const Color(0xFF1A1A1A),
         border: Border(
           top: BorderSide(
-            color: const Color(0xFF4DABF7).withOpacity(0.3),
+            color: const Color(0xFF4DABF7).withValues(alpha: 0.3),
             width: 1,
           ),
         ),
@@ -416,14 +416,14 @@ class _PushupTutorialScreenState extends State<PushupTutorialScreen> {
           children: [
             Icon(
               Icons.ads_click,
-              color: const Color(0xFF4DABF7).withOpacity(0.6),
+              color: const Color(0xFF4DABF7).withValues(alpha: 0.6),
               size: adHeight * 0.4,
             ),
             const SizedBox(width: 8),
             Text(
               'Advertisement',
               style: TextStyle(
-                color: const Color(0xFF4DABF7).withOpacity(0.6),
+                color: const Color(0xFF4DABF7).withValues(alpha: 0.6),
                 fontSize: adHeight * 0.25,
                 fontWeight: FontWeight.bold,
               ),
