@@ -59,8 +59,18 @@ class Achievement {
     switch (titleKey) {
       case 'achievementTutorialExplorerTitle':
         return l10n.achievementTutorialExplorerTitle;
+      case 'achievementTutorialStudentTitle':
+        return l10n.achievementTutorialStudentTitle;
+      case 'achievementTutorialMasterTitle':
+        return l10n.achievementTutorialMasterTitle;
       case 'achievementPerfect3Title':
         return l10n.achievementPerfect3Title;
+      case 'achievementPerfect5Title':
+        return l10n.achievementPerfect5Title;
+      case 'achievementPerfect10Title':
+        return l10n.achievementPerfect10Title;
+      case 'achievementPerfect20Title':
+        return l10n.achievementPerfect20Title;
       case 'achievementLevel5Title':
         return l10n.achievementLevel5Title;
       case 'achievementFirst50Title':
@@ -73,14 +83,12 @@ class Achievement {
         return l10n.achievementStreak7Title;
       case 'achievementStreak14Title':
         return l10n.achievementStreak14Title;
-      case 'achievementTotal50Title':
-        return l10n.achievementTotal50Title;
-      case 'achievementPerfect10Title':
-        return l10n.achievementPerfect10Title;
-      case 'achievementPerfect20Title':
-        return l10n.achievementPerfect20Title;
       case 'achievementStreak30Title':
         return l10n.achievementStreak30Title;
+      case 'achievementStreak60Title':
+        return l10n.achievementStreak60Title;
+      case 'achievementStreak100Title':
+        return l10n.achievementStreak100Title;
       case 'achievementTotal50Title':
         return l10n.achievementTotal50Title;
       case 'achievementTotal100Title':
@@ -97,10 +105,26 @@ class Achievement {
         return l10n.achievementTotal5000Title;
       case 'achievementTotal10000Title':
         return l10n.achievementTotal10000Title;
-      case 'achievementStreak60Title':
-        return l10n.achievementStreak60Title;
-      case 'achievementStreak100Title':
-        return l10n.achievementStreak100Title;
+      case 'achievementEarlyBirdTitle':
+        return l10n.achievementEarlyBirdTitle;
+      case 'achievementNightOwlTitle':
+        return l10n.achievementNightOwlTitle;
+      case 'achievementWeekendWarriorTitle':
+        return l10n.achievementWeekendWarriorTitle;
+      case 'achievementLunchBreakTitle':
+        return l10n.achievementLunchBreakTitle;
+      case 'achievementSpeedDemonTitle':
+        return l10n.achievementSpeedDemonTitle;
+      case 'achievementEnduranceKingTitle':
+        return l10n.achievementEnduranceKingTitle;
+      case 'achievementComebackKidTitle':
+        return l10n.achievementComebackKidTitle;
+      case 'achievementOverachieverTitle':
+        return l10n.achievementOverachieverTitle;
+      case 'achievementDoubleTroubleTitle':
+        return l10n.achievementDoubleTroubleTitle;
+      case 'achievementConsistencyMasterTitle':
+        return l10n.achievementConsistencyMasterTitle;
       default:
         return titleKey;
     }
@@ -111,8 +135,18 @@ class Achievement {
     switch (descriptionKey) {
       case 'achievementTutorialExplorerDesc':
         return l10n.achievementTutorialExplorerDesc;
+      case 'achievementTutorialStudentDesc':
+        return l10n.achievementTutorialStudentDesc;
+      case 'achievementTutorialMasterDesc':
+        return l10n.achievementTutorialMasterDesc;
       case 'achievementPerfect3Desc':
         return l10n.achievementPerfect3Desc;
+      case 'achievementPerfect5Desc':
+        return l10n.achievementPerfect5Desc;
+      case 'achievementPerfect10Desc':
+        return l10n.achievementPerfect10Desc;
+      case 'achievementPerfect20Desc':
+        return l10n.achievementPerfect20Desc;
       case 'achievementLevel5Desc':
         return l10n.achievementLevel5Desc;
       case 'achievementFirst50Desc':
@@ -125,14 +159,12 @@ class Achievement {
         return l10n.achievementStreak7Desc;
       case 'achievementStreak14Desc':
         return l10n.achievementStreak14Desc;
-      case 'achievementTotal50Desc':
-        return l10n.achievementTotal50Desc;
-      case 'achievementPerfect10Desc':
-        return l10n.achievementPerfect10Desc;
-      case 'achievementPerfect20Desc':
-        return l10n.achievementPerfect20Desc;
       case 'achievementStreak30Desc':
         return l10n.achievementStreak30Desc;
+      case 'achievementStreak60Desc':
+        return l10n.achievementStreak60Desc;
+      case 'achievementStreak100Desc':
+        return l10n.achievementStreak100Desc;
       case 'achievementTotal50Desc':
         return l10n.achievementTotal50Desc;
       case 'achievementTotal100Desc':
@@ -149,10 +181,26 @@ class Achievement {
         return l10n.achievementTotal5000Desc;
       case 'achievementTotal10000Desc':
         return l10n.achievementTotal10000Desc;
-      case 'achievementStreak60Desc':
-        return l10n.achievementStreak60Desc;
-      case 'achievementStreak100Desc':
-        return l10n.achievementStreak100Desc;
+      case 'achievementEarlyBirdDesc':
+        return l10n.achievementEarlyBirdDesc;
+      case 'achievementNightOwlDesc':
+        return l10n.achievementNightOwlDesc;
+      case 'achievementWeekendWarriorDesc':
+        return l10n.achievementWeekendWarriorDesc;
+      case 'achievementLunchBreakDesc':
+        return l10n.achievementLunchBreakDesc;
+      case 'achievementSpeedDemonDesc':
+        return l10n.achievementSpeedDemonDesc;
+      case 'achievementEnduranceKingDesc':
+        return l10n.achievementEnduranceKingDesc;
+      case 'achievementComebackKidDesc':
+        return l10n.achievementComebackKidDesc;
+      case 'achievementOverachieverDesc':
+        return l10n.achievementOverachieverDesc;
+      case 'achievementDoubleTroubleDesc':
+        return l10n.achievementDoubleTroubleDesc;
+      case 'achievementConsistencyMasterDesc':
+        return l10n.achievementConsistencyMasterDesc;
       default:
         return descriptionKey;
     }
@@ -163,8 +211,18 @@ class Achievement {
     switch (motivationKey) {
       case 'achievementTutorialExplorerMotivation':
         return l10n.achievementTutorialExplorerMotivation;
+      case 'achievementTutorialStudentMotivation':
+        return l10n.achievementTutorialStudentMotivation;
+      case 'achievementTutorialMasterMotivation':
+        return l10n.achievementTutorialMasterMotivation;
       case 'achievementPerfect3Motivation':
         return l10n.achievementPerfect3Motivation;
+      case 'achievementPerfect5Motivation':
+        return l10n.achievementPerfect5Motivation;
+      case 'achievementPerfect10Motivation':
+        return l10n.achievementPerfect10Motivation;
+      case 'achievementPerfect20Motivation':
+        return l10n.achievementPerfect20Motivation;
       case 'achievementLevel5Motivation':
         return l10n.achievementLevel5Motivation;
       case 'achievementFirst50Motivation':
@@ -177,14 +235,12 @@ class Achievement {
         return l10n.achievementStreak7Motivation;
       case 'achievementStreak14Motivation':
         return l10n.achievementStreak14Motivation;
-      case 'achievementTotal50Motivation':
-        return l10n.achievementTotal50Motivation;
-      case 'achievementPerfect10Motivation':
-        return l10n.achievementPerfect10Motivation;
-      case 'achievementPerfect20Motivation':
-        return l10n.achievementPerfect20Motivation;
       case 'achievementStreak30Motivation':
         return l10n.achievementStreak30Motivation;
+      case 'achievementStreak60Motivation':
+        return l10n.achievementStreak60Motivation;
+      case 'achievementStreak100Motivation':
+        return l10n.achievementStreak100Motivation;
       case 'achievementTotal50Motivation':
         return l10n.achievementTotal50Motivation;
       case 'achievementTotal100Motivation':
@@ -201,10 +257,26 @@ class Achievement {
         return l10n.achievementTotal5000Motivation;
       case 'achievementTotal10000Motivation':
         return l10n.achievementTotal10000Motivation;
-      case 'achievementStreak60Motivation':
-        return l10n.achievementStreak60Motivation;
-      case 'achievementStreak100Motivation':
-        return l10n.achievementStreak100Motivation;
+      case 'achievementEarlyBirdMotivation':
+        return l10n.achievementEarlyBirdMotivation;
+      case 'achievementNightOwlMotivation':
+        return l10n.achievementNightOwlMotivation;
+      case 'achievementWeekendWarriorMotivation':
+        return l10n.achievementWeekendWarriorMotivation;
+      case 'achievementLunchBreakMotivation':
+        return l10n.achievementLunchBreakMotivation;
+      case 'achievementSpeedDemonMotivation':
+        return l10n.achievementSpeedDemonMotivation;
+      case 'achievementEnduranceKingMotivation':
+        return l10n.achievementEnduranceKingMotivation;
+      case 'achievementComebackKidMotivation':
+        return l10n.achievementComebackKidMotivation;
+      case 'achievementOverachieverMotivation':
+        return l10n.achievementOverachieverMotivation;
+      case 'achievementDoubleTroubleMotivation':
+        return l10n.achievementDoubleTroubleMotivation;
+      case 'achievementConsistencyMasterMotivation':
+        return l10n.achievementConsistencyMasterMotivation;
       default:
         return motivationKey;
     }
