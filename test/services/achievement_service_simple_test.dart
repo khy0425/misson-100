@@ -15,8 +15,8 @@ void main() {
       // 각 업적이 올바른 구조를 가지는지 확인
       for (final achievement in achievements) {
         expect(achievement.id, isNotNull);
-        expect(achievement.title, isNotNull);
-        expect(achievement.description, isNotNull);
+        expect(achievement.titleKey, isNotNull);
+        expect(achievement.descriptionKey, isNotNull);
         expect(achievement.xpReward, greaterThan(0));
       }
     });
@@ -93,7 +93,7 @@ void main() {
       // Then: 업적을 찾을 수 있어야 함
       expect(foundAchievement, isNotNull);
       expect(foundAchievement!.id, equals(firstAchievement.id));
-      expect(foundAchievement.title, equals(firstAchievement.title));
+      expect(foundAchievement.titleKey, equals(firstAchievement.titleKey));
     });
 
     test('업적 진행률 계산이 올바른지 테스트', () {

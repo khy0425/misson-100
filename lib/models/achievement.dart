@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import '../generated/app_localizations.dart';
+
 enum AchievementType {
   first, // 첫 번째 달성
   streak, // 연속 달성
@@ -15,9 +18,9 @@ enum AchievementRarity {
 
 class Achievement {
   final String id;
-  final String title;
-  final String description;
-  final String iconCode; // 이모지나 아이콘 코드
+  final String titleKey;
+  final String descriptionKey;
+  final String motivationKey;
   final AchievementType type;
   final AchievementRarity rarity;
   final int targetValue; // 달성 목표값
@@ -25,13 +28,13 @@ class Achievement {
   final bool isUnlocked;
   final DateTime? unlockedAt;
   final int xpReward; // 경험치 보상
-  final String motivationalMessage; // 달성 시 메시지
+  final IconData icon;
 
   Achievement({
     required this.id,
-    required this.title,
-    required this.description,
-    required this.iconCode,
+    required this.titleKey,
+    required this.descriptionKey,
+    required this.motivationKey,
     required this.type,
     required this.rarity,
     required this.targetValue,
@@ -39,17 +42,206 @@ class Achievement {
     this.isUnlocked = false,
     this.unlockedAt,
     this.xpReward = 0,
-    required this.motivationalMessage,
+    required this.icon,
   });
 
   double get progress => currentValue / targetValue;
   bool get isCompleted => currentValue >= targetValue;
 
+  // 이전 버전과의 호환성을 위한 getter들
+  String get title => titleKey;
+  String get description => descriptionKey;
+  String get motivationalMessage => motivationKey;
+  int get iconCode => icon.codePoint;
+
+  String getTitle(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    switch (titleKey) {
+      case 'achievementTutorialExplorerTitle':
+        return l10n.achievementTutorialExplorerTitle;
+      case 'achievementPerfect3Title':
+        return l10n.achievementPerfect3Title;
+      case 'achievementLevel5Title':
+        return l10n.achievementLevel5Title;
+      case 'achievementFirst50Title':
+        return l10n.achievementFirst50Title;
+      case 'achievementFirst100SingleTitle':
+        return l10n.achievementFirst100SingleTitle;
+      case 'achievementStreak3Title':
+        return l10n.achievementStreak3Title;
+      case 'achievementStreak7Title':
+        return l10n.achievementStreak7Title;
+      case 'achievementStreak14Title':
+        return l10n.achievementStreak14Title;
+      case 'achievementTotal50Title':
+        return l10n.achievementTotal50Title;
+      case 'achievementPerfect10Title':
+        return l10n.achievementPerfect10Title;
+      case 'achievementPerfect20Title':
+        return l10n.achievementPerfect20Title;
+      case 'achievementStreak30Title':
+        return l10n.achievementStreak30Title;
+      case 'achievementTotal50Title':
+        return l10n.achievementTotal50Title;
+      case 'achievementTotal100Title':
+        return l10n.achievementTotal100Title;
+      case 'achievementTotal250Title':
+        return l10n.achievementTotal250Title;
+      case 'achievementTotal500Title':
+        return l10n.achievementTotal500Title;
+      case 'achievementTotal1000Title':
+        return l10n.achievementTotal1000Title;
+      case 'achievementTotal2500Title':
+        return l10n.achievementTotal2500Title;
+      case 'achievementTotal5000Title':
+        return l10n.achievementTotal5000Title;
+      case 'achievementTotal10000Title':
+        return l10n.achievementTotal10000Title;
+      case 'achievementStreak60Title':
+        return l10n.achievementStreak60Title;
+      case 'achievementStreak100Title':
+        return l10n.achievementStreak100Title;
+      default:
+        return titleKey;
+    }
+  }
+
+  String getDescription(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    switch (descriptionKey) {
+      case 'achievementTutorialExplorerDesc':
+        return l10n.achievementTutorialExplorerDesc;
+      case 'achievementPerfect3Desc':
+        return l10n.achievementPerfect3Desc;
+      case 'achievementLevel5Desc':
+        return l10n.achievementLevel5Desc;
+      case 'achievementFirst50Desc':
+        return l10n.achievementFirst50Desc;
+      case 'achievementFirst100SingleDesc':
+        return l10n.achievementFirst100SingleDesc;
+      case 'achievementStreak3Desc':
+        return l10n.achievementStreak3Desc;
+      case 'achievementStreak7Desc':
+        return l10n.achievementStreak7Desc;
+      case 'achievementStreak14Desc':
+        return l10n.achievementStreak14Desc;
+      case 'achievementTotal50Desc':
+        return l10n.achievementTotal50Desc;
+      case 'achievementPerfect10Desc':
+        return l10n.achievementPerfect10Desc;
+      case 'achievementPerfect20Desc':
+        return l10n.achievementPerfect20Desc;
+      case 'achievementStreak30Desc':
+        return l10n.achievementStreak30Desc;
+      case 'achievementTotal50Desc':
+        return l10n.achievementTotal50Desc;
+      case 'achievementTotal100Desc':
+        return l10n.achievementTotal100Desc;
+      case 'achievementTotal250Desc':
+        return l10n.achievementTotal250Desc;
+      case 'achievementTotal500Desc':
+        return l10n.achievementTotal500Desc;
+      case 'achievementTotal1000Desc':
+        return l10n.achievementTotal1000Desc;
+      case 'achievementTotal2500Desc':
+        return l10n.achievementTotal2500Desc;
+      case 'achievementTotal5000Desc':
+        return l10n.achievementTotal5000Desc;
+      case 'achievementTotal10000Desc':
+        return l10n.achievementTotal10000Desc;
+      case 'achievementStreak60Desc':
+        return l10n.achievementStreak60Desc;
+      case 'achievementStreak100Desc':
+        return l10n.achievementStreak100Desc;
+      default:
+        return descriptionKey;
+    }
+  }
+
+  String getMotivation(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    switch (motivationKey) {
+      case 'achievementTutorialExplorerMotivation':
+        return l10n.achievementTutorialExplorerMotivation;
+      case 'achievementPerfect3Motivation':
+        return l10n.achievementPerfect3Motivation;
+      case 'achievementLevel5Motivation':
+        return l10n.achievementLevel5Motivation;
+      case 'achievementFirst50Motivation':
+        return l10n.achievementFirst50Motivation;
+      case 'achievementFirst100SingleMotivation':
+        return l10n.achievementFirst100SingleMotivation;
+      case 'achievementStreak3Motivation':
+        return l10n.achievementStreak3Motivation;
+      case 'achievementStreak7Motivation':
+        return l10n.achievementStreak7Motivation;
+      case 'achievementStreak14Motivation':
+        return l10n.achievementStreak14Motivation;
+      case 'achievementTotal50Motivation':
+        return l10n.achievementTotal50Motivation;
+      case 'achievementPerfect10Motivation':
+        return l10n.achievementPerfect10Motivation;
+      case 'achievementPerfect20Motivation':
+        return l10n.achievementPerfect20Motivation;
+      case 'achievementStreak30Motivation':
+        return l10n.achievementStreak30Motivation;
+      case 'achievementTotal50Motivation':
+        return l10n.achievementTotal50Motivation;
+      case 'achievementTotal100Motivation':
+        return l10n.achievementTotal100Motivation;
+      case 'achievementTotal250Motivation':
+        return l10n.achievementTotal250Motivation;
+      case 'achievementTotal500Motivation':
+        return l10n.achievementTotal500Motivation;
+      case 'achievementTotal1000Motivation':
+        return l10n.achievementTotal1000Motivation;
+      case 'achievementTotal2500Motivation':
+        return l10n.achievementTotal2500Motivation;
+      case 'achievementTotal5000Motivation':
+        return l10n.achievementTotal5000Motivation;
+      case 'achievementTotal10000Motivation':
+        return l10n.achievementTotal10000Motivation;
+      case 'achievementStreak60Motivation':
+        return l10n.achievementStreak60Motivation;
+      case 'achievementStreak100Motivation':
+        return l10n.achievementStreak100Motivation;
+      default:
+        return motivationKey;
+    }
+  }
+
+  String getRarityName(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    switch (rarity) {
+      case AchievementRarity.common:
+        return l10n.rarityCommon;
+      case AchievementRarity.rare:
+        return l10n.rarityRare;
+      case AchievementRarity.epic:
+        return l10n.rarityEpic;
+      case AchievementRarity.legendary:
+        return l10n.rarityLegendary;
+    }
+  }
+
+  Color getRarityColor() {
+    switch (rarity) {
+      case AchievementRarity.common:
+        return Colors.grey;
+      case AchievementRarity.rare:
+        return Colors.blue;
+      case AchievementRarity.epic:
+        return Colors.purple;
+      case AchievementRarity.legendary:
+        return Colors.orange;
+    }
+  }
+
   Achievement copyWith({
     String? id,
-    String? title,
-    String? description,
-    String? iconCode,
+    String? titleKey,
+    String? descriptionKey,
+    String? motivationKey,
     AchievementType? type,
     AchievementRarity? rarity,
     int? targetValue,
@@ -57,13 +249,13 @@ class Achievement {
     bool? isUnlocked,
     DateTime? unlockedAt,
     int? xpReward,
-    String? motivationalMessage,
+    IconData? icon,
   }) {
     return Achievement(
       id: id ?? this.id,
-      title: title ?? this.title,
-      description: description ?? this.description,
-      iconCode: iconCode ?? this.iconCode,
+      titleKey: titleKey ?? this.titleKey,
+      descriptionKey: descriptionKey ?? this.descriptionKey,
+      motivationKey: motivationKey ?? this.motivationKey,
       type: type ?? this.type,
       rarity: rarity ?? this.rarity,
       targetValue: targetValue ?? this.targetValue,
@@ -71,16 +263,16 @@ class Achievement {
       isUnlocked: isUnlocked ?? this.isUnlocked,
       unlockedAt: unlockedAt ?? this.unlockedAt,
       xpReward: xpReward ?? this.xpReward,
-      motivationalMessage: motivationalMessage ?? this.motivationalMessage,
+      icon: icon ?? this.icon,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'title': title,
-      'description': description,
-      'iconCode': iconCode,
+      'titleKey': titleKey,
+      'descriptionKey': descriptionKey,
+      'motivationKey': motivationKey,
       'type': type.name,
       'rarity': rarity.name,
       'targetValue': targetValue,
@@ -88,57 +280,31 @@ class Achievement {
       'isUnlocked': isUnlocked ? 1 : 0,
       'unlockedAt': unlockedAt?.toIso8601String(),
       'xpReward': xpReward,
-      'motivationalMessage': motivationalMessage,
+      'icon': icon.codePoint,
     };
   }
 
   factory Achievement.fromMap(Map<String, dynamic> map) {
     return Achievement(
-      id: map['id'],
-      title: map['title'],
-      description: map['description'],
-      iconCode: map['iconCode'],
-      type: AchievementType.values.firstWhere((e) => e.name == map['type']),
-      rarity: AchievementRarity.values.firstWhere(
-        (e) => e.name == map['rarity'],
+      id: map['id'] as String,
+      titleKey: map['titleKey'] as String,
+      descriptionKey: map['descriptionKey'] as String,
+      motivationKey: map['motivationKey'] as String,
+      type: AchievementType.values.firstWhere(
+        (e) => e.name == map['type'] as String,
       ),
-      targetValue: map['targetValue'],
-      currentValue: map['currentValue'] ?? 0,
-      isUnlocked: map['isUnlocked'] == 1,
+      rarity: AchievementRarity.values.firstWhere(
+        (e) => e.name == map['rarity'] as String,
+      ),
+      targetValue: map['targetValue'] as int,
+      currentValue: map['currentValue'] as int? ?? 0,
+      isUnlocked: (map['isUnlocked'] as int) == 1,
       unlockedAt: map['unlockedAt'] != null
-          ? DateTime.parse(map['unlockedAt'])
+          ? DateTime.parse(map['unlockedAt'] as String)
           : null,
-      xpReward: map['xpReward'] ?? 0,
-      motivationalMessage: map['motivationalMessage'],
+      xpReward: map['xpReward'] as int? ?? 0,
+      icon: IconData(map['icon'] as int, fontFamily: 'MaterialIcons'),
     );
-  }
-
-  // 레어도에 따른 색상 반환
-  int getRarityColor() {
-    switch (rarity) {
-      case AchievementRarity.common:
-        return 0xFF9E9E9E; // 회색
-      case AchievementRarity.rare:
-        return 0xFF2196F3; // 파란색
-      case AchievementRarity.epic:
-        return 0xFF9C27B0; // 보라색
-      case AchievementRarity.legendary:
-        return 0xFFFF9800; // 주황색
-    }
-  }
-
-  // 레어도 이름 반환
-  String getRarityName() {
-    switch (rarity) {
-      case AchievementRarity.common:
-        return '일반';
-      case AchievementRarity.rare:
-        return '레어';
-      case AchievementRarity.epic:
-        return '에픽';
-      case AchievementRarity.legendary:
-        return '레전더리';
-    }
   }
 }
 
@@ -148,234 +314,590 @@ class PredefinedAchievements {
     // 첫 번째 달성 시리즈
     Achievement(
       id: 'first_workout',
-      title: '차드 여정의 시작',
-      description: '첫 번째 운동을 완료했습니다',
-      iconCode: '🎯',
+      titleKey: 'achievementTutorialExplorerTitle',
+      descriptionKey: 'achievementTutorialExplorerDesc',
+      motivationKey: 'achievementTutorialExplorerMotivation',
       type: AchievementType.first,
       rarity: AchievementRarity.common,
       targetValue: 1,
       xpReward: 100,
-      motivationalMessage: '모든 차드는 첫 걸음부터 시작합니다! 💪',
+      icon: Icons.play_arrow,
     ),
 
     Achievement(
       id: 'first_perfect_set',
-      title: '완벽한 첫 세트',
-      description: '목표를 100% 달성한 첫 번째 세트',
-      iconCode: '⭐',
+      titleKey: 'achievementPerfect3Title',
+      descriptionKey: 'achievementPerfect3Desc',
+      motivationKey: 'achievementPerfect3Motivation',
       type: AchievementType.first,
       rarity: AchievementRarity.rare,
       targetValue: 1,
       xpReward: 200,
-      motivationalMessage: '완벽함이 바로 차드의 시작입니다! ⭐',
+      icon: Icons.star,
     ),
 
     Achievement(
       id: 'first_level_up',
-      title: '레벨업 달성',
-      description: '첫 번째 레벨업을 달성했습니다',
-      iconCode: '🚀',
+      titleKey: 'achievementLevel5Title',
+      descriptionKey: 'achievementLevel5Desc',
+      motivationKey: 'achievementLevel5Motivation',
       type: AchievementType.first,
       rarity: AchievementRarity.rare,
       targetValue: 1,
       xpReward: 300,
-      motivationalMessage: '성장하는 차드! 다음 레벨을 향해! 🚀',
+      icon: Icons.trending_up,
+    ),
+
+    Achievement(
+      id: 'first_50_pushups',
+      titleKey: 'achievementFirst50Title',
+      descriptionKey: 'achievementFirst50Desc',
+      motivationKey: 'achievementFirst50Motivation',
+      type: AchievementType.first,
+      rarity: AchievementRarity.common,
+      targetValue: 1,
+      xpReward: 150,
+      icon: Icons.fitness_center,
+    ),
+
+    Achievement(
+      id: 'first_100_single',
+      titleKey: 'achievementFirst100SingleTitle',
+      descriptionKey: 'achievementFirst100SingleDesc',
+      motivationKey: 'achievementFirst100SingleMotivation',
+      type: AchievementType.first,
+      rarity: AchievementRarity.epic,
+      targetValue: 1,
+      xpReward: 500,
+      icon: Icons.flash_on,
     ),
 
     // 연속 달성 시리즈
     Achievement(
       id: 'streak_3_days',
-      title: '3일 연속 차드',
-      description: '3일 연속으로 운동을 완료했습니다',
-      iconCode: '🔥',
+      titleKey: 'achievementStreak3Title',
+      descriptionKey: 'achievementStreak3Desc',
+      motivationKey: 'achievementStreak3Motivation',
       type: AchievementType.streak,
       rarity: AchievementRarity.common,
       targetValue: 3,
       xpReward: 300,
-      motivationalMessage: '일관성이 차드를 만든다! 🔥',
+      icon: Icons.local_fire_department,
     ),
 
     Achievement(
       id: 'streak_7_days',
-      title: '일주일 차드',
-      description: '7일 연속으로 운동을 완료했습니다',
-      iconCode: '💪',
+      titleKey: 'achievementStreak7Title',
+      descriptionKey: 'achievementStreak7Desc',
+      motivationKey: 'achievementStreak7Motivation',
       type: AchievementType.streak,
       rarity: AchievementRarity.rare,
       targetValue: 7,
       xpReward: 500,
-      motivationalMessage: '한 주를 정복한 진정한 차드! 💪',
+      icon: Icons.fitness_center,
     ),
 
     Achievement(
       id: 'streak_14_days',
-      title: '2주 마라톤 차드',
-      description: '14일 연속으로 운동을 완료했습니다',
-      iconCode: '🏃‍♂️',
+      titleKey: 'achievementStreak14Title',
+      descriptionKey: 'achievementStreak14Desc',
+      motivationKey: 'achievementStreak14Motivation',
       type: AchievementType.streak,
       rarity: AchievementRarity.epic,
       targetValue: 14,
       xpReward: 800,
-      motivationalMessage: '지속성의 왕! 차드 중의 차드! 🏃‍♂️',
+      icon: Icons.directions_run,
     ),
 
     Achievement(
       id: 'streak_30_days',
-      title: '한 달 울티메이트 차드',
-      description: '30일 연속으로 운동을 완료했습니다',
-      iconCode: '👑',
+      titleKey: 'achievementStreak30Title',
+      descriptionKey: 'achievementStreak30Desc',
+      motivationKey: 'achievementStreak30Motivation',
       type: AchievementType.streak,
       rarity: AchievementRarity.legendary,
       targetValue: 30,
       xpReward: 1500,
-      motivationalMessage: '당신은 이제 차드의 왕입니다! 👑',
+      icon: Icons.emoji_events,
+    ),
+
+    Achievement(
+      id: 'streak_60_days',
+      titleKey: 'achievementMasterTitle',
+      descriptionKey: 'achievementMasterDesc',
+      motivationKey: 'achievementMasterMotivation',
+      type: AchievementType.streak,
+      rarity: AchievementRarity.legendary,
+      targetValue: 60,
+      xpReward: 2500,
+      icon: Icons.military_tech,
+    ),
+
+    Achievement(
+      id: 'streak_100_days',
+      titleKey: 'achievementPerfectLegendTitle',
+      descriptionKey: 'achievementPerfectLegendDesc',
+      motivationKey: 'achievementPerfectLegendMotivation',
+      type: AchievementType.streak,
+      rarity: AchievementRarity.legendary,
+      targetValue: 100,
+      xpReward: 5000,
+      icon: Icons.stars,
     ),
 
     // 총량 달성 시리즈
     Achievement(
+      id: 'total_50_pushups',
+      titleKey: 'achievementTotal50Title',
+      descriptionKey: 'achievementTotal50Desc',
+      motivationKey: 'achievementTotal50Motivation',
+      type: AchievementType.volume,
+      rarity: AchievementRarity.common,
+      targetValue: 50,
+      xpReward: 100,
+      icon: Icons.eco,
+    ),
+
+    Achievement(
       id: 'total_100_pushups',
-      title: '첫 100개 돌파',
-      description: '총 100개의 푸시업을 완료했습니다',
-      iconCode: '💯',
+      titleKey: 'achievementFirst100Title',
+      descriptionKey: 'achievementFirst100Desc',
+      motivationKey: 'achievementFirst100Motivation',
       type: AchievementType.volume,
       rarity: AchievementRarity.common,
       targetValue: 100,
       xpReward: 200,
-      motivationalMessage: '첫 100개 돌파! 차드의 기본기 완성! 💯',
+      icon: Icons.sports_score,
+    ),
+
+    Achievement(
+      id: 'total_250_pushups',
+      titleKey: 'achievementMasterTitle',
+      descriptionKey: 'achievementMasterDesc',
+      motivationKey: 'achievementMasterMotivation',
+      type: AchievementType.volume,
+      rarity: AchievementRarity.common,
+      targetValue: 250,
+      xpReward: 300,
+      icon: Icons.gps_fixed,
     ),
 
     Achievement(
       id: 'total_500_pushups',
-      title: '500개 차드',
-      description: '총 500개의 푸시업을 완료했습니다',
-      iconCode: '🚀',
+      titleKey: 'achievementUltimateTitle',
+      descriptionKey: 'achievementUltimateDesc',
+      motivationKey: 'achievementUltimateMotivation',
       type: AchievementType.volume,
       rarity: AchievementRarity.rare,
       targetValue: 500,
       xpReward: 500,
-      motivationalMessage: '500개 돌파! 중급 차드 등극! 🚀',
+      icon: Icons.rocket_launch,
     ),
 
     Achievement(
       id: 'total_1000_pushups',
-      title: '1000개 메가 차드',
-      description: '총 1000개의 푸시업을 완료했습니다',
-      iconCode: '⚡',
+      titleKey: 'achievementPerfectLegendTitle',
+      descriptionKey: 'achievementPerfectLegendDesc',
+      motivationKey: 'achievementPerfectLegendMotivation',
       type: AchievementType.volume,
       rarity: AchievementRarity.epic,
       targetValue: 1000,
       xpReward: 1000,
-      motivationalMessage: '1000개 돌파! 메가 차드 등극! ⚡',
+      icon: Icons.bolt,
+    ),
+
+    Achievement(
+      id: 'total_2500_pushups',
+      titleKey: 'achievementMasterTitle',
+      descriptionKey: 'achievementMasterDesc',
+      motivationKey: 'achievementMasterMotivation',
+      type: AchievementType.volume,
+      rarity: AchievementRarity.epic,
+      targetValue: 2500,
+      xpReward: 1500,
+      icon: Icons.local_fire_department,
     ),
 
     Achievement(
       id: 'total_5000_pushups',
-      title: '5000개 울트라 차드',
-      description: '총 5000개의 푸시업을 완료했습니다',
-      iconCode: '🌟',
+      titleKey: 'achievementUltimateTitle',
+      descriptionKey: 'achievementUltimateDesc',
+      motivationKey: 'achievementUltimateMotivation',
       type: AchievementType.volume,
       rarity: AchievementRarity.legendary,
       targetValue: 5000,
       xpReward: 2000,
-      motivationalMessage: '5000개! 당신은 울트라 차드입니다! 🌟',
+      icon: Icons.stars,
+    ),
+
+    Achievement(
+      id: 'total_10000_pushups',
+      titleKey: 'achievementPerfectLegendTitle',
+      descriptionKey: 'achievementPerfectLegendDesc',
+      motivationKey: 'achievementPerfectLegendMotivation',
+      type: AchievementType.volume,
+      rarity: AchievementRarity.legendary,
+      targetValue: 10000,
+      xpReward: 5000,
+      icon: Icons.emoji_events,
     ),
 
     // 완벽 수행 시리즈
     Achievement(
+      id: 'perfect_workout_3',
+      titleKey: 'achievementPerfectSetTitle',
+      descriptionKey: 'achievementPerfectSetDesc',
+      motivationKey: 'achievementPerfectSetMotivation',
+      type: AchievementType.perfect,
+      rarity: AchievementRarity.common,
+      targetValue: 3,
+      xpReward: 250,
+      icon: Icons.gps_fixed,
+    ),
+
+    Achievement(
       id: 'perfect_workout_5',
-      title: '완벽주의 차드',
-      description: '5번의 완벽한 운동을 달성했습니다',
-      iconCode: '🎯',
+      titleKey: 'achievementMasterTitle',
+      descriptionKey: 'achievementMasterDesc',
+      motivationKey: 'achievementMasterMotivation',
       type: AchievementType.perfect,
       rarity: AchievementRarity.rare,
       targetValue: 5,
       xpReward: 400,
-      motivationalMessage: '완벽을 추구하는 진정한 차드! 🎯',
+      icon: Icons.verified,
     ),
 
     Achievement(
       id: 'perfect_workout_10',
-      title: '마스터 차드',
-      description: '10번의 완벽한 운동을 달성했습니다',
-      iconCode: '🏆',
+      titleKey: 'achievementPerfectLegendTitle',
+      descriptionKey: 'achievementPerfectLegendDesc',
+      motivationKey: 'achievementPerfectLegendMotivation',
       type: AchievementType.perfect,
       rarity: AchievementRarity.epic,
       targetValue: 10,
-      xpReward: 800,
-      motivationalMessage: '완벽함의 마스터! 차드 중의 차드! 🏆',
+      xpReward: 750,
+      icon: Icons.workspace_premium,
     ),
 
-    // 특별 업적
     Achievement(
-      id: 'tutorial_explorer',
-      title: '탐구하는 차드',
-      description: '첫 번째 푸시업 튜토리얼을 확인했습니다',
-      iconCode: '🔍',
+      id: 'perfect_workout_20',
+      titleKey: 'achievementUltimateTitle',
+      descriptionKey: 'achievementUltimateDesc',
+      motivationKey: 'achievementUltimateMotivation',
+      type: AchievementType.perfect,
+      rarity: AchievementRarity.legendary,
+      targetValue: 20,
+      xpReward: 1200,
+      icon: Icons.diamond,
+    ),
+
+    // 특별한 조건 시리즈
+    Achievement(
+      id: 'explorer_achievement',
+      titleKey: 'achievementExplorerTitle',
+      descriptionKey: 'achievementExplorerDesc',
+      motivationKey: 'achievementExplorerMotivation',
       type: AchievementType.special,
       rarity: AchievementRarity.common,
       targetValue: 1,
-      xpReward: 50,
-      motivationalMessage: '지식은 차드의 첫 번째 힘! 🔍',
+      xpReward: 200,
+      icon: Icons.explore,
     ),
 
     Achievement(
-      id: 'tutorial_student',
-      title: '학습하는 차드',
-      description: '5가지 푸시업 튜토리얼을 확인했습니다',
-      iconCode: '📚',
+      id: 'learner_achievement',
+      titleKey: 'achievementMasterTitle',
+      descriptionKey: 'achievementMasterDesc',
+      motivationKey: 'achievementMasterMotivation',
       type: AchievementType.special,
       rarity: AchievementRarity.rare,
-      targetValue: 5,
-      xpReward: 250,
-      motivationalMessage: '다양한 기술을 익히는 진정한 차드! 📚',
+      targetValue: 1,
+      xpReward: 300,
+      icon: Icons.school,
     ),
 
     Achievement(
-      id: 'tutorial_master',
-      title: '푸시업 마스터',
-      description: '모든 푸시업 튜토리얼을 확인했습니다',
-      iconCode: '🎓',
+      id: 'master_achievement',
+      titleKey: 'achievementPerfectLegendTitle',
+      descriptionKey: 'achievementPerfectLegendDesc',
+      motivationKey: 'achievementPerfectLegendMotivation',
       type: AchievementType.special,
-      rarity: AchievementRarity.epic,
-      targetValue: 10,
-      xpReward: 500,
-      motivationalMessage: '모든 기술을 마스터한 푸시업 박사! 🎓',
+      rarity: AchievementRarity.legendary,
+      targetValue: 1,
+      xpReward: 1000,
+      icon: Icons.psychology,
     ),
 
-    Achievement(
-      id: 'weekend_warrior',
-      title: '주말 전사',
-      description: '주말에도 꾸준히 운동하는 차드',
-      iconCode: '⚔️',
-      type: AchievementType.special,
-      rarity: AchievementRarity.rare,
-      targetValue: 4, // 4번의 주말 운동
-      xpReward: 600,
-      motivationalMessage: '주말에도 멈추지 않는 전사! ⚔️',
-    ),
-
+    // 시간대별 특별 업적
     Achievement(
       id: 'early_bird',
-      title: '새벽 차드',
-      description: '오전 7시 전에 5번 운동했습니다',
-      iconCode: '🌅',
+      titleKey: 'achievementExplorerTitle',
+      descriptionKey: 'achievementExplorerDesc',
+      motivationKey: 'achievementExplorerMotivation',
       type: AchievementType.special,
-      rarity: AchievementRarity.epic,
-      targetValue: 5,
-      xpReward: 700,
-      motivationalMessage: '새벽을 정복한 얼리버드 차드! 🌅',
+      rarity: AchievementRarity.rare,
+      targetValue: 1,
+      xpReward: 300,
+      icon: Icons.wb_sunny,
     ),
 
     Achievement(
       id: 'night_owl',
-      title: '야행성 차드',
-      description: '밤 10시 이후에 5번 운동했습니다',
-      iconCode: '🦉',
+      titleKey: 'achievementMasterTitle',
+      descriptionKey: 'achievementMasterDesc',
+      motivationKey: 'achievementMasterMotivation',
+      type: AchievementType.special,
+      rarity: AchievementRarity.rare,
+      targetValue: 1,
+      xpReward: 300,
+      icon: Icons.nightlight,
+    ),
+
+    Achievement(
+      id: 'weekend_warrior',
+      titleKey: 'achievementUltimateTitle',
+      descriptionKey: 'achievementUltimateDesc',
+      motivationKey: 'achievementUltimateMotivation',
+      type: AchievementType.special,
+      rarity: AchievementRarity.common,
+      targetValue: 1,
+      xpReward: 200,
+      icon: Icons.weekend,
+    ),
+
+    Achievement(
+      id: 'lunch_break_chad',
+      titleKey: 'achievementPerfectSetTitle',
+      descriptionKey: 'achievementPerfectSetDesc',
+      motivationKey: 'achievementPerfectSetMotivation',
+      type: AchievementType.special,
+      rarity: AchievementRarity.common,
+      targetValue: 1,
+      xpReward: 150,
+      icon: Icons.lunch_dining,
+    ),
+
+    // 성능 기반 업적
+    Achievement(
+      id: 'speed_demon',
+      titleKey: 'achievementMasterTitle',
+      descriptionKey: 'achievementMasterDesc',
+      motivationKey: 'achievementMasterMotivation',
       type: AchievementType.special,
       rarity: AchievementRarity.epic,
-      targetValue: 5,
-      xpReward: 700,
-      motivationalMessage: '밤에도 포기하지 않는 올빼미 차드! 🦉',
+      targetValue: 1,
+      xpReward: 500,
+      icon: Icons.speed,
+    ),
+
+    Achievement(
+      id: 'endurance_king',
+      titleKey: 'achievementUltimateTitle',
+      descriptionKey: 'achievementUltimateDesc',
+      motivationKey: 'achievementUltimateMotivation',
+      type: AchievementType.special,
+      rarity: AchievementRarity.epic,
+      targetValue: 1,
+      xpReward: 500,
+      icon: Icons.timer,
+    ),
+
+    Achievement(
+      id: 'comeback_kid',
+      titleKey: 'achievementExplorerTitle',
+      descriptionKey: 'achievementExplorerDesc',
+      motivationKey: 'achievementExplorerMotivation',
+      type: AchievementType.special,
+      rarity: AchievementRarity.rare,
+      targetValue: 1,
+      xpReward: 400,
+      icon: Icons.refresh,
+    ),
+
+    // 목표 달성 업적
+    Achievement(
+      id: 'goal_crusher',
+      titleKey: 'achievementPerfectLegendTitle',
+      descriptionKey: 'achievementPerfectLegendDesc',
+      motivationKey: 'achievementPerfectLegendMotivation',
+      type: AchievementType.special,
+      rarity: AchievementRarity.epic,
+      targetValue: 1,
+      xpReward: 600,
+      icon: Icons.flag,
+    ),
+
+    Achievement(
+      id: 'double_trouble',
+      titleKey: 'achievementMasterTitle',
+      descriptionKey: 'achievementMasterDesc',
+      motivationKey: 'achievementMasterMotivation',
+      type: AchievementType.special,
+      rarity: AchievementRarity.rare,
+      targetValue: 1,
+      xpReward: 350,
+      icon: Icons.double_arrow,
+    ),
+
+    Achievement(
+      id: 'consistency_master',
+      titleKey: 'achievementUltimateTitle',
+      descriptionKey: 'achievementUltimateDesc',
+      motivationKey: 'achievementUltimateMotivation',
+      type: AchievementType.special,
+      rarity: AchievementRarity.legendary,
+      targetValue: 1,
+      xpReward: 1000,
+      icon: Icons.trending_up,
+    ),
+
+    // 레벨 기반 업적
+    Achievement(
+      id: 'level_5_chad',
+      titleKey: 'achievementLevelUpTitle',
+      descriptionKey: 'achievementLevelUpDesc',
+      motivationKey: 'achievementLevelUpMotivation',
+      type: AchievementType.special,
+      rarity: AchievementRarity.common,
+      targetValue: 1,
+      xpReward: 250,
+      icon: Icons.looks_5,
+    ),
+
+    Achievement(
+      id: 'level_10_chad',
+      titleKey: 'achievementMasterTitle',
+      descriptionKey: 'achievementMasterDesc',
+      motivationKey: 'achievementMasterMotivation',
+      type: AchievementType.special,
+      rarity: AchievementRarity.rare,
+      targetValue: 1,
+      xpReward: 500,
+      icon: Icons.filter_1,
+    ),
+
+    Achievement(
+      id: 'level_20_chad',
+      titleKey: 'achievementUltimateTitle',
+      descriptionKey: 'achievementUltimateDesc',
+      motivationKey: 'achievementUltimateMotivation',
+      type: AchievementType.special,
+      rarity: AchievementRarity.epic,
+      targetValue: 1,
+      xpReward: 1000,
+      icon: Icons.filter_2,
+    ),
+
+    // 월간/계절 업적
+    Achievement(
+      id: 'monthly_warrior',
+      titleKey: 'achievementMonthStreakTitle',
+      descriptionKey: 'achievementMonthStreakDesc',
+      motivationKey: 'achievementMonthStreakMotivation',
+      type: AchievementType.special,
+      rarity: AchievementRarity.epic,
+      targetValue: 1,
+      xpReward: 800,
+      icon: Icons.calendar_month,
+    ),
+
+    Achievement(
+      id: 'season_champion',
+      titleKey: 'achievementPerfectLegendTitle',
+      descriptionKey: 'achievementPerfectLegendDesc',
+      motivationKey: 'achievementPerfectLegendMotivation',
+      type: AchievementType.special,
+      rarity: AchievementRarity.legendary,
+      targetValue: 1,
+      xpReward: 1500,
+      icon: Icons.emoji_events,
+    ),
+
+    // 다양성 업적
+    Achievement(
+      id: 'variety_seeker',
+      titleKey: 'achievementExplorerTitle',
+      descriptionKey: 'achievementExplorerDesc',
+      motivationKey: 'achievementExplorerMotivation',
+      type: AchievementType.special,
+      rarity: AchievementRarity.rare,
+      targetValue: 1,
+      xpReward: 400,
+      icon: Icons.shuffle,
+    ),
+
+    Achievement(
+      id: 'all_rounder',
+      titleKey: 'achievementMasterTitle',
+      descriptionKey: 'achievementMasterDesc',
+      motivationKey: 'achievementMasterMotivation',
+      type: AchievementType.special,
+      rarity: AchievementRarity.epic,
+      targetValue: 1,
+      xpReward: 600,
+      icon: Icons.all_inclusive,
+    ),
+
+    // 의지력 업적
+    Achievement(
+      id: 'iron_will',
+      titleKey: 'achievementUltimateTitle',
+      descriptionKey: 'achievementUltimateDesc',
+      motivationKey: 'achievementUltimateMotivation',
+      type: AchievementType.special,
+      rarity: AchievementRarity.legendary,
+      targetValue: 1,
+      xpReward: 1200,
+      icon: Icons.security,
+    ),
+
+    Achievement(
+      id: 'unstoppable_force',
+      titleKey: 'achievementPerfectLegendTitle',
+      descriptionKey: 'achievementPerfectLegendDesc',
+      motivationKey: 'achievementPerfectLegendMotivation',
+      type: AchievementType.special,
+      rarity: AchievementRarity.legendary,
+      targetValue: 1,
+      xpReward: 1500,
+      icon: Icons.flash_on,
+    ),
+
+    Achievement(
+      id: 'legendary_beast',
+      titleKey: 'achievementUltimateTitle',
+      descriptionKey: 'achievementUltimateDesc',
+      motivationKey: 'achievementUltimateMotivation',
+      type: AchievementType.special,
+      rarity: AchievementRarity.legendary,
+      targetValue: 1,
+      xpReward: 2000,
+      icon: Icons.pets,
+    ),
+
+    // 동기부여 업적
+    Achievement(
+      id: 'motivator',
+      titleKey: 'achievementMasterTitle',
+      descriptionKey: 'achievementMasterDesc',
+      motivationKey: 'achievementMasterMotivation',
+      type: AchievementType.special,
+      rarity: AchievementRarity.rare,
+      targetValue: 1,
+      xpReward: 350,
+      icon: Icons.campaign,
+    ),
+
+    Achievement(
+      id: 'dedication_master',
+      titleKey: 'achievementPerfectLegendTitle',
+      descriptionKey: 'achievementPerfectLegendDesc',
+      motivationKey: 'achievementPerfectLegendMotivation',
+      type: AchievementType.special,
+      rarity: AchievementRarity.legendary,
+      targetValue: 1,
+      xpReward: 1000,
+      icon: Icons.favorite,
     ),
   ];
 }

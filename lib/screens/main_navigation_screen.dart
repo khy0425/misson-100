@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../generated/app_localizations.dart';
 import '../utils/constants.dart';
+import '../utils/debug_helper.dart';
+import '../services/achievement_service.dart';
+import '../services/notification_service.dart';
+import '../services/workout_history_service.dart';
+import '../widgets/achievement_celebration_dialog.dart';
+import '../models/achievement.dart';
 import 'home_screen.dart';
 import 'calendar_screen.dart';
 import 'achievements_screen.dart';
@@ -17,18 +25,165 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _selectedIndex = 0;
 
   final List<Widget> _screens = [
-    const HomeScreen(),
+    HomeScreen(),
     const CalendarScreen(),
-    const AchievementsScreen(),
+    AchievementsScreen(),
     const StatisticsScreen(),
-    const SettingsScreen(),
+    SettingsScreen(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeApp();
+    
+    // 업적 서비스에 실시간 업데이트 콜백 설정
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      AchievementService.setGlobalContext(context);
+      
+      AchievementService.setOnAchievementUnlocked(() {
+        if (mounted) {
+          _refreshAllData();
+        }
+      });
+      
+      AchievementService.setOnStatsUpdated(() {
+        if (mounted) {
+          _refreshAllData();
+        }
+      });
+      
+      // 운동 기록 저장 시 달력 업데이트 콜백 설정
+      WorkoutHistoryService.setOnWorkoutSaved(() {
+        if (mounted) {
+          _refreshAllData();
+        }
+      });
+    });
+  }
+
+  Future<void> _initializeApp() async {
+    // 업적 관련 데이터 완전 초기화 (배지 문제 해결)
+    await DebugHelper.clearAllAchievementData();
+    
+    // 디버그용: SharedPreferences 상태 확인
+    await DebugHelper.debugSharedPreferences();
+    
+    // 업적 이벤트 확인
+    _checkPendingAchievementEvents();
+  }
+  
+  /// 모든 화면 데이터 새로고침 (업적 달성 시 호출)
+  Future<void> _refreshAllData() async {
+    try {
+      // 업적 이벤트 다시 확인
+      _checkPendingAchievementEvents();
+      
+      // 현재 선택된 화면에 따라 데이터 새로고침
+      if (_selectedIndex == 0) {
+        // 홈 화면 새로고침 (필요시 구현)
+      } else if (_selectedIndex == 1) {
+        // 달력 화면 새로고침 (필요시 구현)
+      } else if (_selectedIndex == 2) {
+        // 업적 화면 새로고침 (필요시 구현)
+      } else if (_selectedIndex == 3) {
+        // 통계 화면 새로고침 (필요시 구현)
+      }
+      
+      // 상태 업데이트로 UI 새로고침
+      if (mounted) {
+        setState(() {});
+      }
+    } catch (e) {
+      debugPrint('데이터 새로고침 오류: $e');
+    }
+  }
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
+
+  // 대기 중인 업적 달성 이벤트 확인 및 다이얼로그 표시
+  Future<void> _checkPendingAchievementEvents() async {
+    try {
+      // 잠시 대기 후 확인 (화면이 완전히 로드된 후)
+      await Future.delayed(const Duration(milliseconds: 500));
+      
+      final events = await AchievementService.getPendingAchievementEvents();
+      
+      if (events.isNotEmpty && mounted) {
+        // 첫 번째 이벤트 표시
+        final event = events.first;
+        
+        // Achievement 객체 생성
+        final achievement = Achievement(
+          id: (event['id'] as String?) ?? '',
+          titleKey: 'achievementTutorialExplorerTitle',
+          descriptionKey: 'achievementTutorialExplorerDesc',
+          motivationKey: 'achievementTutorialExplorerMotivation',
+          type: AchievementType.first, // 기본값
+          rarity: _parseRarity((event['rarity'] as String?) ?? 'common'),
+          targetValue: 1,
+          xpReward: (event['xpReward'] as int?) ?? 0,
+          icon: Icons.emoji_events,
+        );
+        
+        // 다이얼로그 표시
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) => AchievementCelebrationDialog(
+            achievement: achievement,
+            onDismiss: () {
+              // 표시된 이벤트 제거 후 다음 이벤트 확인
+              _removeFirstEventAndCheckNext();
+            },
+          ),
+        );
+      }
+    } catch (e) {
+      print('업적 이벤트 확인 오류: $e');
+    }
+  }
+
+  // 첫 번째 이벤트 제거 후 다음 이벤트 확인
+  Future<void> _removeFirstEventAndCheckNext() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final events = prefs.getStringList('pending_achievement_events') ?? [];
+      
+      if (events.isNotEmpty) {
+        events.removeAt(0); // 첫 번째 이벤트 제거
+        await prefs.setStringList('pending_achievement_events', events);
+        
+        // 남은 이벤트가 있으면 다음 이벤트 표시
+        if (events.isNotEmpty && mounted) {
+          await Future.delayed(const Duration(milliseconds: 300));
+          _checkPendingAchievementEvents();
+        }
+      }
+    } catch (e) {
+      print('이벤트 제거 오류: $e');
+    }
+  }
+
+  // 레어도 문자열을 enum으로 변환
+  AchievementRarity _parseRarity(String rarityStr) {
+    switch (rarityStr.toLowerCase()) {
+      case 'rare':
+        return AchievementRarity.rare;
+      case 'epic':
+        return AchievementRarity.epic;
+      case 'legendary':
+        return AchievementRarity.legendary;
+      default:
+        return AchievementRarity.common;
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -37,58 +192,83 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
     return Scaffold(
       body: IndexedStack(index: _selectedIndex, children: _screens),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.1),
-              blurRadius: 10,
-              offset: const Offset(0, -2),
-            ),
-          ],
+      bottomNavigationBar: _buildCustomBottomNavBar(isDark),
+    );
+  }
+
+  Widget _buildCustomBottomNavBar(bool isDark) {
+    final l10n = AppLocalizations.of(context)!;
+    
+    return Container(
+      height: 80,
+      decoration: BoxDecoration(
+        color: isDark
+            ? const Color(AppColors.backgroundDark)
+            : const Color(AppColors.backgroundLight),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.1),
+            blurRadius: 10,
+            offset: const Offset(0, -2),
+          ),
+        ],
+        border: Border(
+          top: BorderSide(
+            color: const Color(AppColors.primaryColor).withValues(alpha: 0.2),
+            width: 1,
+          ),
         ),
-        child: BottomNavigationBar(
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: isDark
-              ? Color(AppColors.backgroundDark)
-              : Color(AppColors.backgroundLight),
-          selectedItemColor: Color(AppColors.primaryColor),
-          unselectedItemColor: Colors.grey[600],
-          selectedLabelStyle: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 12,
-          ),
-          unselectedLabelStyle: const TextStyle(
-            fontWeight: FontWeight.normal,
-            fontSize: 11,
-          ),
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              activeIcon: Icon(Icons.home),
-              label: '홈',
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          _buildNavItem(0, Icons.home_outlined, Icons.home, l10n.home),
+          _buildNavItem(1, Icons.calendar_today_outlined, Icons.calendar_today, l10n.calendar),
+          _buildNavItem(2, Icons.emoji_events_outlined, Icons.emoji_events, l10n.achievements),
+          _buildNavItem(3, Icons.analytics_outlined, Icons.analytics, l10n.statistics),
+          _buildNavItem(4, Icons.settings_outlined, Icons.settings, l10n.settings),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildNavItem(int index, IconData inactiveIcon, IconData activeIcon, String label) {
+    final isSelected = _selectedIndex == index;
+    
+    return GestureDetector(
+      onTap: () => _onItemTapped(index),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: isSelected 
+                    ? const Color(AppColors.primaryColor).withValues(alpha: 0.1)
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                isSelected ? activeIcon : inactiveIcon,
+                color: isSelected 
+                    ? const Color(AppColors.primaryColor)
+                    : Colors.grey[600],
+                size: 24,
+              ),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today_outlined),
-              activeIcon: Icon(Icons.calendar_today),
-              label: '달력',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.emoji_events_outlined),
-              activeIcon: Icon(Icons.emoji_events),
-              label: '업적',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.analytics_outlined),
-              activeIcon: Icon(Icons.analytics),
-              label: '통계',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings_outlined),
-              activeIcon: Icon(Icons.settings),
-              label: '설정',
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: TextStyle(
+                color: isSelected 
+                    ? const Color(AppColors.primaryColor)
+                    : Colors.grey[600],
+                fontSize: 11,
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+              ),
             ),
           ],
         ),
