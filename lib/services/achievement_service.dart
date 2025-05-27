@@ -388,6 +388,27 @@ class AchievementService {
         }
         return nightWorkouts;
 
+      case 'lunch_break_chad':
+        int lunchWorkouts = 0;
+        for (final workout in workouts) {
+          // 점심시간 (12시-14시) 체크
+          final localHour = workout.date.hour;
+          if (localHour >= 12 && localHour < 14) {
+            lunchWorkouts++;
+          }
+        }
+        return lunchWorkouts;
+
+      case 'speed_demon':
+      case 'endurance_king':
+      case 'comeback_kid':
+      case 'overachiever':
+      case 'double_trouble':
+      case 'consistency_master':
+        // 이러한 업적들은 별도 로직이 필요하므로 현재는 0 반환
+        // 추후 구체적인 조건 구현 예정
+        return 0;
+
       default:
         return 0;
     }

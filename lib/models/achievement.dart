@@ -423,9 +423,9 @@ class PredefinedAchievements {
 
     Achievement(
       id: 'streak_60_days',
-      titleKey: 'achievementMasterTitle',
-      descriptionKey: 'achievementMasterDesc',
-      motivationKey: 'achievementMasterMotivation',
+      titleKey: 'achievementStreak60Title',
+      descriptionKey: 'achievementStreak60Desc',
+      motivationKey: 'achievementStreak60Motivation',
       type: AchievementType.streak,
       rarity: AchievementRarity.legendary,
       targetValue: 60,
@@ -435,9 +435,9 @@ class PredefinedAchievements {
 
     Achievement(
       id: 'streak_100_days',
-      titleKey: 'achievementPerfectLegendTitle',
-      descriptionKey: 'achievementPerfectLegendDesc',
-      motivationKey: 'achievementPerfectLegendMotivation',
+      titleKey: 'achievementStreak100Title',
+      descriptionKey: 'achievementStreak100Desc',
+      motivationKey: 'achievementStreak100Motivation',
       type: AchievementType.streak,
       rarity: AchievementRarity.legendary,
       targetValue: 100,
@@ -460,9 +460,9 @@ class PredefinedAchievements {
 
     Achievement(
       id: 'total_100_pushups',
-      titleKey: 'achievementFirst100Title',
-      descriptionKey: 'achievementFirst100Desc',
-      motivationKey: 'achievementFirst100Motivation',
+      titleKey: 'achievementTotal100Title',
+      descriptionKey: 'achievementTotal100Desc',
+      motivationKey: 'achievementTotal100Motivation',
       type: AchievementType.volume,
       rarity: AchievementRarity.common,
       targetValue: 100,
@@ -472,9 +472,9 @@ class PredefinedAchievements {
 
     Achievement(
       id: 'total_250_pushups',
-      titleKey: 'achievementMasterTitle',
-      descriptionKey: 'achievementMasterDesc',
-      motivationKey: 'achievementMasterMotivation',
+      titleKey: 'achievementTotal250Title',
+      descriptionKey: 'achievementTotal250Desc',
+      motivationKey: 'achievementTotal250Motivation',
       type: AchievementType.volume,
       rarity: AchievementRarity.common,
       targetValue: 250,
@@ -484,9 +484,9 @@ class PredefinedAchievements {
 
     Achievement(
       id: 'total_500_pushups',
-      titleKey: 'achievementUltimateTitle',
-      descriptionKey: 'achievementUltimateDesc',
-      motivationKey: 'achievementUltimateMotivation',
+      titleKey: 'achievementTotal500Title',
+      descriptionKey: 'achievementTotal500Desc',
+      motivationKey: 'achievementTotal500Motivation',
       type: AchievementType.volume,
       rarity: AchievementRarity.rare,
       targetValue: 500,
@@ -496,9 +496,9 @@ class PredefinedAchievements {
 
     Achievement(
       id: 'total_1000_pushups',
-      titleKey: 'achievementPerfectLegendTitle',
-      descriptionKey: 'achievementPerfectLegendDesc',
-      motivationKey: 'achievementPerfectLegendMotivation',
+      titleKey: 'achievementTotal1000Title',
+      descriptionKey: 'achievementTotal1000Desc',
+      motivationKey: 'achievementTotal1000Motivation',
       type: AchievementType.volume,
       rarity: AchievementRarity.epic,
       targetValue: 1000,
@@ -508,9 +508,9 @@ class PredefinedAchievements {
 
     Achievement(
       id: 'total_2500_pushups',
-      titleKey: 'achievementMasterTitle',
-      descriptionKey: 'achievementMasterDesc',
-      motivationKey: 'achievementMasterMotivation',
+      titleKey: 'achievementTotal2500Title',
+      descriptionKey: 'achievementTotal2500Desc',
+      motivationKey: 'achievementTotal2500Motivation',
       type: AchievementType.volume,
       rarity: AchievementRarity.epic,
       targetValue: 2500,
@@ -520,9 +520,9 @@ class PredefinedAchievements {
 
     Achievement(
       id: 'total_5000_pushups',
-      titleKey: 'achievementUltimateTitle',
-      descriptionKey: 'achievementUltimateDesc',
-      motivationKey: 'achievementUltimateMotivation',
+      titleKey: 'achievementTotal5000Title',
+      descriptionKey: 'achievementTotal5000Desc',
+      motivationKey: 'achievementTotal5000Motivation',
       type: AchievementType.volume,
       rarity: AchievementRarity.legendary,
       targetValue: 5000,
@@ -532,9 +532,9 @@ class PredefinedAchievements {
 
     Achievement(
       id: 'total_10000_pushups',
-      titleKey: 'achievementPerfectLegendTitle',
-      descriptionKey: 'achievementPerfectLegendDesc',
-      motivationKey: 'achievementPerfectLegendMotivation',
+      titleKey: 'achievementTotal10000Title',
+      descriptionKey: 'achievementTotal10000Desc',
+      motivationKey: 'achievementTotal10000Motivation',
       type: AchievementType.volume,
       rarity: AchievementRarity.legendary,
       targetValue: 10000,
@@ -545,9 +545,9 @@ class PredefinedAchievements {
     // 완벽 수행 시리즈
     Achievement(
       id: 'perfect_workout_3',
-      titleKey: 'achievementPerfectSetTitle',
-      descriptionKey: 'achievementPerfectSetDesc',
-      motivationKey: 'achievementPerfectSetMotivation',
+      titleKey: 'achievementPerfect3Title',
+      descriptionKey: 'achievementPerfect3Desc',
+      motivationKey: 'achievementPerfect3Motivation',
       type: AchievementType.perfect,
       rarity: AchievementRarity.common,
       targetValue: 3,
@@ -557,9 +557,9 @@ class PredefinedAchievements {
 
     Achievement(
       id: 'perfect_workout_5',
-      titleKey: 'achievementMasterTitle',
-      descriptionKey: 'achievementMasterDesc',
-      motivationKey: 'achievementMasterMotivation',
+      titleKey: 'achievementPerfect5Title',
+      descriptionKey: 'achievementPerfect5Desc',
+      motivationKey: 'achievementPerfect5Motivation',
       type: AchievementType.perfect,
       rarity: AchievementRarity.rare,
       targetValue: 5,
@@ -569,9 +569,9 @@ class PredefinedAchievements {
 
     Achievement(
       id: 'perfect_workout_10',
-      titleKey: 'achievementPerfectLegendTitle',
-      descriptionKey: 'achievementPerfectLegendDesc',
-      motivationKey: 'achievementPerfectLegendMotivation',
+      titleKey: 'achievementPerfect10Title',
+      descriptionKey: 'achievementPerfect10Desc',
+      motivationKey: 'achievementPerfect10Motivation',
       type: AchievementType.perfect,
       rarity: AchievementRarity.epic,
       targetValue: 10,
@@ -581,9 +581,9 @@ class PredefinedAchievements {
 
     Achievement(
       id: 'perfect_workout_20',
-      titleKey: 'achievementUltimateTitle',
-      descriptionKey: 'achievementUltimateDesc',
-      motivationKey: 'achievementUltimateMotivation',
+      titleKey: 'achievementPerfect20Title',
+      descriptionKey: 'achievementPerfect20Desc',
+      motivationKey: 'achievementPerfect20Motivation',
       type: AchievementType.perfect,
       rarity: AchievementRarity.legendary,
       targetValue: 20,
@@ -593,10 +593,10 @@ class PredefinedAchievements {
 
     // 특별한 조건 시리즈
     Achievement(
-      id: 'explorer_achievement',
-      titleKey: 'achievementExplorerTitle',
-      descriptionKey: 'achievementExplorerDesc',
-      motivationKey: 'achievementExplorerMotivation',
+      id: 'tutorial_explorer',
+      titleKey: 'achievementTutorialExplorerTitle',
+      descriptionKey: 'achievementTutorialExplorerDesc',
+      motivationKey: 'achievementTutorialExplorerMotivation',
       type: AchievementType.special,
       rarity: AchievementRarity.common,
       targetValue: 1,
@@ -605,25 +605,25 @@ class PredefinedAchievements {
     ),
 
     Achievement(
-      id: 'learner_achievement',
-      titleKey: 'achievementMasterTitle',
-      descriptionKey: 'achievementMasterDesc',
-      motivationKey: 'achievementMasterMotivation',
+      id: 'tutorial_student',
+      titleKey: 'achievementTutorialStudentTitle',
+      descriptionKey: 'achievementTutorialStudentDesc',
+      motivationKey: 'achievementTutorialStudentMotivation',
       type: AchievementType.special,
       rarity: AchievementRarity.rare,
-      targetValue: 1,
+      targetValue: 3,
       xpReward: 300,
       icon: Icons.school,
     ),
 
     Achievement(
-      id: 'master_achievement',
-      titleKey: 'achievementPerfectLegendTitle',
-      descriptionKey: 'achievementPerfectLegendDesc',
-      motivationKey: 'achievementPerfectLegendMotivation',
+      id: 'tutorial_master',
+      titleKey: 'achievementTutorialMasterTitle',
+      descriptionKey: 'achievementTutorialMasterDesc',
+      motivationKey: 'achievementTutorialMasterMotivation',
       type: AchievementType.special,
       rarity: AchievementRarity.legendary,
-      targetValue: 1,
+      targetValue: 5,
       xpReward: 1000,
       icon: Icons.psychology,
     ),
@@ -631,9 +631,9 @@ class PredefinedAchievements {
     // 시간대별 특별 업적
     Achievement(
       id: 'early_bird',
-      titleKey: 'achievementExplorerTitle',
-      descriptionKey: 'achievementExplorerDesc',
-      motivationKey: 'achievementExplorerMotivation',
+      titleKey: 'achievementEarlyBirdTitle',
+      descriptionKey: 'achievementEarlyBirdDesc',
+      motivationKey: 'achievementEarlyBirdMotivation',
       type: AchievementType.special,
       rarity: AchievementRarity.rare,
       targetValue: 1,
@@ -643,9 +643,9 @@ class PredefinedAchievements {
 
     Achievement(
       id: 'night_owl',
-      titleKey: 'achievementMasterTitle',
-      descriptionKey: 'achievementMasterDesc',
-      motivationKey: 'achievementMasterMotivation',
+      titleKey: 'achievementNightOwlTitle',
+      descriptionKey: 'achievementNightOwlDesc',
+      motivationKey: 'achievementNightOwlMotivation',
       type: AchievementType.special,
       rarity: AchievementRarity.rare,
       targetValue: 1,
@@ -655,9 +655,9 @@ class PredefinedAchievements {
 
     Achievement(
       id: 'weekend_warrior',
-      titleKey: 'achievementUltimateTitle',
-      descriptionKey: 'achievementUltimateDesc',
-      motivationKey: 'achievementUltimateMotivation',
+      titleKey: 'achievementWeekendWarriorTitle',
+      descriptionKey: 'achievementWeekendWarriorDesc',
+      motivationKey: 'achievementWeekendWarriorMotivation',
       type: AchievementType.special,
       rarity: AchievementRarity.common,
       targetValue: 1,
@@ -667,9 +667,9 @@ class PredefinedAchievements {
 
     Achievement(
       id: 'lunch_break_chad',
-      titleKey: 'achievementPerfectSetTitle',
-      descriptionKey: 'achievementPerfectSetDesc',
-      motivationKey: 'achievementPerfectSetMotivation',
+      titleKey: 'achievementLunchBreakTitle',
+      descriptionKey: 'achievementLunchBreakDesc',
+      motivationKey: 'achievementLunchBreakMotivation',
       type: AchievementType.special,
       rarity: AchievementRarity.common,
       targetValue: 1,
@@ -680,9 +680,9 @@ class PredefinedAchievements {
     // 성능 기반 업적
     Achievement(
       id: 'speed_demon',
-      titleKey: 'achievementMasterTitle',
-      descriptionKey: 'achievementMasterDesc',
-      motivationKey: 'achievementMasterMotivation',
+      titleKey: 'achievementSpeedDemonTitle',
+      descriptionKey: 'achievementSpeedDemonDesc',
+      motivationKey: 'achievementSpeedDemonMotivation',
       type: AchievementType.special,
       rarity: AchievementRarity.epic,
       targetValue: 1,
@@ -692,9 +692,9 @@ class PredefinedAchievements {
 
     Achievement(
       id: 'endurance_king',
-      titleKey: 'achievementUltimateTitle',
-      descriptionKey: 'achievementUltimateDesc',
-      motivationKey: 'achievementUltimateMotivation',
+      titleKey: 'achievementEnduranceKingTitle',
+      descriptionKey: 'achievementEnduranceKingDesc',
+      motivationKey: 'achievementEnduranceKingMotivation',
       type: AchievementType.special,
       rarity: AchievementRarity.epic,
       targetValue: 1,
@@ -704,9 +704,9 @@ class PredefinedAchievements {
 
     Achievement(
       id: 'comeback_kid',
-      titleKey: 'achievementExplorerTitle',
-      descriptionKey: 'achievementExplorerDesc',
-      motivationKey: 'achievementExplorerMotivation',
+      titleKey: 'achievementComebackKidTitle',
+      descriptionKey: 'achievementComebackKidDesc',
+      motivationKey: 'achievementComebackKidMotivation',
       type: AchievementType.special,
       rarity: AchievementRarity.rare,
       targetValue: 1,
@@ -714,24 +714,23 @@ class PredefinedAchievements {
       icon: Icons.refresh,
     ),
 
-    // 목표 달성 업적
     Achievement(
-      id: 'goal_crusher',
-      titleKey: 'achievementPerfectLegendTitle',
-      descriptionKey: 'achievementPerfectLegendDesc',
-      motivationKey: 'achievementPerfectLegendMotivation',
+      id: 'overachiever',
+      titleKey: 'achievementOverachieverTitle',
+      descriptionKey: 'achievementOverachieverDesc',
+      motivationKey: 'achievementOverachieverMotivation',
       type: AchievementType.special,
       rarity: AchievementRarity.epic,
       targetValue: 1,
       xpReward: 600,
-      icon: Icons.flag,
+      icon: Icons.trending_up,
     ),
 
     Achievement(
       id: 'double_trouble',
-      titleKey: 'achievementMasterTitle',
-      descriptionKey: 'achievementMasterDesc',
-      motivationKey: 'achievementMasterMotivation',
+      titleKey: 'achievementDoubleTroubleTitle',
+      descriptionKey: 'achievementDoubleTroubleDesc',
+      motivationKey: 'achievementDoubleTroubleMotivation',
       type: AchievementType.special,
       rarity: AchievementRarity.rare,
       targetValue: 1,
@@ -741,163 +740,14 @@ class PredefinedAchievements {
 
     Achievement(
       id: 'consistency_master',
-      titleKey: 'achievementUltimateTitle',
-      descriptionKey: 'achievementUltimateDesc',
-      motivationKey: 'achievementUltimateMotivation',
+      titleKey: 'achievementConsistencyMasterTitle',
+      descriptionKey: 'achievementConsistencyMasterDesc',
+      motivationKey: 'achievementConsistencyMasterMotivation',
       type: AchievementType.special,
       rarity: AchievementRarity.legendary,
       targetValue: 1,
       xpReward: 1000,
-      icon: Icons.trending_up,
-    ),
-
-    // 레벨 기반 업적
-    Achievement(
-      id: 'level_5_chad',
-      titleKey: 'achievementLevelUpTitle',
-      descriptionKey: 'achievementLevelUpDesc',
-      motivationKey: 'achievementLevelUpMotivation',
-      type: AchievementType.special,
-      rarity: AchievementRarity.common,
-      targetValue: 1,
-      xpReward: 250,
-      icon: Icons.looks_5,
-    ),
-
-    Achievement(
-      id: 'level_10_chad',
-      titleKey: 'achievementMasterTitle',
-      descriptionKey: 'achievementMasterDesc',
-      motivationKey: 'achievementMasterMotivation',
-      type: AchievementType.special,
-      rarity: AchievementRarity.rare,
-      targetValue: 1,
-      xpReward: 500,
-      icon: Icons.filter_1,
-    ),
-
-    Achievement(
-      id: 'level_20_chad',
-      titleKey: 'achievementUltimateTitle',
-      descriptionKey: 'achievementUltimateDesc',
-      motivationKey: 'achievementUltimateMotivation',
-      type: AchievementType.special,
-      rarity: AchievementRarity.epic,
-      targetValue: 1,
-      xpReward: 1000,
-      icon: Icons.filter_2,
-    ),
-
-    // 월간/계절 업적
-    Achievement(
-      id: 'monthly_warrior',
-      titleKey: 'achievementMonthStreakTitle',
-      descriptionKey: 'achievementMonthStreakDesc',
-      motivationKey: 'achievementMonthStreakMotivation',
-      type: AchievementType.special,
-      rarity: AchievementRarity.epic,
-      targetValue: 1,
-      xpReward: 800,
-      icon: Icons.calendar_month,
-    ),
-
-    Achievement(
-      id: 'season_champion',
-      titleKey: 'achievementPerfectLegendTitle',
-      descriptionKey: 'achievementPerfectLegendDesc',
-      motivationKey: 'achievementPerfectLegendMotivation',
-      type: AchievementType.special,
-      rarity: AchievementRarity.legendary,
-      targetValue: 1,
-      xpReward: 1500,
-      icon: Icons.emoji_events,
-    ),
-
-    // 다양성 업적
-    Achievement(
-      id: 'variety_seeker',
-      titleKey: 'achievementExplorerTitle',
-      descriptionKey: 'achievementExplorerDesc',
-      motivationKey: 'achievementExplorerMotivation',
-      type: AchievementType.special,
-      rarity: AchievementRarity.rare,
-      targetValue: 1,
-      xpReward: 400,
-      icon: Icons.shuffle,
-    ),
-
-    Achievement(
-      id: 'all_rounder',
-      titleKey: 'achievementMasterTitle',
-      descriptionKey: 'achievementMasterDesc',
-      motivationKey: 'achievementMasterMotivation',
-      type: AchievementType.special,
-      rarity: AchievementRarity.epic,
-      targetValue: 1,
-      xpReward: 600,
-      icon: Icons.all_inclusive,
-    ),
-
-    // 의지력 업적
-    Achievement(
-      id: 'iron_will',
-      titleKey: 'achievementUltimateTitle',
-      descriptionKey: 'achievementUltimateDesc',
-      motivationKey: 'achievementUltimateMotivation',
-      type: AchievementType.special,
-      rarity: AchievementRarity.legendary,
-      targetValue: 1,
-      xpReward: 1200,
-      icon: Icons.security,
-    ),
-
-    Achievement(
-      id: 'unstoppable_force',
-      titleKey: 'achievementPerfectLegendTitle',
-      descriptionKey: 'achievementPerfectLegendDesc',
-      motivationKey: 'achievementPerfectLegendMotivation',
-      type: AchievementType.special,
-      rarity: AchievementRarity.legendary,
-      targetValue: 1,
-      xpReward: 1500,
-      icon: Icons.flash_on,
-    ),
-
-    Achievement(
-      id: 'legendary_beast',
-      titleKey: 'achievementUltimateTitle',
-      descriptionKey: 'achievementUltimateDesc',
-      motivationKey: 'achievementUltimateMotivation',
-      type: AchievementType.special,
-      rarity: AchievementRarity.legendary,
-      targetValue: 1,
-      xpReward: 2000,
-      icon: Icons.pets,
-    ),
-
-    // 동기부여 업적
-    Achievement(
-      id: 'motivator',
-      titleKey: 'achievementMasterTitle',
-      descriptionKey: 'achievementMasterDesc',
-      motivationKey: 'achievementMasterMotivation',
-      type: AchievementType.special,
-      rarity: AchievementRarity.rare,
-      targetValue: 1,
-      xpReward: 350,
-      icon: Icons.campaign,
-    ),
-
-    Achievement(
-      id: 'dedication_master',
-      titleKey: 'achievementPerfectLegendTitle',
-      descriptionKey: 'achievementPerfectLegendDesc',
-      motivationKey: 'achievementPerfectLegendMotivation',
-      type: AchievementType.special,
-      rarity: AchievementRarity.legendary,
-      targetValue: 1,
-      xpReward: 1000,
-      icon: Icons.favorite,
+      icon: Icons.timeline,
     ),
   ];
 }
