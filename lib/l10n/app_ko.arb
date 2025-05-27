@@ -746,39 +746,39 @@
     "description": "격려 메시지 10"
   },
 
-  "chadMessage0": "💥 깨어나라, 전설이여! 오늘부터 차드 제국의 황제가 된다 💥",
+  "chadMessage0": "🛌 잠에서 깨어나라, 미래의 차드여! 여정이 시작된다!",
   "@chadMessage0": {
-    "description": "차드 레벨 0 메시지"
+    "description": "차드 레벨 0 메시지 - 수면모자차드"
   },
 
-  "chadMessage1": "⚡ 시작이 곧 정복이다, 만삣삐! 약자들은 뒤에서 지켜보고 있다 ⚡",
+  "chadMessage1": "😎 기본기가 탄탄해지고 있어! 진짜 차드의 시작이야!",
   "@chadMessage1": {
-    "description": "차드 레벨 1 메시지"
+    "description": "차드 레벨 1 메시지 - 기본차드"
   },
 
-  "chadMessage2": "🔱 차드 에너지가 폭발한다! 이제 세상이 네 무릎 꿇을 차례야, FXXK YEAH! 🔱",
+  "chadMessage2": "☕ 에너지가 넘쳐흘러! 커피보다 강한 힘이 생겼어!",
   "@chadMessage2": {
-    "description": "차드 레벨 2 메시지"
+    "description": "차드 레벨 2 메시지 - 커피차드"
   },
 
-  "chadMessage3": "👑 자신감? 그딴 건 이미 넘어섰다. 이제 절대 강자의 영역이다, 만삣삐! 👑",
+  "chadMessage3": "🔥 정면돌파! 어떤 장애물도 막을 수 없다!",
   "@chadMessage3": {
-    "description": "차드 레벨 3 메시지"
+    "description": "차드 레벨 3 메시지 - 정면차드"
   },
 
-  "chadMessage4": "🦁 멋져 보인다고? 아니다. 이제 전설이 되었다, YOU ABSOLUTE BEAST! 🦁",
+  "chadMessage4": "🕶️ 쿨함이 몸에 배었어! 진정한 알파의 모습이야!",
   "@chadMessage4": {
-    "description": "차드 레벨 4 메시지"
+    "description": "차드 레벨 4 메시지 - 썬글차드"
   },
 
-  "chadMessage5": "🌪️ 차드 아우라가 아니야... 이제 진짜 ALPHA STORM이 왔다, 만삣삐! 🌪️",
+  "chadMessage5": "⚡ 눈빛만으로도 세상을 바꿀 수 있어! 전설의 시작!",
   "@chadMessage5": {
-    "description": "차드 레벨 5 메시지"
+    "description": "차드 레벨 5 메시지 - 눈빔차드"
   },
 
-  "chadMessage6": "🚀 기가 차드 탄생? 틀렸다! 이제 ULTRA MEGA GIGA CHAD EMPEROR 강림했다! 🚀",
+  "chadMessage6": "👑 최고의 차드 완성! 더블 파워로 우주를 정복하라!",
   "@chadMessage6": {
-    "description": "차드 레벨 6 메시지"
+    "description": "차드 레벨 6 메시지 - 더블차드"
   },
 
   "tutorialTitle": "🔥 ALPHA EMPEROR PUSHUP DOJO 🔥",
@@ -1264,5 +1264,1767 @@
         "type": "String"
       }
     }
-  }
-} 
+  },
+
+  "achievementFirstJourney": "차드 여정의 시작",
+  "@achievementFirstJourney": {
+    "description": "첫 번째 업적 제목"
+  },
+
+  "achievementFirstJourneyDesc": "첫 번째 푸쉬업을 완료하다",
+  "@achievementFirstJourneyDesc": {
+    "description": "첫 번째 업적 설명"
+  },
+
+  "achievementPerfectSet": "완벽한 첫 세트",
+  "@achievementPerfectSet": {
+    "description": "완벽한 세트 업적 제목"
+  },
+
+  "achievementPerfectSetDesc": "목표를 100% 달성한 세트를 완료하다",
+  "@achievementPerfectSetDesc": {
+    "description": "완벽한 세트 업적 설명"
+  },
+
+  "achievementCenturion": "센츄리온",
+  "@achievementCenturion": {
+    "description": "100회 업적 제목"
+  },
+
+  "achievementCenturionDesc": "총 100회의 푸쉬업을 달성하다",
+  "@achievementCenturionDesc": {
+    "description": "100회 업적 설명"
+  },
+
+  "achievementWeekWarrior": "주간 전사",
+  "@achievementWeekWarrior": {
+    "description": "7일 연속 업적 제목"
+  },
+
+  "achievementWeekWarriorDesc": "7일 연속으로 운동하다",
+  "@achievementWeekWarriorDesc": {
+    "description": "7일 연속 업적 설명"
+  },
+
+  "achievementIronWill": "강철 의지",
+  "@achievementIronWill": {
+    "description": "어려운 난이도 업적 제목"
+  },
+
+  "achievementIronWillDesc": "어려운 난이도로 운동을 완료하다",
+  "@achievementIronWillDesc": {
+    "description": "어려운 난이도 업적 설명"
+  },
+
+  "achievementSpeedDemon": "스피드 데몬",
+  "@achievementSpeedDemon": {
+    "description": "빠른 완료 업적 제목"
+  },
+
+  "achievementSpeedDemonDesc": "5분 안에 운동을 완료하다",
+  "@achievementSpeedDemonDesc": {
+    "description": "빠른 완료 업적 설명"
+  },
+
+  "achievementPushupMaster": "푸쉬업 마스터",
+  "@achievementPushupMaster": {
+    "description": "1000회 업적 제목"
+  },
+
+  "achievementPushupMasterDesc": "총 1000회의 푸쉬업을 달성하다",
+  "@achievementPushupMasterDesc": {
+    "description": "1000회 업적 설명"
+  },
+
+  "achievementConsistency": "일관성의 왕",
+  "@achievementConsistency": {
+    "description": "30일 연속 업적 제목"
+  },
+
+  "achievementConsistencyDesc": "30일 연속으로 운동하다",
+  "@achievementConsistencyDesc": {
+    "description": "30일 연속 업적 설명"
+  },
+
+  "achievementBeastMode": "야수 모드",
+  "@achievementBeastMode": {
+    "description": "목표 초과 업적 제목"
+  },
+
+  "achievementBeastModeDesc": "목표를 150% 초과 달성하다",
+  "@achievementBeastModeDesc": {
+    "description": "목표 초과 업적 설명"
+  },
+
+  "achievementMarathoner": "마라토너",
+  "@achievementMarathoner": {
+    "description": "5000회 업적 제목"
+  },
+
+  "achievementMarathonerDesc": "총 5000회의 푸쉬업을 달성하다",
+  "@achievementMarathonerDesc": {
+    "description": "5000회 업적 설명"
+  },
+
+  "achievementLegend": "전설",
+  "@achievementLegend": {
+    "description": "10000회 업적 제목"
+  },
+
+  "achievementLegendDesc": "총 10000회의 푸쉬업을 달성하다",
+  "@achievementLegendDesc": {
+    "description": "10000회 업적 설명"
+  },
+
+  "achievementPerfectionist": "완벽주의자",
+  "@achievementPerfectionist": {
+    "description": "완벽한 세트 10개 업적 제목"
+  },
+
+  "achievementPerfectionistDesc": "완벽한 세트를 10개 달성하다",
+  "@achievementPerfectionistDesc": {
+    "description": "완벽한 세트 10개 업적 설명"
+  },
+
+  "achievementEarlyBird": "얼리버드",
+  "@achievementEarlyBird": {
+    "description": "아침 운동 업적 제목"
+  },
+
+  "achievementEarlyBirdDesc": "오전 6시 이전에 운동을 완료하다",
+  "@achievementEarlyBirdDesc": {
+    "description": "아침 운동 업적 설명"
+  },
+
+  "achievementNightOwl": "올빼미",
+  "@achievementNightOwl": {
+    "description": "밤 운동 업적 제목"
+  },
+
+  "achievementNightOwlDesc": "오후 10시 이후에 운동을 완료하다",
+  "@achievementNightOwlDesc": {
+    "description": "밤 운동 업적 설명"
+  },
+
+  "achievementOverachiever": "초과달성자",
+  "@achievementOverachiever": {
+    "description": "목표 초과 5회 업적 제목"
+  },
+
+  "achievementOverachieverDesc": "목표를 초과 달성한 세트를 5개 완료하다",
+  "@achievementOverachieverDesc": {
+    "description": "목표 초과 5회 업적 설명"
+  },
+
+  "achievementEndurance": "지구력 왕",
+  "@achievementEndurance": {
+    "description": "긴 운동 업적 제목"
+  },
+
+  "achievementEnduranceDesc": "30분 이상 운동하다",
+  "@achievementEnduranceDesc": {
+    "description": "긴 운동 업적 설명"
+  },
+
+  "achievementVariety": "다양성의 달인",
+  "@achievementVariety": {
+    "description": "다양한 푸쉬업 업적 제목"
+  },
+
+  "achievementVarietyDesc": "5가지 다른 푸쉬업 타입을 완료하다",
+  "@achievementVarietyDesc": {
+    "description": "다양한 푸쉬업 업적 설명"
+  },
+
+  "achievementDedication": "헌신",
+  "@achievementDedication": {
+    "description": "100일 연속 업적 제목"
+  },
+
+  "achievementDedicationDesc": "100일 연속으로 운동하다",
+  "@achievementDedicationDesc": {
+    "description": "100일 연속 업적 설명"
+  },
+
+  "achievementUltimate": "궁극의 차드",
+  "@achievementUltimate": {
+    "description": "최고 업적 제목"
+  },
+
+  "achievementUltimateDesc": "모든 업적을 달성하다",
+  "@achievementUltimateDesc": {
+    "description": "최고 업적 설명"
+  },
+
+  "achievementGodMode": "신 모드",
+  "@achievementGodMode": {
+    "description": "신 모드 업적 제목"
+  },
+
+  "achievementGodModeDesc": "한 세션에서 500회 이상 달성하다",
+  "@achievementGodModeDesc": {
+    "description": "신 모드 업적 설명"
+  },
+
+  "achievementRarityCommon": "일반",
+  "@achievementRarityCommon": {
+    "description": "일반 등급"
+  },
+
+  "achievementRarityRare": "레어",
+  "@achievementRarityRare": {
+    "description": "레어 등급"
+  },
+
+  "achievementRarityEpic": "에픽",
+  "@achievementRarityEpic": {
+    "description": "에픽 등급"
+  },
+
+  "achievementRarityLegendary": "전설",
+  "@achievementRarityLegendary": {
+    "description": "전설 등급"
+  },
+
+  "achievementRarityMythic": "신화",
+  "@achievementRarityMythic": {
+    "description": "신화 등급"
+  },
+
+  "home": "홈",
+  "@home": {
+    "description": "홈 탭"
+  },
+
+  "calendar": "달력",
+  "@calendar": {
+    "description": "달력 탭"
+  },
+
+  "achievements": "업적",
+  "@achievements": {
+    "description": "업적 탭"
+  },
+
+  "statistics": "통계",
+  "@statistics": {
+    "description": "통계 탭"
+  },
+
+  "settings": "설정",
+  "@settings": {
+    "description": "설정 탭"
+  },
+
+  "chadShorts": "차드 쇼츠 🔥",
+  "@chadShorts": {
+    "description": "차드 쇼츠 버튼"
+  },
+
+  "settingsTitle": "⚙️ 차드 설정",
+  "@settingsTitle": {
+    "description": "설정 화면 제목"
+  },
+
+  "settingsSubtitle": "당신의 차드 여정을 커스터마이즈하세요",
+  "@settingsSubtitle": {
+    "description": "설정 화면 부제목"
+  },
+
+  "workoutSettings": "💪 운동 설정",
+  "@workoutSettings": {
+    "description": "운동 설정 섹션"
+  },
+
+  "notificationSettings": "🔔 알림 설정",
+  "@notificationSettings": {
+    "description": "알림 설정 섹션"
+  },
+
+  "appearanceSettings": "🎨 외형 설정",
+  "@appearanceSettings": {
+    "description": "외형 설정 섹션"
+  },
+
+  "dataSettings": "💾 데이터 관리",
+  "@dataSettings": {
+    "description": "데이터 관리 섹션"
+  },
+
+  "aboutSettings": "ℹ️ 앱 정보",
+  "@aboutSettings": {
+    "description": "앱 정보 섹션"
+  },
+
+  "difficultySettings": "난이도 설정",
+  "@difficultySettings": {
+    "description": "난이도 설정"
+  },
+
+  "pushNotifications": "푸시 알림",
+  "@pushNotifications": {
+    "description": "푸시 알림 설정"
+  },
+
+  "pushNotificationsDesc": "앱의 모든 알림을 받습니다",
+  "@pushNotificationsDesc": {
+    "description": "푸시 알림 설명"
+  },
+
+  "achievementNotifications": "업적 알림",
+  "@achievementNotifications": {
+    "description": "업적 알림 설정"
+  },
+
+  "achievementNotificationsDesc": "새로운 업적 달성 시 알림을 받습니다",
+  "@achievementNotificationsDesc": {
+    "description": "업적 알림 설명"
+  },
+
+  "workoutReminders": "운동 리마인더",
+  "@workoutReminders": {
+    "description": "운동 리마인더 설정"
+  },
+
+  "workoutRemindersDesc": "매일 설정한 시간에 운동을 알려드립니다",
+  "@workoutRemindersDesc": {
+    "description": "운동 리마인더 설명"
+  },
+
+  "reminderTime": "리마인더 시간",
+  "@reminderTime": {
+    "description": "리마인더 시간 설정"
+  },
+
+  "reminderTimeDesc": "운동 알림을 받을 시간을 설정합니다",
+  "@reminderTimeDesc": {
+    "description": "리마인더 시간 설명"
+  },
+
+  "darkMode": "다크 모드",
+  "@darkMode": {
+    "description": "다크 모드 설정"
+  },
+
+  "darkModeDesc": "어두운 테마를 사용합니다",
+  "@darkModeDesc": {
+    "description": "다크 모드 설명"
+  },
+
+  "languageSettings": "언어 설정",
+  "@languageSettings": {
+    "description": "언어 설정"
+  },
+
+  "dataBackup": "데이터 백업",
+  "@dataBackup": {
+    "description": "데이터 백업"
+  },
+
+  "dataBackupDesc": "운동 기록과 업적을 백업합니다",
+  "@dataBackupDesc": {
+    "description": "데이터 백업 설명"
+  },
+
+  "dataRestore": "데이터 복원",
+  "@dataRestore": {
+    "description": "데이터 복원"
+  },
+
+  "dataRestoreDesc": "백업된 데이터를 복원합니다",
+  "@dataRestoreDesc": {
+    "description": "데이터 복원 설명"
+  },
+
+  "dataReset": "데이터 초기화",
+  "@dataReset": {
+    "description": "데이터 초기화"
+  },
+
+  "dataResetDesc": "모든 데이터를 삭제합니다",
+  "@dataResetDesc": {
+    "description": "데이터 초기화 설명"
+  },
+
+  "versionInfo": "버전 정보",
+  "@versionInfo": {
+    "description": "버전 정보"
+  },
+
+  "versionInfoDesc": "Mission: 100 v1.0.0",
+  "@versionInfoDesc": {
+    "description": "버전 정보 설명"
+  },
+
+  "developerInfo": "개발자 정보",
+  "@developerInfo": {
+    "description": "개발자 정보"
+  },
+
+  "developerInfoDesc": "차드가 되는 여정을 함께하세요",
+  "@developerInfoDesc": {
+    "description": "개발자 정보 설명"
+  },
+
+  "sendFeedback": "피드백 보내기",
+  "@sendFeedback": {
+    "description": "피드백 보내기"
+  },
+
+  "sendFeedbackDesc": "의견을 공유해주세요",
+  "@sendFeedbackDesc": {
+    "description": "피드백 보내기 설명"
+  },
+
+  "common": "일반",
+  "@common": {
+    "description": "일반 등급"
+  },
+
+  "rare": "레어",
+  "@rare": {
+    "description": "레어 등급"
+  },
+
+  "epic": "에픽",
+  "@epic": {
+    "description": "에픽 등급"
+  },
+
+  "legendary": "레전더리",
+  "@legendary": {
+    "description": "레전더리 등급"
+  },
+
+  "unlockedAchievements": "획득한 업적 ({count})",
+  "@unlockedAchievements": {
+    "description": "획득한 업적 탭",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "lockedAchievements": "미획득 업적 ({count})",
+  "@lockedAchievements": {
+    "description": "미획득 업적 탭",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "noAchievementsYet": "아직 획득한 업적이 없습니다",
+  "@noAchievementsYet": {
+    "description": "업적 없음 제목"
+  },
+
+  "startWorkoutForAchievements": "운동을 시작해서 첫 번째 업적을 획득해보세요!",
+  "@startWorkoutForAchievements": {
+    "description": "업적 없음 메시지"
+  },
+
+  "allAchievementsUnlocked": "모든 업적을 획득했습니다!",
+  "@allAchievementsUnlocked": {
+    "description": "모든 업적 획득 제목"
+  },
+
+  "congratulationsChad": "축하합니다! 진정한 차드가 되셨습니다! 🎉",
+  "@congratulationsChad": {
+    "description": "모든 업적 획득 메시지"
+  },
+
+  "achievementsBannerText": "업적을 달성해서 차드가 되자! 🏆",
+  "@achievementsBannerText": {
+    "description": "업적 화면 배너 텍스트"
+  },
+
+  "totalExperience": "총 경험치",
+  "@totalExperience": {
+    "description": "총 경험치 라벨"
+  },
+
+  "noWorkoutRecords": "아직 운동 기록이 없어!",
+  "@noWorkoutRecords": {
+    "description": "운동 기록 없음 제목"
+  },
+
+  "startFirstWorkout": "첫 운동을 시작하고\\n차드의 전설을 만들어보자! 🔥",
+  "@startFirstWorkout": {
+    "description": "첫 운동 시작 메시지"
+  },
+
+  "loadingStatistics": "차드의 통계를 불러오는 중...",
+  "@loadingStatistics": {
+    "description": "통계 로딩 메시지"
+  },
+
+  "totalWorkouts": "총 운동 횟수",
+  "@totalWorkouts": {
+    "description": "총 운동 횟수"
+  },
+
+  "workoutCount": "{count}회",
+  "@workoutCount": {
+    "description": "운동 횟수 형식",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "chadDays": "차드가 된 날들!",
+  "@chadDays": {
+    "description": "총 운동 횟수 부제목"
+  },
+
+  "totalPushups": "총 푸시업",
+  "@totalPushups": {
+    "description": "총 푸시업 개수"
+  },
+
+  "pushupsCount": "{count}개",
+  "@pushupsCount": {
+    "description": "푸시업 개수 형식",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "realChadPower": "진짜 차드 파워!",
+  "@realChadPower": {
+    "description": "총 푸시업 부제목"
+  },
+
+  "averageCompletion": "평균 달성률",
+  "@averageCompletion": {
+    "description": "평균 달성률"
+  },
+
+  "completionPercentage": "{percentage}%",
+  "@completionPercentage": {
+    "description": "달성률 퍼센트 형식",
+    "placeholders": {
+      "percentage": {
+        "type": "int"
+      }
+    }
+  },
+
+  "perfectExecution": "완벽한 수행!",
+  "@perfectExecution": {
+    "description": "평균 달성률 부제목"
+  },
+
+  "thisMonthWorkouts": "이번 달 운동",
+  "@thisMonthWorkouts": {
+    "description": "이번 달 운동 횟수"
+  },
+
+  "consistentChad": "꾸준한 차드!",
+  "@consistentChad": {
+    "description": "이번 달 운동 부제목"
+  },
+
+  "currentStreak": "현재 연속",
+  "@currentStreak": {
+    "description": "현재 연속 운동일"
+  },
+
+  "streakDays": "{days}일",
+  "@streakDays": {
+    "description": "연속 일수 형식",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+
+  "bestRecord": "최고 기록",
+  "@bestRecord": {
+    "description": "최고 연속 운동일"
+  },
+
+  "recentWorkouts": "최근 운동 기록",
+  "@recentWorkouts": {
+    "description": "최근 운동 기록 제목"
+  },
+
+  "repsAchieved": "{reps}개 • {percentage}% 달성",
+  "@repsAchieved": {
+    "description": "운동 기록 형식",
+    "placeholders": {
+      "reps": {
+        "type": "int"
+      },
+      "percentage": {
+        "type": "int"
+      }
+    }
+  },
+
+  "checkChadGrowth": "차드의 성장을 확인하라! 📊",
+  "@checkChadGrowth": {
+    "description": "통계 화면 배너 텍스트"
+  },
+
+  "workoutRecordForDate": "{month}/{day} 운동 기록",
+  "@workoutRecordForDate": {
+    "description": "선택된 날짜의 운동 기록",
+    "placeholders": {
+      "month": {
+        "type": "int"
+      },
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+
+  "noWorkoutRecordForDate": "이 날에는 운동 기록이 없습니다",
+  "@noWorkoutRecordForDate": {
+    "description": "선택된 날짜에 운동 기록 없음"
+  },
+
+  "calendarBannerText": "꾸준함이 차드의 힘! 📅",
+  "@calendarBannerText": {
+    "description": "달력 화면 배너 텍스트"
+  },
+
+  "workoutHistoryLoadError": "운동 기록을 불러오는 중 오류가 발생했습니다: {error}",
+  "@workoutHistoryLoadError": {
+    "description": "운동 기록 로딩 실패 오류 메시지",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "completed": "완료!",
+  "@completed": {
+    "description": "세트 완료 시 표시되는 텍스트"
+  },
+  "current": "현재",
+  "@current": {
+    "description": "현재 횟수 표시 텍스트"
+  },
+  "half": "절반",
+  "@half": {
+    "description": "목표 횟수의 절반 빠른 입력 버튼"
+  },
+  "exceed": "초과",
+  "@exceed": {
+    "description": "목표 횟수 초과 빠른 입력 버튼"
+  },
+
+  "target": "목표",
+  "@target": {
+    "description": "목표 횟수 라벨"
+  },
+
+  "chadShorts": "차드 쇼츠 🔥",
+  "@chadShorts": {
+    "description": "YouTube Shorts 화면 제목"
+  },
+
+  "loadingChadVideos": "차드 영상 로딩 중... 🔥",
+  "@loadingChadVideos": {
+    "description": "YouTube 영상 로딩 메시지"
+  },
+
+  "videoLoadError": "영상 로딩 오류: {error}",
+  "@videoLoadError": {
+    "description": "영상 로딩 실패 오류 메시지",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "tryAgain": "다시 시도",
+  "@tryAgain": {
+    "description": "다시 시도 버튼 텍스트"
+  },
+
+  "like": "좋아요",
+  "@like": {
+    "description": "좋아요 버튼 라벨"
+  },
+
+  "share": "공유",
+  "@share": {
+    "description": "공유 버튼 라벨"
+  },
+
+  "save": "저장",
+  "@save": {
+    "description": "저장 버튼 라벨"
+  },
+
+  "workout": "운동",
+  "@workout": {
+    "description": "운동 버튼 라벨"
+  },
+
+  "likeMessage": "좋아요! 💪",
+  "@likeMessage": {
+    "description": "좋아요 액션 메시지"
+  },
+
+  "shareMessage": "공유 중 📤",
+  "@shareMessage": {
+    "description": "공유 액션 메시지"
+  },
+
+  "saveMessage": "저장됨 📌",
+  "@saveMessage": {
+    "description": "저장 액션 메시지"
+  },
+
+  "workoutStartMessage": "운동 시작! 🔥",
+  "@workoutStartMessage": {
+    "description": "운동 시작 액션 메시지"
+  },
+
+  "swipeUpHint": "위로 스와이프하여 다음 영상",
+  "@swipeUpHint": {
+    "description": "스와이프 힌트 텍스트"
+  },
+
+  "pushupHashtag": "#팔굽혀펴기",
+  "@pushupHashtag": {
+    "description": "팔굽혀펴기 해시태그"
+  },
+
+  "chadHashtag": "#차드",
+  "@chadHashtag": {
+    "description": "차드 해시태그"
+  },
+
+  "perfectPushupForm": "완벽한 팔굽혀펴기 자세 💪",
+  "@perfectPushupForm": {
+    "description": "영상 제목 1"
+  },
+
+  "pushupVariations": "팔굽혀펴기 변형 동작 🔥",
+  "@pushupVariations": {
+    "description": "영상 제목 2"
+  },
+
+  "chadSecrets": "차드의 비밀 ⚡",
+  "@chadSecrets": {
+    "description": "영상 제목 3"
+  },
+
+  "pushup100Challenge": "팔굽혀펴기 100개 도전 🎯",
+  "@pushup100Challenge": {
+    "description": "영상 제목 4"
+  },
+
+  "homeWorkoutPushups": "홈트 팔굽혀펴기 🏠",
+  "@homeWorkoutPushups": {
+    "description": "영상 제목 5"
+  },
+
+  "strengthSecrets": "근력의 비밀 💯",
+  "@strengthSecrets": {
+    "description": "영상 제목 6"
+  },
+
+  "correctPushupFormDesc": "올바른 팔굽혀펴기 자세로 효과적인 운동",
+  "@correctPushupFormDesc": {
+    "description": "영상 설명 1"
+  },
+
+  "variousPushupStimulation": "다양한 팔굽혀펴기 변형으로 근육 자극",
+  "@variousPushupStimulation": {
+    "description": "영상 설명 2"
+  },
+
+  "trueChadMindset": "진정한 차드가 되는 마인드셋",
+  "@trueChadMindset": {
+    "description": "영상 설명 3"
+  },
+
+  "challengeSpirit100": "팔굽혀펴기 100개를 향한 도전 정신",
+  "@challengeSpirit100": {
+    "description": "영상 설명 4"
+  },
+
+  "perfectHomeWorkout": "집에서 할 수 있는 완벽한 운동",
+  "@perfectHomeWorkout": {
+    "description": "영상 설명 5"
+  },
+
+  "consistentStrengthImprovement": "꾸준한 운동으로 근력 향상",
+  "@consistentStrengthImprovement": {
+    "description": "영상 설명 6"
+  },
+
+  "cancel": "취소",
+  "@cancel": {
+    "description": "취소 버튼 텍스트"
+  },
+
+  "delete": "삭제",
+  "@delete": {
+    "description": "삭제 버튼 텍스트"
+  },
+
+  "confirm": "확인",
+  "@confirm": {
+    "description": "확인 버튼 텍스트"
+  },
+
+  "korean": "한국어",
+  "@korean": {
+    "description": "한국어 언어 옵션"
+  },
+
+  "english": "영어",
+  "@english": {
+    "description": "영어 언어 옵션"
+  },
+
+  "chest": "가슴",
+  "@chest": {
+    "description": "가슴 근육군"
+  },
+
+  "triceps": "삼두",
+  "@triceps": {
+    "description": "삼두 근육군"
+  },
+
+  "shoulders": "어깨",
+  "@shoulders": {
+    "description": "어깨 근육군"
+  },
+
+  "core": "코어",
+  "@core": {
+    "description": "코어 근육군"
+  },
+
+  "fullBody": "전신",
+  "@fullBody": {
+    "description": "전신 근육군"
+  },
+
+  "restTimeSettings": "휴식 시간 설정",
+  "@restTimeSettings": {
+    "description": "휴식 시간 설정"
+  },
+
+  "restTimeDesc": "세트 간 휴식 시간 설정",
+  "@restTimeDesc": {
+    "description": "휴식 시간 설명"
+  },
+
+  "soundSettings": "사운드 설정",
+  "@soundSettings": {
+    "description": "사운드 설정"
+  },
+
+  "soundSettingsDesc": "운동 효과음 활성화",
+  "@soundSettingsDesc": {
+    "description": "사운드 설정 설명"
+  },
+
+  "vibrationSettings": "진동 설정",
+  "@vibrationSettings": {
+    "description": "진동 설정"
+  },
+
+  "vibrationSettingsDesc": "진동 피드백 활성화",
+  "@vibrationSettingsDesc": {
+    "description": "진동 설정 설명"
+  },
+
+  "dataManagement": "데이터 관리",
+  "@dataManagement": {
+    "description": "데이터 관리"
+  },
+
+  "dataManagementDesc": "운동 기록 백업 및 복원",
+  "@dataManagementDesc": {
+    "description": "데이터 관리 설명"
+  },
+
+  "appInfo": "앱 정보",
+  "@appInfo": {
+    "description": "앱 정보"
+  },
+
+  "appInfoDesc": "버전 정보 및 개발자 정보",
+  "@appInfoDesc": {
+    "description": "앱 정보 설명"
+  },
+
+  "seconds": "초",
+  "@seconds": {
+    "description": "초 단위"
+  },
+
+  "minutes": "분",
+  "@minutes": {
+    "description": "분 단위"
+  },
+
+  "motivationMessages": "동기부여 메시지",
+  "@motivationMessages": {
+    "description": "동기부여 메시지 설정"
+  },
+
+  "motivationMessagesDesc": "운동 중 동기부여 메시지 표시",
+  "@motivationMessagesDesc": {
+    "description": "동기부여 메시지 설명"
+  },
+
+  "autoStartNextSet": "다음 세트 자동 시작",
+  "@autoStartNextSet": {
+    "description": "다음 세트 자동 시작 설정"
+  },
+
+  "autoStartNextSetDesc": "휴식 후 자동으로 다음 세트 시작",
+  "@autoStartNextSetDesc": {
+    "description": "다음 세트 자동 시작 설명"
+  },
+
+  "privacyPolicy": "개인정보 처리방침",
+  "@privacyPolicy": {
+    "description": "개인정보 처리방침"
+  },
+
+  "privacyPolicyDesc": "개인정보 처리방침 보기",
+  "@privacyPolicyDesc": {
+    "description": "개인정보 처리방침 설명"
+  },
+
+  "termsOfService": "서비스 이용약관",
+  "@termsOfService": {
+    "description": "서비스 이용약관"
+  },
+
+  "termsOfServiceDesc": "서비스 이용약관 보기",
+  "@termsOfServiceDesc": {
+    "description": "서비스 이용약관 설명"
+  },
+
+  "openSourceLicenses": "오픈소스 라이선스",
+  "@openSourceLicenses": {
+    "description": "오픈소스 라이선스"
+  },
+
+  "openSourceLicensesDesc": "오픈소스 라이선스 보기",
+  "@openSourceLicensesDesc": {
+    "description": "오픈소스 라이선스 설명"
+  },
+
+  "resetConfirmTitle": "모든 데이터 초기화",
+  "@resetConfirmTitle": {
+    "description": "초기화 확인 다이얼로그 제목"
+  },
+
+  "resetConfirmMessage": "정말로 모든 데이터를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
+  "@resetConfirmMessage": {
+    "description": "초기화 확인 다이얼로그 메시지"
+  },
+
+  "dataResetConfirm": "정말로 모든 데이터를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
+  "@dataResetConfirm": {
+    "description": "데이터 초기화 확인 메시지"
+  },
+
+  "dataResetComingSoon": "데이터 초기화 기능은 곧 제공될 예정입니다.",
+  "@dataResetComingSoon": {
+    "description": "데이터 초기화 준비 중 메시지"
+  },
+
+  "resetSuccess": "모든 데이터가 성공적으로 초기화되었습니다",
+  "@resetSuccess": {
+    "description": "초기화 성공 메시지"
+  },
+
+  "backupSuccess": "데이터 백업이 성공적으로 완료되었습니다",
+  "@backupSuccess": {
+    "description": "백업 성공 메시지"
+  },
+
+  "restoreSuccess": "데이터 복원이 성공적으로 완료되었습니다",
+  "@restoreSuccess": {
+    "description": "복원 성공 메시지"
+  },
+
+  "selectTime": "시간 선택",
+  "@selectTime": {
+    "description": "시간 선택기 제목"
+  },
+
+  "currentDifficulty": "현재: {difficulty} - {description}",
+  "@currentDifficulty": {
+    "description": "현재 난이도 표시",
+    "placeholders": {
+      "difficulty": {
+        "type": "String"
+      },
+      "description": {
+        "type": "String"
+      }
+    }
+  },
+
+  "currentLanguage": "현재: {language}",
+  "@currentLanguage": {
+    "description": "현재 언어 표시",
+    "placeholders": {
+      "language": {
+        "type": "String"
+      }
+    }
+  },
+
+  "darkModeEnabled": "다크 모드가 활성화되었습니다",
+  "@darkModeEnabled": {
+    "description": "다크 모드 활성화 메시지"
+  },
+
+  "lightModeEnabled": "라이트 모드가 활성화되었습니다",
+  "@lightModeEnabled": {
+    "description": "라이트 모드 활성화 메시지"
+  },
+
+  "languageChanged": "언어가 {language}로 변경되었습니다!",
+  "@languageChanged": {
+    "description": "언어 변경 성공 메시지",
+    "placeholders": {
+      "language": {
+        "type": "String"
+      }
+    }
+  },
+
+  "difficultyChanged": "난이도가 {difficulty}로 변경되었습니다!",
+  "@difficultyChanged": {
+    "description": "난이도 변경 성공 메시지",
+    "placeholders": {
+      "difficulty": {
+        "type": "String"
+      }
+    }
+  },
+
+  "dataBackupComingSoon": "데이터 백업 기능이 곧 추가됩니다!",
+  "@dataBackupComingSoon": {
+    "description": "데이터 백업 준비 중 메시지"
+  },
+
+  "dataRestoreComingSoon": "데이터 복원 기능이 곧 추가됩니다!",
+  "@dataRestoreComingSoon": {
+    "description": "데이터 복원 준비 중 메시지"
+  },
+
+  "feedbackComingSoon": "피드백 기능이 곧 추가됩니다!",
+  "@feedbackComingSoon": {
+    "description": "피드백 준비 중 메시지"
+  },
+
+  "reminderTimeChanged": "리마인더 시간이 {time}으로 변경되었습니다!",
+  "@reminderTimeChanged": {
+    "description": "리마인더 시간 변경 성공 메시지",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+
+  "notificationPermissionRequired": "🔔 알림 권한 필요",
+  "@notificationPermissionRequired": {
+    "description": "알림 권한 다이얼로그 제목"
+  },
+
+  "notificationPermissionMessage": "푸시 알림을 받으려면 알림 권한이 필요합니다.",
+  "@notificationPermissionMessage": {
+    "description": "알림 권한 다이얼로그 메시지"
+  },
+
+  "notificationPermissionFeatures": "• 운동 리마인더\n• 업적 달성 알림\n• 동기부여 메시지",
+  "@notificationPermissionFeatures": {
+    "description": "알림 권한 기능 목록"
+  },
+
+  "notificationPermissionRequest": "설정에서 알림 권한을 허용해주세요.",
+  "@notificationPermissionRequest": {
+    "description": "알림 권한 요청 메시지"
+  },
+
+  "goToSettings": "설정으로 이동",
+  "@goToSettings": {
+    "description": "설정으로 이동 버튼"
+  },
+
+  "comingSoon": "🚀 Coming Soon",
+  "@comingSoon": {
+    "description": "준비 중 다이얼로그 제목"
+  },
+
+  "difficultySettingsTitle": "💪 난이도 설정",
+  "@difficultySettingsTitle": {
+    "description": "난이도 설정 다이얼로그 제목"
+  },
+
+  "difficultyChanged": "난이도가 {difficulty}로 변경되었습니다!",
+  "@difficultyChanged": {
+    "description": "난이도 변경 성공 메시지",
+    "placeholders": {
+      "difficulty": {
+        "type": "String"
+      }
+    }
+  },
+
+  "notificationPermissionGranted": "알림 권한이 허용되었습니다! 🎉",
+  "@notificationPermissionGranted": {
+    "description": "알림 권한 허용 메시지"
+  },
+
+  "settingsBannerText": "차드의 설정을 맞춤화하세요! ⚙️",
+  "@settingsBannerText": {
+    "description": "설정 배너 광고 텍스트"
+  },
+
+  "buildInfo": "빌드: {buildNumber}",
+  "@buildInfo": {
+    "description": "빌드 정보",
+    "placeholders": {
+      "buildNumber": {
+        "type": "String"
+      }
+    }
+  },
+
+  "versionAndBuild": "버전 {version}+{buildNumber}",
+  "@versionAndBuild": {
+    "description": "버전 및 빌드 정보",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "buildNumber": {
+        "type": "String"
+      }
+    }
+  },
+
+  "madeWithLove": "차드를 위해 ❤️로 제작",
+  "@madeWithLove": {
+    "description": "사랑으로 제작 메시지"
+  },
+
+  "joinChadJourney": "차드가 되는 여정에 동참하세요",
+  "@joinChadJourney": {
+    "description": "차드 여정 참여 메시지"
+  },
+
+  "supportChadJourney": "당신의 차드 여정을 응원합니다! 🔥",
+  "@supportChadJourney": {
+    "description": "차드 여정 응원 메시지"
+  },
+
+  "selectLanguage": "사용할 언어를 선택해주세요",
+  "@selectLanguage": {
+    "description": "언어 선택 메시지"
+  },
+
+  "languageChanged": "언어가 {language}로 변경되었습니다!",
+  "@languageChanged": {
+    "description": "언어 변경 확인 메시지",
+    "placeholders": {
+      "language": {
+        "type": "String"
+      }
+    }
+  },
+
+  "progress": "진행도",
+  "@progress": {
+    "description": "진행도 라벨"
+  },
+
+  "chest": "가슴",
+  "@chest": {
+    "description": "가슴 근육군"
+  },
+
+  "triceps": "삼두",
+  "@triceps": {
+    "description": "삼두 근육군"
+  },
+
+  "shoulders": "어깨",
+  "@shoulders": {
+    "description": "어깨 근육군"
+  },
+
+  "core": "코어",
+  "@core": {
+    "description": "코어 근육군"
+  },
+
+  "fullBody": "전신",
+  "@fullBody": {
+    "description": "전신 근육군"
+  },
+
+  "description": "설명",
+  "@description": {
+    "description": "설명 라벨"
+  },
+
+  "completed": "완료!",
+  "@completed": {
+    "description": "업적 완료 상태"
+  },
+
+  "percentComplete": "{percentage}% 완료",
+  "@percentComplete": {
+    "description": "업적 진행도 퍼센트",
+    "placeholders": {
+      "percentage": {
+        "type": "int"
+      }
+    }
+  },
+
+  "koreanLanguage": "한국어",
+  "@koreanLanguage": {
+    "description": "한국어 언어명"
+  },
+
+  "englishLanguage": "English",
+  "@englishLanguage": {
+    "description": "영어 언어명"
+  },
+
+  "notificationPermissionGrantedMessage": "🎉 알림 권한이 허용되었습니다! 차드 여정을 시작하세요!",
+  "@notificationPermissionGrantedMessage": {
+    "description": "알림 권한 허용 성공 메시지"
+  },
+
+  "notificationPermissionDeniedMessage": "⚠️ 알림 권한이 필요합니다. 설정에서 허용해주세요.",
+  "@notificationPermissionDeniedMessage": {
+    "description": "알림 권한 거부 메시지"
+  },
+
+  "notificationPermissionErrorMessage": "권한 요청 중 오류가 발생했습니다.",
+  "@notificationPermissionErrorMessage": {
+    "description": "알림 권한 오류 메시지"
+  },
+
+  "notificationPermissionLaterMessage": "나중에 설정에서 알림을 허용할 수 있습니다.",
+  "@notificationPermissionLaterMessage": {
+    "description": "알림 권한 나중에 설정 메시지"
+  },
+
+  "videoCannotOpen": "영상을 열 수 없습니다. YouTube 앱을 확인해주세요.",
+  "@videoCannotOpen": {
+    "description": "영상 열기 실패 메시지"
+  },
+
+  "advertisement": "광고",
+  "@advertisement": {
+    "description": "광고 라벨"
+  },
+
+  "chadMessage6": "👑 최고의 차드 완성! 더블 파워로 우주를 정복하라!",
+  "@chadMessage6": {
+    "description": "차드 레벨 6 메시지 - 더블차드"
+  },
+
+  "chadLevel": "차드 레벨",
+  "@chadLevel": {
+    "description": "차드 레벨 라벨"
+  },
+
+  "progressVisualization": "진행률 시각화",
+  "@progressVisualization": {
+    "description": "진행률 시각화 섹션 제목"
+  },
+
+  "weeklyGoal": "주간 목표",
+  "@weeklyGoal": {
+    "description": "주간 목표 라벨"
+  },
+
+  "monthlyGoal": "월간 목표",
+  "@monthlyGoal": {
+    "description": "월간 목표 라벨"
+  },
+
+  "streakProgress": "연속 운동 진행률",
+  "@streakProgress": {
+    "description": "연속 운동 진행률 라벨"
+  },
+
+  "workoutChart": "운동 차트",
+  "@workoutChart": {
+    "description": "운동 차트 제목"
+  },
+
+  "days": "일",
+  "@days": {
+    "description": "일 단위"
+  },
+
+  "monthlyProgress": "월간 진행률",
+  "@monthlyProgress": {
+    "description": "월간 진행률 제목"
+  },
+
+  "thisMonth": "이번 달",
+  "@thisMonth": {
+    "description": "이번 달 라벨"
+  },
+
+  "noWorkoutThisDay": "이 날에는 운동 기록이 없습니다",
+  "@noWorkoutThisDay": {
+    "description": "운동 기록이 없는 날 메시지"
+  },
+
+  "legend": "범례",
+  "@legend": {
+    "description": "범례 제목"
+  },
+
+  "perfect": "완벽",
+  "@perfect": {
+    "description": "완벽한 운동 완료"
+  },
+
+  "good": "좋음",
+  "@good": {
+    "description": "좋은 운동 완료"
+  },
+
+  "okay": "보통",
+  "@okay": {
+    "description": "보통 운동 완료"
+  },
+
+  "poor": "부족",
+  "@poor": {
+    "description": "부족한 운동 완료"
+  },
+
+    "calendar": "달력",
+  "@calendar": {
+    "description": "달력 탭 제목"
+  },
+
+  "weekly": "주간",
+  "@weekly": {
+    "description": "주간 필터 옵션"
+  },
+
+  "monthly": "월간",
+  "@monthly": {
+    "description": "월간 필터 옵션"
+  },
+
+  "yearly": "연간",
+  "@yearly": {
+    "description": "연간 필터 옵션"
+  },
+
+  "times": "회",
+  "@times": {
+    "description": "운동 횟수 단위"
+  },
+
+  "count": "개",
+  "@count": {
+    "description": "개수 단위"
+  },
+
+  "rookieLevelTitle": "초보자",
+  "@rookieLevelTitle": {
+    "description": "초보자 레벨 제목"
+  },
+
+  "rookieLevelDescription": "천천히 시작하는 차드",
+  "@rookieLevelDescription": {
+    "description": "초보자 레벨 설명"
+  },
+
+  "risingLevelTitle": "중급자",
+  "@risingLevelTitle": {
+    "description": "중급자 레벨 제목"
+  },
+
+  "risingLevelDescription": "성장하는 차드",
+  "@risingLevelDescription": {
+    "description": "중급자 레벨 설명"
+  },
+
+  "alphaLevelTitle": "고급자",
+  "@alphaLevelTitle": {
+    "description": "고급자 레벨 제목"
+  },
+
+  "alphaLevelDescription": "궁극의 차드",
+  "@alphaLevelDescription": {
+    "description": "고급자 레벨 설명"
+  },
+
+  "noWorkoutHistory": "운동 기록이 없습니다",
+  "@noWorkoutHistory": {
+    "description": "운동 기록이 없을 때 메시지"
+  },
+
+  "noChartData": "차트 데이터가 없습니다",
+  "@noChartData": {
+    "description": "차트 데이터가 없을 때 메시지"
+  },
+
+  "noPieChartData": "파이 차트 데이터가 없습니다",
+  "@noPieChartData": {
+    "description": "파이 차트 데이터가 없을 때 메시지"
+  },
+
+  "month": "월",
+  "@month": {
+    "description": "날짜 표시용 월 단위"
+  },
+
+  "notificationSettings": "운동 알림 설정",
+  "@notificationSettings": {
+    "description": "알림 설정 제목"
+  },
+
+  "dailyWorkoutReminder": "일일 운동 알림",
+  "@dailyWorkoutReminder": {
+    "description": "일일 운동 알림 설정"
+  },
+
+  "streakEncouragement": "연속 운동 격려",
+  "@streakEncouragement": {
+    "description": "연속 운동 격려 설정"
+  },
+
+  "streakEncouragementSubtitle": "3일 연속 운동 시 격려 메시지",
+  "@streakEncouragementSubtitle": {
+    "description": "연속 운동 격려 설정 부제목"
+  },
+
+  "notificationSetupFailed": "알림 설정에 실패했습니다",
+  "@notificationSetupFailed": {
+    "description": "알림 설정 실패 에러 메시지"
+  },
+
+  "streakNotificationSet": "연속 운동 격려 알림이 설정되었습니다!",
+  "@streakNotificationSet": {
+    "description": "연속 운동 알림 설정 성공 메시지"
+  },
+
+  "dailyNotificationSet": "매일 {time}에 운동 알림이 설정되었습니다!",
+  "@dailyNotificationSet": {
+    "description": "일일 알림 설정 성공 메시지"
+  },
+
+  "dailyReminderSubtitle": "매일 정해진 시간에 운동 알림",
+  "@dailyReminderSubtitle": {
+    "description": "일일 알림 설정 부제목"
+  },
+
+  "adFallbackMessage": "차드가 되는 여정을 함께하세요! 💪",
+  "@adFallbackMessage": {
+    "description": "광고가 없을 때 표시되는 대체 메시지"
+  },
+
+  "testAdMessage": "테스트 광고 - 피트니스 앱",
+  "@testAdMessage": {
+    "description": "테스트 광고 메시지"
+  },
+
+  "achievementCelebrationMessage": "차드의 힘을 느꼈다! 💪",
+  "@achievementCelebrationMessage": {
+    "description": "업적 달성 축하 다이얼로그 메시지"
+  },
+
+  "workoutScreenAdMessage": "차드의 힘을 느껴라! 💪",
+  "@workoutScreenAdMessage": {
+    "description": "운동 화면 광고 대체 메시지"
+  },
+
+  "achievementScreenAdMessage": "업적을 달성해서 차드가 되자! 🏆",
+  "@achievementScreenAdMessage": {
+    "description": "업적 화면 광고 대체 메시지"
+  },
+
+  "tutorialAdviceBasic": "기본이 제일 중요하다, 만삣삐!",
+  "@tutorialAdviceBasic": {
+    "description": "기본 푸시업 튜토리얼 조언"
+  },
+
+  "tutorialAdviceStart": "시작이 반이다!",
+  "@tutorialAdviceStart": {
+    "description": "시작 튜토리얼 조언"
+  },
+
+  "tutorialAdviceForm": "완벽한 자세가 완벽한 차드를 만든다!",
+  "@tutorialAdviceForm": {
+    "description": "자세 튜토리얼 조언"
+  },
+
+  "tutorialAdviceConsistency": "꾸준함이 차드 파워의 열쇠다!",
+  "@tutorialAdviceConsistency": {
+    "description": "꾸준함 튜토리얼 조언"
+  },
+
+  "difficultyEasy": "쉬움",
+  "@difficultyEasy": {
+    "description": "쉬움 난이도"
+  },
+
+  "difficultyMedium": "보통",
+  "@difficultyMedium": {
+    "description": "보통 난이도"
+  },
+
+  "difficultyHard": "어려움",
+  "@difficultyHard": {
+    "description": "어려움 난이도"
+  },
+
+  "difficultyExpert": "전문가",
+  "@difficultyExpert": {
+    "description": "전문가 난이도"
+  },
+
+  "dateFormatYearMonthDay": "{year}년 {month}월 {day}일",
+  "@dateFormatYearMonthDay": {
+    "description": "년월일 한국어 날짜 형식",
+    "placeholders": {
+      "year": {
+        "type": "int"
+      },
+      "month": {
+        "type": "int"
+      },
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+
+  "rarityCommon": "일반",
+  "@rarityCommon": {
+    "description": "Common rarity level"
+  },
+
+  "rarityRare": "레어",
+  "@rarityRare": {
+    "description": "Rare rarity level"
+  },
+
+  "rarityEpic": "에픽",
+  "@rarityEpic": {
+    "description": "Epic rarity level"
+  },
+
+  "rarityLegendary": "레전더리",
+  "@rarityLegendary": {
+    "description": "Legendary rarity level"
+  },
+
+  "achievementUltimateMotivation": "당신은 궁극의 차드입니다! 🌟",
+
+  "achievementFirst50Title": "첫 50개 돌파",
+  "achievementFirst50Desc": "한 번의 운동에서 50개를 달성했습니다",
+  "achievementFirst50Motivation": "50개 돌파! 차드의 기반이 단단해지고 있습니다! 🎊",
+
+  "achievementFirst100SingleTitle": "한 번에 100개",
+  "achievementFirst100SingleDesc": "한 번의 운동에서 100개를 달성했습니다",
+  "achievementFirst100SingleMotivation": "한 번에 100개! 진정한 파워 차드! 💥",
+
+  "achievementStreak3Title": "3일 연속 차드",
+  "achievementStreak3Desc": "3일 연속 운동을 완료했습니다",
+  "achievementStreak3Motivation": "꾸준함이 차드를 만듭니다! 🔥",
+
+  "achievementStreak7Title": "주간 차드",
+  "achievementStreak7Desc": "7일 연속 운동을 완료했습니다",
+  "achievementStreak7Motivation": "일주일을 정복한 진정한 차드! 💪",
+
+  "achievementStreak14Title": "2주 마라톤 차드",
+  "achievementStreak14Desc": "14일 연속 운동을 완료했습니다",
+  "achievementStreak14Motivation": "끈기의 왕! 차드 중의 차드! 🏃‍♂️",
+
+  "achievementStreak30Title": "월간 궁극 차드",
+  "achievementStreak30Desc": "30일 연속 운동을 완료했습니다",
+  "achievementStreak30Motivation": "이제 당신은 차드의 왕입니다! 👑",
+
+  "achievementStreak60Title": "2개월 레전드 차드",
+  "achievementStreak60Desc": "60일 연속 운동을 완료했습니다",
+  "achievementStreak60Motivation": "2개월 연속! 당신은 레전드입니다! 🏅",
+
+  "achievementStreak100Title": "100일 신화 차드",
+  "achievementStreak100Desc": "100일 연속 운동을 완료했습니다",
+  "achievementStreak100Motivation": "100일 연속! 당신은 살아있는 신화입니다! 🌟",
+
+  "achievementTotal50Title": "첫 50개 총합",
+  "achievementTotal50Desc": "총 50개의 푸시업을 완료했습니다",
+  "achievementTotal50Motivation": "첫 50개! 차드의 새싹이 자라고 있습니다! 🌱",
+
+  "achievementTotal100Title": "첫 100개 돌파",
+  "achievementTotal100Desc": "총 100개의 푸시업을 완료했습니다",
+  "achievementTotal100Motivation": "첫 100개 돌파! 차드의 기반 완성! 💯",
+
+  "achievementTotal250Title": "250 차드",
+  "achievementTotal250Desc": "총 250개의 푸시업을 완료했습니다",
+  "achievementTotal250Motivation": "250개! 꾸준함의 결과! 🎯",
+
+  "achievementTotal500Title": "500 차드",
+  "achievementTotal500Desc": "총 500개의 푸시업을 완료했습니다",
+  "achievementTotal500Motivation": "500개 돌파! 중급 차드 달성! 🚀",
+
+  "achievementTotal1000Title": "1000 메가 차드",
+  "achievementTotal1000Desc": "총 1000개의 푸시업을 완료했습니다",
+  "achievementTotal1000Motivation": "1000개 돌파! 메가 차드 달성! ⚡",
+
+  "achievementTotal2500Title": "2500 슈퍼 차드",
+  "achievementTotal2500Desc": "총 2500개의 푸시업을 완료했습니다",
+  "achievementTotal2500Motivation": "2500개! 슈퍼 차드의 경지에 도달! 🔥",
+
+  "achievementTotal5000Title": "5000 울트라 차드",
+  "achievementTotal5000Desc": "총 5000개의 푸시업을 완료했습니다",
+  "achievementTotal5000Motivation": "5000개! 당신은 울트라 차드입니다! 🌟",
+
+  "achievementTotal10000Title": "10000 갓 차드",
+  "achievementTotal10000Desc": "총 10000개의 푸시업을 완료했습니다",
+  "achievementTotal10000Motivation": "10000개! 당신은 차드의 신입니다! 👑",
+
+  "achievementPerfect3Title": "완벽한 트리플",
+  "achievementPerfect3Desc": "3번의 완벽한 운동을 달성했습니다",
+  "achievementPerfect3Motivation": "완벽한 트리플! 정확성의 차드! 🎯",
+
+  "achievementPerfect5Title": "완벽주의 차드",
+  "achievementPerfect5Desc": "5번의 완벽한 운동을 달성했습니다",
+  "achievementPerfect5Motivation": "완벽을 추구하는 진정한 차드! ⭐",
+
+  "achievementPerfect10Title": "마스터 차드",
+  "achievementPerfect10Desc": "10번의 완벽한 운동을 달성했습니다",
+  "achievementPerfect10Motivation": "완벽의 마스터! 차드 중의 차드! 🏆",
+
+  "achievementPerfect20Title": "완벽 레전드",
+  "achievementPerfect20Desc": "20번의 완벽한 운동을 달성했습니다",
+  "achievementPerfect20Motivation": "20번 완벽! 당신은 완벽의 화신입니다! 💎",
+
+  "achievementTutorialExplorerTitle": "탐구하는 차드",
+  "achievementTutorialExplorerDesc": "첫 번째 푸시업 튜토리얼을 확인했습니다",
+  "achievementTutorialExplorerMotivation": "지식이 차드의 첫 번째 힘입니다! 🔍",
+
+  "achievementTutorialStudentTitle": "학습하는 차드",
+  "achievementTutorialStudentDesc": "5개의 푸시업 튜토리얼을 확인했습니다",
+  "achievementTutorialStudentMotivation": "다양한 기술을 배우는 진정한 차드! 📚",
+
+  "achievementTutorialMasterTitle": "푸시업 마스터",
+  "achievementTutorialMasterDesc": "모든 푸시업 튜토리얼을 확인했습니다",
+  "achievementTutorialMasterMotivation": "모든 기술을 마스터한 푸시업 박사! 🎓",
+
+  "achievementEarlyBirdTitle": "새벽 차드",
+  "achievementEarlyBirdDesc": "오전 7시 이전에 5번 운동했습니다",
+  "achievementEarlyBirdMotivation": "새벽을 정복한 얼리버드 차드! 🌅",
+
+  "achievementNightOwlTitle": "야행성 차드",
+  "achievementNightOwlDesc": "오후 10시 이후에 5번 운동했습니다",
+  "achievementNightOwlMotivation": "밤에도 포기하지 않는 올빼미 차드! 🦉",
+
+  "achievementWeekendWarriorTitle": "주말 전사",
+  "achievementWeekendWarriorDesc": "주말에 꾸준히 운동하는 차드",
+  "achievementWeekendWarriorMotivation": "주말에도 멈추지 않는 전사! ⚔️",
+
+  "achievementLunchBreakTitle": "점심시간 차드",
+  "achievementLunchBreakDesc": "점심시간(12-2시)에 5번 운동했습니다",
+  "achievementLunchBreakMotivation": "점심시간도 놓치지 않는 효율적인 차드! 🍽️",
+
+  "achievementSpeedDemonTitle": "스피드 데몬",
+  "achievementSpeedDemonDesc": "5분 이내에 50개를 완료했습니다",
+  "achievementSpeedDemonMotivation": "번개 같은 속도! 스피드의 차드! 💨",
+
+  "achievementEnduranceKingTitle": "지구력의 왕",
+  "achievementEnduranceKingDesc": "30분 이상 운동을 지속했습니다",
+  "achievementEnduranceKingMotivation": "30분 지속! 지구력의 왕! ⏰",
+
+  "achievementComebackKidTitle": "컴백 키드",
+  "achievementComebackKidDesc": "7일 이상 쉰 후 다시 운동을 시작했습니다",
+  "achievementComebackKidMotivation": "포기하지 않는 마음! 컴백의 차드! 🔄",
+
+  "achievementOverachieverTitle": "목표 초과 달성자",
+  "achievementOverachieverDesc": "목표의 150%를 5번 달성했습니다",
+  "achievementOverachieverMotivation": "목표를 뛰어넘는 오버어치버! 📈",
+
+  "achievementDoubleTroubleTitle": "더블 트러블",
+  "achievementDoubleTroubleDesc": "목표의 200%를 달성했습니다",
+  "achievementDoubleTroubleMotivation": "목표의 2배! 더블 트러블 차드! 🎪",
+
+  "achievementConsistencyMasterTitle": "일관성의 마스터",
+  "achievementConsistencyMasterDesc": "10일 연속 목표를 정확히 달성했습니다",
+  "achievementConsistencyMasterMotivation": "정확한 목표 달성! 일관성의 마스터! 🎯",
+
+  "achievementLevel5Title": "레벨 5 차드",
+  "achievementLevel5Desc": "레벨 5에 도달했습니다",
+  "achievementLevel5Motivation": "레벨 5 달성! 중급 차드의 시작! 🌟",
+
+  "achievementLevel10Title": "레벨 10 차드",
+  "achievementLevel10Desc": "레벨 10에 도달했습니다",
+  "achievementLevel10Motivation": "레벨 10! 고급 차드의 경지! 🏅",
+
+  "achievementLevel20Title": "레벨 20 차드",
+  "achievementLevel20Desc": "레벨 20에 도달했습니다",
+  "achievementLevel20Motivation": "레벨 20! 차드 중의 왕! 👑",
+
+  "achievementMonthlyWarriorTitle": "월간 전사",
+  "achievementMonthlyWarriorDesc": "한 달에 20일 이상 운동했습니다",
+  "achievementMonthlyWarriorMotivation": "한 달 20일! 월간 전사 차드! 📅",
+
+  "achievementSeasonalChampionTitle": "시즌 챔피언",
+  "achievementSeasonalChampionDesc": "3개월 연속 월간 목표를 달성했습니다",
+  "achievementSeasonalChampionMotivation": "3개월 연속! 시즌 챔피언! 🏆",
+
+  "achievementVarietySeekerTitle": "다양성 추구자",
+  "achievementVarietySeekerDesc": "5가지 다른 푸시업 타입을 시도했습니다",
+  "achievementVarietySeekerMotivation": "다양함을 추구하는 창의적 차드! 🎨",
+
+  "achievementAllRounderTitle": "올라운더",
+  "achievementAllRounderDesc": "모든 푸시업 타입을 시도했습니다",
+  "achievementAllRounderMotivation": "모든 타입 마스터! 올라운더 차드! 🌈",
+
+  "achievementIronWillTitle": "강철 의지",
+  "achievementIronWillDesc": "한 번에 200개를 달성했습니다",
+  "achievementIronWillMotivation": "200개 한 번에! 강철 같은 의지! 🔩",
+
+  "achievementUnstoppableForceTitle": "멈출 수 없는 힘",
+  "achievementUnstoppableForceDesc": "한 번에 300개를 달성했습니다",
+  "achievementUnstoppableForceMotivation": "300개! 당신은 멈출 수 없는 힘입니다! 🌪️",
+
+  "achievementLegendaryBeastTitle": "레전더리 비스트",
+  "achievementLegendaryBeastDesc": "한 번에 500개를 달성했습니다",
+  "achievementLegendaryBeastMotivation": "500개! 당신은 레전더리 비스트입니다! 🐉",
+
+  "achievementMotivatorTitle": "동기부여자",
+  "achievementMotivatorDesc": "앱을 30일 이상 사용했습니다",
+  "achievementMotivatorMotivation": "30일 사용! 진정한 동기부여자! 💡",
+
+  "achievementDedicationMasterTitle": "헌신의 마스터",
+  "achievementDedicationMasterDesc": "앱을 100일 이상 사용했습니다",
+  "achievementDedicationMasterMotivation": "100일 헌신! 당신은 헌신의 마스터입니다! 🎖️"
+}  

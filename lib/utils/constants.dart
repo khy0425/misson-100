@@ -1,8 +1,9 @@
 class AppConstants {
   // 앱 정보
-  static const String appName = 'Mission: 100';
-  static const String appSubtitle = 'Chad Push-up Master';
-  static const String appSlogan = 'From Zero to Chad in 6 Weeks';
+  static const String appName = '💥 Mission: 100 💥';
+  static const String appSubtitle = '🚀 ALPHA EMPEROR Pushup Master 🚀';
+  static const String appSlogan =
+      '⚡ From Zero to ULTRA GIGA CHAD EMPEROR in 6 Weeks ⚡';
 
   // 운동 프로그램 관련
   static const int totalWeeks = 6;
@@ -97,17 +98,17 @@ class AppColors {
   static const int secondaryColor = 0xFFFF6B35; // 주황/빨강 (파워풀한 느낌)
   static const int accentColor = 0xFFE53E3E; // 빨간색 (강렬함)
 
-  // 배경 색상 - 어두운 Chad 테마
-  static const int backgroundLight = 0xFF0A0A0A; // 거의 검정
-  static const int backgroundDark = 0xFF000000; // 순수 검정
-  static const int surfaceLight = 0xFF1A1A1A; // 어두운 회색
-  static const int surfaceDark = 0xFF0F0F0F; // 매우 어두운 회색
+  // 배경 색상 - 라이트/다크 테마 구분
+  static const int backgroundLight = 0xFFF5F5F5; // 밝은 회색 (라이트 테마)
+  static const int backgroundDark = 0xFF000000; // 순수 검정 (다크 테마)
+  static const int surfaceLight = 0xFFFFFFFF; // 흰색 (라이트 테마)
+  static const int surfaceDark = 0xFF0F0F0F; // 매우 어두운 회색 (다크 테마)
 
-  // 텍스트 색상
-  static const int textPrimaryLight = 0xFFFFFFFF; // 흰색
-  static const int textPrimaryDark = 0xFFFFFFFF; // 흰색
-  static const int textSecondaryLight = 0xFFBDBDBD; // 밝은 회색
-  static const int textSecondaryDark = 0xFF757575; // 어두운 회색
+  // 텍스트 색상 - 라이트/다크 테마 구분
+  static const int textPrimaryLight = 0xFF212121; // 어두운 회색 (라이트 테마)
+  static const int textPrimaryDark = 0xFFFFFFFF; // 흰색 (다크 테마)
+  static const int textSecondaryLight = 0xFF757575; // 중간 회색 (라이트 테마)
+  static const int textSecondaryDark = 0xFFBDBDBD; // 밝은 회색 (다크 테마)
 
   // 상태별 색상 - Chad 테마에 맞게 조정
   static const int successColor = 0xFFFFB000; // 금색 (성공)
@@ -153,12 +154,12 @@ class ChadConstants {
   ];
 
   // 특별 이벤트 메시지 키들 (AppLocalizations에서 가져오기 위함)
-  static const String firstWorkoutMessageKey = "firstWorkoutMessage";
-  static const String weekCompletedMessageKey = "weekCompletedMessage";
-  static const String programCompletedMessageKey = "programCompletedMessage";
+  static const String firstWorkoutMessageKey = 'firstWorkoutMessage';
+  static const String weekCompletedMessageKey = 'weekCompletedMessage';
+  static const String programCompletedMessageKey = 'programCompletedMessage';
 
   // 스트릭 관련 메시지 키들 (AppLocalizations에서 가져오기 위함)
-  static const String streakStartMessageKey = "streakStartMessage";
-  static const String streakContinueMessageKey = "streakContinueMessage";
-  static const String streakBrokenMessageKey = "streakBrokenMessage";
+  static const String streakStartMessageKey = 'streakStartMessage';
+  static const String streakContinueMessageKey = 'streakContinueMessage';
+  static const String streakBrokenMessageKey = 'streakBrokenMessage';
 }

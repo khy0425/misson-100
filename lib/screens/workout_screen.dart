@@ -7,6 +7,9 @@ import '../utils/constants.dart';
 import '../services/ad_service.dart';
 import '../models/user_profile.dart';
 import '../services/workout_program_service.dart';
+import '../services/workout_history_service.dart';
+import '../models/workout_history.dart';
+import '../services/achievement_service.dart';
 
 class WorkoutScreen extends StatefulWidget {
   final UserProfile userProfile;
@@ -33,9 +36,8 @@ class _WorkoutScreenState extends State<WorkoutScreen>
   int _restTimeRemaining = 0;
   Timer? _restTimer;
 
-  // 스크롤 컨트롤러 및 힌트 애니메이션
+  // 스크롤 컨트롤러
   late ScrollController _scrollController;
-  Timer? _scrollHintTimer;
 
   // 워크아웃 데이터
   late List<int> _targetReps;
@@ -46,7 +48,6 @@ class _WorkoutScreenState extends State<WorkoutScreen>
     super.initState();
     _scrollController = ScrollController();
     _initializeWorkout();
-    _startScrollHintAnimation();
   }
 
   void _initializeWorkout() {
@@ -55,50 +56,11 @@ class _WorkoutScreenState extends State<WorkoutScreen>
     _completedReps = List.filled(_targetReps.length, 0);
   }
 
-  void _startScrollHintAnimation() {
-    // 화면 로드 완료 후 2초 뒤에 스크롤 힌트 애니메이션 시작 (워크아웃은 조금 더 늦게)
-    _scrollHintTimer = Timer(const Duration(milliseconds: 2000), () {
-      if (_scrollController.hasClients && !_isRestTime) {
-        _performScrollHint();
-      }
-    });
-  }
 
-  void _performScrollHint() async {
-    if (!_scrollController.hasClients) return;
-
-    try {
-      // 현재 위치 저장
-      final currentPosition = _scrollController.offset;
-
-      // 살짝 아래로 스크롤 (120px 정도 - 워크아웃 화면은 좀 더 많이)
-      await _scrollController.animateTo(
-        currentPosition + 120,
-        duration: const Duration(milliseconds: 600),
-        curve: Curves.easeInOut,
-      );
-
-      // 1초 대기 (사용자가 인지할 시간)
-      await Future.delayed(const Duration(milliseconds: 1000));
-
-      // 원래 위치로 부드럽게 돌아가기
-      if (_scrollController.hasClients) {
-        await _scrollController.animateTo(
-          currentPosition,
-          duration: const Duration(milliseconds: 700),
-          curve: Curves.easeOutBack,
-        );
-      }
-    } catch (e) {
-      // 애니메이션 중 에러 발생 시 무시 (사용자가 스크롤하는 경우 등)
-      debugPrint('워크아웃 스크롤 힌트 애니메이션 에러: $e');
-    }
-  }
 
   @override
   void dispose() {
     _restTimer?.cancel();
-    _scrollHintTimer?.cancel();
     _scrollController.dispose();
     super.dispose();
   }
@@ -123,7 +85,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>
     });
 
     // 약간의 지연 후 다음 단계 진행
-    Future.delayed(const Duration(milliseconds: 500), () {
+    Future<void>.delayed(Duration(milliseconds: 500), () {
       // 마지막 세트가 아니면 휴식 시간 시작
       if (_currentSet < _totalSets - 1) {
         _startRestTimer();
@@ -139,7 +101,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>
       _restTimeRemaining = _restTimeSeconds;
     });
 
-    _restTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    _restTimer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
         _restTimeRemaining--;
       });
@@ -163,35 +125,68 @@ class _WorkoutScreenState extends State<WorkoutScreen>
     HapticFeedback.mediumImpact();
   }
 
-  void _completeWorkout() {
-    // TODO: 워크아웃 완료 처리 (데이터베이스 저장 등)
+  void _completeWorkout() async {
+    // 워크아웃 완료 처리 (데이터베이스 저장)
     HapticFeedback.heavyImpact();
+
+    try {
+      // 완료된 총 횟수 계산
+      final totalCompletedReps = _completedReps.fold(
+        0,
+        (sum, reps) => sum + reps,
+      );
+      final completionRate = totalCompletedReps / widget.todayWorkout.totalReps;
+
+      // 운동 기록 생성
+      final workoutHistory = WorkoutHistory(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        date: DateTime.now(),
+        workoutTitle: widget.todayWorkout.title,
+        targetReps: _targetReps,
+        completedReps: _completedReps,
+        totalReps: totalCompletedReps,
+        completionRate: completionRate,
+        level: widget.userProfile.level.toString(),
+      );
+
+      // 데이터베이스에 저장
+      await WorkoutHistoryService.saveWorkoutHistory(workoutHistory);
+
+      // 업적 체크 및 업데이트
+      await AchievementService.checkAndUpdateAchievements();
+
+      debugPrint('운동 기록 저장 완료: ${workoutHistory.id}');
+    } catch (e) {
+      debugPrint('운동 기록 저장 실패: $e');
+    }
 
     // 워크아웃 완료 시 전면 광고 표시
     AdService.showWorkoutCompleteAd();
 
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => AlertDialog(
-        title: Text(AppLocalizations.of(context).workoutCompleteTitle),
-        content: Text(
-          AppLocalizations.of(context).workoutCompleteMessage(
-            widget.todayWorkout.title,
-            widget.todayWorkout.totalReps,
+    if (mounted) {
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => AlertDialog(
+          title: Text(AppLocalizations.of(context).workoutCompleteTitle),
+          content: Text(
+            AppLocalizations.of(context).workoutCompleteMessage(
+              widget.todayWorkout.title,
+              widget.todayWorkout.totalReps,
+            ),
           ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop(); // 홈으로 돌아가기
+              },
+              child: Text(AppLocalizations.of(context).workoutCompleteButton),
+            ),
+          ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              Navigator.of(context).pop(); // 홈으로 돌아가기
-            },
-            child: Text(AppLocalizations.of(context).workoutCompleteButton),
-          ),
-        ],
-      ),
-    );
+      );
+    }
   }
 
   @override
@@ -285,7 +280,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>
     return Container(
       padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
-        color: const Color(AppColors.primaryColor).withValues(alpha: 0.1),
+        color: Color(AppColors.primaryColor).withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(AppConstants.radiusM),
       ),
       child: Column(
@@ -293,7 +288,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>
           Text(
             widget.todayWorkout.title,
             style: theme.textTheme.titleLarge?.copyWith(
-              color: const Color(AppColors.primaryColor),
+              color: Color(AppColors.primaryColor),
               fontWeight: FontWeight.bold,
               fontSize: titleFontSize,
             ),
@@ -309,7 +304,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>
                     context,
                   ).setFormat(_currentSet + 1, _totalSets),
                   style: theme.textTheme.titleMedium?.copyWith(
-                    color: const Color(AppColors.primaryColor),
+                    color: Color(AppColors.primaryColor),
                     fontWeight: FontWeight.w600,
                     fontSize: isSmallScreen ? 14.0 : 16.0,
                   ),
@@ -321,7 +316,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>
                   vertical: padding / 2,
                 ),
                 decoration: BoxDecoration(
-                  color: const Color(AppColors.primaryColor),
+                  color: Color(AppColors.primaryColor),
                   borderRadius: BorderRadius.circular(AppConstants.radiusS),
                 ),
                 child: Text(
@@ -382,14 +377,10 @@ class _WorkoutScreenState extends State<WorkoutScreen>
     final screenHeight = mediaQuery.size.height;
     final isSmallScreen = screenHeight < 700;
 
-    // 반응형 패딩과 여백
-    final padding = isSmallScreen
-        ? AppConstants.paddingM
-        : AppConstants.paddingXL;
-    final spacing = isSmallScreen
-        ? AppConstants.paddingM
-        : AppConstants.paddingL;
-    final fontSize = isSmallScreen ? 48.0 : 64.0;
+    // 더 컴팩트한 패딩과 여백
+    final padding = AppConstants.paddingM;
+    final spacing = AppConstants.paddingS;
+    final fontSize = isSmallScreen ? 40.0 : 48.0;
 
     if (_isRestTime) {
       return _buildRestTimer();
@@ -399,166 +390,148 @@ class _WorkoutScreenState extends State<WorkoutScreen>
       padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
         color: _getPerformanceColor().withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(AppConstants.radiusXL),
+        borderRadius: BorderRadius.circular(AppConstants.radiusL),
         border: Border.all(
           color: _isSetCompleted
-              ? const Color(AppColors.successColor)
-              : const Color(AppColors.primaryColor),
-          width: 3,
+              ? Color(AppColors.successColor)
+              : Color(AppColors.primaryColor),
+          width: 2,
         ),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // 목표 횟수 표시 (반응형)
-          Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: spacing,
-              vertical: spacing / 2,
-            ),
-            decoration: BoxDecoration(
-              color: const Color(AppColors.primaryColor).withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(AppConstants.radiusM),
-              border: Border.all(
-                color: const Color(
-                  AppColors.primaryColor,
-                ).withValues(alpha: 0.3),
-                width: 1,
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.track_changes,
-                  color: const Color(AppColors.primaryColor),
-                  size: isSmallScreen ? 20 : 24,
-                ),
-                SizedBox(width: spacing / 2),
-                Text(
-                  AppLocalizations.of(
-                    context,
-                  ).targetRepsLabel(_currentTargetReps),
-                  style: theme.textTheme.titleLarge?.copyWith(
-                    color: const Color(AppColors.primaryColor),
-                    fontWeight: FontWeight.bold,
-                    fontSize: isSmallScreen ? 16.0 : 20.0,
+          // 목표 횟수와 현재 횟수를 한 줄에 표시
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              // 목표 횟수
+              Column(
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.target,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: Color(AppColors.primaryColor),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-              ],
-            ),
+                  Text(
+                    '$_currentTargetReps',
+                    style: theme.textTheme.headlineMedium?.copyWith(
+                      color: Color(AppColors.primaryColor),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              
+              // 구분선
+              Container(
+                height: 40,
+                width: 2,
+                color: Colors.grey[300],
+              ),
+              
+              // 현재 횟수
+              Column(
+                children: [
+                  Text(
+                    _isSetCompleted ? AppLocalizations.of(context)!.completed : AppLocalizations.of(context)!.current,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: _getPerformanceColor(),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    '$_currentReps',
+                    style: theme.textTheme.headlineLarge?.copyWith(
+                      color: _getPerformanceColor(),
+                      fontWeight: FontWeight.bold,
+                      fontSize: fontSize,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
 
-          SizedBox(height: spacing),
-
-          if (_isSetCompleted) ...[
-            // 세트 완료 상태
-            _buildCompletionStatus(),
-          ] else ...[
-            // 실제 수행 횟수 입력 영역
+          if (!_isSetCompleted) ...[
+            SizedBox(height: spacing),
+            
+            // 성과 메시지
             Text(
-              AppLocalizations.of(context).repLogMessage,
-              style: theme.textTheme.titleMedium?.copyWith(
-                color: const Color(AppColors.primaryColor),
-                fontWeight: FontWeight.bold,
-                fontSize: isSmallScreen ? 14.0 : 16.0,
+              _getPerformanceMessage(),
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: _getPerformanceColor(),
+                fontWeight: FontWeight.w600,
               ),
               textAlign: TextAlign.center,
             ),
 
             SizedBox(height: spacing),
 
-            // 현재 입력된 횟수 큰 표시 (반응형)
-            Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: spacing,
-                vertical: spacing,
-              ),
-              decoration: BoxDecoration(
-                color: _getPerformanceColor().withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(AppConstants.radiusL),
-                border: Border.all(color: _getPerformanceColor(), width: 2),
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    '$_currentReps',
-                    style: theme.textTheme.displayLarge?.copyWith(
-                      color: _getPerformanceColor(),
-                      fontWeight: FontWeight.bold,
-                      fontSize: fontSize,
-                    ),
-                  ),
-                  Text(
-                    _getPerformanceMessage(),
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: _getPerformanceColor(),
-                      fontWeight: FontWeight.w600,
-                      fontSize: isSmallScreen ? 12.0 : 14.0,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            SizedBox(height: spacing),
-
-            // 빠른 입력 버튼들 (반응형)
-            LayoutBuilder(
-              builder: (context, constraints) {
-                return Wrap(
-                  spacing: isSmallScreen
-                      ? AppConstants.paddingS / 2
-                      : AppConstants.paddingS,
-                  runSpacing: isSmallScreen
-                      ? AppConstants.paddingS / 2
-                      : AppConstants.paddingS,
-                  alignment: WrapAlignment.center,
+            // 빠른 입력 버튼들 (2줄로 배치)
+            Column(
+              children: [
+                // 첫 번째 줄: 주요 버튼들
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    // 목표 달성 버튼
-                    _buildQuickInputButton(
-                      _currentTargetReps,
-                      AppLocalizations.of(context).quickInputPerfect,
-                      const Color(AppColors.successColor),
-                      isSmallScreen,
-                    ),
-
-                    // 목표 -1~3 버튼들 (현실적인 범위)
-                    if (_currentTargetReps > 1)
-                      _buildQuickInputButton(
-                        (_currentTargetReps * 0.8).round(),
-                        AppLocalizations.of(context).quickInputStrong,
-                        Colors.orange,
-                        isSmallScreen,
-                      ),
-
-                    if (_currentTargetReps > 2)
-                      _buildQuickInputButton(
+                    Expanded(
+                      child: _buildQuickInputButton(
                         (_currentTargetReps * 0.6).round(),
-                        AppLocalizations.of(context).quickInputMedium,
+                        '60%',
                         Colors.orange[700]!,
-                        isSmallScreen,
+                        true,
                       ),
-
-                    // 절반 버튼
-                    if (_currentTargetReps > 2)
-                      _buildQuickInputButton(
-                        _currentTargetReps ~/ 2,
-                        AppLocalizations.of(context).quickInputStart,
-                        Colors.grey[600]!,
-                        isSmallScreen,
+                    ),
+                    SizedBox(width: spacing),
+                    Expanded(
+                      child: _buildQuickInputButton(
+                        (_currentTargetReps * 0.8).round(),
+                        '80%',
+                        Colors.orange,
+                        true,
                       ),
-
-                    // 목표 초과 버튼
-                    _buildQuickInputButton(
-                      _currentTargetReps + 2,
-                      AppLocalizations.of(context).quickInputBeast,
-                      const Color(AppColors.primaryColor),
-                      isSmallScreen,
+                    ),
+                    SizedBox(width: spacing),
+                    Expanded(
+                      child: _buildQuickInputButton(
+                        _currentTargetReps,
+                        '100%',
+                        Color(AppColors.successColor),
+                        true,
+                      ),
                     ),
                   ],
-                );
-              },
+                ),
+                
+                SizedBox(height: spacing / 2),
+                
+                // 두 번째 줄: 추가 옵션
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: _buildQuickInputButton(
+                        _currentTargetReps ~/ 2,
+                        AppLocalizations.of(context)!.half,
+                        Colors.grey[600]!,
+                        true,
+                      ),
+                    ),
+                    SizedBox(width: spacing),
+                    Expanded(
+                      child: _buildQuickInputButton(
+                        _currentTargetReps + 2,
+                        AppLocalizations.of(context)!.exceed,
+                        Color(AppColors.primaryColor),
+                        true,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
 
             SizedBox(height: spacing / 2),
@@ -604,7 +577,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>
                     HapticFeedback.lightImpact();
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(AppColors.primaryColor),
+                    backgroundColor: Color(AppColors.primaryColor),
                     shape: const CircleBorder(),
                     padding: EdgeInsets.all(
                       isSmallScreen
@@ -695,9 +668,9 @@ class _WorkoutScreenState extends State<WorkoutScreen>
 
   Color _getPerformanceColor() {
     if (_currentReps >= _currentTargetReps) {
-      return const Color(AppColors.successColor); // 목표 달성
+      return Color(AppColors.successColor); // 목표 달성
     } else if (_currentReps >= _currentTargetReps * 0.8) {
-      return const Color(AppColors.primaryColor); // 80% 이상
+      return Color(AppColors.primaryColor); // 80% 이상
     } else if (_currentReps >= _currentTargetReps * 0.5) {
       return Colors.orange; // 50% 이상
     } else {
@@ -754,6 +727,13 @@ class _WorkoutScreenState extends State<WorkoutScreen>
           _currentReps = value;
         });
         HapticFeedback.lightImpact();
+        
+        // 횟수를 설정한 후 자동으로 세트 완료 처리
+        Future.delayed(Duration(milliseconds: 300), () {
+          if (mounted && !_isSetCompleted) {
+            _markSetCompleted();
+          }
+        });
       },
       child: Container(
         padding: padding,
@@ -806,10 +786,10 @@ class _WorkoutScreenState extends State<WorkoutScreen>
     return Container(
       padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
-        color: const Color(AppColors.secondaryColor).withValues(alpha: 0.1),
+        color: Color(AppColors.secondaryColor).withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(AppConstants.radiusXL),
         border: Border.all(
-          color: const Color(AppColors.secondaryColor),
+          color: Color(AppColors.secondaryColor),
           width: 3,
         ),
       ),
@@ -818,14 +798,14 @@ class _WorkoutScreenState extends State<WorkoutScreen>
         children: [
           Icon(
             Icons.timer,
-            color: const Color(AppColors.secondaryColor),
+            color: Color(AppColors.secondaryColor),
             size: iconSize,
           ),
           SizedBox(height: padding / 2),
           Text(
             AppLocalizations.of(context).restTimeTitle,
             style: theme.textTheme.titleLarge?.copyWith(
-              color: const Color(AppColors.secondaryColor),
+              color: Color(AppColors.secondaryColor),
               fontWeight: FontWeight.bold,
               fontSize: isSmallScreen ? 16.0 : 20.0,
             ),
@@ -834,7 +814,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>
           Text(
             '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}',
             style: theme.textTheme.displayLarge?.copyWith(
-              color: const Color(AppColors.secondaryColor),
+              color: Color(AppColors.secondaryColor),
               fontWeight: FontWeight.bold,
               fontSize: timerFontSize,
             ),
@@ -876,7 +856,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>
           Container(
             padding: EdgeInsets.all(padding),
             decoration: BoxDecoration(
-              color: const Color(
+              color: Color(
                 AppColors.secondaryColor,
               ).withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(AppConstants.radiusM),
@@ -884,7 +864,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>
             child: Text(
               AppLocalizations.of(context).restMessage,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: const Color(AppColors.secondaryColor),
+                color: Color(AppColors.secondaryColor),
                 fontWeight: FontWeight.bold,
                 fontSize: isSmallScreen ? 14.0 : 16.0,
               ),
@@ -903,7 +883,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>
                 _moveToNextSet();
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(AppColors.secondaryColor),
+                backgroundColor: Color(AppColors.secondaryColor),
                 padding: EdgeInsets.symmetric(
                   horizontal: padding,
                   vertical: padding / 2,
@@ -935,7 +915,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>
               ? () => _startRestTimer()
               : _completeWorkout,
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(AppColors.successColor),
+            backgroundColor: Color(AppColors.successColor),
             padding: EdgeInsets.symmetric(
               horizontal: padding,
               vertical: padding / 2,
@@ -978,13 +958,13 @@ class _WorkoutScreenState extends State<WorkoutScreen>
         Container(
           padding: EdgeInsets.all(padding),
           decoration: BoxDecoration(
-            color: const Color(AppColors.primaryColor).withValues(alpha: 0.1),
+            color: Color(AppColors.primaryColor).withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(AppConstants.radiusM),
           ),
           child: Text(
             AppLocalizations.of(context).guidanceMessage,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: const Color(AppColors.primaryColor),
+              color: Color(AppColors.primaryColor),
               fontWeight: FontWeight.bold,
               fontSize: isSmallScreen ? 12.0 : 14.0,
             ),
@@ -1001,7 +981,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>
             onPressed: _currentReps > 0 ? _markSetCompleted : null,
             style: ElevatedButton.styleFrom(
               backgroundColor: _currentReps > 0
-                  ? const Color(AppColors.primaryColor)
+                  ? Color(AppColors.primaryColor)
                   : Colors.grey,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppConstants.radiusM),
@@ -1040,7 +1020,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>
     return Container(
       height: 60,
       width: double.infinity,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: Color(0xFF1A1A1A),
         border: Border(
           top: BorderSide(color: Color(AppColors.primaryColor), width: 1),
@@ -1050,7 +1030,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>
           ? AdWidget(ad: bannerAd)
           : Container(
               height: 60,
-              color: const Color(0xFF1A1A1A),
+              color: Color(0xFF1A1A1A),
               child: const Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

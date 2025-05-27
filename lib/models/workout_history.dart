@@ -7,6 +7,8 @@ class WorkoutHistory {
   final int totalReps;
   final double completionRate;
   final String level;
+  final Duration duration;
+  final String pushupType;
 
   WorkoutHistory({
     required this.id,
@@ -17,6 +19,8 @@ class WorkoutHistory {
     required this.totalReps,
     required this.completionRate,
     required this.level,
+    this.duration = const Duration(minutes: 10), // 기본값 설정
+    this.pushupType = 'Push-up', // 기본값 설정
   });
 
   Map<String, dynamic> toMap() {
@@ -29,25 +33,29 @@ class WorkoutHistory {
       'totalReps': totalReps,
       'completionRate': completionRate,
       'level': level,
+      'duration': duration.inMinutes,
+      'pushupType': pushupType,
     };
   }
 
   factory WorkoutHistory.fromMap(Map<String, dynamic> map) {
     return WorkoutHistory(
-      id: map['id'],
-      date: DateTime.parse(map['date']),
-      workoutTitle: map['workoutTitle'],
-      targetReps: map['targetReps']
+      id: map['id'] as String,
+      date: DateTime.parse(map['date'] as String),
+      workoutTitle: map['workoutTitle'] as String,
+      targetReps: (map['targetReps'] as String)
           .split(',')
-          .map<int>((e) => int.parse(e))
+          .map<int>((String e) => int.parse(e))
           .toList(),
-      completedReps: map['completedReps']
+      completedReps: (map['completedReps'] as String)
           .split(',')
-          .map<int>((e) => int.parse(e))
+          .map<int>((String e) => int.parse(e))
           .toList(),
-      totalReps: map['totalReps'],
-      completionRate: map['completionRate'],
-      level: map['level'],
+      totalReps: map['totalReps'] as int,
+      completionRate: map['completionRate'] as double,
+      level: map['level'] as String,
+      duration: Duration(minutes: map['duration'] as int? ?? 10),
+      pushupType: map['pushupType'] as String? ?? 'Push-up',
     );
   }
 

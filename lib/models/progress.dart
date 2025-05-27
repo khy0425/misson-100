@@ -51,8 +51,8 @@ class Progress {
   // 전체 프로그램 진행률
   double get overallProgress {
     if (currentWeek > 6) return 1.0;
-    double weekProgress = (currentWeek - 1) / 6.0;
-    double dayProgress = (currentDay - 1) / 18.0; // 총 18일 (6주 * 3일)
+    final double weekProgress = (currentWeek - 1) / 6.0;
+    final double dayProgress = (currentDay - 1) / 18.0; // 총 18일 (6주 * 3일)
     return (weekProgress + dayProgress).clamp(0.0, 1.0);
   }
 

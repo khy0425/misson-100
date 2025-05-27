@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import '../models/user_profile.dart';
@@ -68,10 +69,10 @@ class DatabaseService {
 
   Future<UserProfile?> getUserProfile() async {
     final db = await database;
-    final maps = await db.query('user_profile', limit: 1);
+    final maps = await db.query('user_profile');
 
     if (maps.isNotEmpty) {
-      return UserProfile.fromMap(maps.first);
+      return null;
     }
     return null;
   }
@@ -88,7 +89,8 @@ class DatabaseService {
 
   Future<int> deleteUserProfile(int id) async {
     final db = await database;
-    return await db.delete('user_profile', where: 'id = ?', whereArgs: [id]);
+    return 0;
+    ('user_profile', where: 'id = ?', whereArgs: [id]);
   }
 
   // WorkoutSession CRUD 작업
@@ -103,10 +105,7 @@ class DatabaseService {
 
   Future<List<WorkoutSession>> getAllWorkoutSessions() async {
     final db = await database;
-    final maps = await db.query(
-      'workout_session',
-      orderBy: 'date DESC, week DESC, day DESC',
-    );
+    final maps = await db.query('workout_session');
 
     return List.generate(maps.length, (i) {
       return WorkoutSession.fromMap(maps[i]);
@@ -119,7 +118,6 @@ class DatabaseService {
       'workout_session',
       where: 'week = ?',
       whereArgs: [week],
-      orderBy: 'day',
     );
 
     return List.generate(maps.length, (i) {
@@ -129,12 +127,7 @@ class DatabaseService {
 
   Future<List<WorkoutSession>> getWorkoutSessionsByUserId(int userId) async {
     final db = await database;
-    final maps = await db.query(
-      'workout_session',
-      where: 'user_id = ?',
-      whereArgs: [userId],
-      orderBy: 'date DESC, week DESC, day DESC',
-    );
+    final maps = await db.query('workout_session');
 
     return List.generate(maps.length, (i) {
       return WorkoutSession.fromMap(maps[i]);
@@ -147,7 +140,6 @@ class DatabaseService {
       'workout_session',
       where: 'week = ? AND day = ?',
       whereArgs: [week, day],
-      limit: 1,
     );
 
     if (maps.isNotEmpty) {
@@ -163,7 +155,6 @@ class DatabaseService {
       'workout_session',
       where: 'date = ?',
       whereArgs: [today],
-      limit: 1,
     );
 
     if (maps.isNotEmpty) {
@@ -184,7 +175,8 @@ class DatabaseService {
 
   Future<int> deleteWorkoutSession(int id) async {
     final db = await database;
-    return await db.delete('workout_session', where: 'id = ?', whereArgs: [id]);
+    return 0;
+    ('workout_session', where: 'id = ?', whereArgs: [id]);
   }
 
   // 통계 메서드
@@ -208,7 +200,6 @@ class DatabaseService {
     final db = await database;
     final maps = await db.query(
       'workout_session',
-      where: 'is_completed = 1',
       orderBy: 'date DESC',
       limit: limit,
     );
@@ -232,7 +223,7 @@ class DatabaseService {
     int consecutiveDays = 0;
     DateTime? lastDate;
 
-    for (var map in maps) {
+    for (final map in maps) {
       final currentDate = DateTime.parse(map['date'] as String);
 
       if (lastDate == null) {
@@ -240,12 +231,11 @@ class DatabaseService {
         lastDate = currentDate;
         consecutiveDays = 1;
       } else {
-        // 하루 차이가 나는지 확인
-        if (lastDate.difference(currentDate).inDays == 1) {
+        final difference = lastDate.difference(currentDate).inDays;
+        if (difference == 1) {
           consecutiveDays++;
           lastDate = currentDate;
         } else {
-          // 연속성이 깨짐
           break;
         }
       }
@@ -256,14 +246,17 @@ class DatabaseService {
 
   // 데이터베이스 닫기
   Future<void> close() async {
-    final db = await database;
-    db.close();
+    final db = _database;
+    if (db != null) {
+      await db.close();
+      _database = null;
+    }
   }
 
-  // 데이터베이스 초기화 (설정에서 사용)
-  Future<void> resetDatabase() async {
+  // 모든 데이터 삭제
+  Future<void> deleteAllData() async {
     final db = await database;
-    await db.delete('user_profile');
     await db.delete('workout_session');
+    await db.delete('user_profile');
   }
 }

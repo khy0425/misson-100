@@ -55,9 +55,9 @@ class PushupType {
       id: json['id'] as String,
       nameKey: json['nameKey'] as String,
       descriptionKey: json['descriptionKey'] as String,
-      difficulty: PushupDifficulty.values.byName(json['difficulty']),
+      difficulty: PushupDifficulty.values.byName(json['difficulty'] as String),
       targetMuscles: (json['targetMuscles'] as List)
-          .map((muscle) => TargetMuscle.values.byName(muscle))
+          .map((muscle) => TargetMuscle.values.byName(muscle as String))
           .toList(),
       benefitsKey: json['benefitsKey'] as String,
       instructionsKey: json['instructionsKey'] as String,

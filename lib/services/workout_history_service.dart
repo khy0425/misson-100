@@ -1,15 +1,43 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:flutter/foundation.dart';
 import '../models/workout_history.dart';
+import 'notification_service.dart';
 
 class WorkoutHistoryService {
   static Database? _database;
   static Database? _testDatabase; // 테스트용 데이터베이스
   static const String tableName = 'workout_history';
+  
+  // 달력 업데이트 콜백들 (여러 화면에서 동시에 사용 가능)
+  static final List<VoidCallback> _onWorkoutSavedCallbacks = [];
 
   // 테스트용 데이터베이스 설정
   static void setTestDatabase(Database testDb) {
     _testDatabase = testDb;
+  }
+  
+  // 운동 저장 시 콜백 추가 (달력 업데이트용)
+  static void addOnWorkoutSavedCallback(VoidCallback callback) {
+    if (!_onWorkoutSavedCallbacks.contains(callback)) {
+      _onWorkoutSavedCallbacks.add(callback);
+    }
+  }
+  
+  // 운동 저장 시 콜백 제거
+  static void removeOnWorkoutSavedCallback(VoidCallback callback) {
+    _onWorkoutSavedCallbacks.remove(callback);
+  }
+  
+  // 모든 콜백 제거
+  static void clearOnWorkoutSavedCallbacks() {
+    _onWorkoutSavedCallbacks.clear();
+  }
+  
+  // 기존 호환성을 위한 메서드 (deprecated)
+  @Deprecated('Use addOnWorkoutSavedCallback instead')
+  static void setOnWorkoutSaved(VoidCallback callback) {
+    addOnWorkoutSavedCallback(callback);
   }
 
   static Future<Database> get database async {
@@ -21,7 +49,7 @@ class WorkoutHistoryService {
   }
 
   static Future<Database> _initDatabase() async {
-    String path = join(await getDatabasesPath(), 'workout_history.db');
+    final String path = join(await getDatabasesPath(), 'workout_history.db');
     return await openDatabase(path, version: 1, onCreate: _createDatabase);
   }
 
@@ -48,6 +76,28 @@ class WorkoutHistoryService {
       history.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+    
+    // 운동 저장 후 달력 업데이트 콜백 호출
+    for (var callback in _onWorkoutSavedCallbacks) {
+      callback();
+    }
+    
+    // 오늘 운동을 완료했으므로 오늘의 리마인더 취소
+    await NotificationService.cancelTodayWorkoutReminder();
+    
+    // 운동 완료 축하 알림
+    await NotificationService.showWorkoutCompletionCelebration(
+      totalReps: history.totalReps,
+      completionRate: history.completionRate,
+    );
+    
+    // 연속 운동 스트릭 확인 및 격려 알림
+    final streak = await getCurrentStreak();
+    if (streak >= 3 && streak % 3 == 0) {
+      await NotificationService.showStreakEncouragement(streak);
+    }
+    
+    debugPrint('💾 운동 기록 저장 완료: ${history.date} - 달력 업데이트 신호 전송 및 오늘 리마인더 취소');
   }
 
   // 특정 날짜의 운동 기록 조회

@@ -37,27 +37,25 @@ class WorkoutSession {
 
   factory WorkoutSession.fromMap(Map<String, dynamic> map) {
     return WorkoutSession(
-      id: map['id'],
-      date: DateTime.parse(map['date']),
-      week: map['week'],
-      day: map['day'],
-      targetReps: map['target_reps'].toString().isEmpty
+      id: map['id'] as int?,
+      date: DateTime.parse(map['date'] as String),
+      week: map['week'] as int,
+      day: map['day'] as int,
+      targetReps: (map['target_reps'] as String).isEmpty
           ? []
-          : map['target_reps']
-                .toString()
+          : (map['target_reps'] as String)
                 .split(',')
-                .map<int>((e) => int.parse(e.trim()))
+                .map<int>((String e) => int.parse(e.trim()))
                 .toList(),
-      completedReps: map['completed_reps'].toString().isEmpty
+      completedReps: (map['completed_reps'] as String).isEmpty
           ? []
-          : map['completed_reps']
-                .toString()
+          : (map['completed_reps'] as String)
                 .split(',')
-                .map<int>((e) => int.parse(e.trim()))
+                .map<int>((String e) => int.parse(e.trim()))
                 .toList(),
-      isCompleted: map['is_completed'] == 1,
-      totalReps: map['total_reps'] ?? 0,
-      totalTime: Duration(seconds: map['total_time'] ?? 0),
+      isCompleted: (map['is_completed'] as int) == 1,
+      totalReps: map['total_reps'] as int? ?? 0,
+      totalTime: Duration(seconds: map['total_time'] as int? ?? 0),
     );
   }
 
@@ -89,8 +87,8 @@ class WorkoutSession {
   double get completionRate {
     if (targetReps.isEmpty || completedReps.isEmpty) return 0.0;
 
-    int totalTarget = targetReps.reduce((a, b) => a + b);
-    int totalCompleted = completedReps.reduce((a, b) => a + b);
+    final int totalTarget = targetReps.reduce((a, b) => a + b);
+    final int totalCompleted = completedReps.reduce((a, b) => a + b);
 
     return totalTarget > 0
         ? (totalCompleted / totalTarget).clamp(0.0, 1.0)

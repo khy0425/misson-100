@@ -10,12 +10,19 @@ class AppTheme {
 
       // 기본 색상 스키마
       colorScheme: ColorScheme.fromSeed(
-        seedColor: Color(AppColors.primaryColor),
+        seedColor: const Color(AppColors.primaryColor),
         brightness: Brightness.light,
+        background: const Color(AppColors.backgroundLight),
+        surface: const Color(AppColors.surfaceLight),
+        onBackground: const Color(AppColors.textPrimaryLight),
+        onSurface: const Color(AppColors.textPrimaryLight),
       ),
 
+      // 배경 색상
+      scaffoldBackgroundColor: const Color(AppColors.backgroundLight),
+
       // 앱바 테마
-      appBarTheme: AppBarTheme(
+      appBarTheme: const AppBarTheme(
         elevation: AppConstants.elevationS,
         centerTitle: true,
         backgroundColor: Color(AppColors.primaryColor),
@@ -33,21 +40,21 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppConstants.radiusM),
         ),
-        color: Color(AppColors.surfaceLight),
+        color: const Color(AppColors.surfaceLight),
       ),
 
       // 버튼 테마
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           elevation: AppConstants.elevationS,
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             horizontal: AppConstants.paddingL,
             vertical: AppConstants.paddingM,
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppConstants.radiusM),
           ),
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
             fontSize: AppConstants.fontSizeM,
             fontWeight: FontWeight.w600,
           ),
@@ -56,14 +63,14 @@ class AppTheme {
 
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             horizontal: AppConstants.paddingL,
             vertical: AppConstants.paddingM,
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppConstants.radiusM),
           ),
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
             fontSize: AppConstants.fontSizeM,
             fontWeight: FontWeight.w600,
           ),
@@ -71,7 +78,7 @@ class AppTheme {
       ),
 
       // 텍스트 테마
-      textTheme: TextTheme(
+      textTheme: const TextTheme(
         displayLarge: TextStyle(
           fontSize: AppConstants.fontSizeXXL,
           fontWeight: FontWeight.bold,
@@ -122,7 +129,7 @@ class AppTheme {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppConstants.radiusM),
         ),
-        contentPadding: EdgeInsets.symmetric(
+        contentPadding: const EdgeInsets.symmetric(
           horizontal: AppConstants.paddingM,
           vertical: AppConstants.paddingS,
         ),
@@ -130,14 +137,16 @@ class AppTheme {
 
       // 프로그레스 인디케이터 테마
       progressIndicatorTheme: ProgressIndicatorThemeData(
-        color: Color(AppColors.primaryColor),
-        linearTrackColor: Color(AppColors.primaryColor).withValues(alpha: 0.2),
+        color: const Color(AppColors.primaryColor),
+        linearTrackColor: const Color(
+          AppColors.primaryColor,
+        ).withValues(alpha: 0.2),
       ),
 
       // 스낵바 테마
       snackBarTheme: SnackBarThemeData(
-        backgroundColor: Color(AppColors.textPrimaryLight),
-        contentTextStyle: TextStyle(color: Colors.white),
+        backgroundColor: const Color(AppColors.textPrimaryLight),
+        contentTextStyle: const TextStyle(color: Colors.white),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppConstants.radiusS),
         ),
@@ -153,7 +162,7 @@ class AppTheme {
       ),
 
       // 플로팅 액션 버튼 테마
-      floatingActionButtonTheme: FloatingActionButtonThemeData(
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
         elevation: AppConstants.elevationM,
         backgroundColor: Color(AppColors.primaryColor),
         foregroundColor: Colors.white,
@@ -169,12 +178,16 @@ class AppTheme {
 
       // 기본 색상 스키마
       colorScheme: ColorScheme.fromSeed(
-        seedColor: Color(AppColors.primaryColor),
+        seedColor: const Color(AppColors.primaryColor),
         brightness: Brightness.dark,
+        background: const Color(AppColors.backgroundDark),
+        surface: const Color(AppColors.surfaceDark),
+        onBackground: const Color(AppColors.textPrimaryDark),
+        onSurface: const Color(AppColors.textPrimaryDark),
       ),
 
       // 앱바 테마
-      appBarTheme: AppBarTheme(
+      appBarTheme: const AppBarTheme(
         elevation: AppConstants.elevationS,
         centerTitle: true,
         backgroundColor: Color(AppColors.surfaceDark),
@@ -192,21 +205,21 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppConstants.radiusM),
         ),
-        color: Color(AppColors.surfaceDark),
+        color: const Color(AppColors.surfaceDark),
       ),
 
       // 버튼 테마
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           elevation: AppConstants.elevationS,
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             horizontal: AppConstants.paddingL,
             vertical: AppConstants.paddingM,
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppConstants.radiusM),
           ),
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
             fontSize: AppConstants.fontSizeM,
             fontWeight: FontWeight.w600,
           ),
@@ -215,14 +228,14 @@ class AppTheme {
 
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             horizontal: AppConstants.paddingL,
             vertical: AppConstants.paddingM,
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppConstants.radiusM),
           ),
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
             fontSize: AppConstants.fontSizeM,
             fontWeight: FontWeight.w600,
           ),
@@ -230,7 +243,7 @@ class AppTheme {
       ),
 
       // 텍스트 테마
-      textTheme: TextTheme(
+      textTheme: const TextTheme(
         displayLarge: TextStyle(
           fontSize: AppConstants.fontSizeXXL,
           fontWeight: FontWeight.bold,
@@ -281,7 +294,7 @@ class AppTheme {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppConstants.radiusM),
         ),
-        contentPadding: EdgeInsets.symmetric(
+        contentPadding: const EdgeInsets.symmetric(
           horizontal: AppConstants.paddingM,
           vertical: AppConstants.paddingS,
         ),
@@ -289,14 +302,18 @@ class AppTheme {
 
       // 프로그레스 인디케이터 테마
       progressIndicatorTheme: ProgressIndicatorThemeData(
-        color: Color(AppColors.primaryColor),
-        linearTrackColor: Color(AppColors.primaryColor).withValues(alpha: 0.2),
+        color: const Color(AppColors.primaryColor),
+        linearTrackColor: const Color(
+          AppColors.primaryColor,
+        ).withValues(alpha: 0.2),
       ),
 
       // 스낵바 테마
       snackBarTheme: SnackBarThemeData(
-        backgroundColor: Color(AppColors.surfaceDark),
-        contentTextStyle: TextStyle(color: Color(AppColors.textPrimaryDark)),
+        backgroundColor: const Color(AppColors.surfaceDark),
+        contentTextStyle: const TextStyle(
+          color: Color(AppColors.textPrimaryDark),
+        ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppConstants.radiusS),
         ),
@@ -309,18 +326,18 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppConstants.radiusL),
         ),
-        backgroundColor: Color(AppColors.surfaceDark),
+        backgroundColor: const Color(AppColors.surfaceDark),
       ),
 
       // 플로팅 액션 버튼 테마
-      floatingActionButtonTheme: FloatingActionButtonThemeData(
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
         elevation: AppConstants.elevationM,
         backgroundColor: Color(AppColors.primaryColor),
         foregroundColor: Colors.white,
       ),
 
       // 배경 색상
-      scaffoldBackgroundColor: Color(AppColors.backgroundDark),
+      scaffoldBackgroundColor: const Color(AppColors.backgroundDark),
     );
   }
 }
@@ -329,7 +346,7 @@ class AppTheme {
 class ButtonStyles {
   // 차드 버튼 스타일 (그라데이션)
   static ButtonStyle get chadButton => ElevatedButton.styleFrom(
-    padding: EdgeInsets.symmetric(
+    padding: const EdgeInsets.symmetric(
       horizontal: AppConstants.paddingXL,
       vertical: AppConstants.paddingL,
     ),
@@ -341,9 +358,9 @@ class ButtonStyles {
 
   // 성공 버튼 스타일
   static ButtonStyle get successButton => ElevatedButton.styleFrom(
-    backgroundColor: Color(AppColors.successColor),
+    backgroundColor: const Color(AppColors.successColor),
     foregroundColor: Colors.white,
-    padding: EdgeInsets.symmetric(
+    padding: const EdgeInsets.symmetric(
       horizontal: AppConstants.paddingL,
       vertical: AppConstants.paddingM,
     ),
@@ -354,9 +371,9 @@ class ButtonStyles {
 
   // 위험 버튼 스타일
   static ButtonStyle get dangerButton => ElevatedButton.styleFrom(
-    backgroundColor: Color(AppColors.errorColor),
+    backgroundColor: const Color(AppColors.errorColor),
     foregroundColor: Colors.white,
-    padding: EdgeInsets.symmetric(
+    padding: const EdgeInsets.symmetric(
       horizontal: AppConstants.paddingL,
       vertical: AppConstants.paddingM,
     ),
@@ -367,8 +384,8 @@ class ButtonStyles {
 
   // 둥근 버튼 스타일
   static ButtonStyle get roundButton => ElevatedButton.styleFrom(
-    shape: CircleBorder(),
-    padding: EdgeInsets.all(AppConstants.paddingL),
+    shape: const CircleBorder(),
+    padding: const EdgeInsets.all(AppConstants.paddingL),
     elevation: AppConstants.elevationM,
   );
 }
@@ -376,28 +393,28 @@ class ButtonStyles {
 // 커스텀 텍스트 스타일들
 class TextStyles {
   // 차드 타이틀 스타일
-  static TextStyle get chadTitle => TextStyle(
+  static TextStyle get chadTitle => const TextStyle(
     fontSize: AppConstants.fontSizeXXL,
     fontWeight: FontWeight.bold,
     color: Color(AppColors.primaryColor),
   );
 
   // 카운터 텍스트 스타일 (큰 숫자)
-  static TextStyle get counter => TextStyle(
+  static TextStyle get counter => const TextStyle(
     fontSize: 48.0,
     fontWeight: FontWeight.bold,
     color: Color(AppColors.primaryColor),
   );
 
   // 강조 텍스트 스타일
-  static TextStyle get emphasis => TextStyle(
+  static TextStyle get emphasis => const TextStyle(
     fontSize: AppConstants.fontSizeL,
     fontWeight: FontWeight.w600,
     color: Color(AppColors.primaryColor),
   );
 
   // 캡션 텍스트 스타일
-  static TextStyle get caption => TextStyle(
+  static TextStyle get caption => const TextStyle(
     fontSize: AppConstants.fontSizeXS,
     color: Color(AppColors.textSecondaryLight),
     fontStyle: FontStyle.italic,

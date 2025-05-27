@@ -31,16 +31,16 @@ class UserProfile {
 
   factory UserProfile.fromMap(Map<String, dynamic> map) {
     return UserProfile(
-      id: map['id'],
+      id: map['id'] as int?,
       level: UserLevel.values.firstWhere(
-        (e) => e.toString() == map['level'],
+        (e) => e.toString() == map['level'] as String,
         orElse: () => UserLevel.rookie,
       ),
-      initialMaxReps: map['initial_max_reps'],
-      startDate: DateTime.parse(map['start_date']),
-      chadLevel: map['chad_level'] ?? 0,
-      reminderEnabled: map['reminder_enabled'] == 1,
-      reminderTime: map['reminder_time'],
+      initialMaxReps: map['initial_max_reps'] as int,
+      startDate: DateTime.parse(map['start_date'] as String),
+      chadLevel: map['chad_level'] as int? ?? 0,
+      reminderEnabled: (map['reminder_enabled'] as int) == 1,
+      reminderTime: map['reminder_time'] as String?,
     );
   }
 

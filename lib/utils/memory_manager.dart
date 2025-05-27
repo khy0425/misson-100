@@ -119,7 +119,8 @@ class MemoryManager {
   /// 메모리 압박 상황 감지
   static bool isMemoryPressure() {
     final stats = getMemoryStats();
-    return stats['imageCacheUsagePercent'] > 80;
+    final usagePercent = stats['imageCacheUsagePercent'] as int;
+    return usagePercent > 80;
   }
 
   /// 자동 메모리 정리 (압박 상황시)

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../generated/app_localizations.dart';
 import '../models/pushup_type.dart';
 import '../services/pushup_tutorial_service.dart';
 import '../services/chad_encouragement_service.dart';
@@ -73,10 +73,7 @@ class _PushupTutorialScreenState extends State<PushupTutorialScreen> {
                       decoration: BoxDecoration(
                         color: const Color(0xFF1A1A1A),
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: const Color(0xFF4DABF7),
-                          width: 2,
-                        ),
+                        border: Border.all(color: const Color(0xFF4DABF7), width: 2),
                       ),
                       child: const Column(
                         children: [
@@ -183,7 +180,7 @@ class _PushupTutorialScreenState extends State<PushupTutorialScreen> {
 
           // 상세 화면으로 이동
           Navigator.of(context).push(
-            MaterialPageRoute(
+            MaterialPageRoute<void>(
               builder: (context) =>
                   PushupTutorialDetailScreen(pushupType: pushup),
             ),
@@ -235,19 +232,16 @@ class _PushupTutorialScreenState extends State<PushupTutorialScreen> {
                     const SizedBox(height: 4),
                     Text(
                       _getPushupDescription(pushup),
-                      style: const TextStyle(
-                        color: Color(0xFFB0B0B0),
-                        fontSize: 14,
-                      ),
+                      style: const TextStyle(color: Color(0xFFB0B0B0), fontSize: 14),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 8),
                     Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.local_fire_department,
-                          color: const Color(0xFF4DABF7),
+                          color: Color(0xFF4DABF7),
                           size: 16,
                         ),
                         const SizedBox(width: 4),
@@ -259,9 +253,9 @@ class _PushupTutorialScreenState extends State<PushupTutorialScreen> {
                           ),
                         ),
                         const SizedBox(width: 12),
-                        Icon(
+                        const Icon(
                           Icons.psychology,
-                          color: const Color(0xFF51CF66),
+                          color: Color(0xFF51CF66),
                           size: 16,
                         ),
                         const SizedBox(width: 4),
@@ -281,11 +275,7 @@ class _PushupTutorialScreenState extends State<PushupTutorialScreen> {
                 ),
               ),
 
-              const Icon(
-                Icons.arrow_forward_ios,
-                color: Color(0xFF4DABF7),
-                size: 16,
-              ),
+              const Icon(Icons.arrow_forward_ios, color: Color(0xFF4DABF7), size: 16),
             ],
           ),
         ),
@@ -363,15 +353,15 @@ class _PushupTutorialScreenState extends State<PushupTutorialScreen> {
   String _getTargetMuscleName(TargetMuscle muscle) {
     switch (muscle) {
       case TargetMuscle.chest:
-        return '가슴';
+        return AppLocalizations.of(context)!.chest;
       case TargetMuscle.triceps:
-        return '삼두';
+        return AppLocalizations.of(context)!.triceps;
       case TargetMuscle.shoulders:
-        return '어깨';
+        return AppLocalizations.of(context)!.shoulders;
       case TargetMuscle.core:
-        return '코어';
+        return AppLocalizations.of(context)!.core;
       case TargetMuscle.full:
-        return '전신';
+        return AppLocalizations.of(context)!.fullBody;
     }
   }
 
@@ -421,7 +411,7 @@ class _PushupTutorialScreenState extends State<PushupTutorialScreen> {
             ),
             const SizedBox(width: 8),
             Text(
-              'Advertisement',
+              AppLocalizations.of(context)!.advertisement,
               style: TextStyle(
                 color: const Color(0xFF4DABF7).withValues(alpha: 0.6),
                 fontSize: adHeight * 0.25,

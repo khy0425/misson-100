@@ -33,12 +33,12 @@ class _InitialTestScreenState extends State<InitialTestScreen>
 
   void _setupAnimations() {
     _slideController = AnimationController(
-      duration: const Duration(milliseconds: 800),
+      duration: Duration(milliseconds: 800),
       vsync: this,
     );
 
-    _slideAnimation =
-        Tween<Offset>(begin: const Offset(0, 0.3), end: Offset.zero).animate(
+    _slideAnimation = Tween<Offset>(begin: Offset(0, 0.3), end: Offset.zero)
+        .animate(
           CurvedAnimation(parent: _slideController, curve: Curves.easeOutBack),
         );
 
@@ -47,7 +47,7 @@ class _InitialTestScreenState extends State<InitialTestScreen>
 
   void _startScrollHintAnimation() {
     // 화면 로드 완료 후 1.5초 뒤에 스크롤 힌트 애니메이션 시작
-    _scrollHintTimer = Timer(const Duration(milliseconds: 1500), () {
+    _scrollHintTimer = Timer(Duration(milliseconds: 1500), () {
       if (_scrollController.hasClients) {
         _performScrollHint();
       }
@@ -62,20 +62,20 @@ class _InitialTestScreenState extends State<InitialTestScreen>
       final currentPosition = _scrollController.offset;
 
       // 살짝 아래로 스크롤 (100px 정도)
-      await _scrollController.animateTo(
+      _scrollController.animateTo(
         currentPosition + 100,
-        duration: const Duration(milliseconds: 500),
+        duration: Duration(milliseconds: 500),
         curve: Curves.easeInOut,
       );
 
       // 0.8초 대기 (사용자가 인지할 시간)
-      await Future.delayed(const Duration(milliseconds: 800));
+      Future<void>.delayed(Duration(milliseconds: 800));
 
       // 원래 위치로 부드럽게 돌아가기
       if (_scrollController.hasClients) {
-        await _scrollController.animateTo(
+        _scrollController.animateTo(
           currentPosition,
-          duration: const Duration(milliseconds: 600),
+          duration: Duration(milliseconds: 600),
           curve: Curves.easeOutBack,
         );
       }
@@ -105,8 +105,8 @@ class _InitialTestScreenState extends State<InitialTestScreen>
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(AppLocalizations.of(context).selectLevelButton),
-          backgroundColor: const Color(AppColors.errorColor),
-          duration: const Duration(seconds: 3),
+          backgroundColor: Color(AppColors.errorColor),
+          duration: Duration(seconds: 3),
         ),
       );
       return;
@@ -146,8 +146,8 @@ class _InitialTestScreenState extends State<InitialTestScreen>
             content: Text(
               AppLocalizations.of(context).profileCreated(sessionsCreated),
             ),
-            backgroundColor: const Color(AppColors.successColor),
-            duration: const Duration(seconds: 2),
+            backgroundColor: Color(AppColors.successColor),
+            duration: Duration(seconds: 2),
           ),
         );
 
@@ -161,8 +161,8 @@ class _InitialTestScreenState extends State<InitialTestScreen>
             content: Text(
               AppLocalizations.of(context).profileCreationError(e.toString()),
             ),
-            backgroundColor: const Color(AppColors.errorColor),
-            duration: const Duration(seconds: 3),
+            backgroundColor: Color(AppColors.errorColor),
+            duration: Duration(seconds: 3),
           ),
         );
       }
@@ -200,9 +200,9 @@ class _InitialTestScreenState extends State<InitialTestScreen>
     return GestureDetector(
       onTap: () => _selectLevel(level),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        margin: const EdgeInsets.only(bottom: AppConstants.paddingL),
-        padding: const EdgeInsets.all(AppConstants.paddingL),
+        duration: Duration(milliseconds: 300),
+        margin: EdgeInsets.only(bottom: AppConstants.paddingL),
+        padding: EdgeInsets.all(AppConstants.paddingL),
         decoration: BoxDecoration(
           color: isSelected
               ? levelColor.withValues(alpha: 0.15)
@@ -217,7 +217,7 @@ class _InitialTestScreenState extends State<InitialTestScreen>
                   BoxShadow(
                     color: levelColor.withValues(alpha: 0.3),
                     blurRadius: 10,
-                    offset: const Offset(0, 5),
+                    offset: Offset(0, 5),
                   ),
                 ]
               : null,
@@ -228,7 +228,7 @@ class _InitialTestScreenState extends State<InitialTestScreen>
             Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.all(AppConstants.paddingM),
+                  padding: EdgeInsets.all(AppConstants.paddingM),
                   decoration: BoxDecoration(
                     color: levelColor.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(AppConstants.radiusM),
@@ -272,7 +272,7 @@ class _InitialTestScreenState extends State<InitialTestScreen>
             const SizedBox(height: AppConstants.paddingM),
             ...features.map(
               (feature) => Padding(
-                padding: const EdgeInsets.only(bottom: 4),
+                padding: EdgeInsets.only(bottom: 4),
                 child: Row(
                   children: [
                     Icon(Icons.fiber_manual_record, color: levelColor, size: 8),
@@ -312,17 +312,15 @@ class _InitialTestScreenState extends State<InitialTestScreen>
         child: SlideTransition(
           position: _slideAnimation,
           child: Padding(
-            padding: const EdgeInsets.all(AppConstants.paddingL),
+            padding: EdgeInsets.all(AppConstants.paddingL),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 // 상단 설명
                 Container(
-                  padding: const EdgeInsets.all(AppConstants.paddingL),
+                  padding: EdgeInsets.all(AppConstants.paddingL),
                   decoration: BoxDecoration(
-                    color: const Color(
-                      AppColors.primaryColor,
-                    ).withValues(alpha: 0.1),
+                    color: Color(AppColors.primaryColor).withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(AppConstants.radiusM),
                   ),
                   child: Column(
@@ -330,7 +328,7 @@ class _InitialTestScreenState extends State<InitialTestScreen>
                       Text(
                         AppLocalizations.of(context).levelSelectionHeader,
                         style: theme.textTheme.titleLarge?.copyWith(
-                          color: const Color(AppColors.primaryColor),
+                          color: Color(AppColors.primaryColor),
                           fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.center,
@@ -410,7 +408,7 @@ class _InitialTestScreenState extends State<InitialTestScreen>
                   child: ElevatedButton(
                     onPressed: _selectedLevel != null ? _onSubmit : null,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(AppColors.primaryColor),
+                      backgroundColor: Color(AppColors.primaryColor),
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(

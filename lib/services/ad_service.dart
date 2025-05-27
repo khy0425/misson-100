@@ -3,6 +3,18 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter/foundation.dart';
 
 class AdService {
+  // 테스트 환경 감지
+  static bool get _isTestEnvironment {
+    try {
+      // 테스트 환경에서는 Platform.environment를 사용할 수 없을 수 있음
+      return Platform.environment.containsKey('FLUTTER_TEST') ||
+          kDebugMode && !kIsWeb;
+    } catch (e) {
+      // 테스트 환경에서는 Platform 접근이 실패할 수 있음
+      return true;
+    }
+  }
+
   // 테스트 광고 ID들 (개발 중 사용)
   static const String _testBannerAdUnitId =
       'ca-app-pub-3940256099942544/6300978111';
@@ -16,12 +28,25 @@ class AdService {
   // 광고 로드 상태
   static bool _isBannerAdLoaded = false;
   static bool _isInterstitialAdLoaded = false;
+  static bool _isInitialized = false;
 
   /// 광고 서비스 초기화
   static Future<void> initialize() async {
-    await MobileAds.instance.initialize();
-    _loadBannerAd();
-    _loadInterstitialAd();
+    if (_isTestEnvironment) {
+      debugPrint('테스트 환경에서 광고 초기화 건너뜀');
+      _isInitialized = true;
+      return;
+    }
+
+    try {
+      await MobileAds.instance.initialize();
+      _isInitialized = true;
+      _loadBannerAd();
+      _loadInterstitialAd();
+    } catch (e) {
+      debugPrint('광고 초기화 실패: $e');
+      _isInitialized = false;
+    }
   }
 
   /// 배너 광고 ID 반환 (테스트/실제 구분)
@@ -42,6 +67,8 @@ class AdService {
 
   /// 배너 광고 로드
   static void _loadBannerAd() {
+    if (_isTestEnvironment || !_isInitialized) return;
+
     _bannerAd = BannerAd(
       adUnitId: bannerAdUnitId,
       size: AdSize.banner,
@@ -66,6 +93,8 @@ class AdService {
 
   /// 전면 광고 로드
   static void _loadInterstitialAd() {
+    if (_isTestEnvironment || !_isInitialized) return;
+
     InterstitialAd.load(
       adUnitId: interstitialAdUnitId,
       request: const AdRequest(),
@@ -101,13 +130,16 @@ class AdService {
     );
   }
 
-  /// 배너 광고 반환
+  /// 배너 광고 반환 (테스트 환경에서는 null 반환)
   static BannerAd? getBannerAd() {
+    if (_isTestEnvironment) return null;
     return _isBannerAdLoaded ? _bannerAd : null;
   }
 
   /// 새로운 배너 광고 생성 (화면별 개별 배너용)
-  static BannerAd createBannerAd() {
+  static BannerAd? createBannerAd() {
+    if (_isTestEnvironment || !_isInitialized) return null;
+
     return BannerAd(
       adUnitId: bannerAdUnitId,
       size: AdSize.banner,
@@ -124,6 +156,11 @@ class AdService {
 
   /// 전면 광고 표시
   static void showInterstitialAd() {
+    if (_isTestEnvironment) {
+      debugPrint('테스트 환경에서 전면 광고 표시 건너뜀');
+      return;
+    }
+
     if (_isInterstitialAdLoaded && _interstitialAd != null) {
       _interstitialAd?.show();
     } else {
@@ -135,11 +172,13 @@ class AdService {
   /// 배너 광고 높이
   static double get bannerHeight => 50.0;
 
-  /// 배너 광고 로드 상태 확인
-  static bool get isBannerAdLoaded => _isBannerAdLoaded;
+  /// 배너 광고 로드 상태 확인 (테스트 환경에서는 항상 false)
+  static bool get isBannerAdLoaded =>
+      _isTestEnvironment ? false : _isBannerAdLoaded;
 
-  /// 전면 광고 로드 상태 확인
-  static bool get isInterstitialAdLoaded => _isInterstitialAdLoaded;
+  /// 전면 광고 로드 상태 확인 (테스트 환경에서는 항상 false)
+  static bool get isInterstitialAdLoaded =>
+      _isTestEnvironment ? false : _isInterstitialAdLoaded;
 
   /// 리소스 정리
   static void dispose() {
@@ -149,10 +188,13 @@ class AdService {
     _interstitialAd = null;
     _isBannerAdLoaded = false;
     _isInterstitialAdLoaded = false;
+    _isInitialized = false;
   }
 
   /// 워크아웃 완료 시 전면 광고 표시 (50% 확률)
   static void showWorkoutCompleteAd() {
+    if (_isTestEnvironment) return;
+
     // 50% 확률로 전면 광고 표시
     if (DateTime.now().millisecondsSinceEpoch % 2 == 0) {
       showInterstitialAd();
@@ -161,6 +203,8 @@ class AdService {
 
   /// 레벨업 시 전면 광고 표시 (30% 확률)
   static void showLevelUpAd() {
+    if (_isTestEnvironment) return;
+
     // 30% 확률로 전면 광고 표시
     if (DateTime.now().millisecondsSinceEpoch % 10 < 3) {
       showInterstitialAd();
@@ -169,6 +213,8 @@ class AdService {
 
   /// 앱 시작 시 전면 광고 표시 (20% 확률)
   static void showAppLaunchAd() {
+    if (_isTestEnvironment) return;
+
     // 20% 확률로 전면 광고 표시
     if (DateTime.now().millisecondsSinceEpoch % 5 == 0) {
       showInterstitialAd();

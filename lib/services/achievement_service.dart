@@ -1,20 +1,42 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/foundation.dart';
+
+import 'package:flutter/material.dart';
 import 'package:path/path.dart';
+import 'dart:convert';
 import '../models/achievement.dart';
 import '../models/workout_history.dart';
 import 'workout_history_service.dart';
-// import '../services/notification_service.dart';
+import 'notification_service.dart';
 
 class AchievementService {
   static const String tableName = 'achievements';
   static Database? _database;
   static Database? _testDatabase; // 테스트용 데이터베이스
+  
+  // 실시간 업데이트를 위한 콜백들
+  static VoidCallback? _onAchievementUnlocked;
+  static VoidCallback? _onStatsUpdated;
+  static BuildContext? _globalContext;
 
   // 테스트용 데이터베이스 설정
   static void setTestDatabase(Database testDb) {
     _testDatabase = testDb;
+  }
+  
+  // 전역 컨텍스트 설정 (알림 표시용)
+  static void setGlobalContext(BuildContext context) {
+    _globalContext = context;
+  }
+  
+  // 업적 달성 콜백 설정
+  static void setOnAchievementUnlocked(VoidCallback callback) {
+    _onAchievementUnlocked = callback;
+  }
+  
+  // 통계 업데이트 콜백 설정
+  static void setOnStatsUpdated(VoidCallback callback) {
+    _onStatsUpdated = callback;
   }
 
   // 데이터베이스 getter (테스트용 데이터베이스가 있으면 우선 사용)
@@ -28,7 +50,7 @@ class AchievementService {
   }
 
   static Future<Database> _initDatabase() async {
-    String path = join(await getDatabasesPath(), 'achievements.db');
+    final String path = join(await getDatabasesPath(), 'achievements.db');
     return await openDatabase(path, version: 1, onCreate: _createDatabase);
   }
 
@@ -155,12 +177,23 @@ class AchievementService {
 
       // 🔥 업적 달성 알림 전송
       try {
-        // await NotificationService.sendAchievementNotification(
-        //   title: achievement.title,
-        //   description: achievement.description,
-        //   xpReward: achievement.xpReward,
-        // );
-        debugPrint('🏆 업적 달성 알림 전송: ${achievement.title}');
+        debugPrint('🏆 업적 달성: ${achievement.title}');
+        
+        // 업적 달성 이벤트 저장 (다이얼로그 표시용)
+        await _saveAchievementEvent(achievement);
+        
+        // 실시간 알림 표시
+        await NotificationService.showAchievementNotification(
+          achievement.title,
+          achievement.description,
+        );
+        
+        // 업적 달성 콜백 호출 (UI 업데이트용)
+        _onAchievementUnlocked?.call();
+        
+        // 통계 업데이트 콜백 호출
+        _onStatsUpdated?.call();
+        
       } catch (e) {
         debugPrint('⚠️ 업적 알림 전송 실패: $e');
       }
@@ -191,7 +224,7 @@ class AchievementService {
           currentValue = currentStreak;
           break;
         case AchievementType.volume:
-          currentValue = statistics['totalReps'] ?? 0;
+          currentValue = statistics['totalReps'] as int? ?? 0;
           break;
         case AchievementType.perfect:
           currentValue = await _checkPerfectAchievements(workouts);
@@ -383,5 +416,53 @@ class AchievementService {
     }
 
     return rarityCount;
+  }
+
+  // 업적 달성 이벤트 저장 (다이얼로그 표시용)
+  static Future<void> _saveAchievementEvent(Achievement achievement) async {
+    final prefs = await SharedPreferences.getInstance();
+    final events = prefs.getStringList('pending_achievement_events') ?? [];
+    
+    // 업적 정보를 JSON 문자열로 저장
+    final eventData = {
+      'id': achievement.id,
+      'title': achievement.title,
+      'description': achievement.description,
+      'iconCode': achievement.iconCode,
+      'rarity': achievement.rarity.name,
+      'xpReward': achievement.xpReward,
+      'motivationalMessage': achievement.motivationalMessage,
+      'timestamp': DateTime.now().toIso8601String(),
+    };
+    
+    events.add(jsonEncode(eventData));
+    await prefs.setStringList('pending_achievement_events', events);
+    
+    debugPrint('💾 업적 달성 이벤트 저장: ${achievement.title}');
+  }
+
+  // 대기 중인 업적 달성 이벤트 조회
+  static Future<List<Map<String, dynamic>>> getPendingAchievementEvents() async {
+    final prefs = await SharedPreferences.getInstance();
+    final events = prefs.getStringList('pending_achievement_events') ?? [];
+    
+    final List<Map<String, dynamic>> parsedEvents = [];
+    for (final eventStr in events) {
+      try {
+        final eventData = jsonDecode(eventStr) as Map<String, dynamic>;
+        parsedEvents.add(eventData);
+      } catch (e) {
+        debugPrint('⚠️ 업적 이벤트 파싱 실패: $e');
+      }
+    }
+    
+    return parsedEvents;
+  }
+
+  // 업적 달성 이벤트 클리어
+  static Future<void> clearPendingAchievementEvents() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('pending_achievement_events');
+    debugPrint('🧹 업적 달성 이벤트 클리어');
   }
 }

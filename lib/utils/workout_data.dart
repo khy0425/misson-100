@@ -232,16 +232,25 @@ class WorkoutData {
     'assets/images/더블차드.jpg', // 6단계 - 6주차 완료
   ];
 
+  // 차드 레벨에 따른 이미지 경로 반환
+  static String getChadImage(int chadLevel) {
+    if (chadLevel < 0 || chadLevel >= chadImagePaths.length) {
+      return chadImagePaths[0]; // 기본값: 수면모자차드
+    }
+    return chadImagePaths[chadLevel];
+  }
+
   // 차드 레벨별 메시지 (국제화)
   static List<String> getChadMessages(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     return [
-      AppLocalizations.of(context).chadMessage0, // 0단계
-      AppLocalizations.of(context).chadMessage1, // 1단계
-      AppLocalizations.of(context).chadMessage2, // 2단계
-      AppLocalizations.of(context).chadMessage3, // 3단계
-      AppLocalizations.of(context).chadMessage4, // 4단계
-      AppLocalizations.of(context).chadMessage5, // 5단계
-      AppLocalizations.of(context).chadMessage6, // 6단계
+      localizations.chadMessage0, // 0단계
+      localizations.chadMessage1, // 1단계
+      localizations.chadMessage2, // 2단계
+      localizations.chadMessage3, // 3단계
+      localizations.chadMessage4, // 4단계
+      localizations.chadMessage5, // 5단계
+      localizations.chadMessage6, // 6단계
     ];
   }
 
