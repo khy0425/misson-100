@@ -2876,6 +2876,102 @@ abstract class AppLocalizations {
   /// **'나중에 설정에서 알림을 허용할 수 있습니다.'**
   String get notificationPermissionLaterMessage;
 
+  /// 권한 요청 다이얼로그 제목
+  ///
+  /// In ko, this message translates to:
+  /// **'🔐 권한이 필요해요'**
+  String get permissionsRequired;
+
+  /// 권한 요청 설명
+  ///
+  /// In ko, this message translates to:
+  /// **'Mission 100에서 최고의 경험을 위해\n다음 권한들이 필요합니다:'**
+  String get permissionsDescription;
+
+  /// 알림 권한 제목
+  ///
+  /// In ko, this message translates to:
+  /// **'🔔 알림 권한'**
+  String get notificationPermissionTitle;
+
+  /// 알림 권한 설명
+  ///
+  /// In ko, this message translates to:
+  /// **'운동 리마인더와 업적 알림을 받기 위해 필요합니다'**
+  String get notificationPermissionDesc;
+
+  /// 저장소 권한 제목
+  ///
+  /// In ko, this message translates to:
+  /// **'📁 저장소 권한'**
+  String get storagePermissionTitle;
+
+  /// 저장소 권한 설명
+  ///
+  /// In ko, this message translates to:
+  /// **'운동 데이터 백업 및 복원을 위해 필요합니다'**
+  String get storagePermissionDesc;
+
+  /// 권한 허용 버튼
+  ///
+  /// In ko, this message translates to:
+  /// **'권한 허용하기'**
+  String get allowPermissions;
+
+  /// 권한 건너뛰기 버튼
+  ///
+  /// In ko, this message translates to:
+  /// **'나중에 설정하기'**
+  String get skipPermissions;
+
+  /// 권한 혜택 제목
+  ///
+  /// In ko, this message translates to:
+  /// **'이 권한들을 허용하면:'**
+  String get permissionBenefits;
+
+  /// 알림 혜택 1
+  ///
+  /// In ko, this message translates to:
+  /// **'💪 매일 운동 리마인더'**
+  String get notificationBenefit1;
+
+  /// 알림 혜택 2
+  ///
+  /// In ko, this message translates to:
+  /// **'🏆 업적 달성 축하 알림'**
+  String get notificationBenefit2;
+
+  /// 알림 혜택 3
+  ///
+  /// In ko, this message translates to:
+  /// **'🔥 동기부여 메시지'**
+  String get notificationBenefit3;
+
+  /// 저장소 혜택 1
+  ///
+  /// In ko, this message translates to:
+  /// **'📁 운동 데이터 안전 백업'**
+  String get storageBenefit1;
+
+  /// 저장소 혜택 2
+  ///
+  /// In ko, this message translates to:
+  /// **'🔄 기기 변경 시 데이터 복원'**
+  String get storageBenefit2;
+
+  /// 저장소 혜택 3
+  ///
+  /// In ko, this message translates to:
+  /// **'💾 데이터 손실 방지'**
+  String get storageBenefit3;
+
+  /// 이미 권한 요청한 경우 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'이미 권한을 요청했습니다.\n설정에서 수동으로 허용해주세요.'**
+  String get permissionAlreadyRequested;
+
   /// 영상 열기 실패 메시지
   ///
   /// In ko, this message translates to:

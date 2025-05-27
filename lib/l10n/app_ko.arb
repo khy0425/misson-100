@@ -2535,6 +2535,86 @@
     "description": "알림 권한 나중에 설정 메시지"
   },
 
+  "permissionsRequired": "🔐 권한이 필요해요",
+  "@permissionsRequired": {
+    "description": "권한 요청 다이얼로그 제목"
+  },
+
+  "permissionsDescription": "Mission 100에서 최고의 경험을 위해\n다음 권한들이 필요합니다:",
+  "@permissionsDescription": {
+    "description": "권한 요청 설명"
+  },
+
+  "notificationPermissionTitle": "🔔 알림 권한",
+  "@notificationPermissionTitle": {
+    "description": "알림 권한 제목"
+  },
+
+  "notificationPermissionDesc": "운동 리마인더와 업적 알림을 받기 위해 필요합니다",
+  "@notificationPermissionDesc": {
+    "description": "알림 권한 설명"
+  },
+
+  "storagePermissionTitle": "📁 저장소 권한",
+  "@storagePermissionTitle": {
+    "description": "저장소 권한 제목"
+  },
+
+  "storagePermissionDesc": "운동 데이터 백업 및 복원을 위해 필요합니다",
+  "@storagePermissionDesc": {
+    "description": "저장소 권한 설명"
+  },
+
+  "allowPermissions": "권한 허용하기",
+  "@allowPermissions": {
+    "description": "권한 허용 버튼"
+  },
+
+  "skipPermissions": "나중에 설정하기",
+  "@skipPermissions": {
+    "description": "권한 건너뛰기 버튼"
+  },
+
+  "permissionBenefits": "이 권한들을 허용하면:",
+  "@permissionBenefits": {
+    "description": "권한 혜택 제목"
+  },
+
+  "notificationBenefit1": "💪 매일 운동 리마인더",
+  "@notificationBenefit1": {
+    "description": "알림 혜택 1"
+  },
+
+  "notificationBenefit2": "🏆 업적 달성 축하 알림",
+  "@notificationBenefit2": {
+    "description": "알림 혜택 2"
+  },
+
+  "notificationBenefit3": "🔥 동기부여 메시지",
+  "@notificationBenefit3": {
+    "description": "알림 혜택 3"
+  },
+
+  "storageBenefit1": "📁 운동 데이터 안전 백업",
+  "@storageBenefit1": {
+    "description": "저장소 혜택 1"
+  },
+
+  "storageBenefit2": "🔄 기기 변경 시 데이터 복원",
+  "@storageBenefit2": {
+    "description": "저장소 혜택 2"
+  },
+
+  "storageBenefit3": "💾 데이터 손실 방지",
+  "@storageBenefit3": {
+    "description": "저장소 혜택 3"
+  },
+
+  "permissionAlreadyRequested": "이미 권한을 요청했습니다.\n설정에서 수동으로 허용해주세요.",
+  "@permissionAlreadyRequested": {
+    "description": "이미 권한 요청한 경우 메시지"
+  },
+
   "videoCannotOpen": "영상을 열 수 없습니다. YouTube 앱을 확인해주세요.",
   "@videoCannotOpen": {
     "description": "영상 열기 실패 메시지"

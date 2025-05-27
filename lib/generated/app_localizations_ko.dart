@@ -1553,6 +1553,55 @@ class AppLocalizationsKo extends AppLocalizations {
   String get notificationPermissionLaterMessage => '나중에 설정에서 알림을 허용할 수 있습니다.';
 
   @override
+  String get permissionsRequired => '🔐 권한이 필요해요';
+
+  @override
+  String get permissionsDescription =>
+      'Mission 100에서 최고의 경험을 위해\n다음 권한들이 필요합니다:';
+
+  @override
+  String get notificationPermissionTitle => '🔔 알림 권한';
+
+  @override
+  String get notificationPermissionDesc => '운동 리마인더와 업적 알림을 받기 위해 필요합니다';
+
+  @override
+  String get storagePermissionTitle => '📁 저장소 권한';
+
+  @override
+  String get storagePermissionDesc => '운동 데이터 백업 및 복원을 위해 필요합니다';
+
+  @override
+  String get allowPermissions => '권한 허용하기';
+
+  @override
+  String get skipPermissions => '나중에 설정하기';
+
+  @override
+  String get permissionBenefits => '이 권한들을 허용하면:';
+
+  @override
+  String get notificationBenefit1 => '💪 매일 운동 리마인더';
+
+  @override
+  String get notificationBenefit2 => '🏆 업적 달성 축하 알림';
+
+  @override
+  String get notificationBenefit3 => '🔥 동기부여 메시지';
+
+  @override
+  String get storageBenefit1 => '📁 운동 데이터 안전 백업';
+
+  @override
+  String get storageBenefit2 => '🔄 기기 변경 시 데이터 복원';
+
+  @override
+  String get storageBenefit3 => '💾 데이터 손실 방지';
+
+  @override
+  String get permissionAlreadyRequested => '이미 권한을 요청했습니다.\n설정에서 수동으로 허용해주세요.';
+
+  @override
   String get videoCannotOpen => '영상을 열 수 없습니다. YouTube 앱을 확인해주세요.';
 
   @override

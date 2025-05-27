@@ -2208,6 +2208,86 @@
     "description": "Notification permission later message"
   },
 
+  "permissionsRequired": "🔐 Permissions Required",
+  "@permissionsRequired": {
+    "description": "Permission request dialog title"
+  },
+
+  "permissionsDescription": "Mission 100 needs the following permissions\nfor the best experience:",
+  "@permissionsDescription": {
+    "description": "Permission request description"
+  },
+
+  "notificationPermissionTitle": "🔔 Notification Permission",
+  "@notificationPermissionTitle": {
+    "description": "Notification permission title"
+  },
+
+  "notificationPermissionDesc": "Required for workout reminders and achievement notifications",
+  "@notificationPermissionDesc": {
+    "description": "Notification permission description"
+  },
+
+  "storagePermissionTitle": "📁 Storage Permission",
+  "@storagePermissionTitle": {
+    "description": "Storage permission title"
+  },
+
+  "storagePermissionDesc": "Required for backing up and restoring workout data",
+  "@storagePermissionDesc": {
+    "description": "Storage permission description"
+  },
+
+  "allowPermissions": "Allow Permissions",
+  "@allowPermissions": {
+    "description": "Allow permissions button"
+  },
+
+  "skipPermissions": "Set Up Later",
+  "@skipPermissions": {
+    "description": "Skip permissions button"
+  },
+
+  "permissionBenefits": "With these permissions, you can:",
+  "@permissionBenefits": {
+    "description": "Permission benefits title"
+  },
+
+  "notificationBenefit1": "💪 Daily workout reminders",
+  "@notificationBenefit1": {
+    "description": "Notification benefit 1"
+  },
+
+  "notificationBenefit2": "🏆 Achievement celebration alerts",
+  "@notificationBenefit2": {
+    "description": "Notification benefit 2"
+  },
+
+  "notificationBenefit3": "🔥 Motivational messages",
+  "@notificationBenefit3": {
+    "description": "Notification benefit 3"
+  },
+
+  "storageBenefit1": "📁 Secure workout data backup",
+  "@storageBenefit1": {
+    "description": "Storage benefit 1"
+  },
+
+  "storageBenefit2": "🔄 Data restoration when changing devices",
+  "@storageBenefit2": {
+    "description": "Storage benefit 2"
+  },
+
+  "storageBenefit3": "💾 Prevent data loss",
+  "@storageBenefit3": {
+    "description": "Storage benefit 3"
+  },
+
+  "permissionAlreadyRequested": "Permissions have already been requested.\nPlease allow them manually in settings.",
+  "@permissionAlreadyRequested": {
+    "description": "Permission already requested message"
+  },
+
   "videoCannotOpen": "Cannot open video. Please check your YouTube app.",
   "@videoCannotOpen": {
     "description": "Video cannot open error message"

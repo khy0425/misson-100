@@ -1611,6 +1611,58 @@ class AppLocalizationsEn extends AppLocalizations {
       'You can allow notifications later in settings.';
 
   @override
+  String get permissionsRequired => '🔐 Permissions Required';
+
+  @override
+  String get permissionsDescription =>
+      'Mission 100 needs the following permissions\nfor the best experience:';
+
+  @override
+  String get notificationPermissionTitle => '🔔 Notification Permission';
+
+  @override
+  String get notificationPermissionDesc =>
+      'Required for workout reminders and achievement notifications';
+
+  @override
+  String get storagePermissionTitle => '📁 Storage Permission';
+
+  @override
+  String get storagePermissionDesc =>
+      'Required for backing up and restoring workout data';
+
+  @override
+  String get allowPermissions => 'Allow Permissions';
+
+  @override
+  String get skipPermissions => 'Set Up Later';
+
+  @override
+  String get permissionBenefits => 'With these permissions, you can:';
+
+  @override
+  String get notificationBenefit1 => '💪 Daily workout reminders';
+
+  @override
+  String get notificationBenefit2 => '🏆 Achievement celebration alerts';
+
+  @override
+  String get notificationBenefit3 => '🔥 Motivational messages';
+
+  @override
+  String get storageBenefit1 => '📁 Secure workout data backup';
+
+  @override
+  String get storageBenefit2 => '🔄 Data restoration when changing devices';
+
+  @override
+  String get storageBenefit3 => '💾 Prevent data loss';
+
+  @override
+  String get permissionAlreadyRequested =>
+      'Permissions have already been requested.\nPlease allow them manually in settings.';
+
+  @override
   String get videoCannotOpen =>
       'Cannot open video. Please check your YouTube app.';
 

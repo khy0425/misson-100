@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../generated/app_localizations.dart';
 import '../utils/constants.dart';
 import '../services/notification_service.dart';
+import '../services/permission_service.dart';
 import 'main_navigation_screen.dart';
 import 'initial_test_screen.dart';
 
@@ -51,11 +53,13 @@ class _PermissionScreenState extends State<PermissionScreen>
 
   Future<void> _checkPermissionStatus() async {
     final prefs = await SharedPreferences.getInstance();
-    _hasRequestedBefore = prefs.getBool('has_requested_notification_permission') ?? false;
+    _hasRequestedBefore = prefs.getBool('has_requested_permissions') ?? false;
     
     // 이미 권한이 허용되어 있는지 확인
-    final hasPermission = await NotificationService.hasPermission();
-    if (hasPermission) {
+    final hasNotificationPermission = await NotificationService.hasPermission();
+    final hasStoragePermission = await PermissionService.getStoragePermissionStatus();
+    
+    if (hasNotificationPermission && hasStoragePermission == PermissionStatus.granted) {
       _navigateToMainScreen();
     }
   }
@@ -131,7 +135,7 @@ class _PermissionScreenState extends State<PermissionScreen>
         ],
       ),
       child: const Icon(
-        Icons.notifications_active,
+        Icons.security,
         size: 60,
         color: Colors.white,
       ),
@@ -142,7 +146,7 @@ class _PermissionScreenState extends State<PermissionScreen>
     final theme = Theme.of(context);
     
     return Text(
-      '🔔 알림 권한이 필요해요',
+      AppLocalizations.of(context)!.permissionsRequired,
       style: theme.textTheme.headlineSmall?.copyWith(
         fontWeight: FontWeight.bold,
         color: const Color(AppColors.primaryColor),
@@ -156,8 +160,8 @@ class _PermissionScreenState extends State<PermissionScreen>
     
     return Text(
       _hasRequestedBefore 
-        ? '차드가 되는 여정을 위해\n알림 권한이 꼭 필요합니다!\n\n설정에서 알림을 허용해주세요 💪'
-        : '차드가 되는 여정을 함께하기 위해\n알림 권한이 필요합니다!\n\n운동 리마인더와 업적 알림을 통해\n꾸준한 운동을 도와드릴게요 🔥',
+        ? AppLocalizations.of(context)!.permissionAlreadyRequested
+        : AppLocalizations.of(context)!.permissionsDescription,
       style: theme.textTheme.bodyLarge?.copyWith(
         color: theme.textTheme.bodyLarge?.color?.withValues(alpha: 0.8),
         height: 1.5,
@@ -180,68 +184,97 @@ class _PermissionScreenState extends State<PermissionScreen>
         ),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildPermissionItem(
-            '💪 운동 리마인더',
-            '매일 설정한 시간에 운동을 알려드려요',
-            Icons.schedule,
+          // 알림 권한 섹션
+          _buildPermissionSection(
+            AppLocalizations.of(context)!.notificationPermissionTitle,
+            AppLocalizations.of(context)!.notificationPermissionDesc,
+            Icons.notifications_active,
+            [
+              AppLocalizations.of(context)!.notificationBenefit1,
+              AppLocalizations.of(context)!.notificationBenefit2,
+              AppLocalizations.of(context)!.notificationBenefit3,
+            ],
           ),
-          const SizedBox(height: 16),
-          _buildPermissionItem(
-            '🏆 업적 알림',
-            '새로운 업적 달성 시 축하 메시지를 보내드려요',
-            Icons.emoji_events,
-          ),
-          const SizedBox(height: 16),
-          _buildPermissionItem(
-            '🔥 동기부여 메시지',
-            '차드가 되는 여정을 응원하는 메시지를 보내드려요',
-            Icons.favorite,
+          
+          const SizedBox(height: 24),
+          
+          // 저장소 권한 섹션
+          _buildPermissionSection(
+            AppLocalizations.of(context)!.storagePermissionTitle,
+            AppLocalizations.of(context)!.storagePermissionDesc,
+            Icons.folder,
+            [
+              AppLocalizations.of(context)!.storageBenefit1,
+              AppLocalizations.of(context)!.storageBenefit2,
+              AppLocalizations.of(context)!.storageBenefit3,
+            ],
           ),
         ],
       ),
     );
   }
 
-  Widget _buildPermissionItem(String title, String description, IconData icon) {
+  Widget _buildPermissionSection(
+    String title,
+    String description,
+    IconData icon,
+    List<String> benefits,
+  ) {
     final theme = Theme.of(context);
     
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-            color: const Color(AppColors.primaryColor).withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Icon(
-            icon,
-            color: const Color(AppColors.primaryColor),
-            size: 20,
-          ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: theme.textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+        Row(
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: const Color(AppColors.primaryColor).withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(8),
               ),
-              const SizedBox(height: 2),
-              Text(
-                description,
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.textTheme.bodySmall?.color?.withValues(alpha: 0.7),
-                ),
+              child: Icon(
+                icon,
+                color: const Color(AppColors.primaryColor),
+                size: 20,
               ),
-            ],
-          ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: theme.textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    description,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.textTheme.bodySmall?.color?.withValues(alpha: 0.7),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
+        const SizedBox(height: 12),
+        ...benefits.map((benefit) => Padding(
+          padding: const EdgeInsets.only(left: 16, bottom: 4),
+          child: Text(
+            benefit,
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: theme.textTheme.bodySmall?.color?.withValues(alpha: 0.8),
+            ),
+          ),
+        )),
       ],
     );
   }
@@ -253,7 +286,7 @@ class _PermissionScreenState extends State<PermissionScreen>
           width: double.infinity,
           height: 56,
           child: ElevatedButton(
-            onPressed: _isRequestingPermission ? null : _requestPermission,
+            onPressed: _isRequestingPermission ? null : _requestPermissions,
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(AppColors.primaryColor),
               foregroundColor: Colors.white,
@@ -272,7 +305,9 @@ class _PermissionScreenState extends State<PermissionScreen>
                     ),
                   )
                 : Text(
-                    _hasRequestedBefore ? '설정에서 허용하기' : '알림 허용하기',
+                    _hasRequestedBefore 
+                      ? AppLocalizations.of(context)!.goToSettings 
+                      : AppLocalizations.of(context)!.allowPermissions,
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -282,9 +317,9 @@ class _PermissionScreenState extends State<PermissionScreen>
         ),
         const SizedBox(height: 12),
         TextButton(
-          onPressed: _isRequestingPermission ? null : _skipPermission,
+          onPressed: _isRequestingPermission ? null : _skipPermissions,
           child: Text(
-            '나중에 설정하기',
+            AppLocalizations.of(context)!.skipPermissions,
             style: TextStyle(
               color: Theme.of(context).textTheme.bodyMedium?.color?.withValues(alpha: 0.6),
               fontSize: 14,
@@ -295,34 +330,42 @@ class _PermissionScreenState extends State<PermissionScreen>
     );
   }
 
-  Future<void> _requestPermission() async {
+  Future<void> _requestPermissions() async {
     setState(() {
       _isRequestingPermission = true;
     });
 
     try {
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('notification_permission_requested', true);
+      await prefs.setBool('permission_screen_shown', true);
 
-      bool granted;
+      bool notificationGranted = false;
+      bool storageGranted = false;
       
       if (_hasRequestedBefore) {
         // 이미 한 번 요청했다면 설정 화면으로 이동
-        granted = await NotificationService.openNotificationSettings();
+        await NotificationService.openNotificationSettings();
         
         // 설정 화면에서 돌아온 후 권한 상태 재확인
         await Future.delayed(const Duration(milliseconds: 500));
-        granted = await NotificationService.hasPermission();
+        notificationGranted = await NotificationService.hasPermission();
+        final storageStatus = await PermissionService.getStoragePermissionStatus();
+        storageGranted = storageStatus == PermissionStatus.granted;
       } else {
         // 처음 요청하는 경우
-        granted = await NotificationService.requestPermissions();
+        // 1. 알림 권한 요청
+        notificationGranted = await NotificationService.requestPermissions();
+        
+        // 2. 저장소 권한 요청
+        final storageStatus = await PermissionService.requestStoragePermission();
+        storageGranted = storageStatus == PermissionStatus.granted;
         
         // 권한 요청 후 상태 저장
-        await prefs.setBool('has_requested_notification_permission', true);
+        await prefs.setBool('has_requested_permissions', true);
       }
 
-      if (granted) {
-        // 권한이 허용되면 알림 채널 생성 및 기본 설정
+      if (notificationGranted && storageGranted) {
+        // 모든 권한이 허용되면 알림 채널 생성 및 기본 설정
         await NotificationService.createNotificationChannels();
         
         // 성공 메시지 표시
@@ -343,10 +386,19 @@ class _PermissionScreenState extends State<PermissionScreen>
           _hasRequestedBefore = true;
         });
         
+        String message = '';
+        if (!notificationGranted && !storageGranted) {
+          message = '알림 및 저장소 권한이 필요합니다. 설정에서 허용해주세요.';
+        } else if (!notificationGranted) {
+          message = AppLocalizations.of(context)!.notificationPermissionDeniedMessage;
+        } else {
+          message = '저장소 권한이 필요합니다. 설정에서 허용해주세요.';
+        }
+        
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(AppLocalizations.of(context)!.notificationPermissionDeniedMessage),
+              content: Text(message),
               backgroundColor: Colors.orange,
               duration: const Duration(seconds: 3),
             ),
@@ -372,7 +424,7 @@ class _PermissionScreenState extends State<PermissionScreen>
     }
   }
 
-  Future<void> _skipPermission() async {
+  Future<void> _skipPermissions() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('permission_screen_shown', true);
     
