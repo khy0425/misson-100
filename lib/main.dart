@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'generated/app_localizations.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +13,7 @@ import 'services/theme_service.dart';
 import 'services/locale_service.dart';
 import 'services/notification_service.dart';
 import 'services/ad_service.dart';
+import 'services/permission_service.dart';
 // MemoryManager import 제거됨
 
 void main() async {
@@ -141,11 +143,24 @@ class _SplashScreenState extends State<SplashScreen>
     await Future.delayed(const Duration(seconds: 1));
 
     if (mounted) {
-      // 알림 권한 확인
-      final hasPermission = await NotificationService.hasPermission();
+      // 알림 권한과 저장소 권한 모두 확인
+      final hasNotificationPermission = await NotificationService.hasPermission();
+      
+      // 저장소 권한 확인 (PermissionService 사용)
+      bool hasStoragePermission = false;
+      try {
+        final storageStatus = await PermissionService.getStoragePermissionStatus();
+        hasStoragePermission = storageStatus == PermissionStatus.granted;
+      } catch (e) {
+        debugPrint('저장소 권한 확인 오류: $e');
+        hasStoragePermission = false;
+      }
+      
+      // 모든 권한이 허용되었는지 확인
+      final hasAllPermissions = hasNotificationPermission && hasStoragePermission;
       
       // 권한 상태에 따라 화면 이동
-      final targetScreen = hasPermission 
+      final targetScreen = hasAllPermissions 
           ? const MainNavigationScreen()
           : const PermissionScreen();
       
