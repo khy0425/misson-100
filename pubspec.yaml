@@ -84,6 +84,9 @@ dependencies:
   
   # UI 아이콘
   cupertino_icons: ^1.0.8
+  
+  # 소셜 공유
+  share_plus: ^10.1.2
 
 dependency_overrides:
   # webview_flutter 호환성 문제 해결을 위한 버전 고정

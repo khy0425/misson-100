@@ -10,7 +10,9 @@ import '../services/workout_program_service.dart';
 import '../services/workout_history_service.dart';
 import '../models/workout_history.dart';
 import '../services/achievement_service.dart';
+import '../services/social_share_service.dart';
 import '../widgets/ad_banner_widget.dart';
+import '../widgets/share_card_widget.dart';
 
 class WorkoutScreen extends StatefulWidget {
   final UserProfile userProfile;
@@ -56,8 +58,6 @@ class _WorkoutScreenState extends State<WorkoutScreen>
     _restTimeSeconds = widget.todayWorkout.restTimeSeconds;
     _completedReps = List.filled(_targetReps.length, 0);
   }
-
-
 
   @override
   void dispose() {
@@ -167,28 +167,148 @@ class _WorkoutScreenState extends State<WorkoutScreen>
     }
 
     if (mounted) {
-      showDialog<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => AlertDialog(
-          title: Text(AppLocalizations.of(context).workoutCompleteTitle),
-          content: Text(
-            AppLocalizations.of(context).workoutCompleteMessage(
-              widget.todayWorkout.title,
-              widget.todayWorkout.totalReps,
+      _showWorkoutCompleteDialog();
+    }
+  }
+
+  void _showWorkoutCompleteDialog() {
+    final l10n = AppLocalizations.of(context);
+    final totalCompletedReps = _completedReps.fold(0, (sum, reps) => sum + reps);
+    
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: Row(
+          children: [
+            const Icon(
+              Icons.celebration,
+              color: Color(AppColors.primaryColor),
+              size: 28,
             ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pop(); // 홈으로 돌아가기
-              },
-              child: Text(AppLocalizations.of(context).workoutCompleteButton),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                l10n.workoutCompleteTitle,
+                style: const TextStyle(
+                  color: Color(AppColors.primaryColor),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ],
         ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              l10n.workoutCompleteMessage(
+                widget.todayWorkout.title,
+                totalCompletedReps,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: const Color(AppColors.primaryColor).withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Column(
+                    children: [
+                      const Text(
+                        '💪',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      Text(
+                        '${totalCompletedReps}개',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      const Text(
+                        '완료',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      const Text(
+                        '🏆',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      Text(
+                        '${_totalSets}세트',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      const Text(
+                        '달성',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton.icon(
+            onPressed: () => _shareWorkoutResult(),
+            icon: const Icon(Icons.share),
+            label: const Text('공유하기'),
+            style: TextButton.styleFrom(
+              foregroundColor: const Color(AppColors.primaryColor),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pop(); // 홈으로 돌아가기
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(AppColors.primaryColor),
+              foregroundColor: Colors.white,
+            ),
+            child: Text(l10n.workoutCompleteButton),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _shareWorkoutResult() async {
+    try {
+      final totalCompletedReps = _completedReps.fold(0, (sum, reps) => sum + reps);
+      
+      // 현재 날짜를 기준으로 운동 일차 계산 (임시)
+      final currentDay = DateTime.now().difference(DateTime(2024, 1, 1)).inDays + 1;
+      
+      await SocialShareService.shareDailyWorkout(
+        context: context,
+        pushupCount: totalCompletedReps,
+        currentDay: currentDay,
+        level: widget.userProfile.level,
       );
+    } catch (e) {
+      debugPrint('공유 오류: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('공유 중 오류가 발생했습니다.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
   }
 

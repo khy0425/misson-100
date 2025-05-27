@@ -4,6 +4,7 @@ import '../generated/app_localizations.dart';
 import '../utils/constants.dart';
 import '../services/workout_program_service.dart';
 import '../services/ad_service.dart';
+import '../services/social_share_service.dart';
 import '../models/user_profile.dart';
 import '../utils/workout_data.dart';
 import '../widgets/ad_banner_widget.dart';
@@ -152,6 +153,45 @@ class HomeScreen extends StatelessWidget {
 
                     const SizedBox(height: AppConstants.paddingL),
 
+                    // 친구 도전장 공유 버튼
+                    OutlinedButton(
+                      onPressed: () => _shareFriendChallenge(context),
+                      style: OutlinedButton.styleFrom(
+                        side: const BorderSide(
+                          color: Color(AppColors.primaryColor),
+                          width: 2,
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: AppConstants.paddingL,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                            AppConstants.radiusM,
+                          ),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.share,
+                            color: Color(AppColors.primaryColor),
+                            size: 24,
+                          ),
+                          const SizedBox(width: AppConstants.paddingS),
+                          Text(
+                            '친구에게 도전장 보내기',
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              color: const Color(AppColors.primaryColor),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(height: AppConstants.paddingL),
+
                     // 진행 상황 카드 (임시)
                     Container(
                       padding: const EdgeInsets.all(AppConstants.paddingL),
@@ -288,7 +328,24 @@ class HomeScreen extends StatelessWidget {
     }
   }
 
-
+  void _shareFriendChallenge(BuildContext context) async {
+    try {
+      await SocialShareService.shareFriendChallenge(
+        context: context,
+        userName: '', // 사용자 이름이 없으므로 빈 문자열
+      );
+    } catch (e) {
+      debugPrint('친구 도전장 공유 오류: $e');
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('공유 중 오류가 발생했습니다.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
 
   Widget _buildChadSection(BuildContext context, ThemeData theme, bool isDark) {
     // TODO: 실제 사용자 프로필을 데이터베이스에서 가져와야 함
