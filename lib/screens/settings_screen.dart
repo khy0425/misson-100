@@ -448,7 +448,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         AppLocalizations.of(context).sendFeedback,
         AppLocalizations.of(context).sendFeedbackDesc,
         Icons.feedback,
-        () => _showComingSoonDialog(AppLocalizations.of(context)!.feedbackComingSoon),
+        () => _sendFeedback(),
       ),
     ]);
   }
@@ -909,7 +909,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
 
   /// GitHub 저장소 열기
   Future<void> _openGitHub() async {
-    const githubUrl = 'https://github.com/your-username/mission100_chad_pushup'; // 실제 GitHub URL로 변경
+    const githubUrl = 'https://github.com/khy0425';
     final uri = Uri.parse(githubUrl);
     
     try {
