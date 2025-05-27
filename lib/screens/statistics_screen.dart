@@ -106,7 +106,25 @@ class _StatisticsScreenState extends State<StatisticsScreen>
   }
 
   void _loadBannerAd() {
-    _statisticsBannerAd = AdService.createBannerAd();
+    _statisticsBannerAd = AdService.instance.createBannerAd(
+      adSize: AdSize.banner,
+      onAdLoaded: (Ad ad) {
+        debugPrint('통계 배너 광고 로드 완료');
+        if (mounted) {
+          setState(() {});
+        }
+      },
+      onAdFailedToLoad: (Ad ad, LoadAdError error) {
+        debugPrint('통계 배너 광고 로드 실패: $error');
+        ad.dispose();
+        if (mounted) {
+          setState(() {
+            _statisticsBannerAd = null;
+          });
+        }
+      },
+    );
+    _statisticsBannerAd?.load();
   }
 
   Future<void> _loadStatistics() async {

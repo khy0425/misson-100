@@ -87,7 +87,24 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
 
   /// 설정 화면 전용 배너 광고 생성
   void _loadBannerAd() {
-    _settingsBannerAd = AdService.createBannerAd();
+    _settingsBannerAd = AdService.instance.createBannerAd(
+      adSize: AdSize.banner,
+      onAdLoaded: (Ad ad) {
+        debugPrint('설정 배너 광고 로드 완료');
+        if (mounted) {
+          setState(() {});
+        }
+      },
+      onAdFailedToLoad: (Ad ad, LoadAdError error) {
+        debugPrint('설정 배너 광고 로드 실패: $error');
+        ad.dispose();
+        if (mounted) {
+          setState(() {
+            _settingsBannerAd = null;
+          });
+        }
+      },
+    );
     _settingsBannerAd?.load();
   }
 

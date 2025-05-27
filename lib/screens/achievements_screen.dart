@@ -95,7 +95,24 @@ class _AchievementsScreenState extends State<AchievementsScreen>
 
   /// 업적 화면 전용 배너 광고 생성
   void _createAchievementsBannerAd() {
-    _achievementsBannerAd = AdService.createBannerAd();
+    _achievementsBannerAd = AdService.instance.createBannerAd(
+      adSize: AdSize.banner,
+      onAdLoaded: (Ad ad) {
+        debugPrint('업적 배너 광고 로드 완료');
+        if (mounted) {
+          setState(() {});
+        }
+      },
+      onAdFailedToLoad: (Ad ad, LoadAdError error) {
+        debugPrint('업적 배너 광고 로드 실패: $error');
+        ad.dispose();
+        if (mounted) {
+          setState(() {
+            _achievementsBannerAd = null;
+          });
+        }
+      },
+    );
     _achievementsBannerAd?.load();
   }
 

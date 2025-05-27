@@ -10,6 +10,7 @@ import '../services/workout_program_service.dart';
 import '../services/workout_history_service.dart';
 import '../models/workout_history.dart';
 import '../services/achievement_service.dart';
+import '../widgets/ad_banner_widget.dart';
 
 class WorkoutScreen extends StatefulWidget {
   final UserProfile userProfile;
@@ -160,8 +161,10 @@ class _WorkoutScreenState extends State<WorkoutScreen>
       debugPrint('운동 기록 저장 실패: $e');
     }
 
-    // 워크아웃 완료 시 전면 광고 표시
-    AdService.showWorkoutCompleteAd();
+    // 워크아웃 완료 시 전면 광고 표시 (50% 확률)
+    if (DateTime.now().millisecondsSinceEpoch % 2 == 0) {
+      await AdService.instance.showInterstitialAd();
+    }
 
     if (mounted) {
       showDialog<void>(
@@ -1015,44 +1018,9 @@ class _WorkoutScreenState extends State<WorkoutScreen>
   }
 
   Widget _buildBannerAd() {
-    final bannerAd = AdService.getBannerAd();
-
-    return Container(
-      height: 60,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Color(0xFF1A1A1A),
-        border: Border(
-          top: BorderSide(color: Color(AppColors.primaryColor), width: 1),
-        ),
-      ),
-      child: bannerAd != null
-          ? AdWidget(ad: bannerAd)
-          : Container(
-              height: 60,
-              color: Color(0xFF1A1A1A),
-              child: const Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.fitness_center,
-                      color: Color(AppColors.primaryColor),
-                      size: 18,
-                    ),
-                    SizedBox(width: 6),
-                    Text(
-                      '차드의 힘을 느껴라! 💪',
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+    return const AdBannerWidget(
+      adSize: AdSize.banner,
+      margin: EdgeInsets.all(8.0),
     );
   }
 }

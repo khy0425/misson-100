@@ -11,6 +11,7 @@ import 'screens/permission_screen.dart';
 import 'services/theme_service.dart';
 import 'services/locale_service.dart';
 import 'services/notification_service.dart';
+import 'services/ad_service.dart';
 // MemoryManager import 제거됨
 
 void main() async {
@@ -23,7 +24,7 @@ void main() async {
   ]);
 
   // AdMob 초기화
-  MobileAds.instance.initialize();
+  await AdService.initialize();
 
   // 알림 서비스 초기화
   await NotificationService.initialize();

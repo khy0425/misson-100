@@ -5,6 +5,7 @@ import '../models/pushup_type.dart';
 import '../services/pushup_tutorial_service.dart';
 import '../services/chad_encouragement_service.dart';
 import '../services/ad_service.dart';
+import '../widgets/ad_banner_widget.dart';
 import 'pushup_tutorial_detail_screen.dart';
 
 class PushupTutorialScreen extends StatefulWidget {
@@ -367,25 +368,25 @@ class _PushupTutorialScreenState extends State<PushupTutorialScreen> {
 
   /// 반응형 배너 광고 위젯
   Widget _buildResponsiveBannerAd(BuildContext context, double adHeight) {
-    final bannerAd = AdService.getBannerAd();
-
-    if (bannerAd != null && AdService.isBannerAdLoaded) {
-      return Container(
-        height: adHeight,
-        width: double.infinity,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: const Color(0xFF1A1A1A),
-          border: Border(
-            top: BorderSide(
-              color: const Color(0xFF4DABF7).withValues(alpha: 0.3),
-              width: 1,
-            ),
+    // AdBannerWidget 사용으로 변경
+    return Container(
+      height: adHeight,
+      width: double.infinity,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: const Color(0xFF1A1A1A),
+        border: Border(
+          top: BorderSide(
+            color: const Color(0xFF4DABF7).withValues(alpha: 0.3),
+            width: 1,
           ),
         ),
-        child: AdWidget(ad: bannerAd),
-      );
-    }
+      ),
+      child: const AdBannerWidget(
+        adSize: AdSize.banner,
+        showOnError: true,
+      ),
+    );
 
     // 광고가 로드되지 않은 경우 반응형 플레이스홀더
     return Container(

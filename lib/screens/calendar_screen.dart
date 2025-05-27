@@ -578,7 +578,24 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   /// 달력 화면 전용 배너 광고 생성
   void _createCalendarBannerAd() {
-    _calendarBannerAd = AdService.createBannerAd();
+    _calendarBannerAd = AdService.instance.createBannerAd(
+      adSize: AdSize.banner,
+      onAdLoaded: (Ad ad) {
+        debugPrint('달력 배너 광고 로드 완료');
+        if (mounted) {
+          setState(() {});
+        }
+      },
+      onAdFailedToLoad: (Ad ad, LoadAdError error) {
+        debugPrint('달력 배너 광고 로드 실패: $error');
+        ad.dispose();
+        if (mounted) {
+          setState(() {
+            _calendarBannerAd = null;
+          });
+        }
+      },
+    );
     _calendarBannerAd?.load();
   }
 

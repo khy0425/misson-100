@@ -10,6 +10,7 @@ import '../services/achievement_service.dart';
 import '../services/notification_service.dart';
 import '../services/workout_history_service.dart';
 import '../services/permission_service.dart';
+import '../services/ad_service.dart';
 import '../widgets/achievement_celebration_dialog.dart';
 import '../models/achievement.dart';
 import 'home_screen.dart';
@@ -90,6 +91,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       
       // 업적 이벤트 확인
       _checkPendingAchievementEvents();
+      
+      // 전면 광고 미리 로드
+      await AdService.instance.loadInterstitialAd();
     } catch (e) {
       debugPrint('❌ 앱 초기화 오류: $e');
     }

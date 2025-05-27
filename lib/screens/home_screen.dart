@@ -6,6 +6,7 @@ import '../services/workout_program_service.dart';
 import '../services/ad_service.dart';
 import '../models/user_profile.dart';
 import '../utils/workout_data.dart';
+import '../widgets/ad_banner_widget.dart';
 import 'workout_screen.dart';
 import 'pushup_tutorial_screen.dart';
 import 'youtube_shorts_screen.dart';
@@ -212,7 +213,10 @@ class HomeScreen extends StatelessWidget {
           ),
 
           // 하단 배너 광고
-          _buildBannerAd(context),
+          const AdBannerWidget(
+            adSize: AdSize.banner,
+            margin: EdgeInsets.all(8.0),
+          ),
         ],
       ),
     );
@@ -284,47 +288,7 @@ class HomeScreen extends StatelessWidget {
     }
   }
 
-  Widget _buildBannerAd(BuildContext context) {
-    final bannerAd = AdService.createBannerAd();
 
-    return Container(
-      height: 60,
-      width: double.infinity,
-      decoration: const BoxDecoration(
-        color: Color(0xFF1A1A1A),
-        border: Border(
-          top: BorderSide(color: Color(AppColors.primaryColor), width: 1),
-        ),
-      ),
-      child: bannerAd != null
-          ? AdWidget(ad: bannerAd)
-          : Container(
-              height: 60,
-              color: const Color(0xFF1A1A1A),
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.fitness_center,
-                      color: Color(AppColors.primaryColor),
-                      size: 20,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      AppLocalizations.of(context).testAdMessage,
-                      style: const TextStyle(
-                        color: Colors.white70,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-    );
-  }
 
   Widget _buildChadSection(BuildContext context, ThemeData theme, bool isDark) {
     // TODO: 실제 사용자 프로필을 데이터베이스에서 가져와야 함
