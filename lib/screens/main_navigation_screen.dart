@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart' as path;
+import 'dart:io';
 import '../generated/app_localizations.dart';
 import '../utils/constants.dart';
 import '../utils/debug_helper.dart';
@@ -64,6 +67,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   Future<void> _initializeApp() async {
     try {
+      // 데이터베이스 완전 재설정 (스키마 변경으로 인한 문제 해결)
+      await _resetAchievementDatabase();
+      
       // 업적 서비스 초기화 (가장 먼저 실행)
       await AchievementService.initialize();
       debugPrint('✅ 업적 서비스 초기화 완료');
@@ -78,6 +84,20 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       _checkPendingAchievementEvents();
     } catch (e) {
       debugPrint('❌ 앱 초기화 오류: $e');
+    }
+  }
+
+  // 업적 데이터베이스 완전 재설정
+  Future<void> _resetAchievementDatabase() async {
+    try {
+      final dbPath = path.join(await getDatabasesPath(), 'achievements.db');
+      final file = File(dbPath);
+      if (await file.exists()) {
+        await file.delete();
+        debugPrint('🗑️ 기존 업적 데이터베이스 삭제');
+      }
+    } catch (e) {
+      debugPrint('⚠️ 데이터베이스 삭제 실패: $e');
     }
   }
   

@@ -112,12 +112,24 @@ class AchievementService {
 
     // 이미 초기화되었는지 확인
     final existingAchievements = await db.query(tableName, limit: 1);
-    if (existingAchievements.isNotEmpty) return;
+    debugPrint('🔍 기존 업적 개수: ${existingAchievements.length}');
+    
+    if (existingAchievements.isNotEmpty) {
+      debugPrint('✅ 업적이 이미 초기화되어 있음');
+      return;
+    }
 
     // 미리 정의된 업적들 추가
+    debugPrint('🚀 업적 초기화 시작 - 총 ${PredefinedAchievements.all.length}개 업적');
     for (final achievement in PredefinedAchievements.all) {
-      await db.insert(tableName, achievement.toMap());
+      try {
+        await db.insert(tableName, achievement.toMap());
+        debugPrint('✅ 업적 추가: ${achievement.id}');
+      } catch (e) {
+        debugPrint('❌ 업적 추가 실패: ${achievement.id} - $e');
+      }
     }
+    debugPrint('🎉 업적 초기화 완료');
   }
 
   // 모든 업적 조회
@@ -128,9 +140,19 @@ class AchievementService {
       orderBy: 'rarity DESC, isUnlocked DESC, id ASC',
     );
 
-    return List.generate(maps.length, (i) {
-      return Achievement.fromMap(maps[i]);
+    debugPrint('📊 데이터베이스에서 조회된 업적 개수: ${maps.length}');
+    
+    final achievements = List.generate(maps.length, (i) {
+      try {
+        return Achievement.fromMap(maps[i]);
+      } catch (e) {
+        debugPrint('❌ 업적 파싱 실패: ${maps[i]} - $e');
+        rethrow;
+      }
     });
+    
+    debugPrint('✅ 성공적으로 파싱된 업적 개수: ${achievements.length}');
+    return achievements;
   }
 
   // 잠금 해제된 업적들만 조회
