@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mission100_chad_pushup/screens/statistics_screen.dart';
-import 'package:mission100_chad_pushup/services/workout_history_service.dart';
-import 'package:mission100_chad_pushup/models/workout_history.dart';
+import 'package:mission100/screens/statistics_screen.dart';
+import 'package:mission100/services/workout_history_service.dart';
+import 'package:mission100/models/workout_history.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:mission100_chad_pushup/generated/app_localizations.dart';
+import 'package:mission100/generated/app_localizations.dart';
 import '../test_helper.dart';
 
 void main() {
@@ -60,17 +60,17 @@ void main() {
 
       // When: StatisticsScreen 렌더링 (더 간단한 방식)
       await tester.pumpWidget(
-        ProviderScope(
+        const ProviderScope(
           child: MaterialApp(
-            home: const StatisticsScreen(),
-            localizationsDelegates: const [
+            home: StatisticsScreen(),
+            localizationsDelegates: [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            supportedLocales: const [Locale('ko', 'KR'), Locale('en', 'US')],
-            locale: const Locale('ko', 'KR'),
+            supportedLocales: [Locale('ko', 'KR'), Locale('en', 'US')],
+            locale: Locale('ko', 'KR'),
           ),
         ),
       );
@@ -91,17 +91,17 @@ void main() {
 
       // When: StatisticsScreen 렌더링
       await tester.pumpWidget(
-        ProviderScope(
+        const ProviderScope(
           child: MaterialApp(
-            home: const StatisticsScreen(),
-            localizationsDelegates: const [
+            home: StatisticsScreen(),
+            localizationsDelegates: [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            supportedLocales: const [Locale('ko', 'KR'), Locale('en', 'US')],
-            locale: const Locale('ko', 'KR'),
+            supportedLocales: [Locale('ko', 'KR'), Locale('en', 'US')],
+            locale: Locale('ko', 'KR'),
           ),
         ),
       );
@@ -118,17 +118,17 @@ void main() {
 
       // When: StatisticsScreen 렌더링
       await tester.pumpWidget(
-        ProviderScope(
+        const ProviderScope(
           child: MaterialApp(
-            home: const StatisticsScreen(),
-            localizationsDelegates: const [
+            home: StatisticsScreen(),
+            localizationsDelegates: [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            supportedLocales: const [Locale('ko', 'KR'), Locale('en', 'US')],
-            locale: const Locale('ko', 'KR'),
+            supportedLocales: [Locale('ko', 'KR'), Locale('en', 'US')],
+            locale: Locale('ko', 'KR'),
           ),
         ),
       );

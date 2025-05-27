@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mission100_chad_pushup/models/workout_history.dart';
+import 'package:mission100/models/workout_history.dart';
 
 void main() {
   group('WorkoutHistory Model Tests', () {

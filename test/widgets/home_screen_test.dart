@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mission100_chad_pushup/screens/home_screen.dart';
+import 'package:mission100/screens/home_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:mission100_chad_pushup/generated/app_localizations.dart';
+import 'package:mission100/generated/app_localizations.dart';
 import '../test_helper.dart';
 
 void main() {

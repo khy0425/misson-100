@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:mission100_chad_pushup/generated/app_localizations.dart';
+import 'package:mission100/generated/app_localizations.dart';
 
 /// 테스트 환경 초기화
 void setupTestEnvironment() {
@@ -22,8 +21,55 @@ void setupTestEnvironment() {
       .setMockMethodCallHandler(
         const MethodChannel('plugins.flutter.io/google_mobile_ads'),
         (MethodCall methodCall) async {
-          // 광고 관련 메소드 호출 무시
-          return null;
+          // 광고 관련 메소드 호출 모킹
+          switch (methodCall.method) {
+            case 'loadBannerAd':
+            case 'loadInterstitialAd':
+            case 'loadRewardedAd':
+            case 'showAdWithoutView':
+            case 'disposeAd':
+              return <String, dynamic>{
+                'responseInfo': <String, dynamic>{
+                  'responseId': 'test_response_id',
+                  'mediationAdapterClassName': 'test_adapter',
+                },
+              };
+            case 'getAdSize':
+              return <String, dynamic>{
+                'width': 320,
+                'height': 50,
+              };
+            case 'initialize':
+              return <String, dynamic>{
+                'status': <String, dynamic>{
+                  'initialization_status': 'ready',
+                },
+              };
+            default:
+              return null;
+          }
+        },
+      );
+
+  // 알림 관련 메소드 채널 모킹
+  TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+      .setMockMethodCallHandler(
+        const MethodChannel('dexterous.com/flutter/local_notifications'),
+        (MethodCall methodCall) async {
+          // 알림 관련 메소드 호출 모킹
+          switch (methodCall.method) {
+            case 'initialize':
+            case 'show':
+            case 'cancel':
+            case 'cancelAll':
+            case 'getNotificationAppLaunchDetails':
+            case 'requestPermissions':
+              return true;
+            case 'pendingNotificationRequests':
+              return <Map<String, dynamic>>[];
+            default:
+              return null;
+          }
         },
       );
 

@@ -1,11 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:mission100_chad_pushup/services/workout_history_service.dart';
-import 'package:mission100_chad_pushup/models/workout_history.dart';
+import 'package:mission100/services/workout_history_service.dart';
+import 'package:mission100/models/workout_history.dart';
+import '../test_helper.dart';
 
 void main() {
   // FFI 초기화 (테스트 환경용)
   setUpAll(() {
+    setupTestEnvironment();
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
   });
@@ -29,7 +31,9 @@ void main() {
               completedReps TEXT NOT NULL,
               totalReps INTEGER NOT NULL,
               completionRate REAL NOT NULL,
-              level TEXT NOT NULL
+              level TEXT NOT NULL,
+              duration INTEGER DEFAULT 10,
+              pushupType TEXT DEFAULT 'Push-up'
             )
           ''');
         },

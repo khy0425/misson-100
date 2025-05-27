@@ -3,7 +3,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../generated/app_localizations.dart';
 import '../utils/constants.dart';
 import '../services/workout_program_service.dart';
-import '../services/ad_service.dart';
+
 import '../services/social_share_service.dart';
 import '../models/user_profile.dart';
 import '../utils/workout_data.dart';

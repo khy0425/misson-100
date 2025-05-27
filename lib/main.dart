@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'generated/app_localizations.dart';
 import 'package:flutter/services.dart';
@@ -140,7 +139,7 @@ class _SplashScreenState extends State<SplashScreen>
     await _animationController.forward();
 
     // 2초 대기 후 권한 확인
-    await Future.delayed(const Duration(seconds: 1));
+    await Future<void>.delayed(const Duration(seconds: 1));
 
     if (mounted) {
       // 알림 권한과 저장소 권한 모두 확인
@@ -164,9 +163,11 @@ class _SplashScreenState extends State<SplashScreen>
           ? const MainNavigationScreen()
           : const PermissionScreen();
       
-      await Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => targetScreen),
-      );
+      if (mounted) {
+        await Navigator.of(context).pushReplacement(
+          MaterialPageRoute<void>(builder: (context) => targetScreen),
+        );
+      }
     }
   }
 

@@ -11,7 +11,7 @@ import '../services/theme_service.dart';
 import '../services/locale_service.dart';
 import '../services/notification_service.dart';
 import '../services/data_service.dart';
-import '../services/permission_service.dart';
+
 import '../generated/app_localizations.dart';
 import '../main.dart'; // LocaleNotifier를 위해 추가
 
@@ -914,7 +914,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: const Color(AppColors.primaryColor).withOpacity(0.1),
+                                  color: const Color(AppColors.primaryColor).withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Column(

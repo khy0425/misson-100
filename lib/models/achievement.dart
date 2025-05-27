@@ -375,7 +375,7 @@ class Achievement {
           ? DateTime.parse(map['unlockedAt'] as String)
           : null,
       xpReward: map['xpReward'] as int? ?? 0,
-      icon: IconData(map['icon'] as int, fontFamily: 'MaterialIcons'),
+      icon: IconData(map['icon'] as int? ?? Icons.star.codePoint, fontFamily: 'MaterialIcons'),
     );
   }
 }

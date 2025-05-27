@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/foundation.dart';
-import 'package:mission100_chad_pushup/models/achievement.dart';
+import 'package:mission100/models/achievement.dart';
 
 void main() {
   group('AchievementService Simple Tests', () {

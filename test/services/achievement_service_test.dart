@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:mission100_chad_pushup/services/achievement_service.dart';
-import 'package:mission100_chad_pushup/models/workout_history.dart';
+import 'package:mission100/services/achievement_service.dart';
+import 'package:mission100/models/workout_history.dart';
 import '../test_helper.dart';
 
 void main() {

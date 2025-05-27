@@ -6,7 +6,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../models/pushup_type.dart';
 import '../services/pushup_tutorial_service.dart';
 import '../services/chad_encouragement_service.dart';
-import '../services/ad_service.dart';
+
 import '../widgets/ad_banner_widget.dart';
 
 class PushupTutorialDetailScreen extends StatefulWidget {
@@ -23,7 +23,7 @@ class _PushupTutorialDetailScreenState
     extends State<PushupTutorialDetailScreen> {
   final _encouragementService = ChadEncouragementService();
   late YoutubePlayerController _youtubeController;
-  bool _isPlayerReady = false;
+
 
   @override
   void initState() {
@@ -61,37 +61,7 @@ class _PushupTutorialDetailScreenState
     super.dispose();
   }
 
-  Future<void> _launchYouTubeVideo() async {
-    final videoId = widget.pushupType.youtubeVideoId;
-    final youtubeUrl = 'https://www.youtube.com/watch?v=$videoId';
-    final youtubeAppUrl = 'youtube://watch?v=$videoId';
 
-    try {
-      // 먼저 YouTube 앱으로 열기 시도
-      if (await canLaunchUrl(Uri.parse(youtubeAppUrl))) {
-        await launchUrl(Uri.parse(youtubeAppUrl));
-      } else {
-        // YouTube 앱이 없으면 웹 브라우저로 열기
-        await launchUrl(
-          Uri.parse(youtubeUrl),
-          mode: LaunchMode.externalApplication,
-        );
-      }
-
-      // 영상 시청 후 격려 메시지
-      _encouragementService.maybeShowEncouragement(context);
-    } catch (e) {
-      // 에러 발생 시 스낵바로 알림
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(AppLocalizations.of(context)!.videoCannotOpen),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -189,7 +159,7 @@ class _PushupTutorialDetailScreenState
             ),
             onReady: () {
               setState(() {
-                _isPlayerReady = true;
+                // Player ready
               });
             },
             onEnded: (metaData) {
@@ -532,40 +502,6 @@ class _PushupTutorialDetailScreenState
       ),
     );
 
-    // 광고가 로드되지 않은 경우 반응형 플레이스홀더
-    return Container(
-      height: adHeight,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Color(0xFF1A1A1A),
-        border: Border(
-          top: BorderSide(
-            color: Color(0xFF4DABF7).withValues(alpha: 0.3),
-            width: 1,
-          ),
-        ),
-      ),
-      child: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.ads_click,
-              color: Color(0xFF4DABF7).withValues(alpha: 0.6),
-              size: adHeight * 0.4,
-            ),
-            const SizedBox(width: 8),
-            Text(
-              AppLocalizations.of(context)!.advertisement,
-              style: TextStyle(
-                color: Color(0xFF4DABF7).withValues(alpha: 0.6),
-                fontSize: adHeight * 0.25,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+
   }
 }

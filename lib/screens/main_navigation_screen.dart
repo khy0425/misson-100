@@ -7,7 +7,7 @@ import '../generated/app_localizations.dart';
 import '../utils/constants.dart';
 import '../utils/debug_helper.dart';
 import '../services/achievement_service.dart';
-import '../services/notification_service.dart';
+
 import '../services/workout_history_service.dart';
 import '../services/permission_service.dart';
 import '../services/ad_service.dart';
@@ -30,11 +30,11 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _selectedIndex = 0;
 
   final List<Widget> _screens = [
-    HomeScreen(),
+    const HomeScreen(),
     const CalendarScreen(),
-    AchievementsScreen(),
+    const AchievementsScreen(),
     const StatisticsScreen(),
-    SettingsScreen(),
+    const SettingsScreen(),
   ];
 
   @override
@@ -59,7 +59,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       });
       
       // 운동 기록 저장 시 달력 업데이트 콜백 설정
-      WorkoutHistoryService.setOnWorkoutSaved(() {
+      WorkoutHistoryService.addOnWorkoutSavedCallback(() {
         if (mounted) {
           _refreshAllData();
         }
@@ -149,7 +149,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   Future<void> _checkPendingAchievementEvents() async {
     try {
       // 잠시 대기 후 확인 (화면이 완전히 로드된 후)
-      await Future.delayed(const Duration(milliseconds: 500));
+      await Future<void>.delayed(const Duration(milliseconds: 500));
       
       final events = await AchievementService.getPendingAchievementEvents();
       
@@ -171,7 +171,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         );
         
         // 다이얼로그 표시
-        showDialog(
+        showDialog<void>(
           context: context,
           barrierDismissible: false,
           builder: (context) => AchievementCelebrationDialog(
@@ -200,7 +200,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         
         // 남은 이벤트가 있으면 다음 이벤트 표시
         if (events.isNotEmpty && mounted) {
-          await Future.delayed(const Duration(milliseconds: 300));
+          await Future<void>.delayed(const Duration(milliseconds: 300));
           _checkPendingAchievementEvents();
         }
       }

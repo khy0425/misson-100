@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
-import 'package:mission100_chad_pushup/models/achievement.dart';
+import 'package:mission100/models/achievement.dart';
 
 void main() {
   group('Achievement Model Tests', () {
