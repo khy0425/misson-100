@@ -223,8 +223,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -232,7 +230,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
     return Scaffold(
       body: IndexedStack(index: _selectedIndex, children: _screens),
-      bottomNavigationBar: _buildCustomBottomNavBar(isDark),
+      bottomNavigationBar: SafeArea(
+        child: _buildCustomBottomNavBar(isDark),
+      ),
     );
   }
 
@@ -240,23 +240,28 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     final l10n = AppLocalizations.of(context)!;
     
     return Container(
-      height: 80,
+      height: 70,
+      margin: const EdgeInsets.only(
+        left: 8,
+        right: 8,
+        bottom: 8,
+      ),
       decoration: BoxDecoration(
         color: isDark
             ? const Color(AppColors.backgroundDark)
             : const Color(AppColors.backgroundLight),
+        borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 10,
-            offset: const Offset(0, -2),
+            color: Colors.black.withValues(alpha: 0.15),
+            blurRadius: 15,
+            offset: const Offset(0, -3),
+            spreadRadius: 1,
           ),
         ],
-        border: Border(
-          top: BorderSide(
-            color: const Color(AppColors.primaryColor).withValues(alpha: 0.2),
-            width: 1,
-          ),
+        border: Border.all(
+          color: const Color(AppColors.primaryColor).withValues(alpha: 0.1),
+          width: 1,
         ),
       ),
       child: Row(
@@ -275,42 +280,49 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   Widget _buildNavItem(int index, IconData inactiveIcon, IconData activeIcon, String label) {
     final isSelected = _selectedIndex == index;
     
-    return GestureDetector(
-      onTap: () => _onItemTapped(index),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: isSelected 
-                    ? const Color(AppColors.primaryColor).withValues(alpha: 0.1)
-                    : Colors.transparent,
-                borderRadius: BorderRadius.circular(12),
+    return Expanded(
+      child: GestureDetector(
+        onTap: () => _onItemTapped(index),
+        behavior: HitTestBehavior.opaque,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  color: isSelected 
+                      ? const Color(AppColors.primaryColor).withValues(alpha: 0.15)
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(
+                  isSelected ? activeIcon : inactiveIcon,
+                  color: isSelected 
+                      ? const Color(AppColors.primaryColor)
+                      : Colors.grey[600],
+                  size: 22,
+                ),
               ),
-              child: Icon(
-                isSelected ? activeIcon : inactiveIcon,
-                color: isSelected 
-                    ? const Color(AppColors.primaryColor)
-                    : Colors.grey[600],
-                size: 24,
+              const SizedBox(height: 2),
+              Text(
+                label,
+                style: TextStyle(
+                  color: isSelected 
+                      ? const Color(AppColors.primaryColor)
+                      : Colors.grey[600],
+                  fontSize: 10,
+                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                ),
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              label,
-              style: TextStyle(
-                color: isSelected 
-                    ? const Color(AppColors.primaryColor)
-                    : Colors.grey[600],
-                fontSize: 11,
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
