@@ -51,16 +51,21 @@ class AchievementService {
 
   static Future<Database> _initDatabase() async {
     final String path = join(await getDatabasesPath(), 'achievements.db');
-    return await openDatabase(path, version: 1, onCreate: _createDatabase);
+    return await openDatabase(
+      path, 
+      version: 2, // 버전을 2로 업데이트
+      onCreate: _createDatabase,
+      onUpgrade: _upgradeDatabase,
+    );
   }
 
   static Future<void> _createDatabase(Database db, int version) async {
     await db.execute('''
       CREATE TABLE $tableName (
         id TEXT PRIMARY KEY,
-        title TEXT NOT NULL,
-        description TEXT NOT NULL,
-        iconCode TEXT NOT NULL,
+        titleKey TEXT NOT NULL,
+        descriptionKey TEXT NOT NULL,
+        motivationKey TEXT NOT NULL,
         type TEXT NOT NULL,
         rarity TEXT NOT NULL,
         targetValue INTEGER NOT NULL,
@@ -68,9 +73,37 @@ class AchievementService {
         isUnlocked INTEGER DEFAULT 0,
         unlockedAt TEXT,
         xpReward INTEGER DEFAULT 0,
-        motivationalMessage TEXT NOT NULL
+        icon INTEGER NOT NULL
       )
     ''');
+  }
+
+  // 데이터베이스 업그레이드 (기존 데이터 마이그레이션)
+  static Future<void> _upgradeDatabase(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      // 기존 테이블 삭제하고 새로 생성 (데이터 손실 방지를 위해 백업 후 복원)
+      await db.execute('DROP TABLE IF EXISTS ${tableName}_backup');
+      
+      // 기존 데이터가 있다면 백업
+      try {
+        await db.execute('ALTER TABLE $tableName RENAME TO ${tableName}_backup');
+      } catch (e) {
+        // 테이블이 없으면 무시
+        debugPrint('기존 테이블이 없음: $e');
+      }
+      
+      // 새 스키마로 테이블 생성
+      await _createDatabase(db, newVersion);
+      
+      // 백업 테이블 삭제 (새로운 구조로 다시 초기화)
+      try {
+        await db.execute('DROP TABLE IF EXISTS ${tableName}_backup');
+      } catch (e) {
+        debugPrint('백업 테이블 삭제 실패: $e');
+      }
+      
+      debugPrint('✅ 업적 데이터베이스 스키마 업그레이드 완료');
+    }
   }
 
   // 초기화 - 미리 정의된 업적들 로드
@@ -177,15 +210,15 @@ class AchievementService {
 
       // 🔥 업적 달성 알림 전송
       try {
-        debugPrint('🏆 업적 달성: ${achievement.title}');
+        debugPrint('🏆 업적 달성: ${achievement.titleKey}');
         
         // 업적 달성 이벤트 저장 (다이얼로그 표시용)
         await _saveAchievementEvent(achievement);
         
-        // 실시간 알림 표시
+        // 실시간 알림 표시 (현지화 키 사용)
         await NotificationService.showAchievementNotification(
-          achievement.title,
-          achievement.description,
+          achievement.titleKey,
+          achievement.descriptionKey,
         );
         
         // 업적 달성 콜백 호출 (UI 업데이트용)
@@ -426,19 +459,19 @@ class AchievementService {
     // 업적 정보를 JSON 문자열로 저장
     final eventData = {
       'id': achievement.id,
-      'title': achievement.title,
-      'description': achievement.description,
-      'iconCode': achievement.iconCode,
+      'titleKey': achievement.titleKey,
+      'descriptionKey': achievement.descriptionKey,
+      'motivationKey': achievement.motivationKey,
+      'icon': achievement.icon.codePoint,
       'rarity': achievement.rarity.name,
       'xpReward': achievement.xpReward,
-      'motivationalMessage': achievement.motivationalMessage,
       'timestamp': DateTime.now().toIso8601String(),
     };
     
     events.add(jsonEncode(eventData));
     await prefs.setStringList('pending_achievement_events', events);
     
-    debugPrint('💾 업적 달성 이벤트 저장: ${achievement.title}');
+    debugPrint('💾 업적 달성 이벤트 저장: ${achievement.titleKey}');
   }
 
   // 대기 중인 업적 달성 이벤트 조회

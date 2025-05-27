@@ -63,14 +63,22 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   }
 
   Future<void> _initializeApp() async {
-    // 업적 관련 데이터 완전 초기화 (배지 문제 해결)
-    await DebugHelper.clearAllAchievementData();
-    
-    // 디버그용: SharedPreferences 상태 확인
-    await DebugHelper.debugSharedPreferences();
-    
-    // 업적 이벤트 확인
-    _checkPendingAchievementEvents();
+    try {
+      // 업적 서비스 초기화 (가장 먼저 실행)
+      await AchievementService.initialize();
+      debugPrint('✅ 업적 서비스 초기화 완료');
+      
+      // 업적 관련 데이터 완전 초기화 (배지 문제 해결)
+      await DebugHelper.clearAllAchievementData();
+      
+      // 디버그용: SharedPreferences 상태 확인
+      await DebugHelper.debugSharedPreferences();
+      
+      // 업적 이벤트 확인
+      _checkPendingAchievementEvents();
+    } catch (e) {
+      debugPrint('❌ 앱 초기화 오류: $e');
+    }
   }
   
   /// 모든 화면 데이터 새로고침 (업적 달성 시 호출)
