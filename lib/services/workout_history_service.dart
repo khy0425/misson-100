@@ -237,4 +237,11 @@ class WorkoutHistoryService {
   static String _monthToString(DateTime date) {
     return '${date.year}-${date.month.toString().padLeft(2, '0')}';
   }
+
+  // 모든 운동 기록 삭제 (데이터 초기화용)
+  static Future<void> clearAllRecords() async {
+    final db = await database;
+    await db.delete(tableName);
+    debugPrint('🗑️ 모든 운동 기록 삭제 완료');
+  }
 }

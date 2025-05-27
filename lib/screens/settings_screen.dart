@@ -10,6 +10,7 @@ import '../services/difficulty_service.dart';
 import '../services/theme_service.dart';
 import '../services/locale_service.dart';
 import '../services/notification_service.dart';
+import '../services/data_service.dart';
 import '../generated/app_localizations.dart';
 import '../main.dart'; // LocaleNotifier를 위해 추가
 
@@ -412,13 +413,13 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         AppLocalizations.of(context).dataBackup,
         AppLocalizations.of(context).dataBackupDesc,
         Icons.backup,
-        () => _showComingSoonDialog(AppLocalizations.of(context)!.dataBackupComingSoon),
+        () => _performDataBackup(),
       ),
       _buildTapSetting(
         AppLocalizations.of(context).dataRestore,
         AppLocalizations.of(context).dataRestoreDesc,
         Icons.restore,
-        () => _showComingSoonDialog(AppLocalizations.of(context)!.dataRestoreComingSoon),
+        () => _performDataRestore(),
       ),
       _buildTapSetting(
         AppLocalizations.of(context).dataReset,
@@ -617,6 +618,153 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     );
   }
 
+  /// 데이터 백업 수행
+  Future<void> _performDataBackup() async {
+    try {
+      // 로딩 다이얼로그 표시
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const AlertDialog(
+          content: Row(
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(width: 16),
+              Text('데이터를 백업하는 중...'),
+            ],
+          ),
+        ),
+      );
+
+      final backupPath = await DataService.backupData();
+      
+      // 로딩 다이얼로그 닫기
+      if (mounted) Navigator.pop(context);
+
+      if (backupPath != null) {
+        // 백업 시간 저장
+        await DataService.saveLastBackupTime();
+        
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('백업이 완료되었습니다!\n저장 위치: $backupPath'),
+              backgroundColor: const Color(AppColors.primaryColor),
+              duration: const Duration(seconds: 4),
+            ),
+          );
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('백업에 실패했습니다. 다시 시도해주세요.'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      // 로딩 다이얼로그 닫기
+      if (mounted) Navigator.pop(context);
+      
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('백업 중 오류가 발생했습니다: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  /// 데이터 복원 수행
+  Future<void> _performDataRestore() async {
+    // 복원 확인 다이얼로그
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('⚠️ 데이터 복원'),
+        content: const Text(
+          '백업 파일로부터 데이터를 복원하면 현재 데이터가 모두 삭제됩니다.\n'
+          '정말로 복원하시겠습니까?'
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(AppLocalizations.of(context)!.cancel),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.pop(context, true),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.orange,
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('복원'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true) return;
+
+    try {
+      // 로딩 다이얼로그 표시
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const AlertDialog(
+          content: Row(
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(width: 16),
+              Text('데이터를 복원하는 중...'),
+            ],
+          ),
+        ),
+      );
+
+      final success = await DataService.restoreData();
+      
+      // 로딩 다이얼로그 닫기
+      if (mounted) Navigator.pop(context);
+
+      if (success) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('데이터 복원이 완료되었습니다! 앱을 재시작해주세요.'),
+              backgroundColor: Color(AppColors.primaryColor),
+              duration: Duration(seconds: 4),
+            ),
+          );
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('데이터 복원에 실패했습니다. 백업 파일을 확인해주세요.'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      // 로딩 다이얼로그 닫기
+      if (mounted) Navigator.pop(context);
+      
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('복원 중 오류가 발생했습니다: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
   void _showResetDataDialog() {
     showDialog<void>(
       context: context,
@@ -631,7 +779,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
           TextButton(
             onPressed: () {
               Navigator.pop(context);
-              _showComingSoonDialog(AppLocalizations.of(context)!.dataResetComingSoon);
+              _performDataReset();
             },
             style: TextButton.styleFrom(foregroundColor: Colors.red),
             child: Text(AppLocalizations.of(context)!.delete),
@@ -639,6 +787,64 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         ],
       ),
     );
+  }
+
+  /// 데이터 초기화 수행
+  Future<void> _performDataReset() async {
+    try {
+      // 로딩 다이얼로그 표시
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const AlertDialog(
+          content: Row(
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(width: 16),
+              Text('데이터를 초기화하는 중...'),
+            ],
+          ),
+        ),
+      );
+
+      final success = await DataService.resetAllData();
+      
+      // 로딩 다이얼로그 닫기
+      if (mounted) Navigator.pop(context);
+
+      if (success) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('모든 데이터가 초기화되었습니다! 앱을 재시작해주세요.'),
+              backgroundColor: Color(AppColors.primaryColor),
+              duration: Duration(seconds: 4),
+            ),
+          );
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('데이터 초기화에 실패했습니다. 다시 시도해주세요.'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      // 로딩 다이얼로그 닫기
+      if (mounted) Navigator.pop(context);
+      
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('초기화 중 오류가 발생했습니다: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
   }
 
   void _showVersionDialog() {

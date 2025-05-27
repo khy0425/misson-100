@@ -64,6 +64,11 @@ dependencies:
   # 앱 정보
   package_info_plus: ^8.0.2
   
+  # 파일 관리
+  file_picker: ^8.1.2
+  path_provider: ^2.1.4
+  permission_handler: ^11.3.1
+  
   # 유튜브 플레이어
   youtube_player_flutter: ^9.1.1
   

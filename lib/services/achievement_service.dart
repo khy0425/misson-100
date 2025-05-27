@@ -541,4 +541,26 @@ class AchievementService {
     await prefs.remove('pending_achievement_events');
     debugPrint('🧹 업적 달성 이벤트 클리어');
   }
+
+  // 모든 업적 데이터베이스 초기화 (데이터 초기화용)
+  static Future<void> resetAchievementDatabase() async {
+    final db = await database;
+    await db.delete(tableName);
+    debugPrint('🗑️ 모든 업적 데이터 삭제 완료');
+    
+    // 다시 초기화
+    await initialize();
+    debugPrint('🔄 업적 데이터베이스 재초기화 완료');
+  }
+
+  // 업적 업데이트 (복원용)
+  static Future<void> saveAchievement(Achievement achievement) async {
+    final db = await database;
+    await db.insert(
+      tableName,
+      achievement.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+    debugPrint('💾 업적 저장: ${achievement.id}');
+  }
 }
