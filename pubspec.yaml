@@ -1,5 +1,5 @@
-name: mission100_chad_pushup
-description: "기가차드 밈 기반 개인화된 푸쉬업 마스터 앱 - 6주 만에 100개 달성!"
+name: mission100
+description: "Mission: 100 - 기가차드 밈 기반 개인화된 푸쉬업 마스터 앱, 6주 만에 100개 달성!"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev

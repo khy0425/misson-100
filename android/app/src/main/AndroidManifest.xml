@@ -17,7 +17,7 @@
                      android:minSdkVersion="30" />
     
     <application
-        android:label="misson100"
+        android:label="Mission: 100"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon"
         android:requestLegacyExternalStorage="true">
