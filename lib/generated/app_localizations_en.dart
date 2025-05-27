@@ -225,11 +225,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get welcomeMessage =>
-      '🔥 WELCOME, FUTURE EMPEROR! TIME FOR WORLD DOMINATION! 🔥';
+      '🔥 WELCOME,\nFUTURE EMPEROR! 🔥\nTIME FOR WORLD\nDOMINATION!';
 
   @override
   String get dailyMotivation =>
-      '⚡ ANOTHER DAY OF LEGENDARY BEAST MODE! CRUSH THE UNIVERSE! ⚡';
+      '⚡ ANOTHER DAY OF\nLEGENDARY BEAST MODE!\nCRUSH THE UNIVERSE! ⚡';
 
   @override
   String get startTodayWorkout => '🚀 START TODAY\'S DOMINATION! 🚀';

@@ -355,12 +355,12 @@
     "description": "홈 화면 제목"
   },
 
-  "welcomeMessage": "🔥 WELCOME, FUTURE EMPEROR! 정복의 시간이다, 만삣삐! 🔥",
+  "welcomeMessage": "🔥 WELCOME,\nFUTURE EMPEROR! 🔥\n정복의 시간이다, 만삣삐!",
   "@welcomeMessage": {
     "description": "홈 화면 환영 메시지"
   },
 
-  "dailyMotivation": "⚡ 오늘도 LEGENDARY BEAST MODE로 세상을 압도해라! ⚡",
+  "dailyMotivation": "⚡ 오늘도 LEGENDARY\nBEAST MODE로\n세상을 압도해라! ⚡",
   "@dailyMotivation": {
     "description": "일일 동기부여 메시지"
   },

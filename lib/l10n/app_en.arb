@@ -390,12 +390,12 @@
     "description": "Home screen title"
   },
 
-  "welcomeMessage": "🔥 WELCOME, FUTURE EMPEROR! TIME FOR WORLD DOMINATION! 🔥",
+  "welcomeMessage": "🔥 WELCOME,\nFUTURE EMPEROR! 🔥\nTIME FOR WORLD\nDOMINATION!",
   "@welcomeMessage": {
     "description": "Home screen welcome message"
   },
 
-  "dailyMotivation": "⚡ ANOTHER DAY OF LEGENDARY BEAST MODE! CRUSH THE UNIVERSE! ⚡",
+  "dailyMotivation": "⚡ ANOTHER DAY OF\nLEGENDARY BEAST MODE!\nCRUSH THE UNIVERSE! ⚡",
   "@dailyMotivation": {
     "description": "Daily motivation message"
   },

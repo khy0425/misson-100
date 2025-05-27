@@ -220,10 +220,11 @@ class AppLocalizationsKo extends AppLocalizations {
   String get homeTitle => '💥 ALPHA EMPEROR COMMAND CENTER 💥';
 
   @override
-  String get welcomeMessage => '🔥 WELCOME, FUTURE EMPEROR! 정복의 시간이다, 만삣삐! 🔥';
+  String get welcomeMessage =>
+      '🔥 WELCOME,\nFUTURE EMPEROR! 🔥\n정복의 시간이다, 만삣삐!';
 
   @override
-  String get dailyMotivation => '⚡ 오늘도 LEGENDARY BEAST MODE로 세상을 압도해라! ⚡';
+  String get dailyMotivation => '⚡ 오늘도 LEGENDARY\nBEAST MODE로\n세상을 압도해라! ⚡';
 
   @override
   String get startTodayWorkout => '🚀 오늘의 DOMINATION 시작! 🚀';

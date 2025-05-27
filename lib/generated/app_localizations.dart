@@ -491,13 +491,13 @@ abstract class AppLocalizations {
   /// 홈 화면 환영 메시지
   ///
   /// In ko, this message translates to:
-  /// **'🔥 WELCOME, FUTURE EMPEROR! 정복의 시간이다, 만삣삐! 🔥'**
+  /// **'🔥 WELCOME,\nFUTURE EMPEROR! 🔥\n정복의 시간이다, 만삣삐!'**
   String get welcomeMessage;
 
   /// 일일 동기부여 메시지
   ///
   /// In ko, this message translates to:
-  /// **'⚡ 오늘도 LEGENDARY BEAST MODE로 세상을 압도해라! ⚡'**
+  /// **'⚡ 오늘도 LEGENDARY\nBEAST MODE로\n세상을 압도해라! ⚡'**
   String get dailyMotivation;
 
   /// 오늘 운동 시작 버튼
