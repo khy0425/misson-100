@@ -5,6 +5,15 @@
     "appInfo",
     "appInfoDesc",
     "dataResetConfirm",
-    "dataResetComingSoon"
+    "dataResetComingSoon",
+    "githubRepository",
+    "feedbackEmail",
+    "developerContact",
+    "openGithub",
+    "emailFeedback",
+    "cannotOpenEmail",
+    "cannotOpenGithub",
+    "appVersion",
+    "builtWithFlutter"
   ]
 }

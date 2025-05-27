@@ -3026,5 +3026,55 @@
 
   "achievementDedicationMasterTitle": "헌신의 마스터",
   "achievementDedicationMasterDesc": "앱을 100일 이상 사용했습니다",
-  "achievementDedicationMasterMotivation": "100일 헌신! 당신은 헌신의 마스터입니다! 🎖️"
+  "achievementDedicationMasterMotivation": "100일 헌신! 당신은 헌신의 마스터입니다! 🎖️",
+
+  "githubRepository": "GitHub 저장소",
+  "@githubRepository": {
+    "description": "GitHub repository link"
+  },
+
+  "sendFeedback": "피드백 보내기",
+  "@sendFeedback": {
+    "description": "Send feedback button"
+  },
+
+  "feedbackEmail": "이메일로 피드백 보내기",
+  "@feedbackEmail": {
+    "description": "Send feedback via email"
+  },
+
+  "developerContact": "개발자 연락처",
+  "@developerContact": {
+    "description": "Developer contact information"
+  },
+
+  "openGithub": "GitHub에서 소스코드 보기",
+  "@openGithub": {
+    "description": "Open GitHub repository"
+  },
+
+  "emailFeedback": "이메일로 의견을 보내주세요",
+  "@emailFeedback": {
+    "description": "Send feedback via email"
+  },
+
+  "cannotOpenEmail": "이메일 앱을 열 수 없습니다",
+  "@cannotOpenEmail": {
+    "description": "Cannot open email app error"
+  },
+
+  "cannotOpenGithub": "GitHub을 열 수 없습니다",
+  "@cannotOpenGithub": {
+    "description": "Cannot open GitHub error"
+  },
+
+  "appVersion": "앱 버전",
+  "@appVersion": {
+    "description": "App version"
+  },
+
+  "builtWithFlutter": "Flutter로 제작됨",
+  "@builtWithFlutter": {
+    "description": "Built with Flutter"
+  }
 }  

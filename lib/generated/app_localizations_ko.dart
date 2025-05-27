@@ -2104,4 +2104,31 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String get achievementDedicationMasterMotivation =>
       '100일 헌신! 당신은 헌신의 마스터입니다! 🎖️';
+
+  @override
+  String get githubRepository => 'GitHub 저장소';
+
+  @override
+  String get feedbackEmail => '이메일로 피드백 보내기';
+
+  @override
+  String get developerContact => '개발자 연락처';
+
+  @override
+  String get openGithub => 'GitHub에서 소스코드 보기';
+
+  @override
+  String get emailFeedback => '이메일로 의견을 보내주세요';
+
+  @override
+  String get cannotOpenEmail => '이메일 앱을 열 수 없습니다';
+
+  @override
+  String get cannotOpenGithub => 'GitHub을 열 수 없습니다';
+
+  @override
+  String get appVersion => '앱 버전';
+
+  @override
+  String get builtWithFlutter => 'Flutter로 제작됨';
 }

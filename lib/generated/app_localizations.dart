@@ -2018,7 +2018,7 @@ abstract class AppLocalizations {
   /// **'차드가 되는 여정을 함께하세요'**
   String get developerInfoDesc;
 
-  /// 피드백 보내기
+  /// Send feedback button
   ///
   /// In ko, this message translates to:
   /// **'피드백 보내기'**
@@ -3967,6 +3967,60 @@ abstract class AppLocalizations {
   /// In ko, this message translates to:
   /// **'100일 헌신! 당신은 헌신의 마스터입니다! 🎖️'**
   String get achievementDedicationMasterMotivation;
+
+  /// GitHub repository link
+  ///
+  /// In ko, this message translates to:
+  /// **'GitHub 저장소'**
+  String get githubRepository;
+
+  /// Send feedback via email
+  ///
+  /// In ko, this message translates to:
+  /// **'이메일로 피드백 보내기'**
+  String get feedbackEmail;
+
+  /// Developer contact information
+  ///
+  /// In ko, this message translates to:
+  /// **'개발자 연락처'**
+  String get developerContact;
+
+  /// Open GitHub repository
+  ///
+  /// In ko, this message translates to:
+  /// **'GitHub에서 소스코드 보기'**
+  String get openGithub;
+
+  /// Send feedback via email
+  ///
+  /// In ko, this message translates to:
+  /// **'이메일로 의견을 보내주세요'**
+  String get emailFeedback;
+
+  /// Cannot open email app error
+  ///
+  /// In ko, this message translates to:
+  /// **'이메일 앱을 열 수 없습니다'**
+  String get cannotOpenEmail;
+
+  /// Cannot open GitHub error
+  ///
+  /// In ko, this message translates to:
+  /// **'GitHub을 열 수 없습니다'**
+  String get cannotOpenGithub;
+
+  /// App version
+  ///
+  /// In ko, this message translates to:
+  /// **'앱 버전'**
+  String get appVersion;
+
+  /// Built with Flutter
+  ///
+  /// In ko, this message translates to:
+  /// **'Flutter로 제작됨'**
+  String get builtWithFlutter;
 }
 
 class _AppLocalizationsDelegate

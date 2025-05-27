@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import '../utils/constants.dart';
 import '../services/ad_service.dart';
 import '../services/difficulty_service.dart';
@@ -665,20 +667,86 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     );
   }
 
-  void _showDeveloperDialog() {
+  void _showDeveloperDialog() async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    
+    if (!mounted) return;
+    
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(AppLocalizations.of(context)!.developerInfo),
+        title: Row(
+          children: [
+            const Icon(Icons.info_outline, color: Color(AppColors.primaryColor)),
+            const SizedBox(width: 8),
+            Text(AppLocalizations.of(context)!.developerInfo),
+          ],
+        ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('💪 Mission: 100'),
-            const SizedBox(height: 8),
-            Text(AppLocalizations.of(context)!.madeWithLove),
+            // 앱 정보
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: const Color(AppColors.primaryColor).withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('💪 Mission: 100', 
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 4),
+                  Text('${AppLocalizations.of(context)!.appVersion}: ${packageInfo.version}'),
+                  const SizedBox(height: 4),
+                  Text(AppLocalizations.of(context)!.builtWithFlutter),
+                ],
+              ),
+            ),
             const SizedBox(height: 16),
+            
+            Text(AppLocalizations.of(context)!.madeWithLove),
+            const SizedBox(height: 8),
             Text(AppLocalizations.of(context)!.supportChadJourney),
+            const SizedBox(height: 16),
+            
+            // 개발자 연락처
+            Text(AppLocalizations.of(context)!.developerContact,
+              style: const TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 8),
+            
+            // GitHub 버튼
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () => _openGitHub(),
+                icon: const Icon(Icons.code, size: 20),
+                label: Text(AppLocalizations.of(context)!.githubRepository),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black87,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            
+            // 피드백 버튼
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () => _sendFeedback(),
+                icon: const Icon(Icons.email, size: 20),
+                label: Text(AppLocalizations.of(context)!.sendFeedback),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(AppColors.primaryColor),
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                ),
+              ),
+            ),
           ],
         ),
         actions: [
@@ -837,6 +905,75 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         ],
       ),
     );
+  }
+
+  /// GitHub 저장소 열기
+  Future<void> _openGitHub() async {
+    const githubUrl = 'https://github.com/your-username/mission100_chad_pushup'; // 실제 GitHub URL로 변경
+    final uri = Uri.parse(githubUrl);
+    
+    try {
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(AppLocalizations.of(context)!.cannotOpenGithub),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      debugPrint('GitHub 열기 실패: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.cannotOpenGithub),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  /// 피드백 이메일 보내기
+  Future<void> _sendFeedback() async {
+    const email = 'osu355@gmail.com';
+    const subject = 'Mission 100 Chad Pushup 피드백';
+    const body = '안녕하세요! Mission 100 Chad Pushup 앱에 대한 피드백을 보내드립니다.\n\n';
+    
+    final emailUri = Uri(
+      scheme: 'mailto',
+      path: email,
+      query: 'subject=${Uri.encodeComponent(subject)}&body=${Uri.encodeComponent(body)}',
+    );
+    
+    try {
+      if (await canLaunchUrl(emailUri)) {
+        await launchUrl(emailUri);
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(AppLocalizations.of(context)!.cannotOpenEmail),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      debugPrint('이메일 열기 실패: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.cannotOpenEmail),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
   }
 
   void _showDifficultyDialog() {
