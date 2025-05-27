@@ -64,6 +64,9 @@ dependencies:
   # 앱 정보
   package_info_plus: ^8.0.2
   
+  # 디바이스 정보
+  device_info_plus: ^10.1.2
+  
   # 파일 관리
   file_picker: ^8.1.2
   path_provider: ^2.1.4
