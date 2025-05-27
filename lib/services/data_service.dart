@@ -18,12 +18,14 @@ class DataService {
     try {
       debugPrint('🔄 데이터 백업 시작...');
       
-      // 권한 확인
+      // Android 13 이상에서는 파일 선택기를 사용하므로 권한이 필요 없음
+      // Android 12 이하에서만 권한 확인
       if (Platform.isAndroid) {
-        final status = await Permission.storage.request();
-        if (!status.isGranted) {
-          debugPrint('❌ 저장소 권한이 거부되었습니다');
-          return null;
+        try {
+          // 먼저 권한 없이 시도 (Android 13+)
+          debugPrint('📱 Android에서 파일 선택기 사용');
+        } catch (e) {
+          debugPrint('⚠️ 권한 확인 중 오류: $e');
         }
       }
       

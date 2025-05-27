@@ -548,9 +548,35 @@ class AchievementService {
     await db.delete(tableName);
     debugPrint('🗑️ 모든 업적 데이터 삭제 완료');
     
-    // 다시 초기화
-    await initialize();
+    // SharedPreferences에서 업적 관련 데이터도 삭제
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('tutorial_view_count');
+    await prefs.remove('pending_achievement_events');
+    
+    // 다시 초기화 (중복 방지를 위해 강제 초기화)
+    await _forceInitialize();
     debugPrint('🔄 업적 데이터베이스 재초기화 완료');
+  }
+
+  // 강제 초기화 (중복 방지)
+  static Future<void> _forceInitialize() async {
+    final db = await database;
+
+    // 미리 정의된 업적들 추가 (중복 방지)
+    debugPrint('🚀 업적 강제 초기화 시작 - 총 ${PredefinedAchievements.all.length}개 업적');
+    for (final achievement in PredefinedAchievements.all) {
+      try {
+        await db.insert(
+          tableName, 
+          achievement.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.ignore, // 중복 시 무시
+        );
+        debugPrint('✅ 업적 추가: ${achievement.id}');
+      } catch (e) {
+        debugPrint('❌ 업적 추가 실패: ${achievement.id} - $e');
+      }
+    }
+    debugPrint('🎉 업적 강제 초기화 완료');
   }
 
   // 업적 업데이트 (복원용)
