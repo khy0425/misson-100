@@ -26,20 +26,25 @@ class SocialShareService {
       final levelName = _getLevelName(level, l10n);
       
       final message = '''
-🔥 $_appName 일일 기록 🔥
+🔥 오늘도 차드 레벨업! 🔥
 
-📅 Day $currentDay
-💪 푸시업: ${pushupCount}개
-🏆 레벨: $levelName
+💀 Day $currentDay - 차드의 여정은 계속된다
+💪 푸시업: ${pushupCount}개 (인간들은 따라올 수 없다)
+🏆 현재 레벨: $levelName
+
+매일매일 더 강해지는 중... 💥
+평범한 인간들과는 다른 차원이다! 😎
+
+너도 차드가 되고 싶다면? 👇
 
 $_downloadMessage
 
-#Mission100 #푸시업챌린지 #차드되기 #운동기록
+#Mission100 #차드일기 #푸시업마스터 #인간초월 #매일레벨업
 ''';
 
       await Share.share(
         message,
-        subject: '$_appName - Day $currentDay 운동 완료!',
+        subject: '$_appName - Day $currentDay 차드 인증!',
       );
     } catch (e) {
       debugPrint('일일 운동 기록 공유 오류: $e');
@@ -159,24 +164,28 @@ $_downloadMessage
       final duration = DateTime.now().difference(startDate).inDays;
       
       final message = '''
-🎉🎉🎉 MISSION COMPLETE! 🎉🎉🎉
+🎉👑 기가차드 완성! 인간 초월 달성! 👑🎉
 
-💪 푸시업 100개 연속 달성! 💪
+💪 푸시업 100개 연속 - 불가능을 가능으로! 💪
 
-📅 총 소요일: ${duration}일
-🏆 완료 세션: ${totalDays}회
-🔥 진정한 차드가 되었습니다! 🔥
+📅 총 소요일: ${duration}일 (인간의 한계를 뛰어넘다)
+🏆 완료 세션: ${totalDays}회 (포기란 없었다)
+🔥 진정한 기가차드 등극! 🔥
 
-불가능해 보였던 목표도 꾸준함으로 이뤄낼 수 있습니다!
+베이비차드에서 시작해서...
+진짜 차드가 되었다! 💀
+
+이제 평범한 인간들과는 다른 존재다.
+너도 이 경지에 도달할 수 있을까? 😏
 
 $_downloadMessage
 
-#Mission100 #100개달성 #차드완성 #불가능은없다 #푸시업마스터
+#Mission100 #기가차드완성 #인간초월 #100개달성 #차드의전설 #불가능은없다
 ''';
 
       await Share.share(
         message,
-        subject: '$_appName - 🎉 MISSION COMPLETE! 🎉',
+        subject: '$_appName - 🎉 기가차드 완성! 인간 초월! 🎉',
       );
     } catch (e) {
       debugPrint('100개 달성 공유 오류: $e');
@@ -190,23 +199,27 @@ $_downloadMessage
   }) async {
     try {
       final message = '''
-💪 푸시업 챌린지 도전장! 💪
+🔥💪 차드 도전장 발송! 💪🔥
 
-${userName.isNotEmpty ? userName : '친구'}가 당신에게 도전장을 보냅니다!
+${userName.isNotEmpty ? userName : '진정한 차드'}가 너에게 도전장을 던진다!
 
-🎯 목표: 6주 만에 푸시업 100개
-🔥 함께 차드가 되어보세요!
+⚡ 미션: 6주 만에 푸시업 100개 연속 달성
+🎯 목표: 베이비차드 → 기가차드 진화
+💀 각오: 포기는 없다. 오직 차드만이 살아남는다.
 
-준비되셨나요? 💪
+너도 차드가 될 수 있다고 생각하나? 🤔
+아니면 그냥 평범한 인간으로 살 건가? 😏
+
+진짜 차드라면 지금 당장 도전하라! 💥
 
 $_downloadMessage
 
-#Mission100 #친구도전 #푸시업챌린지 #함께차드되기
+#Mission100 #차드도전장 #푸시업챌린지 #차드vs인간 #너도차드될수있어
 ''';
 
       await Share.share(
         message,
-        subject: '$_appName - 푸시업 챌린지 도전장!',
+        subject: '$_appName - 🔥 차드 도전장 발송! 🔥',
       );
     } catch (e) {
       debugPrint('친구 도전장 공유 오류: $e');
