@@ -9,6 +9,7 @@ import '../utils/debug_helper.dart';
 import '../services/achievement_service.dart';
 import '../services/notification_service.dart';
 import '../services/workout_history_service.dart';
+import '../services/permission_service.dart';
 import '../widgets/achievement_celebration_dialog.dart';
 import '../models/achievement.dart';
 import 'home_screen.dart';
@@ -67,6 +68,13 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   Future<void> _initializeApp() async {
     try {
+      // 앱 시작 시 권한 체크 (가장 먼저 실행)
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        if (mounted) {
+          await PermissionService.checkInitialPermissions(context);
+        }
+      });
+      
       // 데이터베이스 완전 재설정 (스키마 변경으로 인한 문제 해결)
       await _resetAchievementDatabase();
       

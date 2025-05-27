@@ -4,28 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
 import '../models/workout_history.dart';
 import '../models/achievement.dart';
 import 'workout_history_service.dart';
 import 'achievement_service.dart';
+import 'permission_service.dart';
 
 class DataService {
   static const String _backupFileName = 'mission100_backup.json';
   
   /// 데이터 백업
-  static Future<String?> backupData() async {
+  static Future<String?> backupData({BuildContext? context}) async {
     try {
       debugPrint('🔄 데이터 백업 시작...');
       
-      // Android 13 이상에서는 파일 선택기를 사용하므로 권한이 필요 없음
-      // Android 12 이하에서만 권한 확인
-      if (Platform.isAndroid) {
-        try {
-          // 먼저 권한 없이 시도 (Android 13+)
-          debugPrint('📱 Android에서 파일 선택기 사용');
-        } catch (e) {
-          debugPrint('⚠️ 권한 확인 중 오류: $e');
+      // 권한 체크 (context가 있는 경우에만)
+      if (context != null && Platform.isAndroid) {
+        final hasPermission = await PermissionService.checkAndRequestStoragePermissionForBackup(context);
+        if (!hasPermission) {
+          debugPrint('❌ 저장소 권한이 없어 백업을 취소합니다');
+          return null;
         }
       }
       
@@ -62,9 +60,18 @@ class DataService {
   }
   
   /// 데이터 복원
-  static Future<bool> restoreData() async {
+  static Future<bool> restoreData({BuildContext? context}) async {
     try {
       debugPrint('🔄 데이터 복원 시작...');
+      
+      // 권한 체크 (context가 있는 경우에만)
+      if (context != null && Platform.isAndroid) {
+        final hasPermission = await PermissionService.checkAndRequestStoragePermissionForBackup(context);
+        if (!hasPermission) {
+          debugPrint('❌ 저장소 권한이 없어 복원을 취소합니다');
+          return false;
+        }
+      }
       
       // 백업 파일 선택
       final result = await FilePicker.platform.pickFiles(

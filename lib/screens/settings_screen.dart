@@ -11,6 +11,7 @@ import '../services/theme_service.dart';
 import '../services/locale_service.dart';
 import '../services/notification_service.dart';
 import '../services/data_service.dart';
+import '../services/permission_service.dart';
 import '../generated/app_localizations.dart';
 import '../main.dart'; // LocaleNotifier를 위해 추가
 
@@ -636,7 +637,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         ),
       );
 
-      final backupPath = await DataService.backupData();
+      final backupPath = await DataService.backupData(context: context);
       
       // 로딩 다이얼로그 닫기
       if (mounted) Navigator.pop(context);
@@ -725,7 +726,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         ),
       );
 
-      final success = await DataService.restoreData();
+      final success = await DataService.restoreData(context: context);
       
       // 로딩 다이얼로그 닫기
       if (mounted) Navigator.pop(context);
