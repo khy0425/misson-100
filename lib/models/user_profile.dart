@@ -99,6 +99,20 @@ extension UserLevelExtension on UserLevel {
     }
   }
 
+  /// UserLevel을 int 값으로 변환 (동기부여 메시지 레벨용)
+  int get levelValue {
+    switch (this) {
+      case UserLevel.rookie:
+        return 1;
+      case UserLevel.rising:
+        return 25;
+      case UserLevel.alpha:
+        return 50;
+      case UserLevel.giga:
+        return 75;
+    }
+  }
+
   static UserLevel fromMaxReps(int maxReps) {
     if (maxReps <= 5) return UserLevel.rookie;
     if (maxReps <= 10) return UserLevel.rising;

@@ -72,7 +72,7 @@ class DatabaseService {
     final maps = await db.query('user_profile');
 
     if (maps.isNotEmpty) {
-      return null;
+      return UserProfile.fromMap(maps.first);
     }
     return null;
   }
@@ -89,8 +89,7 @@ class DatabaseService {
 
   Future<int> deleteUserProfile(int id) async {
     final db = await database;
-    return 0;
-    ('user_profile', where: 'id = ?', whereArgs: [id]);
+    return await db.delete('user_profile', where: 'id = ?', whereArgs: [id]);
   }
 
   // WorkoutSession CRUD 작업
@@ -175,8 +174,7 @@ class DatabaseService {
 
   Future<int> deleteWorkoutSession(int id) async {
     final db = await database;
-    return 0;
-    ('workout_session', where: 'id = ?', whereArgs: [id]);
+    return await db.delete('workout_session', where: 'id = ?', whereArgs: [id]);
   }
 
   // 통계 메서드

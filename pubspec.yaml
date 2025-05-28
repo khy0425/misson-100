@@ -72,6 +72,10 @@ dependencies:
   path_provider: ^2.1.4
   permission_handler: ^11.3.1
   
+  # 암호화 및 해시
+  crypto: ^3.0.3
+  encrypt: ^5.0.3
+  
   # 유튜브 플레이어
   youtube_player_flutter: ^9.1.1
   
@@ -87,6 +91,9 @@ dependencies:
   
   # 소셜 공유
   share_plus: ^10.1.2
+  
+  # 비디오 재생
+  video_player: ^2.8.1
 
 dependency_overrides:
   # webview_flutter 호환성 문제 해결을 위한 버전 고정
@@ -164,6 +171,7 @@ flutter:
     - assets/images/썬글차드.jpg
     - assets/images/눈빔차드.jpg
     - assets/images/더블차드.jpg
+    - assets/data/pushup_form_guide.json
   
   # 커스텀 폰트 (추후 추가 시)
   # fonts:

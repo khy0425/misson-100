@@ -3,10 +3,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
 import 'dart:io';
+import 'package:provider/provider.dart';
 import '../generated/app_localizations.dart';
 import '../utils/constants.dart';
 import '../utils/debug_helper.dart';
 import '../services/achievement_service.dart';
+import '../services/chad_evolution_service.dart';
+import '../widgets/chad_evolution_animation.dart';
 
 import '../services/workout_history_service.dart';
 import '../services/permission_service.dart';
@@ -16,6 +19,7 @@ import '../models/achievement.dart';
 import 'home_screen.dart';
 import 'calendar_screen.dart';
 import 'achievements_screen.dart';
+import 'challenge_screen.dart';
 import 'settings_screen.dart';
 import 'statistics_screen.dart';
 
@@ -33,6 +37,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     const HomeScreen(),
     const CalendarScreen(),
     const AchievementsScreen(),
+    const ChallengeScreen(),
     const StatisticsScreen(),
     const SettingsScreen(),
   ];
@@ -127,6 +132,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       } else if (_selectedIndex == 2) {
         // 업적 화면 새로고침 (필요시 구현)
       } else if (_selectedIndex == 3) {
+        // 챌린지 화면 새로고침 (필요시 구현)
+      } else if (_selectedIndex == 4) {
         // 통계 화면 새로고침 (필요시 구현)
       }
       
@@ -228,11 +235,32 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    return Scaffold(
-      body: IndexedStack(index: _selectedIndex, children: _screens),
-      bottomNavigationBar: SafeArea(
-        child: _buildCustomBottomNavBar(isDark),
-      ),
+    return Consumer<ChadEvolutionService>(
+      builder: (context, chadService, child) {
+        return Scaffold(
+          body: Stack(
+            children: [
+              // 메인 화면들
+              IndexedStack(index: _selectedIndex, children: _screens),
+              
+              // Chad 진화 애니메이션 오버레이
+              if (chadService.showEvolutionAnimation &&
+                  chadService.evolutionFromChad != null &&
+                  chadService.evolutionToChad != null)
+                ChadEvolutionAnimation(
+                  fromChad: chadService.evolutionFromChad!,
+                  toChad: chadService.evolutionToChad!,
+                  onAnimationComplete: () {
+                    chadService.completeEvolutionAnimation();
+                  },
+                ),
+            ],
+          ),
+          bottomNavigationBar: SafeArea(
+            child: _buildCustomBottomNavBar(isDark),
+          ),
+        );
+      },
     );
   }
 
@@ -270,8 +298,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           _buildNavItem(0, Icons.home_outlined, Icons.home, l10n.home),
           _buildNavItem(1, Icons.calendar_today_outlined, Icons.calendar_today, l10n.calendar),
           _buildNavItem(2, Icons.emoji_events_outlined, Icons.emoji_events, l10n.achievements),
-          _buildNavItem(3, Icons.analytics_outlined, Icons.analytics, l10n.statistics),
-          _buildNavItem(4, Icons.settings_outlined, Icons.settings, l10n.settings),
+          _buildNavItem(3, Icons.emoji_events_outlined, Icons.emoji_events, '챌린지'),
+          _buildNavItem(4, Icons.analytics_outlined, Icons.analytics, l10n.statistics),
+          _buildNavItem(5, Icons.settings_outlined, Icons.settings, l10n.settings),
         ],
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../generated/app_localizations.dart';
@@ -11,8 +12,11 @@ import '../services/workout_history_service.dart';
 import '../models/workout_history.dart';
 import '../services/achievement_service.dart';
 import '../services/social_share_service.dart';
+import '../services/motivational_message_service.dart';
+import '../services/streak_service.dart';
+import '../services/challenge_service.dart';
 import '../widgets/ad_banner_widget.dart';
-import '../widgets/share_card_widget.dart';
+
 
 class WorkoutScreen extends StatefulWidget {
   final UserProfile userProfile;
@@ -46,17 +50,44 @@ class _WorkoutScreenState extends State<WorkoutScreen>
   late List<int> _targetReps;
   late int _restTimeSeconds;
 
+  // 동기부여 메시지 서비스
+  final MotivationalMessageService _messageService = MotivationalMessageService();
+  final StreakService _streakService = StreakService();
+  String _currentMotivationalMessage = '';
+  bool _showMotivationalMessage = false;
+
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
     _initializeWorkout();
+    _showWorkoutStartMessage();
   }
 
   void _initializeWorkout() {
     _targetReps = widget.todayWorkout.workout;
     _restTimeSeconds = widget.todayWorkout.restTimeSeconds;
     _completedReps = List.filled(_targetReps.length, 0);
+  }
+
+  void _showWorkoutStartMessage() {
+    final message = _messageService.getWorkoutStartMessage(
+      userLevel: widget.userProfile.level.levelValue,
+    );
+    
+    setState(() {
+      _currentMotivationalMessage = message;
+      _showMotivationalMessage = true;
+    });
+
+    // 3초 후 메시지 숨기기
+    Timer(const Duration(seconds: 3), () {
+      if (mounted) {
+        setState(() {
+          _showMotivationalMessage = false;
+        });
+      }
+    });
   }
 
   @override
@@ -85,8 +116,27 @@ class _WorkoutScreenState extends State<WorkoutScreen>
       _completedReps[_currentSet] = _currentReps;
     });
 
+    // 세트 완료 동기부여 메시지 표시
+    final message = _messageService.getSetCompletionMessage(
+      userLevel: widget.userProfile.level.levelValue,
+    );
+    
+    setState(() {
+      _currentMotivationalMessage = message;
+      _showMotivationalMessage = true;
+    });
+
+    // 2초 후 메시지 숨기기
+    Timer(const Duration(seconds: 2), () {
+      if (mounted) {
+        setState(() {
+          _showMotivationalMessage = false;
+        });
+      }
+    });
+
     // 약간의 지연 후 다음 단계 진행
-    Future<void>.delayed(Duration(milliseconds: 500), () {
+    Future<void>.delayed(const Duration(milliseconds: 500), () {
       // 마지막 세트가 아니면 휴식 시간 시작
       if (_currentSet < _totalSets - 1) {
         _startRestTimer();
@@ -130,6 +180,16 @@ class _WorkoutScreenState extends State<WorkoutScreen>
     // 워크아웃 완료 처리 (데이터베이스 저장)
     HapticFeedback.heavyImpact();
 
+    // 운동 완료 동기부여 메시지 표시
+    final message = _messageService.getWorkoutCompletionMessage(
+      userLevel: widget.userProfile.level.levelValue,
+    );
+    
+    setState(() {
+      _currentMotivationalMessage = message;
+      _showMotivationalMessage = true;
+    });
+
     try {
       // 완료된 총 횟수 계산
       final totalCompletedReps = _completedReps.fold(
@@ -156,6 +216,19 @@ class _WorkoutScreenState extends State<WorkoutScreen>
       // 업적 체크 및 업데이트
       await AchievementService.checkAndUpdateAchievements();
 
+      // 스트릭 업데이트
+      await _streakService.updateStreak(DateTime.now());
+
+      // 챌린지 업데이트
+      try {
+        final challengeService = ChallengeService();
+        await challengeService.initialize();
+        await challengeService.updateChallengesOnWorkoutComplete(totalCompletedReps, _totalSets);
+        debugPrint('챌린지 업데이트 완료');
+      } catch (e) {
+        debugPrint('챌린지 업데이트 오류: $e');
+      }
+
       debugPrint('운동 기록 저장 완료: ${workoutHistory.id}');
     } catch (e) {
       debugPrint('운동 기록 저장 실패: $e');
@@ -166,9 +239,15 @@ class _WorkoutScreenState extends State<WorkoutScreen>
       await AdService.instance.showInterstitialAd();
     }
 
-    if (mounted) {
-      _showWorkoutCompleteDialog();
-    }
+    // 3초 후 완료 다이얼로그 표시
+    Timer(const Duration(seconds: 3), () {
+      if (mounted) {
+        setState(() {
+          _showMotivationalMessage = false;
+        });
+        _showWorkoutCompleteDialog();
+      }
+    });
   }
 
   void _showWorkoutCompleteDialog() {
@@ -350,43 +429,51 @@ class _WorkoutScreenState extends State<WorkoutScreen>
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: Column(
+      body: Stack(
         children: [
-          // 스크롤 가능한 메인 콘텐츠
-          Expanded(
-            child: SingleChildScrollView(
-              controller: _scrollController,
-              physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.all(responsivePadding),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  // 헤더 (화면 크기에 따라 조정)
-                  _buildResponsiveHeader(context, isSmallScreen),
+          Column(
+            children: [
+              // 스크롤 가능한 메인 콘텐츠
+              Expanded(
+                child: SingleChildScrollView(
+                  controller: _scrollController,
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.all(responsivePadding),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // 헤더 (화면 크기에 따라 조정)
+                      _buildResponsiveHeader(context, isSmallScreen),
 
-                  SizedBox(height: responsiveSpacing),
+                      SizedBox(height: responsiveSpacing),
 
-                  // 메인 컨텐츠 (반응형)
-                  _buildResponsiveContent(
-                    context,
-                    isSmallScreen,
-                    responsiveSpacing,
+                      // 메인 컨텐츠 (반응형)
+                      _buildResponsiveContent(
+                        context,
+                        isSmallScreen,
+                        responsiveSpacing,
+                      ),
+
+                      SizedBox(height: responsiveSpacing),
+
+                      // 하단 컨트롤 (반응형)
+                      _buildResponsiveControls(context, isSmallScreen),
+
+                      // 추가 여백 (광고 공간 확보)
+                      SizedBox(height: adHeight + responsivePadding),
+                    ],
                   ),
-
-                  SizedBox(height: responsiveSpacing),
-
-                  // 하단 컨트롤 (반응형)
-                  _buildResponsiveControls(context, isSmallScreen),
-
-                  // 추가 여백 (광고 공간 확보)
-                  SizedBox(height: adHeight + responsivePadding),
-                ],
+                ),
               ),
-            ),
+
+              // 하단 배너 광고
+              _buildBannerAd(),
+            ],
           ),
 
-          // 하단 배너 광고
-          _buildBannerAd(),
+          // 동기부여 메시지 오버레이
+          if (_showMotivationalMessage)
+            _buildMotivationalMessageOverlay(context),
         ],
       ),
     );
@@ -722,73 +809,6 @@ class _WorkoutScreenState extends State<WorkoutScreen>
     );
   }
 
-  Widget _buildCompletionStatus() {
-    final theme = Theme.of(context);
-    final mediaQuery = MediaQuery.of(context);
-    final screenHeight = mediaQuery.size.height;
-    final isSmallScreen = screenHeight < 700;
-
-    final iconSize = isSmallScreen ? 60.0 : 80.0;
-    final spacing = isSmallScreen
-        ? AppConstants.paddingS
-        : AppConstants.paddingM;
-
-    final achievedGoal = _currentReps >= _currentTargetReps;
-    final percentage = (_currentReps / _currentTargetReps * 100).round();
-
-    return Column(
-      children: [
-        // 성취 아이콘
-        Icon(
-          achievedGoal ? Icons.celebration : Icons.thumb_up,
-          color: _getPerformanceColor(),
-          size: iconSize,
-        ),
-
-        SizedBox(height: spacing),
-
-        // 완료 메시지
-        Text(
-          achievedGoal
-              ? AppLocalizations.of(context).setCompletedSuccess
-              : AppLocalizations.of(context).setCompletedGood,
-          style: theme.textTheme.displaySmall?.copyWith(
-            color: _getPerformanceColor(),
-            fontWeight: FontWeight.bold,
-            fontSize: isSmallScreen ? 24.0 : 32.0,
-          ),
-          textAlign: TextAlign.center,
-        ),
-
-        SizedBox(height: spacing / 2),
-
-        // 수행 결과
-        Text(
-          AppLocalizations.of(context).resultFormat(_currentReps, percentage),
-          style: theme.textTheme.titleLarge?.copyWith(
-            color: _getPerformanceColor(),
-            fontWeight: FontWeight.w600,
-            fontSize: isSmallScreen ? 16.0 : 20.0,
-          ),
-          textAlign: TextAlign.center,
-        ),
-
-        SizedBox(height: spacing / 2),
-
-        // 격려 메시지
-        Text(
-          _getMotivationalMessage(),
-          style: theme.textTheme.bodyMedium?.copyWith(
-            color: Colors.grey[600],
-            fontWeight: FontWeight.w500,
-            fontSize: isSmallScreen ? 12.0 : 14.0,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ],
-    );
-  }
-
   Color _getPerformanceColor() {
     if (_currentReps >= _currentTargetReps) {
       return Color(AppColors.successColor); // 목표 달성
@@ -852,7 +872,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>
         HapticFeedback.lightImpact();
         
         // 횟수를 설정한 후 자동으로 세트 완료 처리
-        Future.delayed(Duration(milliseconds: 300), () {
+        Future.delayed(const Duration(milliseconds: 300), () {
           if (mounted && !_isSetCompleted) {
             _markSetCompleted();
           }
@@ -1138,9 +1158,93 @@ class _WorkoutScreenState extends State<WorkoutScreen>
   }
 
   Widget _buildBannerAd() {
+    // 테스트 환경에서는 광고 위젯을 표시하지 않음
+    if (kDebugMode) {
+      return const SizedBox.shrink();
+    }
+    
     return const AdBannerWidget(
       adSize: AdSize.banner,
       margin: EdgeInsets.all(8.0),
+    );
+  }
+
+  Widget _buildMotivationalMessageOverlay(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Container(
+      color: Colors.black.withValues(alpha: 0.5),
+      child: Center(
+        child: Container(
+          margin: const EdgeInsets.all(32),
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            color: theme.scaffoldBackgroundColor,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.3),
+                blurRadius: 10,
+                offset: const Offset(0, 5),
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Chad 아이콘
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  color: const Color(AppColors.primaryColor),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.fitness_center,
+                  color: Colors.white,
+                  size: 30,
+                ),
+              ),
+              
+              const SizedBox(height: 16),
+              
+              // 동기부여 메시지
+              Text(
+                _currentMotivationalMessage,
+                style: theme.textTheme.titleLarge?.copyWith(
+                  color: const Color(AppColors.primaryColor),
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              
+              const SizedBox(height: 20),
+              
+              // 닫기 버튼
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _showMotivationalMessage = false;
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(AppColors.primaryColor),
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: const Text('확인'),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

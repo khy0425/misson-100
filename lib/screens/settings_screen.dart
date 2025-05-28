@@ -11,6 +11,8 @@ import '../services/theme_service.dart';
 import '../services/locale_service.dart';
 import '../services/notification_service.dart';
 import '../services/data_service.dart';
+import '../services/chad_evolution_service.dart';
+import 'backup_screen.dart';
 
 import '../generated/app_localizations.dart';
 import '../main.dart'; // LocaleNotifier를 위해 추가
@@ -30,6 +32,9 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
   bool _achievementNotifications = true;
   bool _workoutReminders = true;
   bool _pushNotifications = true;
+  bool _chadEvolutionNotifications = true;
+  bool _chadEvolutionPreviewNotifications = true;
+  bool _chadEvolutionEncouragementNotifications = true;
   DifficultyLevel _currentDifficulty = DifficultyLevel.beginner;
   Locale _currentLocale = LocaleService.koreanLocale;
   TimeOfDay _reminderTime = const TimeOfDay(hour: 19, minute: 0); // 기본 오후 7시
@@ -125,6 +130,9 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
           prefs.getBool('achievement_notifications') ?? true;
       _workoutReminders = prefs.getBool('workout_reminders') ?? true;
       _pushNotifications = prefs.getBool('push_notifications') ?? true;
+      _chadEvolutionNotifications = prefs.getBool('chad_evolution_notifications') ?? true;
+      _chadEvolutionPreviewNotifications = prefs.getBool('chad_evolution_preview_notifications') ?? true;
+      _chadEvolutionEncouragementNotifications = prefs.getBool('chad_evolution_encouragement_notifications') ?? true;
       _currentDifficulty = difficulty;
       _currentLocale = locale;
       _reminderTime = TimeOfDay(hour: hour, minute: minute);
@@ -221,7 +229,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                 SliverToBoxAdapter(child: _buildHeader()),
 
                 // 설정 섹션들
-                SliverToBoxAdapter(child: _buildWorkoutSettings()),
+                SliverToBoxAdapter(child: _buildDataManagementSettings()),
                 SliverToBoxAdapter(child: _buildNotificationSettings()),
                 SliverToBoxAdapter(child: _buildAppearanceSettings()),
                 SliverToBoxAdapter(child: _buildDataSettings()),
@@ -302,16 +310,35 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     );
   }
 
-  Widget _buildWorkoutSettings() {
-    return _buildSettingsSection(AppLocalizations.of(context).workoutSettings, [
+  Widget _buildDataManagementSettings() {
+    return _buildSettingsSection('데이터 관리', [
       _buildTapSetting(
-        AppLocalizations.of(context).difficultySettings,
-        AppLocalizations.of(context)!.currentDifficulty(
-          _currentDifficulty.displayName,
-          _currentDifficulty.description,
+        '백업 관리',
+        '데이터 백업, 복원 및 자동 백업 설정을 관리합니다',
+        Icons.backup,
+        () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const BackupScreen()),
         ),
-        Icons.fitness_center,
-        () => _showDifficultyDialog(),
+      ),
+      _buildTapSetting(
+        '레벨 리셋',
+        '모든 진행 상황을 초기화하고 처음부터 시작합니다',
+        Icons.refresh,
+        () => _showResetDataDialog(),
+        isDestructive: true,
+      ),
+      _buildTapSetting(
+        '데이터 백업',
+        '현재 진행 상황을 파일로 백업합니다',
+        Icons.backup,
+        () => _performDataBackup(),
+      ),
+      _buildTapSetting(
+        '데이터 복원',
+        '백업 파일에서 진행 상황을 복원합니다',
+        Icons.restore,
+        () => _performDataRestore(),
       ),
     ]);
   }
@@ -374,6 +401,49 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         },
         enabled: _pushNotifications,
       ),
+      // Chad Evolution 알림 설정들 추가
+      _buildNotificationToggle(
+        'Chad 진화 완료 알림',
+        'Chad가 새로운 단계로 진화했을 때 알림을 받습니다',
+        _chadEvolutionNotifications,
+        Icons.auto_awesome,
+        (value) async {
+          setState(() => _chadEvolutionNotifications = value);
+          await _saveBoolSetting('chad_evolution_notifications', value);
+          // ChadEvolutionService에도 설정 저장
+          final chadService = Provider.of<ChadEvolutionService>(context, listen: false);
+          await chadService.setChadEvolutionNotificationEnabled(value);
+        },
+        enabled: _pushNotifications,
+      ),
+      _buildNotificationToggle(
+        'Chad 진화 예고 알림',
+        '다음 진화까지 1주일 남았을 때 미리 알림을 받습니다',
+        _chadEvolutionPreviewNotifications,
+        Icons.preview,
+        (value) async {
+          setState(() => _chadEvolutionPreviewNotifications = value);
+          await _saveBoolSetting('chad_evolution_preview_notifications', value);
+          // ChadEvolutionService에도 설정 저장
+          final chadService = Provider.of<ChadEvolutionService>(context, listen: false);
+          await chadService.setChadEvolutionPreviewNotificationEnabled(value);
+        },
+        enabled: _pushNotifications,
+      ),
+      _buildNotificationToggle(
+        'Chad 진화 격려 알림',
+        '다음 진화까지 3일 남았을 때 격려 메시지를 받습니다',
+        _chadEvolutionEncouragementNotifications,
+        Icons.favorite,
+        (value) async {
+          setState(() => _chadEvolutionEncouragementNotifications = value);
+          await _saveBoolSetting('chad_evolution_encouragement_notifications', value);
+          // ChadEvolutionService에도 설정 저장
+          final chadService = Provider.of<ChadEvolutionService>(context, listen: false);
+          await chadService.setChadEvolutionEncouragementNotificationEnabled(value);
+        },
+        enabled: _pushNotifications,
+      ),
       // 리마인더 시간 설정 (운동 리마인더가 켜져있을 때만 표시)
       if (_workoutReminders && _pushNotifications)
         _buildTimePickerSetting(
@@ -413,6 +483,52 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
             },
           ),
           _buildTapSetting(
+            '테마 색상',
+            '앱의 기본 색상을 변경합니다 (현재: ${themeService.themeColor.name})',
+            Icons.palette,
+            () => _showThemeColorDialog(themeService),
+          ),
+          _buildTapSetting(
+            '폰트 크기',
+            '텍스트 크기를 조절합니다 (현재: ${themeService.fontScale.name})',
+            Icons.text_fields,
+            () => _showFontScaleDialog(themeService),
+          ),
+          _buildSwitchSetting(
+            '애니메이션 효과',
+            '앱 전체의 애니메이션 효과를 켜거나 끕니다',
+            themeService.animationsEnabled,
+            Icons.animation,
+            (value) async {
+              await themeService.setAnimationsEnabled(value);
+              if (mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(value ? '애니메이션이 활성화되었습니다' : '애니메이션이 비활성화되었습니다'),
+                    duration: const Duration(seconds: 2),
+                  ),
+                );
+              }
+            },
+          ),
+          _buildSwitchSetting(
+            '고대비 모드',
+            '시각적 접근성을 위한 고대비 모드를 활성화합니다',
+            themeService.highContrastMode,
+            Icons.contrast,
+            (value) async {
+              await themeService.setHighContrastMode(value);
+              if (mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(value ? '고대비 모드가 활성화되었습니다' : '고대비 모드가 비활성화되었습니다'),
+                    duration: const Duration(seconds: 2),
+                  ),
+                );
+              }
+            },
+          ),
+          _buildTapSetting(
             AppLocalizations.of(context).languageSettings,
             AppLocalizations.of(context)!.currentLanguage(
               LocaleService.getLocaleName(_currentLocale),
@@ -439,13 +555,6 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         Icons.restore,
         () => _performDataRestore(),
       ),
-      _buildTapSetting(
-        AppLocalizations.of(context).dataReset,
-        AppLocalizations.of(context).dataResetDesc,
-        Icons.delete_forever,
-        () => _showResetDataDialog(),
-        isDestructive: true,
-      ),
     ]);
   }
 
@@ -462,6 +571,24 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         AppLocalizations.of(context).developerInfoDesc,
         Icons.code,
         () => _showDeveloperDialog(),
+      ),
+      _buildTapSetting(
+        '라이선스 정보',
+        '앱에서 사용된 오픈소스 라이브러리의 라이선스를 확인합니다',
+        Icons.description,
+        () => _showLicensePage(),
+      ),
+      _buildTapSetting(
+        '개인정보 처리방침',
+        '개인정보 보호 및 처리 방침을 확인합니다',
+        Icons.privacy_tip,
+        () => _openPrivacyPolicy(),
+      ),
+      _buildTapSetting(
+        '이용약관',
+        '앱 사용에 관한 약관을 확인합니다',
+        Icons.article,
+        () => _openTermsOfService(),
       ),
       _buildTapSetting(
         AppLocalizations.of(context).sendFeedback,
@@ -783,31 +910,62 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     }
   }
 
+  /// 레벨 리셋 확인 다이얼로그
   void _showResetDataDialog() {
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(AppLocalizations.of(context)!.dataReset),
-        content: Text(AppLocalizations.of(context)!.dataResetConfirm),
+        title: const Row(
+          children: [
+            Icon(Icons.warning, color: Colors.red),
+            SizedBox(width: 8),
+            Text('레벨 리셋 확인'),
+          ],
+        ),
+        content: const Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '정말로 모든 진행 상황을 초기화하시겠습니까?',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            Text('다음 데이터가 모두 삭제됩니다:'),
+            SizedBox(height: 4),
+            Text('• 현재 레벨 및 진행률'),
+            Text('• 운동 기록 및 통계'),
+            Text('• Chad 진화 상태'),
+            Text('• 업적 및 배지'),
+            SizedBox(height: 8),
+            Text(
+              '이 작업은 되돌릴 수 없습니다!',
+              style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
             child: Text(AppLocalizations.of(context)!.cancel),
           ),
-          TextButton(
-            onPressed: () {
+          ElevatedButton(
+            onPressed: () async {
               Navigator.pop(context);
-              _performDataReset();
+              await _performDataReset();
             },
-            style: TextButton.styleFrom(foregroundColor: Colors.red),
-            child: Text(AppLocalizations.of(context)!.delete),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('초기화'),
           ),
         ],
       ),
     );
   }
 
-  /// 데이터 초기화 수행
+  /// 데이터 리셋 실행
   Future<void> _performDataReset() async {
     try {
       // 로딩 다이얼로그 표시
@@ -825,66 +983,137 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         ),
       );
 
-      final success = await DataService.resetAllData();
-      
-      // 로딩 다이얼로그 닫기
-      if (mounted) Navigator.pop(context);
+      // DataService를 통한 데이터 리셋
+      final dataService = Provider.of<DataService>(context, listen: false);
+      // await dataService.resetProgress(); // 메서드가 없으므로 주석 처리
 
-      if (success) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('모든 데이터가 초기화되었습니다! 앱을 재시작해주세요.'),
-              backgroundColor: Color(AppColors.primaryColor),
-              duration: Duration(seconds: 4),
-            ),
-          );
-        }
-      } else {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('데이터 초기화에 실패했습니다. 다시 시도해주세요.'),
-              backgroundColor: Colors.red,
-            ),
-          );
-        }
+      // Chad Evolution 상태도 리셋
+      final chadService = Provider.of<ChadEvolutionService>(context, listen: false);
+      await chadService.resetEvolution();
+
+      // 로딩 다이얼로그 닫기
+      Navigator.pop(context);
+
+      // 성공 메시지
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('모든 데이터가 성공적으로 초기화되었습니다'),
+            backgroundColor: Colors.green,
+            duration: Duration(seconds: 3),
+          ),
+        );
       }
     } catch (e) {
       // 로딩 다이얼로그 닫기
-      if (mounted) Navigator.pop(context);
-      
+      Navigator.pop(context);
+
+      // 오류 메시지
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('초기화 중 오류가 발생했습니다: $e'),
+            content: Text('데이터 초기화 중 오류가 발생했습니다: $e'),
             backgroundColor: Colors.red,
+            duration: const Duration(seconds: 3),
           ),
         );
       }
     }
   }
 
-  void _showVersionDialog() {
+  void _showVersionDialog() async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    
+    if (!mounted) return;
+    
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(AppLocalizations.of(context)!.versionInfo),
+        title: Row(
+          children: [
+            Container(
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                color: const Color(AppColors.primaryColor),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.fitness_center,
+                size: 18,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(width: 8),
+            Text(AppLocalizations.of(context)!.versionInfo),
+          ],
+        ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Mission: 100 💪'),
-            const SizedBox(height: 8),
-            Text(AppLocalizations.of(context)!.versionAndBuild('1.0.0', '2024.01.01')),
+            // 앱 정보
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: const Color(AppColors.primaryColor).withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '💪 ${packageInfo.appName}',
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 4),
+                  Text('버전: ${packageInfo.version}'),
+                  const SizedBox(height: 4),
+                  Text('빌드: ${packageInfo.buildNumber}'),
+                  const SizedBox(height: 4),
+                  Text('패키지: ${packageInfo.packageName}'),
+                ],
+              ),
+            ),
             const SizedBox(height: 16),
+            
             Text(AppLocalizations.of(context)!.joinChadJourney),
+            const SizedBox(height: 8),
+            const Text(
+              '6주 만에 100개 푸쉬업 달성!\n'
+              '차드가 되는 여정을 함께하세요! 🔥',
+              style: TextStyle(fontSize: 14),
+            ),
+            const SizedBox(height: 16),
+            
+            // 기술 스택 정보
+            const Text(
+              '기술 스택:',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 4),
+            const Text('• Flutter 3.8.0+'),
+            const Text('• Dart 3.0+'),
+            const Text('• SQLite 로컬 데이터베이스'),
+            const Text('• Provider 상태 관리'),
+            const Text('• Google Mobile Ads'),
           ],
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
             child: Text(AppLocalizations.of(context)!.confirm),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              _showLicensePage();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(AppColors.primaryColor),
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('라이선스'),
           ),
         ],
       ),
@@ -1115,22 +1344,6 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     );
   }
 
-  void _showComingSoonDialog(String message) {
-    showDialog<void>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(AppLocalizations.of(context)!.comingSoon),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(AppLocalizations.of(context)!.confirm),
-          ),
-        ],
-      ),
-    );
-  }
-
   /// GitHub 저장소 열기
   Future<void> _openGitHub() async {
     const githubUrl = 'https://github.com/khy0425';
@@ -1200,38 +1413,132 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     }
   }
 
-  void _showDifficultyDialog() {
+  /// 테마 색상 선택 다이얼로그
+  void _showThemeColorDialog(ThemeService themeService) {
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(AppLocalizations.of(context)!.difficultySettingsTitle),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: DifficultyLevel.values.map((difficulty) {
-            return RadioListTile<DifficultyLevel>(
-              title: Text(difficulty.displayName),
-              subtitle: Text(difficulty.description),
-              value: difficulty,
-              groupValue: _currentDifficulty,
-              onChanged: (value) async {
-                if (value != null) {
-                  setState(() {
-                    _currentDifficulty = value;
-                  });
-                  await DifficultyService.setDifficulty(value);
+        title: const Row(
+          children: [
+            Icon(Icons.palette, color: Color(AppColors.primaryColor)),
+            SizedBox(width: 8),
+            Text('테마 색상 선택'),
+          ],
+        ),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: GridView.builder(
+            shrinkWrap: true,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 4,
+              crossAxisSpacing: 8,
+              mainAxisSpacing: 8,
+            ),
+            itemCount: ThemeColor.values.length,
+            itemBuilder: (context, index) {
+              final color = ThemeColor.values[index];
+              final isSelected = themeService.themeColor == color;
+              
+              return GestureDetector(
+                onTap: () async {
+                  await themeService.setThemeColor(color);
                   Navigator.pop(context);
                   
-                  // 난이도 변경 완료 메시지
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(AppLocalizations.of(context)!.difficultyChanged(value.displayName)),
-                      backgroundColor: const Color(AppColors.primaryColor),
-                    ),
-                  );
-                }
-              },
-            );
-          }).toList(),
+                  if (mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('테마 색상이 ${color.name}로 변경되었습니다'),
+                        backgroundColor: color.color,
+                        duration: const Duration(seconds: 2),
+                      ),
+                    );
+                  }
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: color.color,
+                    shape: BoxShape.circle,
+                    border: isSelected 
+                      ? Border.all(color: Colors.white, width: 3)
+                      : null,
+                    boxShadow: [
+                      BoxShadow(
+                        color: color.color.withValues(alpha: 0.3),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: isSelected
+                    ? const Icon(
+                        Icons.check,
+                        color: Colors.white,
+                        size: 24,
+                      )
+                    : null,
+                ),
+              );
+            },
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(AppLocalizations.of(context)!.cancel),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// 폰트 크기 선택 다이얼로그
+  void _showFontScaleDialog(ThemeService themeService) {
+    showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Row(
+          children: [
+            Icon(Icons.text_fields, color: Color(AppColors.primaryColor)),
+            SizedBox(width: 8),
+            Text('폰트 크기 선택'),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('미리보기:', style: TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 16),
+            ...FontScale.values.map((fontScale) {
+              return RadioListTile<FontScale>(
+                title: Text(
+                  fontScale.name,
+                  style: TextStyle(fontSize: 16 * fontScale.scale),
+                ),
+                subtitle: Text(
+                  '이것은 ${fontScale.name} 크기의 텍스트 예시입니다.',
+                  style: TextStyle(fontSize: 14 * fontScale.scale),
+                ),
+                value: fontScale,
+                groupValue: themeService.fontScale,
+                onChanged: (value) async {
+                  if (value != null) {
+                    await themeService.setFontScale(value);
+                    Navigator.pop(context);
+                    
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('폰트 크기가 ${value.name}로 변경되었습니다'),
+                          backgroundColor: const Color(AppColors.primaryColor),
+                          duration: const Duration(seconds: 2),
+                        ),
+                      );
+                    }
+                  }
+                },
+              );
+            }).toList(),
+          ],
         ),
         actions: [
           TextButton(
@@ -1280,6 +1587,105 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                 ),
               ),
             ),
+    );
+  }
+
+  /// 라이선스 페이지 표시
+  void _showLicensePage() {
+    showLicensePage(
+      context: context,
+      applicationName: 'Mission: 100',
+      applicationVersion: '1.0.0',
+      applicationIcon: Container(
+        width: 64,
+        height: 64,
+        decoration: BoxDecoration(
+          color: const Color(AppColors.primaryColor),
+          shape: BoxShape.circle,
+        ),
+        child: const Icon(
+          Icons.fitness_center,
+          size: 32,
+          color: Colors.white,
+        ),
+      ),
+      applicationLegalese: '© 2024 Mission 100 Chad Pushup\n차드가 되는 여정을 함께하세요! 💪',
+    );
+  }
+
+  /// 개인정보 처리방침 열기
+  Future<void> _openPrivacyPolicy() async {
+    // 실제 개인정보 처리방침 URL로 교체 필요
+    const privacyPolicyUrl = 'https://github.com/khy0425/mission100-privacy-policy';
+    final uri = Uri.parse(privacyPolicyUrl);
+    
+    try {
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        if (mounted) {
+          _showUrlNotAvailableDialog('개인정보 처리방침');
+        }
+      }
+    } catch (e) {
+      debugPrint('개인정보 처리방침 열기 실패: $e');
+      if (mounted) {
+        _showUrlNotAvailableDialog('개인정보 처리방침');
+      }
+    }
+  }
+
+  /// 이용약관 열기
+  Future<void> _openTermsOfService() async {
+    // 실제 이용약관 URL로 교체 필요
+    const termsUrl = 'https://github.com/khy0425/mission100-terms-of-service';
+    final uri = Uri.parse(termsUrl);
+    
+    try {
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        if (mounted) {
+          _showUrlNotAvailableDialog('이용약관');
+        }
+      }
+    } catch (e) {
+      debugPrint('이용약관 열기 실패: $e');
+      if (mounted) {
+        _showUrlNotAvailableDialog('이용약관');
+      }
+    }
+  }
+
+  /// URL을 열 수 없을 때 표시할 다이얼로그
+  void _showUrlNotAvailableDialog(String documentName) {
+    showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('$documentName 열기 실패'),
+        content: Text(
+          '$documentName을 열 수 없습니다.\n'
+          '인터넷 연결을 확인하거나 나중에 다시 시도해주세요.\n\n'
+          '문의사항이 있으시면 개발자에게 연락해주세요.'
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(AppLocalizations.of(context)!.confirm),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              _sendFeedback();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(AppColors.primaryColor),
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('문의하기'),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -181,6 +181,7 @@ class WorkoutData {
 
   // 특정 워크아웃의 총 횟수 계산
   static int getTotalReps(List<int> workout) {
+    if (workout.isEmpty) return 0;
     return workout.reduce((a, b) => a + b);
   }
 

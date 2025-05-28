@@ -547,13 +547,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tutorialButton => '💥 BECOME PUSHUP MASTER 💥';
 
   @override
-  String get difficultyBeginner => '🔥 FUTURE EMPEROR - STARTING ALPHAS 🔥';
+  String get difficultyBeginner => 'Beginner';
 
   @override
-  String get difficultyIntermediate => '⚡ ALPHA RISING - GROWING BEASTS ⚡';
+  String get difficultyIntermediate => 'Intermediate';
 
   @override
-  String get difficultyAdvanced => '👑 EMPEROR MODE - POWERFUL CHADS 👑';
+  String get difficultyAdvanced => 'Advanced';
 
   @override
   String get difficultyExtreme =>
@@ -2300,4 +2300,197 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get builtWithFlutter => 'Flutter로 제작됨';
+
+  @override
+  String get challenge7DaysTitle => '7 Consecutive Days';
+
+  @override
+  String get challenge7DaysDescription => 'Work out for 7 consecutive days';
+
+  @override
+  String get challenge7DaysDetailedDescription =>
+      'Complete workouts for 7 consecutive days without missing a single day. You must complete at least 1 set each day.';
+
+  @override
+  String get challenge50SingleTitle => '50 in One Go';
+
+  @override
+  String get challenge50SingleDescription => '50 pushups in a single workout';
+
+  @override
+  String get challenge50SingleDetailedDescription =>
+      'Complete 50 pushups in one go without stopping. If you stop in the middle, you must start over from the beginning.';
+
+  @override
+  String get challenge100CumulativeTitle => '100 Challenge';
+
+  @override
+  String get challenge100CumulativeDescription =>
+      'Achieve a total of 100 pushups';
+
+  @override
+  String get challenge100CumulativeDetailedDescription =>
+      'Complete a total of 100 pushups across multiple sessions.';
+
+  @override
+  String get challenge200CumulativeTitle => '200 Challenge';
+
+  @override
+  String get challenge200CumulativeDescription =>
+      'Achieve a total of 200 pushups';
+
+  @override
+  String get challenge200CumulativeDetailedDescription =>
+      'Complete a total of 200 pushups across multiple sessions. You can attempt this after completing the 100 challenge.';
+
+  @override
+  String get challenge14DaysTitle => '14 Consecutive Days';
+
+  @override
+  String get challenge14DaysDescription => 'Work out for 14 consecutive days';
+
+  @override
+  String get challenge14DaysDetailedDescription =>
+      'Complete workouts for 14 consecutive days without missing a single day. You can attempt this after completing the 7-day consecutive challenge.';
+
+  @override
+  String get challengeRewardConsecutiveWarrior => 'Consecutive Warrior Badge';
+
+  @override
+  String get challengeRewardPowerLifter => 'Power Lifter Badge';
+
+  @override
+  String get challengeRewardCenturyClub => 'Century Club Badge';
+
+  @override
+  String get challengeRewardUltimateChampion => 'Ultimate Champion Badge';
+
+  @override
+  String get challengeRewardDedicationMaster => 'Dedication Master Badge';
+
+  @override
+  String challengeRewardPoints(String points) {
+    return '$points Points';
+  }
+
+  @override
+  String get challengeRewardAdvancedStats => 'Advanced Stats Feature Unlock';
+
+  @override
+  String get challengeUnitDays => 'days';
+
+  @override
+  String get challengeUnitReps => 'reps';
+
+  @override
+  String get challengeStatusAvailable => 'Available';
+
+  @override
+  String get challengeStatusActive => 'Active';
+
+  @override
+  String get challengeStatusCompleted => 'Completed';
+
+  @override
+  String get challengeStatusFailed => 'Failed';
+
+  @override
+  String get challengeStatusLocked => 'Locked';
+
+  @override
+  String get challengeDifficultyEasy => 'Easy';
+
+  @override
+  String get challengeDifficultyMedium => 'Medium';
+
+  @override
+  String get challengeDifficultyHard => 'Hard';
+
+  @override
+  String get challengeDifficultyExtreme => 'Extreme';
+
+  @override
+  String get challengeTypeConsecutiveDays => 'Consecutive Days';
+
+  @override
+  String get challengeTypeSingleSession => 'Single Session';
+
+  @override
+  String get challengeTypeCumulative => 'Cumulative';
+
+  @override
+  String get challengesTitle => 'Challenges';
+
+  @override
+  String get challengesAvailable => 'Available';
+
+  @override
+  String get challengesActive => 'Active';
+
+  @override
+  String get challengesCompleted => 'Completed';
+
+  @override
+  String get challengeStartButton => 'Start';
+
+  @override
+  String get challengeAbandonButton => 'Abandon';
+
+  @override
+  String get challengeRestartButton => 'Restart';
+
+  @override
+  String challengeProgress(int progress) {
+    return 'Progress: $progress%';
+  }
+
+  @override
+  String challengeEstimatedDuration(int duration) {
+    return 'Estimated Duration: $duration days';
+  }
+
+  @override
+  String get challengeRewards => 'Rewards';
+
+  @override
+  String get challengeCompleted => 'Challenge Completed!';
+
+  @override
+  String get challengeFailed => 'Challenge Failed';
+
+  @override
+  String get challengeStarted => 'Challenge Started!';
+
+  @override
+  String get challengeAbandoned => 'Challenge Abandoned';
+
+  @override
+  String get challengePrerequisitesNotMet => 'Prerequisites not met';
+
+  @override
+  String get challengeAlreadyActive => 'Challenge already active';
+
+  @override
+  String get challengeHintConsecutiveDays =>
+      'Work out consistently every day! If you miss even one day, you\'ll have to start over.';
+
+  @override
+  String get challengeHintSingleSession =>
+      'Achieve the target number in one go! You can\'t rest in the middle.';
+
+  @override
+  String get challengeHintCumulative =>
+      'Achieve the goal across multiple sessions. Just be consistent!';
+
+  @override
+  String get sendFriendChallenge => '💀 Send CHAD Challenge to Friends! 💀';
+
+  @override
+  String get refresh => 'Refresh';
+
+  @override
+  String get achieved => 'Achieved';
+
+  @override
+  String get shareButton => 'Share';
 }

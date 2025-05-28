@@ -2809,5 +2809,625 @@
 
   "achievementDedicationMasterTitle": "Master of Dedication",
   "achievementDedicationMasterDesc": "Used the app for 100+ days",
-  "achievementDedicationMasterMotivation": "100 days of dedication! You are the master of dedication! 🎖️"
+  "achievementDedicationMasterMotivation": "100 days of dedication! You are the master of dedication! 🎖️",
+
+  "challenge7DaysTitle": "7 Consecutive Days",
+  "@challenge7DaysTitle": {
+    "description": "7 consecutive days challenge title"
+  },
+
+  "challenge7DaysDescription": "Work out for 7 consecutive days",
+  "@challenge7DaysDescription": {
+    "description": "7 consecutive days challenge description"
+  },
+
+  "challenge7DaysDetailedDescription": "Complete workouts for 7 consecutive days without missing a single day. You must complete at least 1 set each day.",
+  "@challenge7DaysDetailedDescription": {
+    "description": "7 consecutive days challenge detailed description"
+  },
+
+  "challenge50SingleTitle": "50 in One Go",
+  "@challenge50SingleTitle": {
+    "description": "50 single session challenge title"
+  },
+
+  "challenge50SingleDescription": "50 pushups in a single workout",
+  "@challenge50SingleDescription": {
+    "description": "50 single session challenge description"
+  },
+
+  "challenge50SingleDetailedDescription": "Complete 50 pushups in one go without stopping. If you stop in the middle, you must start over from the beginning.",
+  "@challenge50SingleDetailedDescription": {
+    "description": "50 single session challenge detailed description"
+  },
+
+  "challenge100CumulativeTitle": "100 Challenge",
+  "@challenge100CumulativeTitle": {
+    "description": "100 cumulative challenge title"
+  },
+
+  "challenge100CumulativeDescription": "Achieve a total of 100 pushups",
+  "@challenge100CumulativeDescription": {
+    "description": "100 cumulative challenge description"
+  },
+
+  "challenge100CumulativeDetailedDescription": "Complete a total of 100 pushups across multiple sessions.",
+  "@challenge100CumulativeDetailedDescription": {
+    "description": "100 cumulative challenge detailed description"
+  },
+
+  "challenge200CumulativeTitle": "200 Challenge",
+  "@challenge200CumulativeTitle": {
+    "description": "200 cumulative challenge title"
+  },
+
+  "challenge200CumulativeDescription": "Achieve a total of 200 pushups",
+  "@challenge200CumulativeDescription": {
+    "description": "200 cumulative challenge description"
+  },
+
+  "challenge200CumulativeDetailedDescription": "Complete a total of 200 pushups across multiple sessions. You can attempt this after completing the 100 challenge.",
+  "@challenge200CumulativeDetailedDescription": {
+    "description": "200 cumulative challenge detailed description"
+  },
+
+  "challenge14DaysTitle": "14 Consecutive Days",
+  "@challenge14DaysTitle": {
+    "description": "14 consecutive days challenge title"
+  },
+
+  "challenge14DaysDescription": "Work out for 14 consecutive days",
+  "@challenge14DaysDescription": {
+    "description": "14 consecutive days challenge description"
+  },
+
+  "challenge14DaysDetailedDescription": "Complete workouts for 14 consecutive days without missing a single day. You can attempt this after completing the 7-day consecutive challenge.",
+  "@challenge14DaysDetailedDescription": {
+    "description": "14 consecutive days challenge detailed description"
+  },
+
+  "challengeRewardConsecutiveWarrior": "Consecutive Warrior Badge",
+  "@challengeRewardConsecutiveWarrior": {
+    "description": "Consecutive warrior badge reward"
+  },
+
+  "challengeRewardPowerLifter": "Power Lifter Badge",
+  "@challengeRewardPowerLifter": {
+    "description": "Power lifter badge reward"
+  },
+
+  "challengeRewardCenturyClub": "Century Club Badge",
+  "@challengeRewardCenturyClub": {
+    "description": "Century club badge reward"
+  },
+
+  "challengeRewardUltimateChampion": "Ultimate Champion Badge",
+  "@challengeRewardUltimateChampion": {
+    "description": "Ultimate champion badge reward"
+  },
+
+  "challengeRewardDedicationMaster": "Dedication Master Badge",
+  "@challengeRewardDedicationMaster": {
+    "description": "Dedication master badge reward"
+  },
+
+  "challengeRewardPoints": "{points} Points",
+  "@challengeRewardPoints": {
+    "description": "Points reward",
+    "placeholders": {
+      "points": {
+        "type": "String"
+      }
+    }
+  },
+
+  "challengeRewardAdvancedStats": "Advanced Stats Feature Unlock",
+  "@challengeRewardAdvancedStats": {
+    "description": "Advanced stats feature unlock reward"
+  },
+
+  "challengeUnitDays": "days",
+  "@challengeUnitDays": {
+    "description": "Days unit for challenges"
+  },
+
+  "challengeUnitReps": "reps",
+  "@challengeUnitReps": {
+    "description": "Reps unit for challenges"
+  },
+
+  "challengeStatusAvailable": "Available",
+  "@challengeStatusAvailable": {
+    "description": "Challenge status: available"
+  },
+
+  "challengeStatusActive": "Active",
+  "@challengeStatusActive": {
+    "description": "Challenge status: active"
+  },
+
+  "challengeStatusCompleted": "Completed",
+  "@challengeStatusCompleted": {
+    "description": "Challenge status: completed"
+  },
+
+  "challengeStatusFailed": "Failed",
+  "@challengeStatusFailed": {
+    "description": "Challenge status: failed"
+  },
+
+  "challengeStatusLocked": "Locked",
+  "@challengeStatusLocked": {
+    "description": "Challenge status: locked"
+  },
+
+  "challengeDifficultyEasy": "Easy",
+  "@challengeDifficultyEasy": {
+    "description": "Challenge difficulty: easy"
+  },
+
+  "challengeDifficultyMedium": "Medium",
+  "@challengeDifficultyMedium": {
+    "description": "Challenge difficulty: medium"
+  },
+
+  "challengeDifficultyHard": "Hard",
+  "@challengeDifficultyHard": {
+    "description": "Challenge difficulty: hard"
+  },
+
+  "challengeDifficultyExtreme": "Extreme",
+  "@challengeDifficultyExtreme": {
+    "description": "Challenge difficulty: extreme"
+  },
+
+  "challengeTypeConsecutiveDays": "Consecutive Days",
+  "@challengeTypeConsecutiveDays": {
+    "description": "Challenge type: consecutive days"
+  },
+
+  "challengeTypeSingleSession": "Single Session",
+  "@challengeTypeSingleSession": {
+    "description": "Challenge type: single session"
+  },
+
+  "challengeTypeCumulative": "Cumulative",
+  "@challengeTypeCumulative": {
+    "description": "Challenge type: cumulative"
+  },
+
+  "challengesTitle": "Challenges",
+  "@challengesTitle": {
+    "description": "Challenges screen title"
+  },
+
+  "challengesAvailable": "Available",
+  "@challengesAvailable": {
+    "description": "Available challenges tab"
+  },
+
+  "challengesActive": "Active",
+  "@challengesActive": {
+    "description": "Active challenges tab"
+  },
+
+  "challengesCompleted": "Completed",
+  "@challengesCompleted": {
+    "description": "Completed challenges tab"
+  },
+
+  "challengeStartButton": "Start",
+  "@challengeStartButton": {
+    "description": "Start challenge button"
+  },
+
+  "challengeAbandonButton": "Abandon",
+  "@challengeAbandonButton": {
+    "description": "Abandon challenge button"
+  },
+
+  "challengeRestartButton": "Restart",
+  "@challengeRestartButton": {
+    "description": "Restart challenge button"
+  },
+
+  "challengeProgress": "Progress: {progress}%",
+  "@challengeProgress": {
+    "description": "Challenge progress",
+    "placeholders": {
+      "progress": {
+        "type": "int"
+      }
+    }
+  },
+
+  "challengeEstimatedDuration": "Estimated Duration: {duration} days",
+  "@challengeEstimatedDuration": {
+    "description": "Challenge estimated duration",
+    "placeholders": {
+      "duration": {
+        "type": "int"
+      }
+    }
+  },
+
+  "challengeRewards": "Rewards",
+  "@challengeRewards": {
+    "description": "Challenge rewards section"
+  },
+
+  "challengeCompleted": "Challenge Completed!",
+  "@challengeCompleted": {
+    "description": "Challenge completed message"
+  },
+
+  "challengeFailed": "Challenge Failed",
+  "@challengeFailed": {
+    "description": "Challenge failed message"
+  },
+
+  "challengeStarted": "Challenge Started!",
+  "@challengeStarted": {
+    "description": "Challenge started message"
+  },
+
+  "challengeAbandoned": "Challenge Abandoned",
+  "@challengeAbandoned": {
+    "description": "Challenge abandoned message"
+  },
+
+  "challengePrerequisitesNotMet": "Prerequisites not met",
+  "@challengePrerequisitesNotMet": {
+    "description": "Challenge prerequisites not met message"
+  },
+
+  "challengeAlreadyActive": "Challenge already active",
+  "@challengeAlreadyActive": {
+    "description": "Challenge already active message"
+  },
+
+  "challengeHintConsecutiveDays": "Work out consistently every day! If you miss even one day, you'll have to start over.",
+  "@challengeHintConsecutiveDays": {
+    "description": "Hint for consecutive days challenges"
+  },
+
+  "challengeHintSingleSession": "Achieve the target number in one go! You can't rest in the middle.",
+  "@challengeHintSingleSession": {
+    "description": "Hint for single session challenges"
+  },
+
+  "challengeHintCumulative": "Achieve the goal across multiple sessions. Just be consistent!",
+  "@challengeHintCumulative": {
+    "description": "Hint for cumulative challenges"
+  },
+
+  "sendFriendChallenge": "💀 Send CHAD Challenge to Friends! 💀",
+  "@sendFriendChallenge": {
+    "description": "Send friend challenge button text"
+  },
+
+  "refresh": "Refresh",
+  "@refresh": {
+    "description": "Refresh tooltip"
+  },
+
+  "achieved": "Achieved",
+  "@achieved": {
+    "description": "Achieved status"
+  },
+
+  "shareButton": "Share",
+  "@shareButton": {
+    "description": "Share button text"
+  },
+
+  "confirmButton": "Confirm",
+  "@confirmButton": {
+    "description": "Confirm button text"
+  },
+
+  "cancelButton": "Cancel",
+  "@cancelButton": {
+    "description": "Cancel button text"
+  },
+
+  "allowButton": "Allow",
+  "@allowButton": {
+    "description": "Allow button text"
+  },
+
+  "laterButton": "Later",
+  "@laterButton": {
+    "description": "Later button text"
+  },
+
+  "nextButton": "Next",
+  "@nextButton": {
+    "description": "Next button text"
+  },
+
+  "previousButton": "Previous",
+  "@previousButton": {
+    "description": "Previous button text"
+  },
+
+  "startButton": "Start",
+  "@startButton": {
+    "description": "Start button text"
+  },
+
+  "restoreButton": "Restore",
+  "@restoreButton": {
+    "description": "Restore button text"
+  },
+
+  "resetButton": "Reset",
+  "@resetButton": {
+    "description": "Reset button text"
+  },
+
+  "licenseButton": "License",
+  "@licenseButton": {
+    "description": "License button text"
+  },
+
+  "contactButton": "Contact",
+  "@contactButton": {
+    "description": "Contact button text"
+  },
+
+  "quizButton": "Quiz",
+  "@quizButton": {
+    "description": "Quiz button text"
+  },
+
+  "finishButton": "Finish",
+  "@finishButton": {
+    "description": "Finish button text"
+  },
+
+  "abandonButton": "Abandon",
+  "@abandonButton": {
+    "description": "Abandon challenge button text"
+  },
+
+  "progressText": "Progress",
+  "@progressText": {
+    "description": "Progress text"
+  },
+
+  "targetText": "Target",
+  "@targetText": {
+    "description": "Target text"
+  },
+
+  "rewardText": "Reward",
+  "@rewardText": {
+    "description": "Reward text"
+  },
+
+  "descriptionText": "Description",
+  "@descriptionText": {
+    "description": "Description text"
+  },
+
+  "progressLabel": "Progress",
+  "@progressLabel": {
+    "description": "Progress label"
+  },
+
+  "durationDays": "Duration",
+  "@durationDays": {
+    "description": "Duration in days"
+  },
+
+  "completedSessions": "Completed",
+  "@completedSessions": {
+    "description": "Completed sessions"
+  },
+
+  "completionRate": "Completion Rate",
+  "@completionRate": {
+    "description": "Completion rate"
+  },
+
+  "currentStatus": "Current",
+  "@currentStatus": {
+    "description": "Current status"
+  },
+
+  "goodStatus": "Good",
+  "@goodStatus": {
+    "description": "Good status"
+  },
+
+  "calendarTab": "Calendar",
+  "@calendarTab": {
+    "description": "Calendar tab"
+  },
+
+  "statisticsTab": "Statistics",
+  "@statisticsTab": {
+    "description": "Statistics tab"
+  },
+
+  "completedStatus": "Completed",
+  "@completedStatus": {
+    "description": "Completed status"
+  },
+
+  "inProgressStatus": "In Progress",
+  "@inProgressStatus": {
+    "description": "In progress status"
+  },
+
+  "perfectionist": "Perfectionist",
+  "@perfectionist": {
+    "description": "Perfectionist achievement"
+  },
+
+  "challengeTabTitle": "Challenges",
+  "@challengeTabTitle": {
+    "description": "Challenge tab title"
+  },
+
+  "challengeCompletedTab": "Completed",
+  "@challengeCompletedTab": {
+    "description": "Challenge completed tab"
+  },
+
+  "statusLabel": "Status",
+  "@statusLabel": {
+    "description": "Status label"
+  },
+
+  "encryptionLabel": "Encryption",
+  "@encryptionLabel": {
+    "description": "Encryption label"
+  },
+
+  "enabledStatus": "Enabled",
+  "@enabledStatus": {
+    "description": "Enabled status"
+  },
+
+  "disabledStatus": "Disabled",
+  "@disabledStatus": {
+    "description": "Disabled status"
+  },
+
+  "termsOfService": "Terms of Service",
+  "@termsOfService": {
+    "description": "Terms of service"
+  },
+
+  "achievementRarityCommon": "Common",
+  "@achievementRarityCommon": {
+    "description": "Common achievement rarity"
+  },
+
+  "achievementRarityRare": "Rare",
+  "@achievementRarityRare": {
+    "description": "Rare achievement rarity"
+  },
+
+  "achievementRarityEpic": "Epic",
+  "@achievementRarityEpic": {
+    "description": "Epic achievement rarity"
+  },
+
+  "achievementRarityLegendary": "Legendary",
+  "@achievementRarityLegendary": {
+    "description": "Legendary achievement rarity"
+  },
+
+  "difficultyBeginner": "Beginner",
+  "@difficultyBeginner": {
+    "description": "Beginner difficulty"
+  },
+
+  "difficultyIntermediate": "Intermediate",
+  "@difficultyIntermediate": {
+    "description": "Intermediate difficulty"
+  },
+
+  "difficultyAdvanced": "Advanced",
+  "@difficultyAdvanced": {
+    "description": "Advanced difficulty"
+  },
+
+  "difficultyExpert": "Expert",
+  "@difficultyExpert": {
+    "description": "Expert difficulty"
+  },
+
+  "difficultyBeginnerDesc": "Slowly starting CHAD",
+  "@difficultyBeginnerDesc": {
+    "description": "Beginner difficulty description"
+  },
+
+  "difficultyIntermediateDesc": "Consistent CHAD",
+  "@difficultyIntermediateDesc": {
+    "description": "Intermediate difficulty description"
+  },
+
+  "difficultyAdvancedDesc": "True CHAD",
+  "@difficultyAdvancedDesc": {
+    "description": "Advanced difficulty description"
+  },
+
+  "difficultyExpertDesc": "CHAD Legend",
+  "@difficultyExpertDesc": {
+    "description": "Expert difficulty description"
+  },
+
+  "permissionAllowed": "Allowed",
+  "@permissionAllowed": {
+    "description": "Permission allowed status"
+  },
+
+  "permissionDenied": "Denied",
+  "@permissionDenied": {
+    "description": "Permission denied status"
+  },
+
+  "permissionRestricted": "Restricted",
+  "@permissionRestricted": {
+    "description": "Permission restricted status"
+  },
+
+  "languageKorean": "Korean",
+  "@languageKorean": {
+    "description": "Korean language"
+  },
+
+  "formGuideCategoryBreathing": "Breathing",
+  "@formGuideCategoryBreathing": {
+    "description": "Breathing category in form guide"
+  },
+
+  "formGuideCategoryRecovery": "Recovery",
+  "@formGuideCategoryRecovery": {
+    "description": "Recovery category in form guide"
+  },
+
+  "formGuideCategoryMotivation": "Motivation",
+  "@formGuideCategoryMotivation": {
+    "description": "Motivation category in form guide"
+  },
+
+  "formGuideBeginnerLevel": "Beginner",
+  "@formGuideBeginnerLevel": {
+    "description": "Beginner level in form guide"
+  },
+
+  "formGuideIntermediateLevel": "Intermediate",
+  "@formGuideIntermediateLevel": {
+    "description": "Intermediate level in form guide"
+  },
+
+  "formGuideAdvancedLevel": "Advanced",
+  "@formGuideAdvancedLevel": {
+    "description": "Advanced level in form guide"
+  },
+
+  "expandedInfo": "Expanded",
+  "@expandedInfo": {
+    "description": "Expanded info"
+  },
+
+  "collapsedInfo": "Collapsed. Tap to expand",
+  "@collapsedInfo": {
+    "description": "Collapsed info with tap instruction"
+  },
+
+  "selectAction": "Select",
+  "@selectAction": {
+    "description": "Select action"
+  },
+
+  "selectedState": "Selected",
+  "@selectedState": {
+    "description": "Selected state"
+  }
 }  

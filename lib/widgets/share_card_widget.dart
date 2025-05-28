@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../generated/app_localizations.dart';
 import '../models/user_profile.dart';
 import '../utils/constants.dart';
-import '../utils/workout_data.dart';
+
 
 class ShareCardWidget extends StatelessWidget {
   final ShareCardType type;
@@ -81,7 +81,7 @@ class ShareCardWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'MISSION: 100',
+                '💀 ALPHA EMPEROR DOMAIN 💀',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 18,
@@ -90,7 +90,7 @@ class ShareCardWidget extends StatelessWidget {
                 ),
               ),
               Text(
-                '차드가 되는 여정',
+                '차드가 되는 정복의 여정',
                 style: TextStyle(
                   color: Colors.white70,
                   fontSize: 12,
@@ -127,7 +127,7 @@ class ShareCardWidget extends StatelessWidget {
     return Column(
       children: [
         const Text(
-          '🔥 일일 기록 🔥',
+          '🔥💀 일일 정복 기록 💀🔥',
           style: TextStyle(
             color: Colors.white,
             fontSize: 20,
@@ -213,7 +213,7 @@ class ShareCardWidget extends StatelessWidget {
     return Column(
       children: [
         Text(
-          '$levelEmoji 레벨업! $levelEmoji',
+          '$levelEmoji💥 LEVEL UP! 한계 박살! 💥$levelEmoji',
           style: const TextStyle(
             color: Colors.white,
             fontSize: 20,
@@ -230,7 +230,7 @@ class ShareCardWidget extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                '새로운 레벨',
+                '새로운 차드 등급',
                 style: TextStyle(
                   color: Colors.white.withValues(alpha: 0.8),
                   fontSize: 14,
@@ -435,7 +435,7 @@ class ShareCardWidget extends StatelessWidget {
     return Column(
       children: [
         const Text(
-          '🎉 MISSION COMPLETE! 🎉',
+          '🎉👑💀 MISSION COMPLETE! ALPHA EMPEROR 등극! 💀👑🎉',
           style: TextStyle(
             color: Colors.white,
             fontSize: 18,
@@ -453,7 +453,7 @@ class ShareCardWidget extends StatelessWidget {
           child: Column(
             children: [
               const Text(
-                '💪 푸시업 100개 연속 달성! 💪',
+                '💪💀 푸시업 100개 연속 달성! 인간 초월! 💀💪',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 16,
@@ -509,7 +509,7 @@ class ShareCardWidget extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               const Text(
-                '🔥 진정한 차드 완성! 🔥',
+                '🔥💀 진정한 기가차드 완성! ALPHA EMPEROR! 💀🔥',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 14,
@@ -565,14 +565,14 @@ class ShareCardWidget extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         Text(
-          '나도 차드가 되고 싶다면?',
+          '💀 너도 차드가 되고 싶다면? 💀',
           style: TextStyle(
             color: Colors.white.withValues(alpha: 0.8),
             fontSize: 12,
           ),
         ),
         const Text(
-          'Mission: 100 앱 다운로드!',
+          'Mission: 100 앱 다운로드해라! 약자는 도망가라!',
           style: TextStyle(
             color: Colors.white,
             fontSize: 14,

@@ -7,6 +7,7 @@ enum AchievementType {
   volume, // 총량 달성
   perfect, // 완벽한 수행
   special, // 특별한 조건
+  challenge, // 챌린지 완료
 }
 
 enum AchievementRarity {
@@ -820,6 +821,79 @@ class PredefinedAchievements {
       targetValue: 1,
       xpReward: 1000,
       icon: Icons.timeline,
+    ),
+
+    // 챌린지 완료 업적들
+    Achievement(
+      id: 'challenge_7_days',
+      titleKey: '7일 연속 챌린지 완료',
+      descriptionKey: '7일 연속 운동 챌린지를 완료했습니다',
+      motivationKey: '꾸준함이 최고의 무기입니다!',
+      type: AchievementType.challenge,
+      rarity: AchievementRarity.rare,
+      targetValue: 1,
+      xpReward: 500,
+      icon: Icons.calendar_today,
+    ),
+
+    Achievement(
+      id: 'challenge_50_single',
+      titleKey: '50개 한번에 챌린지 완료',
+      descriptionKey: '한 번에 50개 푸쉬업 챌린지를 완료했습니다',
+      motivationKey: '한계를 뛰어넘었습니다!',
+      type: AchievementType.challenge,
+      rarity: AchievementRarity.epic,
+      targetValue: 1,
+      xpReward: 750,
+      icon: Icons.fitness_center,
+    ),
+
+    Achievement(
+      id: 'challenge_100_cumulative',
+      titleKey: '100개 누적 챌린지 완료',
+      descriptionKey: '100개 누적 푸쉬업 챌린지를 완료했습니다',
+      motivationKey: '작은 노력들이 큰 성과를 만듭니다!',
+      type: AchievementType.challenge,
+      rarity: AchievementRarity.rare,
+      targetValue: 1,
+      xpReward: 400,
+      icon: Icons.trending_up,
+    ),
+
+    Achievement(
+      id: 'challenge_200_cumulative',
+      titleKey: '200개 누적 챌린지 완료',
+      descriptionKey: '200개 누적 푸쉬업 챌린지를 완료했습니다',
+      motivationKey: '진정한 챔피언의 모습입니다!',
+      type: AchievementType.challenge,
+      rarity: AchievementRarity.epic,
+      targetValue: 1,
+      xpReward: 800,
+      icon: Icons.emoji_events,
+    ),
+
+    Achievement(
+      id: 'challenge_14_days',
+      titleKey: '14일 연속 챌린지 완료',
+      descriptionKey: '14일 연속 운동 챌린지를 완료했습니다',
+      motivationKey: '불굴의 의지를 보여주셨습니다!',
+      type: AchievementType.challenge,
+      rarity: AchievementRarity.legendary,
+      targetValue: 1,
+      xpReward: 1200,
+      icon: Icons.military_tech,
+    ),
+
+    Achievement(
+      id: 'challenge_master',
+      titleKey: '챌린지 마스터',
+      descriptionKey: '모든 챌린지를 완료했습니다',
+      motivationKey: '당신은 진정한 챌린지 마스터입니다!',
+      type: AchievementType.challenge,
+      rarity: AchievementRarity.legendary,
+      targetValue: 5, // 5개 챌린지 모두 완료
+      xpReward: 2000,
+      icon: Icons.workspace_premium,
     ),
   ];
 }

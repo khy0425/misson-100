@@ -8,11 +8,15 @@ import 'utils/theme.dart';
 import 'utils/constants.dart';
 import 'screens/main_navigation_screen.dart';
 import 'screens/permission_screen.dart';
+import 'screens/onboarding_screen.dart';
 import 'services/theme_service.dart';
 import 'services/locale_service.dart';
 import 'services/notification_service.dart';
 import 'services/ad_service.dart';
 import 'services/permission_service.dart';
+import 'services/onboarding_service.dart';
+import 'services/chad_evolution_service.dart';
+import 'services/chad_image_service.dart';
 // MemoryManager import 제거됨
 
 void main() async {
@@ -30,6 +34,7 @@ void main() async {
   // 알림 서비스 초기화
   await NotificationService.initialize();
   await NotificationService.createNotificationChannels();
+  await ChadImageService().initialize();
 
   // 테마 서비스 초기화
   final themeService = ThemeService();
@@ -39,14 +44,26 @@ void main() async {
   final localeNotifier = LocaleNotifier();
   await localeNotifier.loadLocale();
 
-  // 메모리 관리자 초기화
-  // // MemoryManager.init();
+  // 온보딩 서비스 초기화
+  final onboardingService = OnboardingService();
+  await onboardingService.initialize();
+
+  // Chad 진화 서비스 초기화
+  final chadEvolutionService = ChadEvolutionService();
+  await chadEvolutionService.initialize();
+  
+  // Chad 이미지 프리로드 (백그라운드에서 실행)
+  chadEvolutionService.preloadAllImages(targetSize: 200).catchError((e) {
+    debugPrint('Chad 이미지 프리로드 오류: $e');
+  });
 
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: themeService),
         ChangeNotifierProvider.value(value: localeNotifier),
+        ChangeNotifierProvider.value(value: onboardingService),
+        ChangeNotifierProvider.value(value: chadEvolutionService),
       ],
       child: const MissionApp(),
     ),
@@ -84,9 +101,9 @@ class MissionApp extends StatelessWidget {
           title: 'Mission: 100',
           debugShowCheckedModeBanner: false,
 
-          // 테마 설정
-          theme: AppTheme.lightTheme,
-          darkTheme: AppTheme.darkTheme,
+          // 테마 설정 - ThemeService의 커스터마이징된 테마 사용
+          theme: themeService.getThemeData(),
+          darkTheme: themeService.getThemeData(),
           themeMode: themeService.themeMode,
 
           // 다국어 설정
@@ -99,7 +116,7 @@ class MissionApp extends StatelessWidget {
           ],
           supportedLocales: LocaleService.supportedLocales,
 
-          // 홈 화면
+          // 스플래시 화면을 홈으로 설정
           home: const SplashScreen(),
         );
       },
@@ -118,18 +135,37 @@ class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
+  late Animation<double> _scaleAnimation;
+  late Animation<double> _rotationAnimation;
 
   @override
   void initState() {
     super.initState();
 
     _animationController = AnimationController(
-      duration: const Duration(milliseconds: 2000),
+      duration: const Duration(milliseconds: 2500),
       vsync: this,
     );
 
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(0.0, 0.6, curve: Curves.easeInOut),
+      ),
+    );
+
+    _scaleAnimation = Tween<double>(begin: 0.5, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(0.2, 0.8, curve: Curves.elasticOut),
+      ),
+    );
+
+    _rotationAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(0.0, 0.7, curve: Curves.easeInOut),
+      ),
     );
 
     _startAnimation();
@@ -158,10 +194,18 @@ class _SplashScreenState extends State<SplashScreen>
       // 모든 권한이 허용되었는지 확인
       final hasAllPermissions = hasNotificationPermission && hasStoragePermission;
       
-      // 권한 상태에 따라 화면 이동
-      final targetScreen = hasAllPermissions 
-          ? const MainNavigationScreen()
-          : const PermissionScreen();
+      // 온보딩 완료 여부 확인
+      final isOnboardingCompleted = await OnboardingService.isOnboardingCompleted();
+      
+      // 화면 이동 결정
+      Widget targetScreen;
+      if (!hasAllPermissions) {
+        targetScreen = const PermissionScreen();
+      } else if (!isOnboardingCompleted) {
+        targetScreen = const OnboardingScreen();
+      } else {
+        targetScreen = const MainNavigationScreen();
+      }
       
       if (mounted) {
         await Navigator.of(context).pushReplacement(
@@ -192,64 +236,88 @@ class _SplashScreenState extends State<SplashScreen>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // 앱 로고/아이콘
-              Container(
-                width: 120,
-                height: 120,
-                decoration: BoxDecoration(
-                  color: const Color(AppColors.primaryColor),
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(
-                        AppColors.primaryColor,
-                      ).withValues(alpha: 0.3),
-                      blurRadius: 20,
-                      offset: const Offset(0, 5),
+              // 앱 로고/아이콘 (회전 및 스케일 애니메이션 적용)
+              ScaleTransition(
+                scale: _scaleAnimation,
+                child: RotationTransition(
+                  turns: _rotationAnimation,
+                  child: Container(
+                    width: 120,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      color: const Color(AppColors.primaryColor),
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(
+                            AppColors.primaryColor,
+                          ).withValues(alpha: 0.3),
+                          blurRadius: 20,
+                          offset: const Offset(0, 5),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                child: const Icon(
-                  Icons.fitness_center,
-                  size: 60,
-                  color: Colors.white,
+                    child: const Icon(
+                      Icons.fitness_center,
+                      size: 60,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
 
               const SizedBox(height: 32),
 
-              // 앱 이름
-              Text(
-                'MISSION: 100',
-                style: theme.textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: const Color(AppColors.primaryColor),
-                  letterSpacing: 2,
+              // 앱 이름 (페이드 인 애니메이션)
+              FadeTransition(
+                opacity: CurvedAnimation(
+                  parent: _animationController,
+                  curve: const Interval(0.4, 1.0, curve: Curves.easeInOut),
+                ),
+                child: Text(
+                  'MISSION: 100',
+                  style: theme.textTheme.headlineMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: const Color(AppColors.primaryColor),
+                    letterSpacing: 2,
+                  ),
                 ),
               ),
 
               const SizedBox(height: 16),
 
-              // 부제목
-              Text(
-                '차드가 되는 여정',
-                style: theme.textTheme.titleMedium?.copyWith(
-                  color: theme.textTheme.bodyLarge?.color?.withValues(
-                    alpha: 0.7,
+              // 부제목 (페이드 인 애니메이션)
+              FadeTransition(
+                opacity: CurvedAnimation(
+                  parent: _animationController,
+                  curve: const Interval(0.6, 1.0, curve: Curves.easeInOut),
+                ),
+                child: Text(
+                  '차드가 되는 여정',
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: theme.textTheme.bodyLarge?.color?.withValues(
+                      alpha: 0.7,
+                    ),
                   ),
                 ),
               ),
 
               const SizedBox(height: 40),
 
-              // 로딩 인디케이터
-              const SizedBox(
-                width: 40,
-                height: 40,
-                child: CircularProgressIndicator(
-                  strokeWidth: 3,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    Color(AppColors.primaryColor),
+              // 로딩 인디케이터 (페이드 인 애니메이션)
+              FadeTransition(
+                opacity: CurvedAnimation(
+                  parent: _animationController,
+                  curve: const Interval(0.8, 1.0, curve: Curves.easeInOut),
+                ),
+                child: const SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 3,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      Color(AppColors.primaryColor),
+                    ),
                   ),
                 ),
               ),

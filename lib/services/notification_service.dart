@@ -1,4 +1,3 @@
-
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
@@ -280,6 +279,163 @@ class NotificationService {
     );
   }
 
+  /// Chad 진화 알림 (특별한 스타일)
+  static Future<void> showChadEvolutionNotification({
+    required String chadName,
+    required String evolutionMessage,
+    required int stageNumber,
+  }) async {
+    await initialize();
+    
+    String title = '🎉 Chad 진화 완료!';
+    String body = '$chadName으로 진화했습니다!\n$evolutionMessage';
+    
+    // 단계별 특별한 메시지
+    switch (stageNumber) {
+      case 1:
+        title = '🌟 첫 번째 진화!';
+        break;
+      case 2:
+        title = '☕ 에너지 충전 완료!';
+        break;
+      case 3:
+        title = '💪 자신감 폭발!';
+        break;
+      case 4:
+        title = '😎 쿨한 매력 획득!';
+        break;
+      case 5:
+        title = '⚡ 강력한 파워 각성!';
+        break;
+      case 6:
+        title = '👑 전설의 Chad 탄생!';
+        break;
+    }
+    
+    await _notifications.show(
+      4, // Chad 진화 알림 ID
+      title,
+      body,
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'chad_evolution',
+          'Chad Evolution',
+          channelDescription: 'Chad 진화 알림',
+          importance: Importance.max,
+          priority: Priority.max,
+          icon: '@mipmap/ic_launcher',
+          enableVibration: true,
+          playSound: true,
+          ticker: 'Chad가 진화했습니다!',
+        ),
+        iOS: DarwinNotificationDetails(
+          presentAlert: true,
+          presentBadge: true,
+          presentSound: true,
+          interruptionLevel: InterruptionLevel.critical,
+        ),
+      ),
+    );
+  }
+
+  /// Chad 진화 예고 알림 (다음 진화까지 1주 남았을 때)
+  static Future<void> showChadEvolutionPreview({
+    required String nextChadName,
+    required int weeksLeft,
+  }) async {
+    await initialize();
+    
+    String title = '🔮 진화 예고!';
+    String body = '$weeksLeft주 후 $nextChadName으로 진화할 수 있습니다!\n계속 운동해서 진화를 완성하세요! 💪';
+    
+    await _notifications.show(
+      5, // Chad 진화 예고 알림 ID
+      title,
+      body,
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'chad_evolution_preview',
+          'Chad Evolution Preview',
+          channelDescription: 'Chad 진화 예고 알림',
+          importance: Importance.high,
+          priority: Priority.high,
+          icon: '@mipmap/ic_launcher',
+        ),
+        iOS: DarwinNotificationDetails(
+          presentAlert: true,
+          presentBadge: true,
+          presentSound: true,
+        ),
+      ),
+    );
+  }
+
+  /// Chad 진화 격려 알림 (진화 조건에 가까워졌을 때)
+  static Future<void> showChadEvolutionEncouragement({
+    required String currentChadName,
+    required String nextChadName,
+    required int daysLeft,
+  }) async {
+    await initialize();
+    
+    String title = '🚀 진화가 가까워졌어요!';
+    String body = '$currentChadName에서 $nextChadName까지 $daysLeft일 남았습니다!\n조금만 더 힘내세요! 🔥';
+    
+    await _notifications.show(
+      6, // Chad 진화 격려 알림 ID
+      title,
+      body,
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'chad_evolution_encouragement',
+          'Chad Evolution Encouragement',
+          channelDescription: 'Chad 진화 격려 알림',
+          importance: Importance.high,
+          priority: Priority.high,
+          icon: '@mipmap/ic_launcher',
+        ),
+        iOS: DarwinNotificationDetails(
+          presentAlert: true,
+          presentBadge: true,
+          presentSound: true,
+        ),
+      ),
+    );
+  }
+
+  /// Chad 최종 진화 완료 알림 (더블 Chad 달성)
+  static Future<void> showChadFinalEvolutionNotification() async {
+    await initialize();
+    
+    String title = '🏆 전설 달성!';
+    String body = '축하합니다! 더블 Chad로 최종 진화를 완료했습니다!\n당신은 진정한 전설의 Chad입니다! 👑✨';
+    
+    await _notifications.show(
+      7, // Chad 최종 진화 알림 ID
+      title,
+      body,
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'chad_final_evolution',
+          'Chad Final Evolution',
+          channelDescription: 'Chad 최종 진화 알림',
+          importance: Importance.max,
+          priority: Priority.max,
+          icon: '@mipmap/ic_launcher',
+          enableVibration: true,
+          playSound: true,
+          ticker: '전설의 Chad 탄생!',
+        ),
+        iOS: DarwinNotificationDetails(
+          presentAlert: true,
+          presentBadge: true,
+          presentSound: true,
+          interruptionLevel: InterruptionLevel.critical,
+        ),
+      ),
+    );
+  }
+
   /// 연속 운동 격려 알림 (3일 연속 시)
   static Future<void> showStreakEncouragement(int streakDays) async {
     await initialize();
@@ -442,8 +598,6 @@ class NotificationService {
     await prefs.setBool('daily_notification_enabled', false);
   }
 
-
-
   /// 알림 채널 생성 (Android용)
   static Future<void> createNotificationChannels() async {
     await initialize();
@@ -481,10 +635,62 @@ class NotificationService {
           importance: Importance.high,
         ),
       );
+      
+      // 업적 달성 알림 채널
+      await androidPlugin.createNotificationChannel(
+        const AndroidNotificationChannel(
+          'achievement',
+          'Achievement Notifications',
+          description: '업적 달성 알림',
+          importance: Importance.high,
+        ),
+      );
+      
+      // Chad 진화 알림 채널
+      await androidPlugin.createNotificationChannel(
+        const AndroidNotificationChannel(
+          'chad_evolution',
+          'Chad Evolution',
+          description: 'Chad 진화 알림',
+          importance: Importance.max,
+          enableVibration: true,
+          playSound: true,
+        ),
+      );
+      
+      // Chad 진화 예고 알림 채널
+      await androidPlugin.createNotificationChannel(
+        const AndroidNotificationChannel(
+          'chad_evolution_preview',
+          'Chad Evolution Preview',
+          description: 'Chad 진화 예고 알림',
+          importance: Importance.high,
+        ),
+      );
+      
+      // Chad 진화 격려 알림 채널
+      await androidPlugin.createNotificationChannel(
+        const AndroidNotificationChannel(
+          'chad_evolution_encouragement',
+          'Chad Evolution Encouragement',
+          description: 'Chad 진화 격려 알림',
+          importance: Importance.high,
+        ),
+      );
+      
+      // Chad 최종 진화 알림 채널
+      await androidPlugin.createNotificationChannel(
+        const AndroidNotificationChannel(
+          'chad_final_evolution',
+          'Chad Final Evolution',
+          description: 'Chad 최종 진화 알림',
+          importance: Importance.max,
+          enableVibration: true,
+          playSound: true,
+        ),
+      );
     }
   }
-
-
 
   /// 알림 설정 화면 열기 (Android 설정 앱으로 이동)
   static Future<bool> openNotificationSettings() async {
@@ -493,5 +699,100 @@ class NotificationService {
     return false;
   }
 
+  /// 챌린지 완료 알림
+  Future<void> showChallengeCompletedNotification(String title, String description) async {
+    await initialize();
+    
+    await _notifications.show(
+      2000, // 챌린지 완료 알림 ID
+      '🎉 챌린지 완료!',
+      '축하합니다! $title 챌린지를 완료했습니다!',
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'challenge_completion',
+          'Challenge Completion',
+          channelDescription: '챌린지 완료 알림',
+          importance: Importance.high,
+          priority: Priority.high,
+          icon: '@mipmap/ic_launcher',
+        ),
+        iOS: DarwinNotificationDetails(
+          presentAlert: true,
+          presentBadge: true,
+          presentSound: true,
+        ),
+      ),
+    );
+  }
 
+  /// 챌린지 실패 알림
+  Future<void> showChallengeFailedNotification(String title, String description) async {
+    await initialize();
+    
+    await _notifications.show(
+      2001, // 챌린지 실패 알림 ID
+      '😢 챌린지 실패',
+      '$title 챌린지가 실패했습니다. 다시 도전해보세요!',
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'challenge_failed',
+          'Challenge Failed',
+          channelDescription: '챌린지 실패 알림',
+          importance: Importance.high,
+          priority: Priority.high,
+          icon: '@mipmap/ic_launcher',
+        ),
+        iOS: DarwinNotificationDetails(
+          presentAlert: true,
+          presentBadge: true,
+          presentSound: true,
+        ),
+      ),
+    );
+  }
+
+  /// 일일 챌린지 리마인더
+  Future<void> scheduleDailyReminder(String title, String body) async {
+    await initialize();
+    
+    // 매일 저녁 8시에 알림
+    final now = DateTime.now();
+    var scheduledDate = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      20, // 8 PM
+      0,
+    );
+    
+    // 오늘 시간이 이미 지났다면 내일로 설정
+    if (scheduledDate.isBefore(now)) {
+      scheduledDate = scheduledDate.add(const Duration(days: 1));
+    }
+    
+    await _notifications.zonedSchedule(
+      2002, // 일일 챌린지 리마인더 ID
+      title,
+      body,
+      tz.TZDateTime.from(scheduledDate, tz.local),
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'challenge_reminder',
+          'Challenge Reminder',
+          channelDescription: '챌린지 리마인더',
+          importance: Importance.high,
+          priority: Priority.high,
+          icon: '@mipmap/ic_launcher',
+        ),
+        iOS: DarwinNotificationDetails(
+          presentAlert: true,
+          presentBadge: true,
+          presentSound: true,
+        ),
+      ),
+      uiLocalNotificationDateInterpretation: 
+          UILocalNotificationDateInterpretation.absoluteTime,
+      matchDateTimeComponents: DateTimeComponents.time, // 매일 반복
+    );
+  }
 }

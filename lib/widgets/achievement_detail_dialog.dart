@@ -40,6 +40,8 @@ class AchievementDetailDialog extends StatelessWidget {
         return '완벽한 수행';
       case AchievementType.special:
         return '특별 업적';
+      case AchievementType.challenge:
+        return '챌린지 업적';
     }
   }
 

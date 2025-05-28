@@ -1026,31 +1026,31 @@ class AppLocalizationsKo extends AppLocalizations {
   String get pushNotifications => '푸시 알림';
 
   @override
-  String get pushNotificationsDesc => '앱의 모든 알림을 받습니다';
+  String get pushNotificationsDesc => '💥 모든 알림을 받아라! 도망칠 곳은 없다!';
 
   @override
   String get achievementNotifications => '업적 알림';
 
   @override
-  String get achievementNotificationsDesc => '새로운 업적 달성 시 알림을 받습니다';
+  String get achievementNotificationsDesc => '🏆 새로운 업적 달성 시 너의 승리를 알려준다!';
 
   @override
   String get workoutReminders => '운동 리마인더';
 
   @override
-  String get workoutRemindersDesc => '매일 설정한 시간에 운동을 알려드립니다';
+  String get workoutRemindersDesc => '💀 매일 너를 깨워서 운동시켜줄 거야! 도망갈 생각 마라!';
 
   @override
-  String get reminderTime => '리마인더 시간';
+  String get reminderTime => '⏰ 리마인더 시간';
 
   @override
-  String get reminderTimeDesc => '운동 알림을 받을 시간을 설정합니다';
+  String get reminderTimeDesc => '⚡ 너의 운명이 결정되는 시간을 정해라!';
 
   @override
   String get darkMode => '다크 모드';
 
   @override
-  String get darkModeDesc => '어두운 테마를 사용합니다';
+  String get darkModeDesc => '🌙 진짜 차드는 어둠 속에서도 강하다';
 
   @override
   String get languageSettings => '언어 설정';
@@ -1059,7 +1059,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get dataBackup => '데이터 백업';
 
   @override
-  String get dataBackupDesc => '운동 기록과 업적을 백업합니다';
+  String get dataBackupDesc => '💾 너의 차드 전설을 영원히 보존한다!';
 
   @override
   String get dataRestore => '데이터 복원';
@@ -1086,10 +1086,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get developerInfoDesc => '차드가 되는 여정을 함께하세요';
 
   @override
-  String get sendFeedback => '피드백 보내기';
+  String get sendFeedback => '📧 피드백 보내기';
 
   @override
-  String get sendFeedbackDesc => '의견을 공유해주세요';
+  String get sendFeedbackDesc => '💬 너의 의견을 들려달라! 차드들의 목소리가 필요하다!';
 
   @override
   String get common => '일반';
@@ -1218,7 +1218,7 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get completed => '완료!';
+  String get completed => '완료';
 
   @override
   String get current => '현재';
@@ -2181,4 +2181,193 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get builtWithFlutter => 'Flutter로 제작됨';
+
+  @override
+  String get challenge7DaysTitle => '7일 연속 운동';
+
+  @override
+  String get challenge7DaysDescription => '7일 동안 연속으로 운동하기';
+
+  @override
+  String get challenge7DaysDetailedDescription =>
+      '하루도 빠짐없이 7일 동안 연속으로 운동을 완료하세요. 매일 최소 1세트 이상 운동해야 합니다.';
+
+  @override
+  String get challenge50SingleTitle => '50개 한번에';
+
+  @override
+  String get challenge50SingleDescription => '한 번의 운동에서 50개 팔굽혀펴기';
+
+  @override
+  String get challenge50SingleDetailedDescription =>
+      '쉬지 않고 한 번에 50개의 팔굽혀펴기를 완료하세요. 중간에 멈추면 처음부터 다시 시작해야 합니다.';
+
+  @override
+  String get challenge100CumulativeTitle => '100개 챌린지';
+
+  @override
+  String get challenge100CumulativeDescription => '총 100개 팔굽혀펴기 달성';
+
+  @override
+  String get challenge100CumulativeDetailedDescription =>
+      '여러 세션에 걸쳐 총 100개의 팔굽혀펴기를 완료하세요.';
+
+  @override
+  String get challenge200CumulativeTitle => '200개 챌린지';
+
+  @override
+  String get challenge200CumulativeDescription => '총 200개 팔굽혀펴기 달성';
+
+  @override
+  String get challenge200CumulativeDetailedDescription =>
+      '여러 세션에 걸쳐 총 200개의 팔굽혀펴기를 완료하세요. 100개 챌린지를 완료한 후에 도전할 수 있습니다.';
+
+  @override
+  String get challenge14DaysTitle => '14일 연속 운동';
+
+  @override
+  String get challenge14DaysDescription => '14일 동안 연속으로 운동하기';
+
+  @override
+  String get challenge14DaysDetailedDescription =>
+      '하루도 빠짐없이 14일 동안 연속으로 운동을 완료하세요. 7일 연속 챌린지를 완료한 후에 도전할 수 있습니다.';
+
+  @override
+  String get challengeRewardConsecutiveWarrior => '연속 운동 전사 배지';
+
+  @override
+  String get challengeRewardPowerLifter => '파워 리프터 배지';
+
+  @override
+  String get challengeRewardCenturyClub => '센추리 클럽 배지';
+
+  @override
+  String get challengeRewardUltimateChampion => '궁극의 챔피언 배지';
+
+  @override
+  String get challengeRewardDedicationMaster => '헌신의 마스터 배지';
+
+  @override
+  String challengeRewardPoints(String points) {
+    return '$points 포인트';
+  }
+
+  @override
+  String get challengeRewardAdvancedStats => '고급 통계 기능 해금';
+
+  @override
+  String get challengeUnitDays => '일';
+
+  @override
+  String get challengeUnitReps => '개';
+
+  @override
+  String get challengeStatusAvailable => '도전 가능';
+
+  @override
+  String get challengeStatusActive => '진행 중';
+
+  @override
+  String get challengeStatusCompleted => '완료';
+
+  @override
+  String get challengeStatusFailed => '실패';
+
+  @override
+  String get challengeStatusLocked => '잠김';
+
+  @override
+  String get challengeDifficultyEasy => '쉬움';
+
+  @override
+  String get challengeDifficultyMedium => '보통';
+
+  @override
+  String get challengeDifficultyHard => '어려움';
+
+  @override
+  String get challengeDifficultyExtreme => '극한';
+
+  @override
+  String get challengeTypeConsecutiveDays => '연속 일수';
+
+  @override
+  String get challengeTypeSingleSession => '단일 세션';
+
+  @override
+  String get challengeTypeCumulative => '누적';
+
+  @override
+  String get challengesTitle => '챌린지';
+
+  @override
+  String get challengesAvailable => '도전 가능';
+
+  @override
+  String get challengesActive => '진행 중';
+
+  @override
+  String get challengesCompleted => '완료';
+
+  @override
+  String get challengeStartButton => '시작하기';
+
+  @override
+  String get challengeAbandonButton => '포기하기';
+
+  @override
+  String get challengeRestartButton => '다시 시작';
+
+  @override
+  String challengeProgress(int progress) {
+    return '진행률: $progress%';
+  }
+
+  @override
+  String challengeEstimatedDuration(int duration) {
+    return '예상 기간: $duration일';
+  }
+
+  @override
+  String get challengeRewards => '보상';
+
+  @override
+  String get challengeCompleted => '챌린지 완료!';
+
+  @override
+  String get challengeFailed => '챌린지 실패';
+
+  @override
+  String get challengeStarted => '챌린지 시작!';
+
+  @override
+  String get challengeAbandoned => '챌린지 포기됨';
+
+  @override
+  String get challengePrerequisitesNotMet => '전제 조건이 충족되지 않았습니다';
+
+  @override
+  String get challengeAlreadyActive => '이미 활성화된 챌린지가 있습니다';
+
+  @override
+  String get challengeHintConsecutiveDays =>
+      '매일 꾸준히 운동하세요! 하루라도 빠뜨리면 처음부터 다시 시작해야 합니다.';
+
+  @override
+  String get challengeHintSingleSession => '한 번에 목표 개수를 달성하세요! 중간에 쉬면 안 됩니다.';
+
+  @override
+  String get challengeHintCumulative => '여러 번에 걸쳐 목표를 달성하세요. 꾸준히 하면 됩니다!';
+
+  @override
+  String get sendFriendChallenge => '💀 친구에게 차드 도전장 발송! 💀';
+
+  @override
+  String get refresh => '새로고침';
+
+  @override
+  String get achieved => '달성';
+
+  @override
+  String get shareButton => '공유';
 }

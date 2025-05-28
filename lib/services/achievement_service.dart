@@ -287,6 +287,9 @@ class AchievementService {
         case AchievementType.special:
           currentValue = await _checkSpecialAchievements(achievement, workouts);
           break;
+        case AchievementType.challenge:
+          currentValue = await _checkChallengeAchievements(achievement);
+          break;
       }
 
       // 진행도 업데이트
@@ -588,5 +591,54 @@ class AchievementService {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
     debugPrint('💾 업적 저장: ${achievement.id}');
+  }
+
+  // 챌린지 업적 체크
+  static Future<int> _checkChallengeAchievements(Achievement achievement) async {
+    final prefs = await SharedPreferences.getInstance();
+    
+    switch (achievement.id) {
+      case 'challenge_7_days':
+        // 7일 연속 챌린지 완료 여부 확인
+        return prefs.getBool('challenge_7_days_completed') == true ? 1 : 0;
+        
+      case 'challenge_50_single':
+        // 50개 한번에 챌린지 완료 여부 확인
+        return prefs.getBool('challenge_50_single_completed') == true ? 1 : 0;
+        
+      case 'challenge_100_cumulative':
+        // 100개 누적 챌린지 완료 여부 확인
+        return prefs.getBool('challenge_100_cumulative_completed') == true ? 1 : 0;
+        
+      case 'challenge_200_cumulative':
+        // 200개 누적 챌린지 완료 여부 확인
+        return prefs.getBool('challenge_200_cumulative_completed') == true ? 1 : 0;
+        
+      case 'challenge_14_days':
+        // 14일 연속 챌린지 완료 여부 확인
+        return prefs.getBool('challenge_14_days_completed') == true ? 1 : 0;
+        
+      case 'challenge_master':
+        // 모든 챌린지 완료 개수 확인
+        int completedCount = 0;
+        if (prefs.getBool('challenge_7_days_completed') == true) completedCount++;
+        if (prefs.getBool('challenge_50_single_completed') == true) completedCount++;
+        if (prefs.getBool('challenge_100_cumulative_completed') == true) completedCount++;
+        if (prefs.getBool('challenge_200_cumulative_completed') == true) completedCount++;
+        if (prefs.getBool('challenge_14_days_completed') == true) completedCount++;
+        return completedCount;
+        
+      default:
+        return 0;
+    }
+  }
+
+  // 챌린지 완료 시 호출되는 메서드 (ChallengeService에서 사용)
+  static Future<void> markChallengeCompleted(String challengeId) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('${challengeId}_completed', true);
+    
+    // 업적 체크 및 업데이트
+    await checkAndUpdateAchievements();
   }
 }

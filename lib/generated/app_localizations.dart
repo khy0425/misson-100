@@ -1901,7 +1901,7 @@ abstract class AppLocalizations {
   /// 푸시 알림 설명
   ///
   /// In ko, this message translates to:
-  /// **'앱의 모든 알림을 받습니다'**
+  /// **'💥 모든 알림을 받아라! 도망칠 곳은 없다!'**
   String get pushNotificationsDesc;
 
   /// 업적 알림 설정
@@ -1913,7 +1913,7 @@ abstract class AppLocalizations {
   /// 업적 알림 설명
   ///
   /// In ko, this message translates to:
-  /// **'새로운 업적 달성 시 알림을 받습니다'**
+  /// **'🏆 새로운 업적 달성 시 너의 승리를 알려준다!'**
   String get achievementNotificationsDesc;
 
   /// 운동 리마인더 설정
@@ -1925,19 +1925,19 @@ abstract class AppLocalizations {
   /// 운동 리마인더 설명
   ///
   /// In ko, this message translates to:
-  /// **'매일 설정한 시간에 운동을 알려드립니다'**
+  /// **'💀 매일 너를 깨워서 운동시켜줄 거야! 도망갈 생각 마라!'**
   String get workoutRemindersDesc;
 
   /// 리마인더 시간 설정
   ///
   /// In ko, this message translates to:
-  /// **'리마인더 시간'**
+  /// **'⏰ 리마인더 시간'**
   String get reminderTime;
 
   /// 리마인더 시간 설명
   ///
   /// In ko, this message translates to:
-  /// **'운동 알림을 받을 시간을 설정합니다'**
+  /// **'⚡ 너의 운명이 결정되는 시간을 정해라!'**
   String get reminderTimeDesc;
 
   /// 다크 모드 설정
@@ -1949,7 +1949,7 @@ abstract class AppLocalizations {
   /// 다크 모드 설명
   ///
   /// In ko, this message translates to:
-  /// **'어두운 테마를 사용합니다'**
+  /// **'🌙 진짜 차드는 어둠 속에서도 강하다'**
   String get darkModeDesc;
 
   /// 언어 설정
@@ -1967,7 +1967,7 @@ abstract class AppLocalizations {
   /// 데이터 백업 설명
   ///
   /// In ko, this message translates to:
-  /// **'운동 기록과 업적을 백업합니다'**
+  /// **'💾 너의 차드 전설을 영원히 보존한다!'**
   String get dataBackupDesc;
 
   /// 데이터 복원
@@ -2021,13 +2021,13 @@ abstract class AppLocalizations {
   /// Send feedback button
   ///
   /// In ko, this message translates to:
-  /// **'피드백 보내기'**
+  /// **'📧 피드백 보내기'**
   String get sendFeedback;
 
   /// 피드백 보내기 설명
   ///
   /// In ko, this message translates to:
-  /// **'의견을 공유해주세요'**
+  /// **'💬 너의 의견을 들려달라! 차드들의 목소리가 필요하다!'**
   String get sendFeedbackDesc;
 
   /// 일반 등급
@@ -2246,10 +2246,10 @@ abstract class AppLocalizations {
   /// **'운동 기록을 불러오는 중 오류가 발생했습니다: {error}'**
   String workoutHistoryLoadError(String error);
 
-  /// 업적 완료 상태
+  /// Completed status
   ///
   /// In ko, this message translates to:
-  /// **'완료!'**
+  /// **'완료'**
   String get completed;
 
   /// 현재 횟수 표시 텍스트
@@ -4117,6 +4117,360 @@ abstract class AppLocalizations {
   /// In ko, this message translates to:
   /// **'Flutter로 제작됨'**
   String get builtWithFlutter;
+
+  /// 7 consecutive days challenge title
+  ///
+  /// In ko, this message translates to:
+  /// **'7일 연속 운동'**
+  String get challenge7DaysTitle;
+
+  /// 7 consecutive days challenge description
+  ///
+  /// In ko, this message translates to:
+  /// **'7일 동안 연속으로 운동하기'**
+  String get challenge7DaysDescription;
+
+  /// 7 consecutive days challenge detailed description
+  ///
+  /// In ko, this message translates to:
+  /// **'하루도 빠짐없이 7일 동안 연속으로 운동을 완료하세요. 매일 최소 1세트 이상 운동해야 합니다.'**
+  String get challenge7DaysDetailedDescription;
+
+  /// 50 single session challenge title
+  ///
+  /// In ko, this message translates to:
+  /// **'50개 한번에'**
+  String get challenge50SingleTitle;
+
+  /// 50 single session challenge description
+  ///
+  /// In ko, this message translates to:
+  /// **'한 번의 운동에서 50개 팔굽혀펴기'**
+  String get challenge50SingleDescription;
+
+  /// 50 single session challenge detailed description
+  ///
+  /// In ko, this message translates to:
+  /// **'쉬지 않고 한 번에 50개의 팔굽혀펴기를 완료하세요. 중간에 멈추면 처음부터 다시 시작해야 합니다.'**
+  String get challenge50SingleDetailedDescription;
+
+  /// 100 cumulative challenge title
+  ///
+  /// In ko, this message translates to:
+  /// **'100개 챌린지'**
+  String get challenge100CumulativeTitle;
+
+  /// 100 cumulative challenge description
+  ///
+  /// In ko, this message translates to:
+  /// **'총 100개 팔굽혀펴기 달성'**
+  String get challenge100CumulativeDescription;
+
+  /// 100 cumulative challenge detailed description
+  ///
+  /// In ko, this message translates to:
+  /// **'여러 세션에 걸쳐 총 100개의 팔굽혀펴기를 완료하세요.'**
+  String get challenge100CumulativeDetailedDescription;
+
+  /// 200 cumulative challenge title
+  ///
+  /// In ko, this message translates to:
+  /// **'200개 챌린지'**
+  String get challenge200CumulativeTitle;
+
+  /// 200 cumulative challenge description
+  ///
+  /// In ko, this message translates to:
+  /// **'총 200개 팔굽혀펴기 달성'**
+  String get challenge200CumulativeDescription;
+
+  /// 200 cumulative challenge detailed description
+  ///
+  /// In ko, this message translates to:
+  /// **'여러 세션에 걸쳐 총 200개의 팔굽혀펴기를 완료하세요. 100개 챌린지를 완료한 후에 도전할 수 있습니다.'**
+  String get challenge200CumulativeDetailedDescription;
+
+  /// 14 consecutive days challenge title
+  ///
+  /// In ko, this message translates to:
+  /// **'14일 연속 운동'**
+  String get challenge14DaysTitle;
+
+  /// 14 consecutive days challenge description
+  ///
+  /// In ko, this message translates to:
+  /// **'14일 동안 연속으로 운동하기'**
+  String get challenge14DaysDescription;
+
+  /// 14 consecutive days challenge detailed description
+  ///
+  /// In ko, this message translates to:
+  /// **'하루도 빠짐없이 14일 동안 연속으로 운동을 완료하세요. 7일 연속 챌린지를 완료한 후에 도전할 수 있습니다.'**
+  String get challenge14DaysDetailedDescription;
+
+  /// Consecutive warrior badge reward
+  ///
+  /// In ko, this message translates to:
+  /// **'연속 운동 전사 배지'**
+  String get challengeRewardConsecutiveWarrior;
+
+  /// Power lifter badge reward
+  ///
+  /// In ko, this message translates to:
+  /// **'파워 리프터 배지'**
+  String get challengeRewardPowerLifter;
+
+  /// Century club badge reward
+  ///
+  /// In ko, this message translates to:
+  /// **'센추리 클럽 배지'**
+  String get challengeRewardCenturyClub;
+
+  /// Ultimate champion badge reward
+  ///
+  /// In ko, this message translates to:
+  /// **'궁극의 챔피언 배지'**
+  String get challengeRewardUltimateChampion;
+
+  /// Dedication master badge reward
+  ///
+  /// In ko, this message translates to:
+  /// **'헌신의 마스터 배지'**
+  String get challengeRewardDedicationMaster;
+
+  /// Points reward
+  ///
+  /// In ko, this message translates to:
+  /// **'{points} 포인트'**
+  String challengeRewardPoints(String points);
+
+  /// Advanced stats feature unlock reward
+  ///
+  /// In ko, this message translates to:
+  /// **'고급 통계 기능 해금'**
+  String get challengeRewardAdvancedStats;
+
+  /// Days unit for challenges
+  ///
+  /// In ko, this message translates to:
+  /// **'일'**
+  String get challengeUnitDays;
+
+  /// Reps unit for challenges
+  ///
+  /// In ko, this message translates to:
+  /// **'개'**
+  String get challengeUnitReps;
+
+  /// Challenge status: available
+  ///
+  /// In ko, this message translates to:
+  /// **'도전 가능'**
+  String get challengeStatusAvailable;
+
+  /// Challenge status: active
+  ///
+  /// In ko, this message translates to:
+  /// **'진행 중'**
+  String get challengeStatusActive;
+
+  /// Challenge status: completed
+  ///
+  /// In ko, this message translates to:
+  /// **'완료'**
+  String get challengeStatusCompleted;
+
+  /// Challenge status: failed
+  ///
+  /// In ko, this message translates to:
+  /// **'실패'**
+  String get challengeStatusFailed;
+
+  /// Challenge status: locked
+  ///
+  /// In ko, this message translates to:
+  /// **'잠김'**
+  String get challengeStatusLocked;
+
+  /// Challenge difficulty: easy
+  ///
+  /// In ko, this message translates to:
+  /// **'쉬움'**
+  String get challengeDifficultyEasy;
+
+  /// Challenge difficulty: medium
+  ///
+  /// In ko, this message translates to:
+  /// **'보통'**
+  String get challengeDifficultyMedium;
+
+  /// Challenge difficulty: hard
+  ///
+  /// In ko, this message translates to:
+  /// **'어려움'**
+  String get challengeDifficultyHard;
+
+  /// Challenge difficulty: extreme
+  ///
+  /// In ko, this message translates to:
+  /// **'극한'**
+  String get challengeDifficultyExtreme;
+
+  /// Challenge type: consecutive days
+  ///
+  /// In ko, this message translates to:
+  /// **'연속 일수'**
+  String get challengeTypeConsecutiveDays;
+
+  /// Challenge type: single session
+  ///
+  /// In ko, this message translates to:
+  /// **'단일 세션'**
+  String get challengeTypeSingleSession;
+
+  /// Challenge type: cumulative
+  ///
+  /// In ko, this message translates to:
+  /// **'누적'**
+  String get challengeTypeCumulative;
+
+  /// Challenges screen title
+  ///
+  /// In ko, this message translates to:
+  /// **'챌린지'**
+  String get challengesTitle;
+
+  /// Available challenges tab
+  ///
+  /// In ko, this message translates to:
+  /// **'도전 가능'**
+  String get challengesAvailable;
+
+  /// Active challenges tab
+  ///
+  /// In ko, this message translates to:
+  /// **'진행 중'**
+  String get challengesActive;
+
+  /// Completed challenges tab
+  ///
+  /// In ko, this message translates to:
+  /// **'완료'**
+  String get challengesCompleted;
+
+  /// Start challenge button
+  ///
+  /// In ko, this message translates to:
+  /// **'시작하기'**
+  String get challengeStartButton;
+
+  /// Abandon challenge button
+  ///
+  /// In ko, this message translates to:
+  /// **'포기하기'**
+  String get challengeAbandonButton;
+
+  /// Restart challenge button
+  ///
+  /// In ko, this message translates to:
+  /// **'다시 시작'**
+  String get challengeRestartButton;
+
+  /// Challenge progress
+  ///
+  /// In ko, this message translates to:
+  /// **'진행률: {progress}%'**
+  String challengeProgress(int progress);
+
+  /// Challenge estimated duration
+  ///
+  /// In ko, this message translates to:
+  /// **'예상 기간: {duration}일'**
+  String challengeEstimatedDuration(int duration);
+
+  /// Challenge rewards section
+  ///
+  /// In ko, this message translates to:
+  /// **'보상'**
+  String get challengeRewards;
+
+  /// Challenge completed message
+  ///
+  /// In ko, this message translates to:
+  /// **'챌린지 완료!'**
+  String get challengeCompleted;
+
+  /// Challenge failed message
+  ///
+  /// In ko, this message translates to:
+  /// **'챌린지 실패'**
+  String get challengeFailed;
+
+  /// Challenge started message
+  ///
+  /// In ko, this message translates to:
+  /// **'챌린지 시작!'**
+  String get challengeStarted;
+
+  /// Challenge abandoned message
+  ///
+  /// In ko, this message translates to:
+  /// **'챌린지 포기됨'**
+  String get challengeAbandoned;
+
+  /// Challenge prerequisites not met message
+  ///
+  /// In ko, this message translates to:
+  /// **'전제 조건이 충족되지 않았습니다'**
+  String get challengePrerequisitesNotMet;
+
+  /// Challenge already active message
+  ///
+  /// In ko, this message translates to:
+  /// **'이미 활성화된 챌린지가 있습니다'**
+  String get challengeAlreadyActive;
+
+  /// Hint for consecutive days challenges
+  ///
+  /// In ko, this message translates to:
+  /// **'매일 꾸준히 운동하세요! 하루라도 빠뜨리면 처음부터 다시 시작해야 합니다.'**
+  String get challengeHintConsecutiveDays;
+
+  /// Hint for single session challenges
+  ///
+  /// In ko, this message translates to:
+  /// **'한 번에 목표 개수를 달성하세요! 중간에 쉬면 안 됩니다.'**
+  String get challengeHintSingleSession;
+
+  /// Hint for cumulative challenges
+  ///
+  /// In ko, this message translates to:
+  /// **'여러 번에 걸쳐 목표를 달성하세요. 꾸준히 하면 됩니다!'**
+  String get challengeHintCumulative;
+
+  /// Send friend challenge button
+  ///
+  /// In ko, this message translates to:
+  /// **'💀 친구에게 차드 도전장 발송! 💀'**
+  String get sendFriendChallenge;
+
+  /// Refresh button
+  ///
+  /// In ko, this message translates to:
+  /// **'새로고침'**
+  String get refresh;
+
+  /// Achieved status
+  ///
+  /// In ko, this message translates to:
+  /// **'달성'**
+  String get achieved;
+
+  /// Share button
+  ///
+  /// In ko, this message translates to:
+  /// **'공유'**
+  String get shareButton;
 }
 
 class _AppLocalizationsDelegate
