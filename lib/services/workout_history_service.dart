@@ -384,10 +384,22 @@ class WorkoutHistoryService {
       }
       
       // 운동 저장 후 달력 업데이트 콜백 호출
-      debugPrint('📞 달력 업데이트 콜백 호출 (${_onWorkoutSavedCallbacks.length}개)');
-      for (var callback in _onWorkoutSavedCallbacks) {
-        callback();
+      debugPrint('📞 달력 업데이트 콜백 호출 시작 (등록된 콜백 수: ${_onWorkoutSavedCallbacks.length}개)');
+      
+      if (_onWorkoutSavedCallbacks.isEmpty) {
+        debugPrint('⚠️ 등록된 콜백이 없습니다. 달력/홈 화면이 아직 초기화되지 않았을 수 있습니다.');
       }
+      
+      for (int i = 0; i < _onWorkoutSavedCallbacks.length; i++) {
+        try {
+          debugPrint('📞 콜백 $i 호출 중...');
+          _onWorkoutSavedCallbacks[i]();
+          debugPrint('✅ 콜백 $i 호출 완료');
+        } catch (e) {
+          debugPrint('❌ 콜백 $i 호출 실패: $e');
+        }
+      }
+      debugPrint('📞 모든 콜백 호출 완료');
       
       // 오늘 운동을 완료했으므로 오늘의 리마인더 취소
       await NotificationService.cancelTodayWorkoutReminder();

@@ -48,6 +48,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _loadUserData();
+    
+    // 운동 기록 저장 시 홈 화면 데이터 즉시 업데이트
+    WorkoutHistoryService.addOnWorkoutSavedCallback(_onWorkoutSaved);
+    debugPrint('🏠 홈 화면: 운동 기록 콜백 등록 완료');
+    
     // 앱 시작 시 운동 재개 체크
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _checkWorkoutResumption();
@@ -58,6 +63,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   @override
   void dispose() {
+    // 콜백 제거하여 메모리 누수 방지
+    WorkoutHistoryService.removeOnWorkoutSavedCallback(_onWorkoutSaved);
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -83,6 +90,16 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       debugPrint('홈 화면 데이터 새로고침 완료');
     } catch (e) {
       debugPrint('홈 화면 데이터 새로고침 오류: $e');
+    }
+  }
+
+  // 운동 저장 시 호출될 콜백 메서드
+  void _onWorkoutSaved() {
+    if (mounted) {
+      debugPrint('🏠 홈 화면: 운동 기록 저장 감지, 데이터 새로고침 시작');
+      _refreshAllServiceData();
+    } else {
+      debugPrint('⚠️ 홈 화면: mounted가 false이므로 콜백 무시');
     }
   }
 

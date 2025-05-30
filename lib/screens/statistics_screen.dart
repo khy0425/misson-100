@@ -73,6 +73,10 @@ class _StatisticsScreenState extends State<StatisticsScreen>
     _loadBannerAd();
     _loadStatistics();
     
+    // 운동 기록 저장 시 통계 데이터 즉시 업데이트
+    WorkoutHistoryService.addOnWorkoutSavedCallback(_onWorkoutSaved);
+    debugPrint('📊 통계 화면: 운동 기록 콜백 등록 완료');
+    
     // 업적 달성 시 통계 데이터 새로고침을 위한 콜백 설정
     WidgetsBinding.instance.addPostFrameCallback((_) {
       AchievementService.setOnStatsUpdated(() {
@@ -311,7 +315,21 @@ class _StatisticsScreenState extends State<StatisticsScreen>
     _counterController.dispose();
     _chartController.dispose();
     _statisticsBannerAd?.dispose();
+    
+    // 콜백 제거하여 메모리 누수 방지
+    WorkoutHistoryService.removeOnWorkoutSavedCallback(_onWorkoutSaved);
+    
     super.dispose();
+  }
+
+  // 운동 저장 시 호출될 콜백 메서드
+  void _onWorkoutSaved() {
+    if (mounted) {
+      debugPrint('📊 통계 화면: 운동 기록 저장 감지, 데이터 새로고침 시작');
+      _loadStatistics();
+    } else {
+      debugPrint('⚠️ 통계 화면: mounted가 false이므로 콜백 무시');
+    }
   }
 
   @override

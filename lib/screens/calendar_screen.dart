@@ -39,6 +39,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
     // 알림 서비스 초기화
     NotificationService.initialize();
     
+    // 운동 기록 저장 시 달력 즉시 업데이트 (즉시 등록)
+    WorkoutHistoryService.addOnWorkoutSavedCallback(_onWorkoutSaved);
+    debugPrint('📅 달력 화면: 운동 기록 콜백 등록 완료');
+    
     // 업적 달성 시 달력 데이터 새로고침을 위한 콜백 설정
     WidgetsBinding.instance.addPostFrameCallback((_) {
       AchievementService.setOnStatsUpdated(() {
@@ -46,9 +50,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
           _loadWorkoutHistory();
         }
       });
-      
-      // 운동 기록 저장 시 달력 즉시 업데이트 (개선된 콜백 시스템 사용)
-      WorkoutHistoryService.addOnWorkoutSavedCallback(_onWorkoutSaved);
     });
   }
 
@@ -630,7 +631,31 @@ class _CalendarScreenState extends State<CalendarScreen> {
   void _onWorkoutSaved() {
     if (mounted) {
       debugPrint('📅 달력 화면: 운동 기록 저장 감지, 데이터 새로고침 시작');
-      _loadWorkoutHistory();
+      
+      // 즉시 UI 업데이트 시작
+      setState(() {
+        _isLoading = true;
+      });
+      
+      // 비동기로 데이터 로드
+      _loadWorkoutHistory().then((_) {
+        debugPrint('📅 달력 화면: 데이터 새로고침 완료');
+        
+        // 선택된 날짜의 이벤트도 업데이트
+        if (_selectedDay != null) {
+          _selectedEvents.value = _getEventsForDay(_selectedDay!);
+          debugPrint('📅 선택된 날짜(${_selectedDay}) 이벤트 업데이트: ${_selectedEvents.value.length}개');
+        }
+      }).catchError((e) {
+        debugPrint('❌ 달력 화면: 데이터 새로고침 실패: $e');
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
+      });
+    } else {
+      debugPrint('⚠️ 달력 화면: mounted가 false이므로 콜백 무시');
     }
   }
 
