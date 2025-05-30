@@ -225,11 +225,26 @@ class _SplashScreenState extends State<SplashScreen>
   void _startAnimation() async {
     await _animationController.forward();
 
-    // 2초 대기 후 권한 확인
+    // 2초 대기 후 초기 설정 확인
     await Future<void>.delayed(const Duration(seconds: 1));
 
     if (mounted) {
-      // 알림 권한과 저장소 권한 모두 확인
+      // 1단계: 온보딩 완료 여부 확인 (최우선)
+      final isOnboardingCompleted = await OnboardingService.isOnboardingCompleted();
+      debugPrint('온보딩 완료 여부: $isOnboardingCompleted');
+      
+      if (!isOnboardingCompleted) {
+        // 온보딩이 완료되지 않았으면 온보딩 화면으로
+        debugPrint('화면 이동: 온보딩 화면 (첫 실행)');
+        if (mounted) {
+          await Navigator.of(context).pushReplacement(
+            MaterialPageRoute<void>(builder: (context) => const OnboardingScreen()),
+          );
+        }
+        return;
+      }
+      
+      // 2단계: 권한 확인 (온보딩 완료 후)
       final hasNotificationPermission = await NotificationService.hasPermission();
       
       // 저장소 권한 확인 (PermissionService 사용)
@@ -244,11 +259,20 @@ class _SplashScreenState extends State<SplashScreen>
       
       // 모든 권한이 허용되었는지 확인
       final hasAllPermissions = hasNotificationPermission && hasStoragePermission;
+      debugPrint('권한 상태 - 알림: $hasNotificationPermission, 저장소: $hasStoragePermission');
       
-      // 온보딩 완료 여부 확인
-      final isOnboardingCompleted = await OnboardingService.isOnboardingCompleted();
+      if (!hasAllPermissions) {
+        // 권한이 없으면 권한 요청 화면
+        debugPrint('화면 이동: 권한 요청 화면');
+        if (mounted) {
+          await Navigator.of(context).pushReplacement(
+            MaterialPageRoute<void>(builder: (context) => const PermissionScreen()),
+          );
+        }
+        return;
+      }
       
-      // UserProfile 생성 여부 확인 (난이도 선택 완료)
+      // 3단계: UserProfile 생성 여부 확인 (난이도 선택 완료)
       bool hasUserProfile = false;
       try {
         final databaseService = DatabaseService();
@@ -260,29 +284,22 @@ class _SplashScreenState extends State<SplashScreen>
         hasUserProfile = false;
       }
       
-      // 화면 이동 결정
-      Widget targetScreen;
-      if (!hasAllPermissions) {
-        // 권한이 없으면 권한 요청 화면
-        targetScreen = const PermissionScreen();
-        debugPrint('화면 이동: 권한 요청 화면');
-      } else if (!isOnboardingCompleted) {
-        // 온보딩이 완료되지 않았으면 온보딩 화면
-        targetScreen = const OnboardingScreen();
-        debugPrint('화면 이동: 온보딩 화면');
-      } else if (!hasUserProfile) {
-        // 온보딩은 완료했지만 난이도 선택이 안 되었으면 초기 테스트 화면
-        targetScreen = const InitialTestScreen();
+      if (!hasUserProfile) {
+        // 온보딩과 권한은 완료했지만 난이도 선택이 안 되었으면 초기 테스트 화면
         debugPrint('화면 이동: 초기 테스트 화면 (난이도 선택)');
-      } else {
-        // 모든 설정이 완료되었으면 메인 화면
-        targetScreen = const MainNavigationScreen();
-        debugPrint('화면 이동: 메인 화면');
+        if (mounted) {
+          await Navigator.of(context).pushReplacement(
+            MaterialPageRoute<void>(builder: (context) => const InitialTestScreen()),
+          );
+        }
+        return;
       }
       
+      // 4단계: 모든 설정이 완료되었으면 메인 화면
+      debugPrint('화면 이동: 메인 화면');
       if (mounted) {
         await Navigator.of(context).pushReplacement(
-          MaterialPageRoute<void>(builder: (context) => targetScreen),
+          MaterialPageRoute<void>(builder: (context) => const MainNavigationScreen()),
         );
       }
     }

@@ -4,6 +4,7 @@ import '../models/onboarding_step.dart';
 import '../services/onboarding_service.dart';
 import '../screens/initial_test_screen.dart';
 import '../screens/home_screen.dart';
+import '../screens/permission_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -70,10 +71,10 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     return Consumer<OnboardingService>(
       builder: (context, onboardingService, child) {
         if (onboardingService.isCompleted) {
-          // 온보딩이 완료된 경우 홈 화면으로 이동
+          // 온보딩이 완료된 경우 권한 설정 화면으로 이동
           WidgetsBinding.instance.addPostFrameCallback((_) {
             Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
+              MaterialPageRoute(builder: (context) => const PermissionScreen()),
             );
           });
           return const SizedBox.shrink();
@@ -694,15 +695,33 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                 height: 56,
                 child: ElevatedButton(
                   onPressed: () async {
-                    // 온보딩 완료 후 초기 테스트 화면으로 이동
-                    await onboardingService.completeOnboarding();
-                    
-                    if (mounted) {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => const InitialTestScreen(),
-                        ),
-                      );
+                    try {
+                      // 온보딩 완료 처리
+                      await onboardingService.completeOnboarding();
+                      debugPrint('온보딩 완료 처리됨');
+                      
+                      // 저장 완료까지 잠시 대기
+                      await Future.delayed(const Duration(milliseconds: 500));
+                      
+                      if (mounted) {
+                        // 권한 설정 화면으로 이동
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => const PermissionScreen(),
+                          ),
+                        );
+                      }
+                    } catch (e) {
+                      debugPrint('온보딩 완료 처리 오류: $e');
+                      
+                      // 오류 발생 시에도 권한 화면으로 이동 (재시도 가능하도록)
+                      if (mounted) {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => const PermissionScreen(),
+                          ),
+                        );
+                      }
                     }
                   },
                   style: ElevatedButton.styleFrom(

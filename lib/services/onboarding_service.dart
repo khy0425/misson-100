@@ -224,6 +224,8 @@ class OnboardingService extends ChangeNotifier {
 
   /// 온보딩 완료
   Future<void> completeOnboarding() async {
+    debugPrint('🎯 온보딩 완료 처리 시작...');
+    
     _progress = _progress.copyWith(
       status: OnboardingStatus.completed,
       currentStepIndex: _steps.length,
@@ -231,7 +233,19 @@ class OnboardingService extends ChangeNotifier {
     );
 
     await _saveProgress();
+    
+    // 추가로 간단한 완료 플래그도 저장 (안전장치)
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(_onboardingCompletedKey, true);
+      await prefs.setBool('onboarding_definitely_completed', true); // 추가 안전장치
+      debugPrint('✅ 온보딩 완료 상태 저장 완료');
+    } catch (e) {
+      debugPrint('❌ 온보딩 완료 상태 저장 오류: $e');
+    }
+    
     notifyListeners();
+    debugPrint('🎯 온보딩 완료 처리 끝');
   }
 
   /// 온보딩 스킵
@@ -263,7 +277,31 @@ class OnboardingService extends ChangeNotifier {
   static Future<bool> isOnboardingCompleted() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      return prefs.getBool(_onboardingCompletedKey) ?? false;
+      
+      // 주요 완료 플래그 확인
+      final isCompleted = prefs.getBool(_onboardingCompletedKey) ?? false;
+      
+      // 추가 안전장치 플래그 확인
+      final isDefinitelyCompleted = prefs.getBool('onboarding_definitely_completed') ?? false;
+      
+      // 상세 진행 상태에서도 확인
+      bool isCompletedFromProgress = false;
+      try {
+        final progressJson = prefs.getString(_onboardingProgressKey);
+        if (progressJson != null) {
+          final progressData = jsonDecode(progressJson) as Map<String, dynamic>;
+          final progress = OnboardingProgress.fromJson(progressData);
+          isCompletedFromProgress = progress.isCompleted;
+        }
+      } catch (e) {
+        debugPrint('온보딩 진행 상태 확인 중 오류: $e');
+      }
+      
+      // 어느 하나라도 완료로 표시되어 있으면 완료로 처리
+      final result = isCompleted || isDefinitelyCompleted || isCompletedFromProgress;
+      debugPrint('온보딩 완료 상태: $result (주요:$isCompleted, 안전장치:$isDefinitelyCompleted, 진행상태:$isCompletedFromProgress)');
+      
+      return result;
     } catch (e) {
       debugPrint('온보딩 완료 여부 확인 오류: $e');
       return false;
