@@ -460,28 +460,6 @@ class _WorkoutScreenState extends State<WorkoutScreen>
     // 햅틱 피드백
     HapticFeedback.heavyImpact();
 
-    // 세션 완료 처리 (즉시 저장된 데이터 기반)
-    bool sessionCompletedSuccessfully = false;
-    if (_sessionId != null) {
-      try {
-        await WorkoutHistoryService.completeWorkoutSession(_sessionId!);
-        debugPrint('✅ 세션 완료 처리 성공: $_sessionId (재개 세션: $_isRecoveredSession)');
-        sessionCompletedSuccessfully = true;
-      } catch (e) {
-        debugPrint('❌ 세션 완료 처리 오류: $e');
-        
-        // 재개된 세션에서 완료 처리 실패 시 응급 백업
-        if (_isRecoveredSession) {
-          try {
-            await _createEmergencyBackup();
-            debugPrint('💾 세션 완료 실패로 응급 백업 생성');
-          } catch (backupError) {
-            debugPrint('❌ 응급 백업 생성 실패: $backupError');
-          }
-        }
-      }
-    }
-
     // 운동 완료 동기부여 메시지 표시
     final message = _messageService.getWorkoutCompletionMessage(
       userLevel: widget.userProfile.level.levelValue,
@@ -494,39 +472,41 @@ class _WorkoutScreenState extends State<WorkoutScreen>
 
     try {
       // 완료된 총 횟수 계산
-      final totalCompletedReps = _completedReps.fold(
-        0,
-        (sum, reps) => sum + reps,
-      );
+      final totalCompletedReps = _completedReps.fold(0, (sum, reps) => sum + reps);
       final completionRate = totalCompletedReps / widget.workoutData.totalReps;
 
-      debugPrint('💾 운동 기록 저장 시작 - 총 ${totalCompletedReps}개, 완료율: ${(completionRate * 100).toStringAsFixed(1)}% (재개: $_isRecoveredSession)');
+      debugPrint('💾 운동 기록 저장 시작 - 총 ${totalCompletedReps}개, 완료율: ${(completionRate * 100).toStringAsFixed(1)}%');
+      debugPrint('📊 세션 정보: ID=$_sessionId, 재개=$_isRecoveredSession');
 
-      // 운동 기록 저장 (세션이 실패했거나 세션이 없는 경우에만, 또는 재개된 세션인 경우 항상)
-      if (!sessionCompletedSuccessfully || _isRecoveredSession) {
-        final workoutHistory = WorkoutHistory(
-          id: _sessionId ?? DateTime.now().millisecondsSinceEpoch.toString(),
-          date: DateTime.now(),
-          workoutTitle: widget.workoutData.title + (_isRecoveredSession ? ' (재개됨)' : ''),
-          targetReps: _targetReps,
-          completedReps: _completedReps,
-          totalReps: totalCompletedReps,
-          completionRate: completionRate,
-          level: widget.userProfile.level.toString(),
-        );
+      // 1단계: 운동 기록 생성 (반드시 실행)
+      final workoutHistory = WorkoutHistory(
+        id: _sessionId ?? DateTime.now().millisecondsSinceEpoch.toString(),
+        date: DateTime.now(),
+        workoutTitle: widget.workoutData.title + (_isRecoveredSession ? ' (재개됨)' : ''),
+        targetReps: _targetReps,
+        completedReps: _completedReps,
+        totalReps: totalCompletedReps,
+        completionRate: completionRate,
+        level: widget.userProfile.level.toString(),
+      );
 
-        await WorkoutHistoryService.saveWorkoutHistory(workoutHistory);
-        debugPrint('💾 운동 기록 저장 완료: ${workoutHistory.id} (재개 세션 처리)');
-      } else {
-        debugPrint('💾 세션 완료로 운동 기록 이미 저장됨, 중복 저장 건너뜀');
+      await WorkoutHistoryService.saveWorkoutHistory(workoutHistory);
+      debugPrint('✅ 1단계: 운동 기록 저장 완료');
+
+      // 2단계: 세션 완료 처리 (세션이 있는 경우에만)
+      if (_sessionId != null) {
+        try {
+          await WorkoutHistoryService.completeWorkoutSession(_sessionId!);
+          debugPrint('✅ 2단계: 세션 완료 처리 성공');
+        } catch (e) {
+          debugPrint('⚠️ 2단계: 세션 완료 처리 실패 (운동 기록은 이미 저장됨): $e');
+          // 세션 완료 실패해도 운동 기록은 이미 저장되었으므로 계속 진행
+        }
       }
 
-      // 워크아웃 세션 업데이트/생성
-      bool workoutSessionUpdated = false;
+      // 3단계: 워크아웃 세션 데이터베이스 업데이트
       try {
         final databaseService = DatabaseService();
-        
-        // 먼저 오늘의 워크아웃 세션을 가져오기
         final todaySession = await databaseService.getTodayWorkoutSession();
         
         if (todaySession != null) {
@@ -540,14 +520,13 @@ class _WorkoutScreenState extends State<WorkoutScreen>
             completedReps: _completedReps,
             isCompleted: true,
             totalReps: totalCompletedReps,
-            totalTime: Duration.zero, // 실제 구현시 운동 시간 추가
+            totalTime: Duration.zero,
           );
 
           await databaseService.updateWorkoutSession(updatedSession);
-          debugPrint('📊 기존 워크아웃 세션 업데이트 완료: Week ${todaySession.week}, Day ${todaySession.day}');
-          workoutSessionUpdated = true;
+          debugPrint('✅ 3단계: 기존 워크아웃 세션 업데이트 완료');
         } else {
-          // 오늘의 세션이 없으면 새로 생성
+          // 새 세션 생성
           final newSession = WorkoutSession(
             id: null,
             week: widget.workoutData.week,
@@ -561,77 +540,68 @@ class _WorkoutScreenState extends State<WorkoutScreen>
           );
 
           await databaseService.insertWorkoutSession(newSession);
-          debugPrint('📊 새 워크아웃 세션 생성 완료: Week ${widget.workoutData.week}, Day ${widget.workoutData.day}');
-          workoutSessionUpdated = true;
+          debugPrint('✅ 3단계: 새 워크아웃 세션 생성 완료');
         }
       } catch (e) {
-        debugPrint('❌ 워크아웃 세션 업데이트 오류: $e');
-        // 세션 업데이트 실패는 치명적이지 않으므로 계속 진행
+        debugPrint('⚠️ 3단계: 워크아웃 세션 업데이트 실패: $e');
+        // 워크아웃 세션 업데이트 실패해도 계속 진행
       }
 
-      // 데이터 저장 확인
-      debugPrint('📊 데이터 저장 상태 확인...');
-      final allWorkouts = await WorkoutHistoryService.getAllWorkouts();
-      debugPrint('📈 현재 WorkoutHistory 레코드 개수: ${allWorkouts.length}');
-      
-      if (allWorkouts.isNotEmpty) {
-        final latestWorkout = allWorkouts.last;
-        debugPrint('📅 최신 워크아웃: ${latestWorkout.date} - ${latestWorkout.totalReps}개 (${latestWorkout.workoutTitle})');
-      }
-
-      // 오늘의 운동 완료 알림 취소
+      // 4단계: 오늘의 운동 완료 알림 취소
       try {
         await NotificationService.cancelTodayWorkoutReminder();
-        debugPrint('🔔 오늘의 운동 알림 취소 완료');
+        debugPrint('✅ 4단계: 오늘의 운동 알림 취소 완료');
       } catch (e) {
-        debugPrint('❌ 알림 취소 오류: $e');
+        debugPrint('⚠️ 4단계: 알림 취소 실패: $e');
       }
 
-      // 업적 체크 및 업데이트 (안전한 처리)
+      // 5단계: 업적 체크 및 업데이트
       try {
-        debugPrint('🏆 업적 체크 시작 - 워크아웃 완료 후');
-        
-        // 업적 데이터베이스 초기화 상태 확인
-        final totalAchievements = await AchievementService.getTotalCount();
-        final unlockedAchievements = await AchievementService.getUnlockedCount();
-        debugPrint('🎯 업적 현황: ${unlockedAchievements}/${totalAchievements} 잠금해제');
-        
-        // 업적 체크 실행
+        debugPrint('🏆 5단계: 업적 체크 시작');
         final newlyUnlocked = await AchievementService.checkAndUpdateAchievements();
-        debugPrint('🎉 새로 잠금해제된 업적: ${newlyUnlocked.length}개');
+        debugPrint('✅ 5단계: 업적 업데이트 완료 - 새로 잠금해제: ${newlyUnlocked.length}개');
         
         for (final achievement in newlyUnlocked) {
           debugPrint('✨ 새 업적: ${achievement.titleKey}');
         }
-        
-        debugPrint('✅ 업적 업데이트 완료');
       } catch (e, stackTrace) {
-        debugPrint('❌ 업적 업데이트 오류: $e');
+        debugPrint('⚠️ 5단계: 업적 업데이트 실패: $e');
         debugPrint('스택 트레이스: $stackTrace');
-        // 업적 실패는 치명적이지 않으므로 계속 진행
       }
 
-      // 스트릭 업데이트 (안전한 처리)
+      // 6단계: 스트릭 업데이트
       try {
         await _streakService.updateStreak(DateTime.now());
-        debugPrint('🔥 스트릭 업데이트 완료');
+        debugPrint('✅ 6단계: 스트릭 업데이트 완료');
       } catch (e) {
-        debugPrint('❌ 스트릭 업데이트 오류: $e');
-        // 스트릭 실패는 치명적이지 않으므로 계속 진행
+        debugPrint('⚠️ 6단계: 스트릭 업데이트 실패: $e');
       }
 
-      // 챌린지 업데이트 (안전한 처리)
+      // 7단계: 챌린지 업데이트
       try {
         final challengeService = ChallengeService();
         await challengeService.initialize();
         await challengeService.updateChallengesOnWorkoutComplete(totalCompletedReps, _totalSets);
-        debugPrint('🎯 챌린지 업데이트 완료');
+        debugPrint('✅ 7단계: 챌린지 업데이트 완료');
       } catch (e) {
-        debugPrint('❌ 챌린지 업데이트 오류: $e');
-        // 챌린지 실패는 치명적이지 않으므로 계속 진행
+        debugPrint('⚠️ 7단계: 챌린지 업데이트 실패: $e');
       }
 
-      debugPrint('✅ 운동 완료 처리 모든 단계 완료');
+      // 8단계: 데이터 저장 확인
+      try {
+        final allWorkouts = await WorkoutHistoryService.getAllWorkouts();
+        debugPrint('📈 8단계: 현재 WorkoutHistory 레코드 개수: ${allWorkouts.length}');
+        
+        if (allWorkouts.isNotEmpty) {
+          final latestWorkout = allWorkouts.last;
+          debugPrint('📅 최신 워크아웃: ${latestWorkout.date} - ${latestWorkout.totalReps}개');
+        }
+        debugPrint('✅ 8단계: 데이터 저장 확인 완료');
+      } catch (e) {
+        debugPrint('⚠️ 8단계: 데이터 확인 실패: $e');
+      }
+
+      debugPrint('🎉 운동 완료 처리 모든 단계 완료!');
 
     } catch (e, stackTrace) {
       debugPrint('❌ 운동 완료 처리 치명적 오류: $e');
@@ -644,6 +614,14 @@ class _WorkoutScreenState extends State<WorkoutScreen>
             content: Text('운동 기록 저장 중 오류가 발생했습니다. 다시 시도해주세요.'),
             backgroundColor: Colors.red,
             duration: Duration(seconds: 5),
+            action: SnackBarAction(
+              label: '재시도',
+              textColor: Colors.white,
+              onPressed: () {
+                // 재시도 로직 (선택사항)
+                _completeWorkout();
+              },
+            ),
           ),
         );
       }
@@ -1823,6 +1801,122 @@ class _WorkoutScreenState extends State<WorkoutScreen>
       
     } catch (e) {
       debugPrint('❌ 응급 백업 생성 오류: $e');
+    }
+  }
+
+  /// 백업된 운동 세션 복원
+  Future<void> _restoreBackupSession() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final backupDataJson = prefs.getString('backup_workout_session');
+      final emergencyBackupJson = prefs.getString('emergency_workout_backup');
+      
+      Map<String, dynamic>? backupData;
+      
+      // 응급 백업 우선 확인
+      if (emergencyBackupJson != null) {
+        try {
+          backupData = jsonDecode(emergencyBackupJson) as Map<String, dynamic>;
+          debugPrint('🚨 응급 백업 데이터 발견 및 복원 시작');
+        } catch (e) {
+          debugPrint('❌ 응급 백업 데이터 파싱 오류: $e');
+        }
+      }
+      
+      // 일반 백업 확인 (응급 백업이 없는 경우)
+      if (backupData == null && backupDataJson != null) {
+        try {
+          backupData = jsonDecode(backupDataJson) as Map<String, dynamic>;
+          debugPrint('💾 일반 백업 데이터 발견 및 복원 시작');
+        } catch (e) {
+          debugPrint('❌ 일반 백업 데이터 파싱 오류: $e');
+        }
+      }
+      
+      if (backupData == null) {
+        debugPrint('📝 복원할 백업 데이터가 없습니다');
+        return;
+      }
+      
+      // 백업 데이터 검증
+      final requiredFields = ['sessionId', 'currentSet', 'currentReps', 'completedReps', 'targetReps'];
+      for (final field in requiredFields) {
+        if (!backupData.containsKey(field)) {
+          debugPrint('❌ 백업 데이터 검증 실패: $field 필드 누락');
+          return;
+        }
+      }
+      
+      // 데이터 무결성 검증
+      final currentSet = backupData['currentSet'] as int? ?? 0;
+      final currentReps = backupData['currentReps'] as int? ?? 0;
+      final completedReps = List<int>.from(backupData['completedReps'] as List? ?? []);
+      final targetReps = List<int>.from(backupData['targetReps'] as List? ?? []);
+      
+      if (currentSet < 0 || currentReps < 0) {
+        debugPrint('❌ 백업 데이터 검증 실패: 음수 값 발견');
+        return;
+      }
+      
+      if (completedReps.length != targetReps.length) {
+        debugPrint('❌ 백업 데이터 검증 실패: 완료/목표 세트 수 불일치');
+        return;
+      }
+      
+      // 안전한 복원 시작
+      setState(() {
+        _sessionId = backupData!['sessionId'] as String?;
+        _currentSet = currentSet;
+        _currentReps = currentReps;
+        _completedReps = completedReps;
+        _targetReps = targetReps;
+        _isSetCompleted = backupData!['isSetCompleted'] as bool? ?? false;
+        _isRecoveredSession = true;
+      });
+      
+      // 백업 타입 확인
+      final isEmergencyBackup = backupData!['isEmergencyBackup'] as bool? ?? false;
+      final backupType = isEmergencyBackup ? '응급' : '일반';
+      
+      debugPrint('✅ $backupType 백업 복원 완료');
+      debugPrint('📊 복원된 데이터: 세트 ${_currentSet + 1}/${targetReps.length}, 현재 ${_currentReps}회');
+      
+      // 복원 성공 시 백업 데이터 정리
+      try {
+        if (isEmergencyBackup) {
+          await prefs.remove('emergency_workout_backup');
+        } else {
+          await prefs.remove('backup_workout_session');
+        }
+        debugPrint('🗑️ 사용된 백업 데이터 정리 완료');
+      } catch (e) {
+        debugPrint('⚠️ 백업 데이터 정리 실패: $e');
+      }
+      
+      // 복원 알림 표시
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('🔄 이전 운동이 복원되었습니다! (세트 ${_currentSet + 1}/${targetReps.length})'),
+            backgroundColor: Colors.green,
+            duration: Duration(seconds: 3),
+          ),
+        );
+      }
+      
+    } catch (e, stackTrace) {
+      debugPrint('❌ 백업 세션 복원 오류: $e');
+      debugPrint('스택 트레이스: $stackTrace');
+      
+      // 복원 실패 시 백업 데이터 정리
+      try {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.remove('backup_workout_session');
+        await prefs.remove('emergency_workout_backup');
+        debugPrint('🗑️ 오류 발생으로 인한 백업 데이터 정리');
+      } catch (cleanupError) {
+        debugPrint('❌ 백업 데이터 정리 실패: $cleanupError');
+      }
     }
   }
 }
