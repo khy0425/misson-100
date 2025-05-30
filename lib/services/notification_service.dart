@@ -46,8 +46,8 @@ class NotificationService {
       final bool? granted = await _channel.invokeMethod('requestExactAlarmPermission');
       debugPrint('🔔 SCHEDULE_EXACT_ALARM 권한 요청 결과: $granted');
       
-      // 설정 화면으로 이동한 후 잠시 대기
-      await Future.delayed(const Duration(milliseconds: 500));
+      // 설정 화면으로 이동한 후 충분한 시간 대기
+      await Future.delayed(const Duration(seconds: 2));
       
       // 실제 권한 상태를 다시 확인 (사용자가 허용했는지 확인)
       final actualPermission = await canScheduleExactAlarms();
@@ -56,6 +56,9 @@ class NotificationService {
       return actualPermission;
     } on PlatformException catch (e) {
       debugPrint('❌ SCHEDULE_EXACT_ALARM 권한 요청 오류: ${e.message}');
+      return false;
+    } catch (e) {
+      debugPrint('❌ SCHEDULE_EXACT_ALARM 권한 요청 일반 오류: $e');
       return false;
     }
   }
@@ -233,38 +236,59 @@ class NotificationService {
       debugPrint('🔄 앱 복귀 후 권한 상태 재확인...');
       
       // 기본 알림 권한 확인
-      final hasNotificationPermission = await areNotificationsEnabled();
+      bool hasNotificationPermission = false;
+      try {
+        hasNotificationPermission = await areNotificationsEnabled();
+      } catch (e) {
+        debugPrint('⚠️ 기본 알림 권한 확인 실패: $e');
+        hasNotificationPermission = false;
+      }
       
       // 정확한 알람 권한 확인
-      final hasExactAlarmPermission = await canScheduleExactAlarms();
+      bool hasExactAlarmPermission = false;
+      try {
+        hasExactAlarmPermission = await canScheduleExactAlarms();
+      } catch (e) {
+        debugPrint('⚠️ 정확한 알람 권한 확인 실패: $e');
+        hasExactAlarmPermission = false;
+      }
       
       // SharedPreferences에 최신 상태 저장
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('notification_permission_granted', hasNotificationPermission);
-      await prefs.setBool('exact_alarm_permission_granted', hasExactAlarmPermission);
-      
-      final allPermissionsGranted = hasNotificationPermission && hasExactAlarmPermission;
-      await prefs.setBool('all_notification_permissions_granted', allPermissionsGranted);
-      
-      debugPrint('🔄 권한 재확인 완료 - 알림: $hasNotificationPermission, 정확한 알람: $hasExactAlarmPermission');
-      
-      // 권한이 새로 허용되었다면 운동 리마인더 재설정
-      if (allPermissionsGranted) {
-        final workoutReminderActive = prefs.getBool('workout_reminder_active') ?? false;
-        if (workoutReminderActive) {
-          final hour = prefs.getInt('workout_reminder_hour') ?? 20;
-          final minute = prefs.getInt('workout_reminder_minute') ?? 0;
-          
-          debugPrint('🔄 권한 허용 확인됨, 운동 리마인더 재설정...');
-          await scheduleWorkoutReminder(
-            hour: hour,
-            minute: minute,
-            enabled: true,
-          );
+      try {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('notification_permission_granted', hasNotificationPermission);
+        await prefs.setBool('exact_alarm_permission_granted', hasExactAlarmPermission);
+        
+        final allPermissionsGranted = hasNotificationPermission && hasExactAlarmPermission;
+        await prefs.setBool('all_notification_permissions_granted', allPermissionsGranted);
+        
+        debugPrint('🔄 권한 재확인 완료 - 알림: $hasNotificationPermission, 정확한 알람: $hasExactAlarmPermission');
+        
+        // 권한이 새로 허용되었고 운동 리마인더가 활성화되어 있다면 재설정
+        if (allPermissionsGranted) {
+          final workoutReminderActive = prefs.getBool('workout_reminder_active') ?? false;
+          if (workoutReminderActive) {
+            final hour = prefs.getInt('workout_reminder_hour') ?? 20;
+            final minute = prefs.getInt('workout_reminder_minute') ?? 0;
+            
+            debugPrint('🔄 권한 허용 확인됨, 운동 리마인더 재설정...');
+            try {
+              await scheduleWorkoutReminder(
+                hour: hour,
+                minute: minute,
+                enabled: true,
+              );
+            } catch (e) {
+              debugPrint('⚠️ 운동 리마인더 재설정 실패: $e');
+            }
+          }
         }
+      } catch (e) {
+        debugPrint('⚠️ SharedPreferences 저장 실패: $e');
       }
     } catch (e) {
-      debugPrint('❌ 권한 재확인 오류: $e');
+      debugPrint('❌ 권한 재확인 전체 오류: $e');
+      // 권한 재확인이 실패해도 앱은 계속 실행되어야 함
     }
   }
 

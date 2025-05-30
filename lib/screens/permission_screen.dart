@@ -344,29 +344,76 @@ class _PermissionScreenState extends State<PermissionScreen>
       
       if (_hasRequestedBefore) {
         // 이미 한 번 요청했다면 설정 화면으로 이동
-        await NotificationService.openNotificationSettings();
+        debugPrint('🔄 설정 화면으로 이동...');
         
-        // 설정 화면에서 돌아온 후 권한 상태 재확인
-        await Future.delayed(const Duration(milliseconds: 500));
-        notificationGranted = await NotificationService.hasPermission();
-        final storageStatus = await PermissionService.getStoragePermissionStatus();
-        storageGranted = storageStatus == PermissionStatus.granted;
+        try {
+          await NotificationService.openNotificationSettings();
+        } catch (e) {
+          debugPrint('⚠️ 설정 화면 열기 실패: $e');
+        }
+        
+        // 설정 화면에서 돌아온 후 충분한 시간 대기 후 권한 상태 재확인
+        debugPrint('⏳ 설정 화면에서 돌아온 후 권한 상태 재확인 대기...');
+        await Future.delayed(const Duration(seconds: 3));
+        
+        try {
+          notificationGranted = await NotificationService.hasPermission();
+          debugPrint('📱 알림 권한 재확인 결과: $notificationGranted');
+        } catch (e) {
+          debugPrint('⚠️ 알림 권한 재확인 실패: $e');
+          notificationGranted = false;
+        }
+        
+        try {
+          final storageStatus = await PermissionService.getStoragePermissionStatus();
+          storageGranted = storageStatus == PermissionStatus.granted;
+          debugPrint('💾 저장소 권한 재확인 결과: $storageGranted');
+        } catch (e) {
+          debugPrint('⚠️ 저장소 권한 재확인 실패: $e');
+          storageGranted = false;
+        }
       } else {
         // 처음 요청하는 경우
-        // 1. 알림 권한 요청
-        notificationGranted = await NotificationService.requestPermissions();
+        debugPrint('🔔 처음 권한 요청 시작...');
         
-        // 2. 저장소 권한 요청
-        final storageStatus = await PermissionService.requestStoragePermission();
-        storageGranted = storageStatus == PermissionStatus.granted;
+        // 1. 알림 권한 요청 (타임아웃 적용)
+        try {
+          notificationGranted = await NotificationService.requestPermissions()
+              .timeout(const Duration(seconds: 30));
+          debugPrint('📱 알림 권한 요청 결과: $notificationGranted');
+        } catch (e) {
+          debugPrint('⚠️ 알림 권한 요청 실패 또는 타임아웃: $e');
+          notificationGranted = false;
+        }
+        
+        // 2. 저장소 권한 요청 (타임아웃 적용)
+        try {
+          final storageStatus = await PermissionService.requestStoragePermission()
+              .timeout(const Duration(seconds: 30));
+          storageGranted = storageStatus == PermissionStatus.granted;
+          debugPrint('💾 저장소 권한 요청 결과: $storageGranted');
+        } catch (e) {
+          debugPrint('⚠️ 저장소 권한 요청 실패 또는 타임아웃: $e');
+          storageGranted = false;
+        }
         
         // 권한 요청 후 상태 저장
-        await prefs.setBool('has_requested_permissions', true);
+        try {
+          await prefs.setBool('has_requested_permissions', true);
+        } catch (e) {
+          debugPrint('⚠️ SharedPreferences 저장 실패: $e');
+        }
       }
 
       if (notificationGranted && storageGranted) {
+        debugPrint('✅ 모든 권한 허용됨');
+        
         // 모든 권한이 허용되면 알림 채널 생성 및 기본 설정
-        await NotificationService.createNotificationChannels();
+        try {
+          await NotificationService.createNotificationChannels();
+        } catch (e) {
+          debugPrint('⚠️ 알림 채널 생성 실패: $e');
+        }
         
         // 성공 메시지 표시
         if (mounted) {
@@ -382,6 +429,8 @@ class _PermissionScreenState extends State<PermissionScreen>
         await Future.delayed(const Duration(milliseconds: 500));
         _navigateToMainScreen();
       } else {
+        debugPrint('⚠️ 일부 권한 거부됨 - 알림: $notificationGranted, 저장소: $storageGranted');
+        
         setState(() {
           _hasRequestedBefore = true;
         });
@@ -406,7 +455,7 @@ class _PermissionScreenState extends State<PermissionScreen>
         }
       }
     } catch (e) {
-      debugPrint('권한 요청 중 오류: $e');
+      debugPrint('❌ 권한 요청 중 전체 오류: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

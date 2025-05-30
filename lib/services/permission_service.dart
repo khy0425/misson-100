@@ -16,13 +16,23 @@ class PermissionService {
       debugPrint('🔐 앱 시작 시 권한 체크 시작...');
       
       // 알림 권한 체크 (Android 13+)
-      await _checkNotificationPermission(context);
+      try {
+        await _checkNotificationPermission(context);
+      } catch (e) {
+        debugPrint('⚠️ 알림 권한 체크 실패 (계속 진행): $e');
+      }
       
       // 저장소 권한 체크 (필요한 경우에만)
-      await _checkStoragePermissionIfNeeded(context);
+      try {
+        await _checkStoragePermissionIfNeeded(context);
+      } catch (e) {
+        debugPrint('⚠️ 저장소 권한 체크 실패 (계속 진행): $e');
+      }
       
+      debugPrint('✅ 초기 권한 체크 완료');
     } catch (e) {
-      debugPrint('❌ 초기 권한 체크 실패: $e');
+      debugPrint('❌ 초기 권한 체크 전체 실패 (앱은 계속 실행): $e');
+      // 권한 체크가 실패해도 앱은 계속 실행되어야 함
     }
   }
   
