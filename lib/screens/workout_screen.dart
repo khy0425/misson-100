@@ -150,11 +150,19 @@ class _WorkoutScreenState extends State<WorkoutScreen>
         _showMotivationalMessage = true;
       });
       
-      Timer(const Duration(seconds: 3), () {
+      // 0.5초 후 메시지 숨기기 (기존 2초에서 단축)
+      Timer(const Duration(milliseconds: 500), () {
         if (mounted) {
           setState(() {
             _showMotivationalMessage = false;
           });
+          
+          // 메시지 숨김과 동시에 다음 단계 진행 (지연 제거)
+          if (_currentSet < _totalSets - 1) {
+            _startRestTimer();
+          } else {
+            _completeWorkout();
+          }
         }
       });
       
@@ -225,11 +233,19 @@ class _WorkoutScreenState extends State<WorkoutScreen>
         _showMotivationalMessage = true;
       });
       
-      Timer(const Duration(seconds: 3), () {
+      // 0.5초 후 메시지 숨기기 (기존 2초에서 단축)
+      Timer(const Duration(milliseconds: 500), () {
         if (mounted) {
           setState(() {
             _showMotivationalMessage = false;
           });
+          
+          // 메시지 숨김과 동시에 다음 단계 진행 (지연 제거)
+          if (_currentSet < _totalSets - 1) {
+            _startRestTimer();
+          } else {
+            _completeWorkout();
+          }
         }
       });
       
@@ -376,32 +392,34 @@ class _WorkoutScreenState extends State<WorkoutScreen>
     // 세트 완료 시 업적 체크 추가
     _checkAchievementsDuringWorkout();
 
-    // 세트 완료 동기부여 메시지 표시
-    final message = _messageService.getSetCompletionMessage(
-      userLevel: widget.userProfile.level.levelValue,
-    );
-    
-    setState(() {
-      _currentMotivationalMessage = message;
-      _showMotivationalMessage = true;
-    });
+    // 간단한 토스트로 피드백 (오버레이 대신)
+    if (mounted) {
+      final message = _messageService.getSetCompletionMessage(
+        userLevel: widget.userProfile.level.levelValue,
+      );
+      
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          backgroundColor: Colors.green,
+          duration: Duration(milliseconds: 800),
+          behavior: SnackBarBehavior.floating,
+          margin: EdgeInsets.all(16),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+      );
+    }
 
-    // 2초 후 메시지 숨기기
-    Timer(const Duration(seconds: 2), () {
+    // 짧은 지연 후 다음 단계로 진행
+    Timer(const Duration(milliseconds: 300), () {
       if (mounted) {
-        setState(() {
-          _showMotivationalMessage = false;
-        });
-      }
-    });
-
-    // 약간의 지연 후 다음 단계 진행
-    Future<void>.delayed(const Duration(milliseconds: 500), () {
-      // 마지막 세트가 아니면 휴식 시간 시작
-      if (_currentSet < _totalSets - 1) {
-        _startRestTimer();
-      } else {
-        _completeWorkout();
+        if (_currentSet < _totalSets - 1) {
+          _startRestTimer();
+        } else {
+          _completeWorkout();
+        }
       }
     });
   }
