@@ -127,17 +127,44 @@ class _CalendarScreenState extends State<CalendarScreen> {
     final events = _getEventsForDay(day);
     if (events.isEmpty) return Colors.transparent;
 
-    // 완료율에 따른 색상 결정
-    final avgCompletionRate = events.fold(0.0, (sum, event) => sum + event.completionRate) / events.length;
+    // 개별 세트 완료도를 체크하여 정확한 완료율 계산
+    double totalCompletionRate = 0.0;
+    
+    for (final event in events) {
+      // 개별 세트들이 모두 목표를 달성했는지 확인
+      bool allSetsCompleted = true;
+      if (event.completedReps.isNotEmpty && event.targetReps.isNotEmpty) {
+        for (int i = 0; i < event.completedReps.length; i++) {
+          final targetRep = i < event.targetReps.length ? event.targetReps[i] : 0;
+          final completedRep = event.completedReps[i];
+          if (completedRep < targetRep) {
+            allSetsCompleted = false;
+            break;
+          }
+        }
+      }
+      
+      // 모든 세트를 완료했다면 실제 완료율 계산 (100% 이상 가능)
+      if (allSetsCompleted) {
+        final totalTarget = event.targetReps.fold(0, (sum, reps) => sum + reps);
+        final totalCompleted = event.completedReps.fold(0, (sum, reps) => sum + reps);
+        totalCompletionRate += totalTarget > 0 ? totalCompleted / totalTarget : 1.0;
+      } else {
+        // 개별 세트 중 하나라도 목표에 못 미쳤다면 기존 로직 사용
+        totalCompletionRate += event.completionRate;
+      }
+    }
+    
+    final avgCompletionRate = totalCompletionRate / events.length;
     
     if (avgCompletionRate >= 1.0) {
-      return Colors.green.shade400; // 완벽 완료
+      return Colors.green.shade400; // 완벽 완료 (모든 세트 목표 달성)
     } else if (avgCompletionRate >= 0.8) {
-      return Colors.blue.shade400; // 좋음
+      return Colors.blue.shade400; // 좋음 (80% 이상)
     } else if (avgCompletionRate >= 0.5) {
-      return Colors.orange.shade400; // 보통
+      return Colors.orange.shade400; // 보통 (50% 이상)
     } else {
-      return Colors.red.shade400; // 부족
+      return Colors.red.shade400; // 부족 (50% 미만)
     }
   }
 

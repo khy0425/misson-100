@@ -8,6 +8,7 @@ class WorkoutHistoryService {
   static Database? _database;
   static Database? _testDatabase; // 테스트용 데이터베이스
   static const String tableName = 'workout_history';
+  static const String sessionTableName = 'workout_sessions'; // 진행 중 세션 테이블
   
   // 달력 업데이트 콜백들 (여러 화면에서 동시에 사용 가능)
   static final List<VoidCallback> _onWorkoutSavedCallbacks = [];
@@ -50,10 +51,11 @@ class WorkoutHistoryService {
 
   static Future<Database> _initDatabase() async {
     final String path = join(await getDatabasesPath(), 'workout_history.db');
-    return await openDatabase(path, version: 1, onCreate: _createDatabase);
+    return await openDatabase(path, version: 2, onCreate: _createDatabase, onUpgrade: _upgradeDatabase);
   }
 
   static Future<void> _createDatabase(Database db, int version) async {
+    // 기존 workout_history 테이블
     await db.execute('''
       CREATE TABLE $tableName (
         id TEXT PRIMARY KEY,
@@ -66,38 +68,353 @@ class WorkoutHistoryService {
         level TEXT NOT NULL
       )
     ''');
+    
+    // 진행 중 세션 테이블 (중간 저장용)
+    await db.execute('''
+      CREATE TABLE $sessionTableName (
+        id TEXT PRIMARY KEY,
+        startTime TEXT NOT NULL,
+        lastUpdateTime TEXT NOT NULL,
+        workoutTitle TEXT NOT NULL,
+        targetReps TEXT NOT NULL,
+        completedReps TEXT NOT NULL,
+        currentSet INTEGER NOT NULL,
+        totalSets INTEGER NOT NULL,
+        isCompleted INTEGER NOT NULL DEFAULT 0,
+        level TEXT NOT NULL
+      )
+    ''');
+    
+    debugPrint('✅ 운동 기록 및 세션 테이블 생성 완료');
+  }
+  
+  static Future<void> _upgradeDatabase(Database db, int oldVersion, int newVersion) async {
+    debugPrint('🔧 데이터베이스 업그레이드: v$oldVersion → v$newVersion');
+    
+    if (oldVersion < 2) {
+      // 버전 2: 세션 테이블 추가
+      await db.execute('''
+        CREATE TABLE $sessionTableName (
+          id TEXT PRIMARY KEY,
+          startTime TEXT NOT NULL,
+          lastUpdateTime TEXT NOT NULL,
+          workoutTitle TEXT NOT NULL,
+          targetReps TEXT NOT NULL,
+          completedReps TEXT NOT NULL,
+          currentSet INTEGER NOT NULL,
+          totalSets INTEGER NOT NULL,
+          isCompleted INTEGER NOT NULL DEFAULT 0,
+          level TEXT NOT NULL
+        )
+      ''');
+      debugPrint('✅ 세션 테이블 추가 완료');
+    }
+  }
+
+  // === 진행 중 세션 관리 기능 ===
+  
+  /// 새 운동 세션 시작
+  static Future<String> startWorkoutSession({
+    required String workoutTitle,
+    required List<int> targetReps,
+    required int totalSets,
+    required String level,
+  }) async {
+    final db = await database;
+    final sessionId = DateTime.now().millisecondsSinceEpoch.toString();
+    final now = DateTime.now().toIso8601String();
+    
+    final session = {
+      'id': sessionId,
+      'startTime': now,
+      'lastUpdateTime': now,
+      'workoutTitle': workoutTitle,
+      'targetReps': targetReps.join(','),
+      'completedReps': List.generate(totalSets, (index) => 0).join(','),
+      'currentSet': 0,
+      'totalSets': totalSets,
+      'isCompleted': 0,
+      'level': level,
+    };
+    
+    await db.insert(sessionTableName, session, conflictAlgorithm: ConflictAlgorithm.replace);
+    debugPrint('🎯 새 운동 세션 시작: $sessionId ($workoutTitle)');
+    
+    return sessionId;
+  }
+  
+  /// 세트 완료 시 즉시 저장
+  static Future<void> saveSetProgress({
+    required String sessionId,
+    required int setIndex,
+    required int completedReps,
+    required int currentSet,
+  }) async {
+    final db = await database;
+    
+    try {
+      // 현재 세션 정보 가져오기
+      final sessionQuery = await db.query(
+        sessionTableName,
+        where: 'id = ?',
+        whereArgs: [sessionId],
+        limit: 1,
+      );
+      
+      if (sessionQuery.isEmpty) {
+        debugPrint('❌ 세션을 찾을 수 없음: $sessionId');
+        return;
+      }
+      
+      final session = sessionQuery.first;
+      final completedRepsList = (session['completedReps'] as String).split(',').map(int.parse).toList();
+      
+      // 세트 결과 업데이트
+      if (setIndex < completedRepsList.length) {
+        completedRepsList[setIndex] = completedReps;
+      }
+      
+      // 세션 업데이트
+      await db.update(
+        sessionTableName,
+        {
+          'completedReps': completedRepsList.join(','),
+          'currentSet': currentSet,
+          'lastUpdateTime': DateTime.now().toIso8601String(),
+        },
+        where: 'id = ?',
+        whereArgs: [sessionId],
+      );
+      
+      debugPrint('💾 세트 $setIndex 즉시 저장 완료: $completedReps회 (세션: $sessionId)');
+      
+      // 백업 파일에도 저장 (추가 안전장치)
+      await _saveSessionBackup(sessionId, completedRepsList, currentSet);
+      
+    } catch (e, stackTrace) {
+      debugPrint('❌ 세트 저장 오류: $e');
+      debugPrint('스택 트레이스: $stackTrace');
+      rethrow;
+    }
+  }
+  
+  /// 운동 세션 완료 처리
+  static Future<void> completeWorkoutSession(String sessionId) async {
+    final db = await database;
+    
+    try {
+      await db.update(
+        sessionTableName,
+        {
+          'isCompleted': 1,
+          'lastUpdateTime': DateTime.now().toIso8601String(),
+        },
+        where: 'id = ?',
+        whereArgs: [sessionId],
+      );
+      
+      debugPrint('✅ 운동 세션 완료 처리: $sessionId');
+      
+      // 완료된 세션을 정식 운동 기록으로 이전
+      await _migrateCompletedSession(sessionId);
+      
+    } catch (e) {
+      debugPrint('❌ 세션 완료 처리 오류: $e');
+      rethrow;
+    }
+  }
+  
+  /// 미완료 세션 복구
+  static Future<Map<String, dynamic>?> recoverIncompleteSession() async {
+    final db = await database;
+    
+    try {
+      final sessions = await db.query(
+        sessionTableName,
+        where: 'isCompleted = ?',
+        whereArgs: [0],
+        orderBy: 'lastUpdateTime DESC',
+        limit: 1,
+      );
+      
+      if (sessions.isNotEmpty) {
+        final session = sessions.first;
+        debugPrint('🔄 미완료 세션 발견: ${session['id']} (${session['workoutTitle']})');
+        
+        // 백업 파일에서도 확인
+        final backupData = await _loadSessionBackup(session['id'] as String);
+        if (backupData != null) {
+          debugPrint('📁 백업에서 추가 데이터 복구');
+          return {
+            ...session,
+            'backupData': backupData,
+          };
+        }
+        
+        return session;
+      }
+      
+      debugPrint('✅ 복구할 미완료 세션 없음');
+      return null;
+      
+    } catch (e) {
+      debugPrint('❌ 세션 복구 오류: $e');
+      return null;
+    }
+  }
+  
+  /// 세션 정리 (완료된 세션들 제거)
+  static Future<void> cleanupCompletedSessions() async {
+    final db = await database;
+    
+    try {
+      final deletedCount = await db.delete(
+        sessionTableName,
+        where: 'isCompleted = ?',
+        whereArgs: [1],
+      );
+      
+      debugPrint('🧹 완료된 세션 정리: ${deletedCount}개 삭제');
+      
+    } catch (e) {
+      debugPrint('❌ 세션 정리 오류: $e');
+    }
+  }
+  
+  // === 백업 시스템 (파일 기반) ===
+  
+  /// 세션 백업 저장
+  static Future<void> _saveSessionBackup(String sessionId, List<int> completedReps, int currentSet) async {
+    try {
+      // SharedPreferences나 파일로 백업 저장 (구현 예정)
+      debugPrint('💾 세션 백업 저장: $sessionId');
+    } catch (e) {
+      debugPrint('❌ 세션 백업 저장 오류: $e');
+    }
+  }
+  
+  /// 세션 백업 로드
+  static Future<Map<String, dynamic>?> _loadSessionBackup(String sessionId) async {
+    try {
+      // SharedPreferences나 파일에서 백업 로드 (구현 예정)
+      debugPrint('📁 세션 백업 로드: $sessionId');
+      return null;
+    } catch (e) {
+      debugPrint('❌ 세션 백업 로드 오류: $e');
+      return null;
+    }
+  }
+  
+  /// 완료된 세션을 정식 운동 기록으로 이전
+  static Future<void> _migrateCompletedSession(String sessionId) async {
+    final db = await database;
+    
+    try {
+      final sessions = await db.query(
+        sessionTableName,
+        where: 'id = ?',
+        whereArgs: [sessionId],
+        limit: 1,
+      );
+      
+      if (sessions.isEmpty) return;
+      
+      final session = sessions.first;
+      final completedRepsList = (session['completedReps'] as String).split(',').map(int.parse).toList();
+      final targetRepsList = (session['targetReps'] as String).split(',').map(int.parse).toList();
+      
+      final totalReps = completedRepsList.fold(0, (sum, reps) => sum + reps);
+      final targetTotal = targetRepsList.fold(0, (sum, reps) => sum + reps);
+      final completionRate = targetTotal > 0 ? totalReps / targetTotal : 0.0;
+      
+      // WorkoutHistory 객체 생성
+      final workoutHistory = WorkoutHistory(
+        id: sessionId,
+        date: DateTime.parse(session['startTime'] as String),
+        workoutTitle: session['workoutTitle'] as String,
+        targetReps: targetRepsList,
+        completedReps: completedRepsList,
+        totalReps: totalReps,
+        completionRate: completionRate,
+        level: session['level'] as String,
+      );
+      
+      // 정식 운동 기록으로 저장
+      await saveWorkoutHistory(workoutHistory);
+      
+      debugPrint('📋 세션을 정식 운동 기록으로 이전 완료: $sessionId');
+      
+    } catch (e) {
+      debugPrint('❌ 세션 이전 오류: $e');
+      rethrow;
+    }
   }
 
   // 운동 기록 저장
   static Future<void> saveWorkoutHistory(WorkoutHistory history) async {
-    final db = await database;
-    await db.insert(
-      tableName,
-      history.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+    debugPrint('💾 운동 기록 저장 시작: ${history.id}');
+    debugPrint('📅 운동 날짜: ${history.date}');
+    debugPrint('📊 운동 데이터: ${history.totalReps}회, 완료율 ${(history.completionRate * 100).toStringAsFixed(1)}%');
     
-    // 운동 저장 후 달력 업데이트 콜백 호출
-    for (var callback in _onWorkoutSavedCallbacks) {
-      callback();
+    try {
+      final db = await database;
+      
+      // 저장 전 데이터베이스 상태 확인
+      final beforeCount = await db.rawQuery('SELECT COUNT(*) as count FROM $tableName');
+      final countBefore = beforeCount.first['count'] as int;
+      debugPrint('🗄️ 저장 전 운동 기록 개수: $countBefore개');
+      
+      await db.insert(
+        tableName,
+        history.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+      
+      // 저장 후 데이터베이스 상태 확인
+      final afterCount = await db.rawQuery('SELECT COUNT(*) as count FROM $tableName');
+      final countAfter = afterCount.first['count'] as int;
+      debugPrint('🗄️ 저장 후 운동 기록 개수: $countAfter개 (${countAfter - countBefore > 0 ? '증가' : '동일'})');
+      
+      // 방금 저장된 데이터 확인
+      final savedWorkout = await getWorkoutByDate(history.date);
+      if (savedWorkout != null) {
+        debugPrint('✅ 운동 기록 저장 성공 확인: ${savedWorkout.id} - ${savedWorkout.totalReps}회');
+      } else {
+        debugPrint('❌ 운동 기록 저장 확인 실패: 데이터를 찾을 수 없음');
+      }
+      
+      // 운동 저장 후 달력 업데이트 콜백 호출
+      debugPrint('📞 달력 업데이트 콜백 호출 (${_onWorkoutSavedCallbacks.length}개)');
+      for (var callback in _onWorkoutSavedCallbacks) {
+        callback();
+      }
+      
+      // 오늘 운동을 완료했으므로 오늘의 리마인더 취소
+      await NotificationService.cancelTodayWorkoutReminder();
+      debugPrint('🔕 오늘의 리마인더 취소 완료');
+      
+      // 운동 완료 축하 알림
+      await NotificationService.showWorkoutCompletionCelebration(
+        totalReps: history.totalReps,
+        completionRate: history.completionRate,
+      );
+      debugPrint('🎉 운동 완료 축하 알림 전송');
+      
+      // 연속 운동 스트릭 확인 및 격려 알림
+      final streak = await getCurrentStreak();
+      debugPrint('🔥 현재 연속 운동 스트릭: ${streak}일');
+      
+      if (streak >= 3 && streak % 3 == 0) {
+        await NotificationService.showStreakEncouragement(streak);
+        debugPrint('🏆 스트릭 격려 알림 전송: ${streak}일 연속');
+      }
+      
+      debugPrint('✅ 운동 기록 저장 완료: ${history.date} - 달력 업데이트 신호 전송 및 오늘 리마인더 취소');
+    } catch (e, stackTrace) {
+      debugPrint('❌ 운동 기록 저장 오류: $e');
+      debugPrint('스택 트레이스: $stackTrace');
+      rethrow;
     }
-    
-    // 오늘 운동을 완료했으므로 오늘의 리마인더 취소
-    await NotificationService.cancelTodayWorkoutReminder();
-    
-    // 운동 완료 축하 알림
-    await NotificationService.showWorkoutCompletionCelebration(
-      totalReps: history.totalReps,
-      completionRate: history.completionRate,
-    );
-    
-    // 연속 운동 스트릭 확인 및 격려 알림
-    final streak = await getCurrentStreak();
-    if (streak >= 3 && streak % 3 == 0) {
-      await NotificationService.showStreakEncouragement(streak);
-    }
-    
-    debugPrint('💾 운동 기록 저장 완료: ${history.date} - 달력 업데이트 신호 전송 및 오늘 리마인더 취소');
   }
 
   // 특정 날짜의 운동 기록 조회

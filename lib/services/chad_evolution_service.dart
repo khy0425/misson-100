@@ -586,4 +586,37 @@ class ChadEvolutionService extends ChangeNotifier {
   void dispose() {
     super.dispose();
   }
+
+  /// 현재 Chad 레벨 가져오기 (static 메서드)
+  static Future<int> getCurrentLevel() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final stateJson = prefs.getString(_evolutionStateKey);
+      
+      if (stateJson != null) {
+        final stateData = jsonDecode(stateJson) as Map<String, dynamic>;
+        final evolutionState = ChadEvolutionState.fromJson(stateData);
+        
+        // Chad 진화 단계를 레벨로 변환 (0-based index + 1)
+        return evolutionState.currentStage.index + 1;
+      }
+      
+      // 기본값: 1레벨 (수면모자 Chad)
+      return 1;
+    } catch (e) {
+      debugPrint('현재 레벨 가져오기 오류: $e');
+      return 1;
+    }
+  }
+
+  /// 경험치 추가 (static 메서드) - 현재는 더미 구현
+  static Future<void> addExperience(int experience) async {
+    try {
+      debugPrint('Chad 경험치 추가: $experience (더미 구현)');
+      // 현재는 더미 구현으로, 실제 경험치 시스템이 필요하면 나중에 구현
+      // 필요시 SharedPreferences에 경험치를 저장하고 관리하는 로직 추가 가능
+    } catch (e) {
+      debugPrint('경험치 추가 오류: $e');
+    }
+  }
 } 

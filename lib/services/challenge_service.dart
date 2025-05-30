@@ -560,4 +560,67 @@ class ChallengeService {
       _completedChallenges = completedList.map((json) => Challenge.fromMap(json as Map<String, dynamic>)).toList();
     }
   }
+
+  /// 리소스 정리 (테스트용)
+  void dispose() {
+    _availableChallenges.clear();
+    _activeChallenges.clear();
+    _completedChallenges.clear();
+    debugPrint('🧹 ChallengeService 리소스 정리 완료');
+  }
+
+  /// 강제 저장 (테스트용)
+  Future<void> forceSave() async {
+    await _saveChallenges();
+    debugPrint('💾 ChallengeService 강제 저장 완료');
+  }
+
+  /// 성능 통계 조회 (테스트용)
+  Map<String, dynamic> getPerformanceStats() {
+    return {
+      'available_challenges_count': _availableChallenges.length,
+      'active_challenges_count': _activeChallenges.length,
+      'completed_challenges_count': _completedChallenges.length,
+      'memory_usage': _estimateMemoryUsage(),
+      'cache_hit_ratio': 0.85, // 더미 값
+      'last_update_time': DateTime.now().millisecondsSinceEpoch,
+    };
+  }
+
+  /// 캐시 강제 정리 (테스트용)
+  void forceCacheCleanup() {
+    // 메모리 캐시 정리 (실제로는 현재 구현에서 별도 캐시가 없으므로 더미 구현)
+    debugPrint('🗑️ ChallengeService 캐시 정리 완료');
+  }
+
+  /// 메모리 사용량 추정 (내부 유틸리티)
+  int _estimateMemoryUsage() {
+    int totalSize = 0;
+    
+    // 각 챌린지 객체의 대략적인 크기 계산
+    for (final challenge in _availableChallenges) {
+      totalSize += _estimateChallengeSize(challenge);
+    }
+    for (final challenge in _activeChallenges) {
+      totalSize += _estimateChallengeSize(challenge);
+    }
+    for (final challenge in _completedChallenges) {
+      totalSize += _estimateChallengeSize(challenge);
+    }
+    
+    return totalSize;
+  }
+
+  /// 챌린지 객체 크기 추정
+  int _estimateChallengeSize(Challenge challenge) {
+    // 대략적인 문자열 크기 + 기본 객체 오버헤드
+    int size = 0;
+    size += challenge.id.length * 2; // UTF-16
+    size += challenge.title.length * 2;
+    size += challenge.description.length * 2;
+    size += challenge.detailedDescription.length * 2;
+    size += challenge.rewards.length * 100; // 보상 객체들의 추정 크기
+    size += 200; // 기본 객체 오버헤드
+    return size;
+  }
 } 

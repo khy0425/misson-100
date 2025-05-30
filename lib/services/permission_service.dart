@@ -62,51 +62,210 @@ class PermissionService {
       final hasAskedBefore = prefs.getBool(_storagePermissionAskedKey) ?? false;
       
       if (!hasAskedBefore) {
-        // 처음 실행 시에는 권한 요청하지 않고, 백업/복원 시에만 요청
+        debugPrint('📱 저장소 권한 요청 중...');
+        
+        final androidInfo = await _getAndroidInfo();
+        
+        // Android 13+ (API 33+)에서는 파일 선택기 사용을 권장
+        if (androidInfo.version.sdkInt >= 33) {
+          debugPrint('📱 Android 13+ 감지 - 파일 선택기 사용');
+          await prefs.setBool(_storagePermissionAskedKey, true);
+          return;
+        }
+        
+        // Android 12 이하에서만 저장소 권한 요청
+        if (context.mounted) {
+          final shouldRequest = await _showStoragePermissionDialog(context);
+          
+          if (shouldRequest) {
+            debugPrint('📱 저장소 권한 요청 시작...');
+            await Permission.storage.request();
+            debugPrint('📱 저장소 권한 요청 완료');
+          }
+        }
+        
         await prefs.setBool(_storagePermissionAskedKey, true);
-        debugPrint('📱 저장소 권한은 백업/복원 시에만 요청됩니다.');
       }
     } catch (e) {
       debugPrint('❌ 저장소 권한 체크 실패: $e');
+      
+      // 오류 발생 시에도 다시 요청하지 않도록 플래그 설정
+      try {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setBool(_storagePermissionAskedKey, true);
+      } catch (prefsError) {
+        debugPrint('❌ SharedPreferences 저장 실패: $prefsError');
+      }
     }
   }
   
   /// 알림 권한 요청 다이얼로그
   static Future<bool> _showNotificationPermissionDialog(BuildContext context) async {
+    if (!context.mounted) return false;
+    
     return await showDialog<bool>(
       context: context,
       barrierDismissible: false,
-      builder: (context) => AlertDialog(
-        title: const Row(
-          children: [
-            Icon(Icons.notifications, color: Colors.blue),
-            SizedBox(width: 8),
-            Text('알림 권한 요청'),
-          ],
-        ),
-        content: const Text(
-          'Mission 100에서 다음 기능을 위해 알림 권한이 필요합니다:\n\n'
-          '🔔 운동 리마인더\n'
-          '🏆 업적 달성 알림\n'
-          '📊 운동 격려 메시지\n\n'
-          '알림 권한을 허용하시겠습니까?\n'
-          '(나중에 설정에서 변경 가능)',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('나중에'),
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Row(
+            children: [
+              Icon(Icons.notifications_active, color: Colors.orange),
+              SizedBox(width: 8),
+              Text('🔔 알림 허용'),
+            ],
           ),
-          ElevatedButton(
-            onPressed: () => Navigator.pop(context, true),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue,
-              foregroundColor: Colors.white,
+          content: const Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '운동 알림을 받기 위해 알림 권한이 필요합니다.',
+                style: TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: 16),
+              Row(
+                children: [
+                  Icon(Icons.schedule, color: Colors.blue, size: 20),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      '• 일일 운동 리마인더',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 8),
+              Row(
+                children: [
+                  Icon(Icons.emoji_events, color: Colors.amber, size: 20),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      '• 목표 달성 축하',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 8),
+              Row(
+                children: [
+                  Icon(Icons.local_fire_department, color: Colors.red, size: 20),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      '• 연속 기록 유지 알림',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text(
+                '나중에',
+                style: TextStyle(color: Colors.grey),
+              ),
             ),
-            child: const Text('허용'),
+            ElevatedButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.orange,
+                foregroundColor: Colors.white,
+              ),
+              child: const Text('허용'),
+            ),
+          ],
+        );
+      },
+    ) ?? false;
+  }
+  
+  /// 저장소 권한 요청 다이얼로그
+  static Future<bool> _showStoragePermissionDialog(BuildContext context) async {
+    if (!context.mounted) return false;
+    
+    return await showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Row(
+            children: [
+              Icon(Icons.folder, color: Colors.blue),
+              SizedBox(width: 8),
+              Text('📁 저장소 접근'),
+            ],
           ),
-        ],
-      ),
+          content: const Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '운동 데이터 백업/복원을 위해 저장소 접근 권한이 필요합니다.',
+                style: TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: 16),
+              Row(
+                children: [
+                  Icon(Icons.backup, color: Colors.green, size: 20),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      '• 운동 기록 백업',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 8),
+              Row(
+                children: [
+                  Icon(Icons.restore, color: Colors.blue, size: 20),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      '• 데이터 복원',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 16),
+              Text(
+                '💡 Android 13+에서는 파일 선택기를 사용하므로 이 권한이 필요하지 않습니다.',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.grey,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text(
+                '나중에',
+                style: TextStyle(color: Colors.grey),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.white,
+              ),
+              child: const Text('허용'),
+            ),
+          ],
+        );
+      },
     ) ?? false;
   }
   

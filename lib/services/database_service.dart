@@ -3,6 +3,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import '../models/user_profile.dart';
 import '../models/workout_session.dart';
+import 'package:flutter/foundation.dart';
 
 class DatabaseService {
   static final DatabaseService _instance = DatabaseService._internal();
@@ -256,5 +257,60 @@ class DatabaseService {
     final db = await database;
     await db.delete('workout_session');
     await db.delete('user_profile');
+  }
+
+  // 데이터베이스 완전 초기화 (테스트용)
+  Future<void> resetDatabase() async {
+    try {
+      if (_database != null) {
+        await _database!.close();
+        _database = null;
+      }
+      
+      final dbPath = await getDatabasesPath();
+      final path = join(dbPath, 'mission100_chad.db');
+      
+      // 데이터베이스 파일 삭제
+      await deleteDatabase(path);
+      debugPrint('데이터베이스 초기화 완료');
+    } catch (e) {
+      debugPrint('데이터베이스 초기화 오류: $e');
+    }
+  }
+
+  // 테이블별 데이터 삭제
+  Future<void> clearAllData() async {
+    try {
+      final db = await database;
+      await db.delete('user_profile');
+      await db.delete('workout_session');
+      debugPrint('모든 데이터 삭제 완료');
+    } catch (e) {
+      debugPrint('데이터 삭제 오류: $e');
+    }
+  }
+
+  // 데이터베이스 상태 확인
+  Future<Map<String, dynamic>> getDatabaseStatus() async {
+    try {
+      final db = await database;
+      
+      final userCount = await db.rawQuery('SELECT COUNT(*) as count FROM user_profile');
+      final sessionCount = await db.rawQuery('SELECT COUNT(*) as count FROM workout_session');
+      
+      return {
+        'userProfiles': userCount.first['count'],
+        'workoutSessions': sessionCount.first['count'],
+        'databaseExists': true,
+      };
+    } catch (e) {
+      debugPrint('데이터베이스 상태 확인 오류: $e');
+      return {
+        'userProfiles': 0,
+        'workoutSessions': 0,
+        'databaseExists': false,
+        'error': e.toString(),
+      };
+    }
   }
 }

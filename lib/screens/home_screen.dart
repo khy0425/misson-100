@@ -9,15 +9,22 @@ import '../services/workout_program_service.dart';
 import '../services/database_service.dart';
 import '../services/social_share_service.dart';
 import '../services/chad_evolution_service.dart';
+import '../services/onboarding_service.dart';
+import '../services/workout_resumption_service.dart';
 import '../models/chad_evolution.dart';
 import '../models/user_profile.dart';
 import '../utils/workout_data.dart';
 import '../widgets/ad_banner_widget.dart';
+import '../widgets/workout_resumption_dialog.dart';
 import 'workout_screen.dart';
 import 'pushup_tutorial_screen.dart';
 import 'pushup_form_guide_screen.dart';
 import 'youtube_shorts_screen.dart';
 import 'progress_tracking_screen.dart';
+import 'onboarding_screen.dart';
+import '../services/achievement_service.dart';
+import '../services/workout_history_service.dart';
+import '../services/notification_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -26,7 +33,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   final DatabaseService _databaseService = DatabaseService();
   final WorkoutProgramService _workoutProgramService = WorkoutProgramService();
   
@@ -39,7 +46,44 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _loadUserData();
+    // 앱 시작 시 운동 재개 체크
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _checkWorkoutResumption();
+      // 보류 중인 알림도 체크
+      NotificationService.checkPendingNotifications();
+    });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.resumed) {
+      // 앱이 포그라운드로 돌아왔을 때 데이터 새로고침
+      _refreshAllServiceData();
+      // 보류 중인 알림 체크
+      NotificationService.checkPendingNotifications();
+    }
+  }
+
+  Future<void> _refreshAllServiceData() async {
+    try {
+      debugPrint('홈 화면 데이터 새로고침 시작');
+      
+      // 모든 서비스 데이터 새로고침
+      await _loadUserData();
+      
+      debugPrint('홈 화면 데이터 새로고침 완료');
+    } catch (e) {
+      debugPrint('홈 화면 데이터 새로고침 오류: $e');
+    }
   }
 
   Future<void> _loadUserData() async {
@@ -155,11 +199,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         
                         const SizedBox(height: AppConstants.paddingL),
                         
-                        // Chad 진화 테스트 버튼 (디버그용)
-                        if (kDebugMode)
-                          _buildDebugEvolutionButton(context, theme),
-                        
-                        const SizedBox(height: AppConstants.paddingL),
+                        // 디버그 섹션 (디버그 모드에서만 표시)
+                        if (kDebugMode) ...[
+                          _buildDebugSection(context, theme),
+                          const SizedBox(height: AppConstants.paddingL),
+                        ],
                         
                         // 하단 정보
                         _buildBottomInfo(context, theme),
@@ -981,7 +1025,7 @@ class _HomeScreenState extends State<HomeScreen> {
           MaterialPageRoute<void>(
             builder: (context) => WorkoutScreen(
               userProfile: _userProfile!,
-              todayWorkout: _todayWorkout!,
+              workoutData: _todayWorkout!,
             ),
           ),
         );
@@ -1054,75 +1098,803 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Widget _buildDebugEvolutionButton(BuildContext context, ThemeData theme) {
+  Widget _buildDebugSection(BuildContext context, ThemeData theme) {
+    return Container(
+      padding: const EdgeInsets.all(AppConstants.paddingL),
+      decoration: BoxDecoration(
+        color: Colors.yellow.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(AppConstants.radiusM),
+        border: Border.all(color: Colors.orange, width: 2),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // 디버그 섹션 헤더
+          Row(
+            children: [
+              const Icon(Icons.bug_report, color: Colors.orange),
+              const SizedBox(width: 8),
+              Text(
+                '🧪 디버그 도구',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: Colors.orange,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppConstants.paddingM),
+          
+          // 업적 관리 버튼들
+          Text(
+            '업적 시스템',
+            style: theme.textTheme.bodyLarge?.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: AppConstants.paddingS),
+          
+          Wrap(
+            spacing: AppConstants.paddingS,
+            runSpacing: AppConstants.paddingS,
+            children: [
+              _buildDebugButton(
+                context: context,
+                icon: Icons.shield_outlined,
+                label: '검증',
+                color: Colors.blue,
+                onPressed: _validateAchievements,
+              ),
+              _buildDebugButton(
+                context: context,
+                icon: Icons.build,
+                label: '복구',
+                color: Colors.green,
+                onPressed: _repairAchievements,
+              ),
+              _buildDebugButton(
+                context: context,
+                icon: Icons.sync,
+                label: '동기화',
+                color: Colors.purple,
+                onPressed: _synchronizeAchievements,
+              ),
+              _buildDebugButton(
+                context: context,
+                icon: Icons.delete_forever,
+                label: '초기화',
+                color: Colors.red,
+                onPressed: _resetAllData,
+              ),
+            ],
+          ),
+          
+          const SizedBox(height: AppConstants.paddingM),
+          
+          // Chad 시스템 버튼들
+          Text(
+            'Chad 시스템',
+            style: theme.textTheme.bodyLarge?.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: AppConstants.paddingS),
+          
+          Wrap(
+            spacing: AppConstants.paddingS,
+            runSpacing: AppConstants.paddingS,
+            children: [
+              _buildDebugButton(
+                context: context,
+                icon: Icons.trending_up,
+                label: 'Chad 진화',
+                color: const Color(AppColors.primaryColor),
+                onPressed: _testChadEvolution,
+              ),
+            ],
+          ),
+          
+          const SizedBox(height: AppConstants.paddingM),
+          
+          // 성능 모니터링 버튼들
+          Text(
+            '성능 모니터링',
+            style: theme.textTheme.bodyLarge?.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: AppConstants.paddingS),
+          
+          Wrap(
+            spacing: AppConstants.paddingS,
+            runSpacing: AppConstants.paddingS,
+            children: [
+              _buildDebugButton(
+                context: context,
+                icon: Icons.analytics,
+                label: '성능 통계',
+                color: Colors.teal,
+                onPressed: _showPerformanceStats,
+              ),
+              _buildDebugButton(
+                context: context,
+                icon: Icons.memory,
+                label: '캐시 상태',
+                color: Colors.indigo,
+                onPressed: _showCacheStatus,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDebugButton({
+    required BuildContext context,
+    required IconData icon,
+    required String label,
+    required Color color,
+    required VoidCallback onPressed,
+  }) {
     return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: () => _debugEvolution(context),
+      height: 36,
+      child: ElevatedButton.icon(
+        onPressed: _isLoading ? null : onPressed,
+        icon: Icon(icon, size: 16),
+        label: Text(
+          label,
+          style: const TextStyle(fontSize: 12),
+        ),
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF51CF66),
+          backgroundColor: color,
+          foregroundColor: Colors.white,
           padding: const EdgeInsets.symmetric(
-            vertical: AppConstants.paddingL,
+            horizontal: AppConstants.paddingS,
+            vertical: AppConstants.paddingXS,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppConstants.radiusM),
+            borderRadius: BorderRadius.circular(AppConstants.radiusS),
           ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.fitness_center,
-              color: Colors.white,
-              size: 24,
-            ),
-            const SizedBox(width: AppConstants.paddingS),
-            Text(
-              'Chad 진화 테스트',
-              style: theme.textTheme.titleMedium?.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
         ),
       ),
     );
   }
 
-  void _debugEvolution(BuildContext context) {
-    final chadService = Provider.of<ChadEvolutionService>(context, listen: false);
-    
-    // 현재 Chad와 다음 Chad 가져오기
-    final currentChad = chadService.currentChad;
-    final currentStage = chadService.evolutionState.currentStage;
-    
-    // 다음 단계 찾기
-    final nextStageIndex = currentStage.index + 1;
-    if (nextStageIndex < ChadEvolutionStage.values.length) {
-      final nextStage = ChadEvolutionStage.values[nextStageIndex];
-      final nextChad = ChadEvolution.defaultStages.firstWhere(
-        (chad) => chad.stage == nextStage,
-      );
-      
-      // 진화 애니메이션 시작
-      chadService.startEvolutionAnimation(currentChad, nextChad);
-      
-      // 실제 진화도 실행 (3초 후)
-      Future.delayed(const Duration(seconds: 3), () {
-        chadService.evolveToNextStage();
+  void _testChadEvolution() async {
+    try {
+      setState(() {
+        _isLoading = true;
       });
-    } else {
-      // 이미 최고 단계인 경우 첫 번째 단계로 리셋
-      final firstChad = ChadEvolution.defaultStages.first;
-      chadService.resetEvolution();
+
+      debugPrint('🧪 Chad 진화 테스트 시작');
       
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('최고 단계입니다. 첫 번째 단계로 리셋했습니다.'),
-          duration: Duration(seconds: 2),
+      // Provider에서 ChadEvolutionService 인스턴스 가져오기
+      final chadService = Provider.of<ChadEvolutionService>(context, listen: false);
+      
+      // 현재 레벨 확인
+      final currentLevel = await ChadEvolutionService.getCurrentLevel();
+      debugPrint('현재 레벨: $currentLevel');
+      
+      // 레벨업 테스트 (더미 메서드이므로 실제로는 아무것도 하지 않음)
+      await ChadEvolutionService.addExperience(100);
+      
+      // 다음 단계로 진화 테스트
+      await chadService.evolveToNextStage();
+      
+      // 업데이트된 레벨 확인
+      final newLevel = await ChadEvolutionService.getCurrentLevel();
+      debugPrint('새 레벨: $newLevel');
+      
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Chad 레벨: $currentLevel → $newLevel')),
+        );
+        
+        // UI 업데이트
+        _refreshAllServiceData();
+      }
+    } catch (e) {
+      debugPrint('❌ Chad 진화 테스트 오류: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Chad 테스트 실패: $e')),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  // 모든 데이터 초기화
+  Future<void> _resetAllData() async {
+    try {
+      // 확인 대화상자
+      final confirmed = await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('⚠️ 데이터 초기화'),
+          content: const Text('모든 운동 데이터, 업적, Chad 진화 상태가 삭제됩니다.\n정말로 초기화하시겠습니까?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('취소'),
+            ),
+            ElevatedButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+              child: const Text('초기화'),
+            ),
+          ],
         ),
       );
+
+      if (confirmed != true) return;
+
+      setState(() {
+        _isLoading = true;
+      });
+
+      debugPrint('🔄 전체 데이터 초기화 시작...');
+      
+      // 모든 서비스 초기화
+      await AchievementService.resetAchievementDatabase();
+      await WorkoutHistoryService.clearAllRecords();
+      
+      // Chad 진화 서비스 인스턴스를 통해 초기화
+      final chadService = Provider.of<ChadEvolutionService>(context, listen: false);
+      await chadService.resetEvolution();
+      
+      debugPrint('✅ 전체 데이터 초기화 완료');
+      
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('✅ 모든 데이터가 초기화되었습니다'),
+            backgroundColor: Colors.green,
+          ),
+        );
+        
+        // UI 새로고침
+        _refreshAllServiceData();
+      }
+    } catch (e) {
+      debugPrint('❌ 데이터 초기화 오류: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('❌ 초기화 실패: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  // 업적 검증
+  Future<void> _validateAchievements() async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+
+      debugPrint('🔍 업적 데이터베이스 검증 시작...');
+      
+      final validation = await AchievementService.validateAchievementDatabase();
+      final isValid = validation['isValid'] as bool? ?? false;
+      final issues = (validation['issues'] as List?)?.cast<String>() ?? <String>[];
+      final stats = validation['stats'] as Map<String, dynamic>? ?? {};
+      
+      if (mounted) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('📊 업적 검증 결과'),
+            content: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('상태: ${isValid ? '✅ 정상' : '❌ 문제 발견'}'),
+                  Text('총 업적: ${stats['totalCount'] ?? 0}개'),
+                  Text('완료 업적: ${stats['unlockedCount'] ?? 0}개'),
+                  Text('완료율: ${stats['completionRate'] ?? '0.0'}%'),
+                  if (issues.isNotEmpty) ...[
+                    const SizedBox(height: 8),
+                    const Text('발견된 문제:', style: TextStyle(fontWeight: FontWeight.bold)),
+                    ...issues.map<Widget>((issue) => Text('• $issue')),
+                  ],
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('확인'),
+              ),
+            ],
+          ),
+        );
+      }
+    } catch (e) {
+      debugPrint('❌ 업적 검증 오류: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('❌ 검증 실패: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  // 업적 복구
+  Future<void> _repairAchievements() async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+
+      debugPrint('🔧 업적 데이터베이스 복구 시작...');
+      
+      final repairResult = await AchievementService.repairAchievementDatabase();
+      
+      if (mounted) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('🔧 업적 복구 결과'),
+            content: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    repairResult ? '✅ 복구 완료' : '❌ 복구 실패',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: repairResult ? Colors.green : Colors.red,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('확인'),
+              ),
+            ],
+          ),
+        );
+        
+        if (repairResult) {
+          _refreshAllServiceData();
+        }
+      }
+    } catch (e) {
+      debugPrint('❌ 업적 복구 오류: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('❌ 복구 실패: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  // 업적 동기화
+  Future<void> _synchronizeAchievements() async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+
+      debugPrint('🔄 업적 진행도 동기화 시작...');
+      
+      await AchievementService.synchronizeAchievementProgress();
+      
+      if (mounted) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('🔄 업적 동기화 결과'),
+            content: const SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    '✅ 동기화 완료',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green,
+                    ),
+                  ),
+                  Text('업적 진행도가 운동 기록과 동기화되었습니다.'),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('확인'),
+              ),
+            ],
+          ),
+        );
+        
+        _refreshAllServiceData();
+      }
+    } catch (e) {
+      debugPrint('❌ 업적 동기화 오류: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('❌ 동기화 실패: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  // 성능 통계 표시
+  void _showPerformanceStats() async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+
+      debugPrint('📊 성능 통계 조회 시작');
+      
+      // AchievementService에서 성능 통계 가져오기
+      final stats = AchievementService.getPerformanceStats();
+      
+      if (mounted) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('📊 성능 통계'),
+            content: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (stats.isEmpty) 
+                    const Text('아직 수집된 성능 데이터가 없습니다.')
+                  else
+                    ...stats.entries.map((entry) {
+                      final operation = entry.key;
+                      final metrics = entry.value;
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              operation.replaceAll('_', ' ').toUpperCase(),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text('평균: ${metrics['average']?.toStringAsFixed(1)}ms'),
+                            Text('최소: ${metrics['min']?.toStringAsFixed(1)}ms'),
+                            Text('최대: ${metrics['max']?.toStringAsFixed(1)}ms'),
+                            Text('실행 횟수: ${metrics['count']?.toInt()}회'),
+                            if (metrics['average']! > 500)
+                              const Text(
+                                '⚠️ 성능 개선 필요',
+                                style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold),
+                              ),
+                            const Divider(),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                  const SizedBox(height: 8),
+                  const Text(
+                    '💡 팁: 500ms 이상의 작업은 성능 개선이 필요할 수 있습니다.',
+                    style: TextStyle(fontSize: 12, color: Colors.grey),
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('확인'),
+              ),
+            ],
+          ),
+        );
+      }
+    } catch (e) {
+      debugPrint('❌ 성능 통계 조회 오류: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('❌ 성능 통계 조회 실패: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  // 캐시 상태 표시
+  void _showCacheStatus() async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+
+      debugPrint('🗂️ 캐시 상태 조회 시작');
+      
+      // 캐시 정보는 private이므로 getAllAchievements 호출하여 캐시 동작 확인
+      final stopwatch = Stopwatch()..start();
+      await AchievementService.getAllAchievements();
+      stopwatch.stop();
+      final firstCallTime = stopwatch.elapsedMilliseconds;
+      
+      // 두 번째 호출 (캐시 히트 예상)
+      stopwatch.reset();
+      stopwatch.start();
+      final achievements = await AchievementService.getAllAchievements();
+      stopwatch.stop();
+      final secondCallTime = stopwatch.elapsedMilliseconds;
+      
+      final cacheHit = secondCallTime < firstCallTime;
+      
+      if (mounted) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('🗂️ 캐시 상태'),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('업적 개수: ${achievements.length}개'),
+                const SizedBox(height: 8),
+                Text('첫 번째 호출: ${firstCallTime}ms'),
+                Text('두 번째 호출: ${secondCallTime}ms'),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Icon(
+                      cacheHit ? Icons.check_circle : Icons.error,
+                      color: cacheHit ? Colors.green : Colors.orange,
+                      size: 16,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      cacheHit ? '캐시 동작 중' : '캐시 미스',
+                      style: TextStyle(
+                        color: cacheHit ? Colors.green : Colors.orange,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                if (cacheHit)
+                  Text(
+                    '성능 향상: ${((firstCallTime - secondCallTime) / firstCallTime * 100).toStringAsFixed(1)}%',
+                    style: const TextStyle(color: Colors.green),
+                  ),
+                const SizedBox(height: 8),
+                const Text(
+                  '💡 캐시는 5분간 유효하며, 데이터 변경 시 자동으로 무효화됩니다.',
+                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('확인'),
+              ),
+            ],
+          ),
+        );
+      }
+    } catch (e) {
+      debugPrint('❌ 캐시 상태 조회 오류: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('❌ 캐시 상태 조회 실패: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  /// 운동 재개 가능 여부 체크 및 다이얼로그 표시
+  Future<void> _checkWorkoutResumption() async {
+    if (!mounted) return;
+    
+    try {
+      debugPrint('🔍 운동 재개 체크 시작');
+      
+      final hasResumableWorkout = await WorkoutResumptionService.hasResumableWorkout();
+      
+      if (hasResumableWorkout && mounted) {
+        debugPrint('📋 재개 가능한 운동 발견, 다이얼로그 표시');
+        
+        final resumptionData = await WorkoutResumptionService.getResumptionData();
+        
+        if (resumptionData != null && resumptionData.hasResumableData && mounted) {
+          await _showWorkoutResumptionDialog(resumptionData);
+        }
+      } else {
+        debugPrint('✅ 재개할 운동 없음');
+      }
+    } catch (e) {
+      debugPrint('❌ 운동 재개 체크 오류: $e');
+    }
+  }
+
+  /// 운동 재개 다이얼로그 표시
+  Future<void> _showWorkoutResumptionDialog(WorkoutResumptionData resumptionData) async {
+    if (!mounted) return;
+    
+    try {
+      final shouldResume = await showWorkoutResumptionDialog(
+        context: context,
+        resumptionData: resumptionData,
+      );
+
+      if (shouldResume == true && mounted) {
+        debugPrint('🔄 운동 재개 선택됨');
+        await _resumeWorkout(resumptionData);
+      } else if (shouldResume == false && mounted) {
+        debugPrint('🆕 새 운동 시작 선택됨');
+        await _startNewWorkout();
+      }
+    } catch (e) {
+      debugPrint('❌ 운동 재개 다이얼로그 오류: $e');
+      
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('운동 재개 처리 중 오류가 발생했습니다.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  /// 운동 재개 실행
+  Future<void> _resumeWorkout(WorkoutResumptionData resumptionData) async {
+    if (!mounted) return;
+
+    try {
+      final primaryData = resumptionData.primaryData;
+      if (primaryData == null) return;
+
+      // 재개 통계 기록
+      final completedRepsStr = primaryData['completedReps'] as String? ?? '';
+      final completedReps = completedRepsStr.isNotEmpty 
+          ? completedRepsStr.split(',').map(int.parse).toList()
+          : <int>[];
+      
+      final completedSetsCount = completedReps.where((reps) => reps > 0).length;
+      final totalCompletedReps = completedReps.fold(0, (sum, reps) => sum + reps);
+      
+      await WorkoutResumptionService.recordResumptionStats(
+        resumptionSource: resumptionData.dataSource,
+        recoveredSets: completedSetsCount,
+        recoveredReps: totalCompletedReps,
+      );
+
+      // 운동 화면으로 이동 (재개 모드)
+      if (mounted) {
+        final result = await Navigator.push<bool>(
+          context,
+          MaterialPageRoute(
+            builder: (context) => WorkoutScreen(
+              userProfile: _userProfile!,
+              workoutData: _todayWorkout!,
+            ),
+          ),
+        );
+
+        // 운동 완료 후 데이터 새로고침
+        if (result == true && mounted) {
+          await _refreshData();
+          
+          // 백업 데이터 정리
+          await WorkoutResumptionService.clearBackupData();
+          
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('🎉 운동이 성공적으로 재개되었습니다!'),
+              backgroundColor: Colors.green,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      debugPrint('❌ 운동 재개 실행 오류: $e');
+      
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('운동 재개 중 오류가 발생했습니다.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  /// 새 운동 시작 (백업 데이터 정리)
+  Future<void> _startNewWorkout() async {
+    try {
+      debugPrint('🧹 새 운동 시작을 위한 백업 데이터 정리');
+      
+      // 백업 데이터 정리
+      await WorkoutResumptionService.clearBackupData();
+      
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('새로운 운동을 시작할 준비가 되었습니다!'),
+            backgroundColor: Colors.blue,
+          ),
+        );
+      }
+    } catch (e) {
+      debugPrint('❌ 새 운동 시작 준비 오류: $e');
     }
   }
 }

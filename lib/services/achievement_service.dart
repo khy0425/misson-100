@@ -8,6 +8,7 @@ import '../models/achievement.dart';
 import '../models/workout_history.dart';
 import 'workout_history_service.dart';
 import 'notification_service.dart';
+import 'chad_evolution_service.dart';
 
 class AchievementService {
   static const String tableName = 'achievements';
@@ -18,6 +19,23 @@ class AchievementService {
   static VoidCallback? _onAchievementUnlocked;
   static VoidCallback? _onStatsUpdated;
   static BuildContext? _globalContext;
+
+  // 성능 최적화를 위한 캐싱
+  static Map<String, Achievement> _achievementCache = {};
+  static DateTime? _lastCacheUpdate;
+  static const Duration _cacheValidDuration = Duration(minutes: 5);
+  
+  // 성능 모니터링
+  static final Map<String, List<int>> _performanceMetrics = {};
+  static const bool _enablePerformanceLogging = true;
+  
+  // 배치 처리를 위한 대기열
+  static final List<Map<String, dynamic>> _pendingUpdates = [];
+  static bool _isBatchProcessing = false;
+  static const int _batchSize = 10;
+  
+  // 오류 복구를 위한 백업
+  static Map<String, dynamic>? _lastKnownState;
 
   // 테스트용 데이터베이스 설정
   static void setTestDatabase(Database testDb) {
@@ -134,25 +152,45 @@ class AchievementService {
 
   // 모든 업적 조회
   static Future<List<Achievement>> getAllAchievements() async {
-    final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query(
-      tableName,
-      orderBy: 'rarity DESC, isUnlocked DESC, id ASC',
-    );
-
-    debugPrint('📊 데이터베이스에서 조회된 업적 개수: ${maps.length}');
+    final timer = _startPerformanceTimer('getAllAchievements');
     
-    final achievements = List.generate(maps.length, (i) {
-      try {
-        return Achievement.fromMap(maps[i]);
-      } catch (e) {
-        debugPrint('❌ 업적 파싱 실패: ${maps[i]} - $e');
-        rethrow;
+    try {
+      // 캐시에서 먼저 확인
+      if (_isCacheValid() && _achievementCache.isNotEmpty) {
+        debugPrint('📂 캐시에서 업적 조회: ${_achievementCache.length}개');
+        final achievements = _achievementCache.values.toList();
+        _endPerformanceTimer('getAllAchievements_cached', timer);
+        return achievements;
       }
-    });
-    
-    debugPrint('✅ 성공적으로 파싱된 업적 개수: ${achievements.length}');
-    return achievements;
+      
+      final db = await database;
+      final List<Map<String, dynamic>> maps = await db.query(
+        tableName,
+        orderBy: 'rarity DESC, isUnlocked DESC, id ASC',
+      );
+
+      debugPrint('📊 데이터베이스에서 조회된 업적 개수: ${maps.length}');
+      
+      final achievements = List.generate(maps.length, (i) {
+        try {
+          return Achievement.fromMap(maps[i]);
+        } catch (e) {
+          debugPrint('❌ 업적 파싱 실패: ${maps[i]} - $e');
+          rethrow;
+        }
+      });
+      
+      // 캐시 업데이트
+      _achievementCache.clear();
+      for (final achievement in achievements) {
+        _updateCache(achievement);
+      }
+      
+      debugPrint('✅ 성공적으로 파싱된 업적 개수: ${achievements.length}');
+      return achievements;
+    } finally {
+      _endPerformanceTimer('getAllAchievements', timer);
+    }
   }
 
   // 잠금 해제된 업적들만 조회
@@ -185,18 +223,39 @@ class AchievementService {
     });
   }
 
-  // 업적 진행도 업데이트
+  // 업적 진행도 업데이트 (최적화됨)
   static Future<void> updateAchievementProgress(
     String achievementId,
     int newValue,
   ) async {
-    final db = await database;
-    await db.update(
-      tableName,
-      {'currentValue': newValue},
-      where: 'id = ?',
-      whereArgs: [achievementId],
-    );
+    final timer = _startPerformanceTimer('updateAchievementProgress');
+    
+    try {
+      // 캐시에서 현재 값 확인
+      final cached = _getFromCache(achievementId);
+      if (cached != null && cached.currentValue == newValue) {
+        debugPrint('🔄 값 변경 없음, 업데이트 건너뜀: $achievementId');
+        return;
+      }
+      
+      final db = await database;
+      await db.update(
+        tableName,
+        {'currentValue': newValue},
+        where: 'id = ?',
+        whereArgs: [achievementId],
+      );
+      
+      // 캐시 업데이트
+      if (cached != null) {
+        final updated = cached.copyWith(currentValue: newValue);
+        _updateCache(updated);
+      }
+      
+      debugPrint('📈 업적 진행도 업데이트: $achievementId = $newValue');
+    } finally {
+      _endPerformanceTimer('updateAchievementProgress', timer);
+    }
   }
 
   // 업적 잠금 해제
@@ -258,53 +317,162 @@ class AchievementService {
     return null;
   }
 
-  // 운동 기록 기반으로 업적 진행도 체크 및 업데이트
+  // 운동 기록 기반으로 업적 진행도 체크 및 업데이트 (최적화됨)
   static Future<List<Achievement>> checkAndUpdateAchievements() async {
+    final overallTimer = _startPerformanceTimer('checkAndUpdateAchievements_full');
+    debugPrint('🏆 업적 체크 및 업데이트 시작');
+    
     final List<Achievement> newlyUnlocked = [];
-    final workouts = await WorkoutHistoryService.getAllWorkouts();
-    final statistics = await WorkoutHistoryService.getStatistics();
-    final currentStreak = await WorkoutHistoryService.getCurrentStreak();
+    
+    try {
+      // 상태 백업
+      await _backupState();
+      
+      // 데이터 수집 (캐시 활용)
+      final dataTimer = _startPerformanceTimer('data_collection');
+      final workouts = await WorkoutHistoryService.getAllWorkouts();
+      debugPrint('📊 WorkoutHistoryService에서 조회된 운동 기록: ${workouts.length}개');
+      
+      final statistics = await WorkoutHistoryService.getStatistics();
+      debugPrint('📈 운동 통계: $statistics');
+      
+      final currentStreak = await WorkoutHistoryService.getCurrentStreak();
+      debugPrint('🔥 현재 스트릭: $currentStreak일');
+      _endPerformanceTimer('data_collection', dataTimer);
 
-    // 각 업적 타입별로 체크
-    for (final achievement in PredefinedAchievements.all) {
-      if (await _isAchievementUnlocked(achievement.id)) continue;
+      // 캐시된 업적 조회
+      final achievementsTimer = _startPerformanceTimer('achievements_loading');
+      final currentAchievements = await getAllAchievements();
+      final unlockedAchievements = Set<String>.from(
+        currentAchievements.where((a) => a.isUnlocked).map((a) => a.id)
+      );
+      _endPerformanceTimer('achievements_loading', achievementsTimer);
 
-      int currentValue = 0;
+      // 업적 처리 (배치 처리 준비)
+      final processingTimer = _startPerformanceTimer('achievements_processing');
+      int processedAchievements = 0;
+      final List<Map<String, dynamic>> batchUpdates = [];
+      
+      for (final achievement in PredefinedAchievements.all) {
+        try {
+          if (unlockedAchievements.contains(achievement.id)) {
+            debugPrint('✅ 업적 ${achievement.id}는 이미 잠금 해제됨');
+            continue;
+          }
 
-      switch (achievement.type) {
-        case AchievementType.first:
-          currentValue = await _checkFirstAchievements(achievement, workouts);
-          break;
-        case AchievementType.streak:
-          currentValue = currentStreak;
-          break;
-        case AchievementType.volume:
-          currentValue = statistics['totalReps'] as int? ?? 0;
-          break;
-        case AchievementType.perfect:
-          currentValue = await _checkPerfectAchievements(workouts);
-          break;
-        case AchievementType.special:
-          currentValue = await _checkSpecialAchievements(achievement, workouts);
-          break;
-        case AchievementType.challenge:
-          currentValue = await _checkChallengeAchievements(achievement);
-          break;
-      }
+          int currentValue = 0;
 
-      // 진행도 업데이트
-      await updateAchievementProgress(achievement.id, currentValue);
+          // 업적 타입별 계산 (최적화된 메서드 사용)
+          switch (achievement.type) {
+            case AchievementType.first:
+              currentValue = await _checkFirstAchievements(achievement, workouts);
+              break;
+            case AchievementType.streak:
+              currentValue = currentStreak;
+              break;
+            case AchievementType.volume:
+              currentValue = statistics['totalReps'] as int? ?? 0;
+              break;
+            case AchievementType.perfect:
+              currentValue = await _checkPerfectAchievements(workouts);
+              break;
+            case AchievementType.special:
+              currentValue = await _checkSpecialAchievements(achievement, workouts);
+              break;
+            case AchievementType.challenge:
+              currentValue = await _checkChallengeAchievements(achievement);
+              break;
+          }
 
-      // 달성 조건 체크
-      if (currentValue >= achievement.targetValue) {
-        final unlockedAchievement = await unlockAchievement(achievement.id);
-        if (unlockedAchievement != null) {
-          newlyUnlocked.add(unlockedAchievement);
+          debugPrint('🎯 업적 ${achievement.id}: 현재 값 = $currentValue, 목표 값 = ${achievement.targetValue}');
+
+          // 배치 업데이트에 추가 (즉시 업데이트 대신)
+          batchUpdates.add({
+            'id': achievement.id,
+            'currentValue': currentValue,
+            'targetValue': achievement.targetValue,
+          });
+
+          // 달성 조건 체크
+          if (currentValue >= achievement.targetValue) {
+            debugPrint('🎉 업적 달성! ${achievement.id}');
+            final unlockedAchievement = await unlockAchievement(achievement.id);
+            if (unlockedAchievement != null) {
+              newlyUnlocked.add(unlockedAchievement);
+              debugPrint('🔓 업적 잠금 해제 성공: ${achievement.id}');
+            } else {
+              debugPrint('❌ 업적 잠금 해제 실패: ${achievement.id}');
+            }
+          }
+          
+          processedAchievements++;
+        } catch (e) {
+          debugPrint('❌ 업적 ${achievement.id} 처리 중 오류: $e');
+          // 개별 업적 오류는 전체 처리를 중단하지 않음
         }
       }
+      _endPerformanceTimer('achievements_processing', processingTimer);
+
+      // 배치 업데이트 실행
+      if (batchUpdates.isNotEmpty) {
+        final batchTimer = _startPerformanceTimer('batch_updates');
+        await _executeBatchUpdates(batchUpdates);
+        _endPerformanceTimer('batch_updates', batchTimer);
+      }
+
+      debugPrint('✅ 업적 체크 완료: ${processedAchievements}개 처리, ${newlyUnlocked.length}개 새로 잠금 해제');
+      
+      // 성능 통계 출력
+      if (_enablePerformanceLogging) {
+        final stats = getPerformanceStats();
+        debugPrint('📊 성능 통계: $stats');
+      }
+      
+    } catch (e) {
+      debugPrint('❌ 업적 체크 및 업데이트 중 치명적 오류: $e');
+      debugPrint('스택 트레이스: ${StackTrace.current}');
+      
+      // 오류 발생 시 백업 상태로 복구 시도
+      final restored = await _restoreState();
+      if (restored) {
+        debugPrint('✅ 백업 상태로 복구 완료');
+      }
+    } finally {
+      _endPerformanceTimer('checkAndUpdateAchievements_full', overallTimer);
     }
 
     return newlyUnlocked;
+  }
+
+  /// 배치 업데이트 실행
+  static Future<void> _executeBatchUpdates(List<Map<String, dynamic>> updates) async {
+    if (updates.isEmpty) return;
+    
+    try {
+      final db = await database;
+      await db.transaction((txn) async {
+        for (final update in updates) {
+          await txn.update(
+            tableName,
+            {'currentValue': update['currentValue']},
+            where: 'id = ?',
+            whereArgs: [update['id']],
+          );
+          
+          // 캐시 업데이트
+          final cached = _getFromCache(update['id'] as String);
+          if (cached != null) {
+            final updated = cached.copyWith(currentValue: update['currentValue'] as int?);
+            _updateCache(updated);
+          }
+        }
+      });
+      
+      debugPrint('✅ 배치 업데이트 완료: ${updates.length}개 업적');
+    } catch (e) {
+      debugPrint('❌ 배치 업데이트 실패: $e');
+      rethrow;
+    }
   }
 
   // 첫 번째 달성 업적 체크
@@ -315,19 +483,37 @@ class AchievementService {
     switch (achievement.id) {
       case 'first_workout':
         return workouts.isNotEmpty ? 1 : 0;
-      case 'first_perfect_set':
-        // 완벽한 세트가 하나라도 있는지 확인
+        
+      case 'first_50_pushups':
+        // 한 번의 운동에서 50개 이상 완료했는지 확인
         for (final workout in workouts) {
-          for (int i = 0; i < workout.targetReps.length; i++) {
-            if (workout.completedReps[i] >= workout.targetReps[i]) {
-              return 1; // 첫 번째 완벽한 세트 달성
-            }
+          final totalReps = workout.completedReps.fold<int>(0, (sum, reps) => sum + reps);
+          if (totalReps >= 50) {
+            return 1;
           }
         }
         return 0;
-      case 'first_level_up':
-        // TODO: 레벨 시스템 구현 후 체크
+        
+      case 'first_100_single':
+        // 한 번의 운동에서 100개 이상 완료했는지 확인
+        for (final workout in workouts) {
+          final totalReps = workout.completedReps.fold<int>(0, (sum, reps) => sum + reps);
+          if (totalReps >= 100) {
+            return 1;
+          }
+        }
         return 0;
+        
+      case 'first_level_up':
+        // 레벨 5 달성 여부 확인 (Chad Evolution 시스템과 연동)
+        try {
+          final currentLevel = await ChadEvolutionService.getCurrentLevel();
+          return currentLevel >= 5 ? 1 : 0;
+        } catch (e) {
+          debugPrint('❌ 레벨 확인 중 오류: $e');
+          return 0;
+        }
+        
       default:
         return 0;
     }
@@ -403,13 +589,89 @@ class AchievementService {
         return lunchWorkouts;
 
       case 'speed_demon':
+        // 5분 이내에 50개 이상 완료한 적이 있는지 체크
+        for (final workout in workouts) {
+          final totalReps = workout.completedReps.fold<int>(0, (sum, reps) => sum + reps);
+          // 총 운동 시간이 5분 이하이고 50개 이상 완료했는지 확인
+          if (totalReps >= 50 && workout.duration.inMinutes <= 5) {
+            return 1;
+          }
+        }
+        return 0;
+
       case 'endurance_king':
+        // 30분 이상 운동한 적이 있는지 체크
+        for (final workout in workouts) {
+          if (workout.duration.inMinutes >= 30) {
+            return 1;
+          }
+        }
+        return 0;
+
       case 'comeback_kid':
+        // 7일 이상 쉬고 다시 운동한 적이 있는지 체크
+        if (workouts.length >= 2) {
+          final sortedWorkouts = List<WorkoutHistory>.from(workouts)
+            ..sort((a, b) => a.date.compareTo(b.date));
+          
+          for (int i = 1; i < sortedWorkouts.length; i++) {
+            final gap = sortedWorkouts[i].date.difference(sortedWorkouts[i-1].date).inDays;
+            if (gap >= 7) {
+              return 1; // 7일 이상 쉬고 복귀
+            }
+          }
+        }
+        return 0;
+
       case 'overachiever':
+        // 목표의 150% 이상을 5번 달성했는지 체크
+        int overachieverCount = 0;
+        for (final workout in workouts) {
+          if (workout.completionRate >= 1.5) {
+            overachieverCount++;
+          }
+        }
+        return overachieverCount >= 5 ? 1 : 0;
+
       case 'double_trouble':
+        // 목표의 200% 이상을 달성한 적이 있는지 체크
+        for (final workout in workouts) {
+          if (workout.completionRate >= 2.0) {
+            return 1;
+          }
+        }
+        return 0;
+
       case 'consistency_master':
-        // 이러한 업적들은 별도 로직이 필요하므로 현재는 0 반환
-        // 추후 구체적인 조건 구현 예정
+        // 연속 10일 동안 정확히 목표 달성했는지 체크
+        if (workouts.length >= 10) {
+          final sortedWorkouts = List<WorkoutHistory>.from(workouts)
+            ..sort((a, b) => b.date.compareTo(a.date)); // 최신순 정렬
+          
+          int consecutiveExactDays = 0;
+          DateTime? lastDate;
+          
+          for (final workout in sortedWorkouts) {
+            // 완료율이 100%~105% 사이인지 체크 (정확한 목표 달성)
+            if (workout.completionRate >= 1.0 && workout.completionRate <= 1.05) {
+              if (lastDate == null || 
+                  lastDate.difference(workout.date).inDays == 1) {
+                consecutiveExactDays++;
+                lastDate = workout.date;
+                
+                if (consecutiveExactDays >= 10) {
+                  return 1;
+                }
+              } else {
+                consecutiveExactDays = 1; // 연속성이 깨짐, 다시 시작
+                lastDate = workout.date;
+              }
+            } else {
+              consecutiveExactDays = 0; // 정확하지 않은 달성
+              lastDate = null;
+            }
+          }
+        }
         return 0;
 
       default:
@@ -640,5 +902,446 @@ class AchievementService {
     
     // 업적 체크 및 업데이트
     await checkAndUpdateAchievements();
+  }
+
+  // 업적 데이터베이스 무결성 검증
+  static Future<Map<String, dynamic>> validateAchievementDatabase() async {
+    final Map<String, dynamic> validation = {
+      'isValid': true,
+      'issues': <String>[],
+      'stats': <String, dynamic>{},
+    };
+
+    try {
+      final db = await database;
+      
+      // 1. 테이블 존재 확인
+      final tables = await db.rawQuery(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name='$tableName'"
+      );
+      if (tables.isEmpty) {
+        validation['isValid'] = false;
+        (validation['issues'] as List<String>).add('업적 테이블이 존재하지 않습니다');
+        return validation;
+      }
+
+      // 2. 기본 업적 개수 확인
+      final totalCount = await getTotalCount();
+      final expectedCount = PredefinedAchievements.all.length;
+      validation['stats']['totalCount'] = totalCount;
+      validation['stats']['expectedCount'] = expectedCount;
+      
+      if (totalCount != expectedCount) {
+        validation['isValid'] = false;
+        (validation['issues'] as List<String>).add('업적 개수 불일치: 예상 ${expectedCount}개, 실제 ${totalCount}개');
+      }
+
+      // 3. 중복 ID 확인
+      final duplicateIds = await db.rawQuery('''
+        SELECT id, COUNT(*) as count 
+        FROM $tableName 
+        GROUP BY id 
+        HAVING COUNT(*) > 1
+      ''');
+      if (duplicateIds.isNotEmpty) {
+        validation['isValid'] = false;
+        for (final row in duplicateIds) {
+          (validation['issues'] as List<String>).add('중복 ID 발견: ${row['id']} (${row['count']}개)');
+        }
+      }
+
+      // 4. 필수 필드 검증
+      final incompleteAchievements = await db.rawQuery('''
+        SELECT id FROM $tableName 
+        WHERE titleKey IS NULL OR descriptionKey IS NULL OR targetValue IS NULL OR xpReward IS NULL
+      ''');
+      if (incompleteAchievements.isNotEmpty) {
+        validation['isValid'] = false;
+        for (final row in incompleteAchievements) {
+          (validation['issues'] as List<String>).add('불완전한 업적 데이터: ${row['id']}');
+        }
+      }
+
+      // 5. 잠금 해제된 업적 통계
+      final unlockedCount = await getUnlockedCount();
+      validation['stats']['unlockedCount'] = unlockedCount;
+      validation['stats']['completionRate'] = (unlockedCount / totalCount * 100).toStringAsFixed(1);
+
+      // 6. 진행도 값 검증 (음수나 비정상적인 값 확인)
+      final invalidProgress = await db.rawQuery('''
+        SELECT id, currentValue, targetValue 
+        FROM $tableName 
+        WHERE currentValue < 0 OR (currentValue > targetValue AND isUnlocked = 0)
+      ''');
+      if (invalidProgress.isNotEmpty) {
+        for (final row in invalidProgress) {
+          (validation['issues'] as List<String>).add('비정상적인 진행도: ${row['id']} (${row['currentValue']}/${row['targetValue']})');
+        }
+      }
+
+      // 7. 타입 및 레어도 검증
+      final invalidTypes = await db.rawQuery('''
+        SELECT id, type, rarity 
+        FROM $tableName 
+        WHERE type NOT IN ('first', 'streak', 'volume', 'perfect', 'special', 'challenge')
+        OR rarity NOT IN ('common', 'rare', 'epic', 'legendary')
+      ''');
+      if (invalidTypes.isNotEmpty) {
+        for (final row in invalidTypes) {
+          (validation['issues'] as List<String>).add('잘못된 타입/레어도: ${row['id']} (${row['type']}, ${row['rarity']})');
+        }
+      }
+
+      debugPrint('🔍 업적 데이터베이스 검증 완료');
+      debugPrint('📊 총 업적: ${validation['stats']['totalCount']}/${validation['stats']['expectedCount']}');
+      debugPrint('🔓 잠금 해제: ${validation['stats']['unlockedCount']}개 (${validation['stats']['completionRate']}%)');
+      
+      final issues = validation['issues'] as List<String>? ?? <String>[];
+      if (issues.isNotEmpty) {
+        debugPrint('⚠️ 발견된 문제점들:');
+        for (final issue in issues) {
+          debugPrint('  - $issue');
+        }
+      } else {
+        debugPrint('✅ 모든 검증 통과');
+      }
+
+    } catch (e) {
+      validation['isValid'] = false;
+      (validation['issues'] as List<String>).add('검증 중 오류 발생: $e');
+      debugPrint('❌ 업적 데이터베이스 검증 실패: $e');
+    }
+
+    return validation;
+  }
+
+  // 업적 데이터베이스 복구 시도
+  static Future<bool> repairAchievementDatabase() async {
+    try {
+      debugPrint('🔧 업적 데이터베이스 복구 시작');
+      
+      // 1. 검증 실행
+      final validation = await validateAchievementDatabase();
+      if ((validation['isValid'] as bool?) == true) {
+        debugPrint('✅ 복구 불필요: 데이터베이스가 정상 상태입니다');
+        return true;
+      }
+
+      final db = await database;
+      
+      // 2. 중복 항목 제거
+      debugPrint('🧹 중복 항목 제거 중...');
+      await db.rawQuery('''
+        DELETE FROM $tableName 
+        WHERE rowid NOT IN (
+          SELECT MIN(rowid) 
+          FROM $tableName 
+          GROUP BY id
+        )
+      ''');
+
+      // 3. 누락된 업적 추가
+      debugPrint('📝 누락된 업적 추가 중...');
+      final existingIds = await db.rawQuery('SELECT DISTINCT id FROM $tableName');
+      final existingIdSet = existingIds.map((row) => row['id'] as String).toSet();
+      
+      for (final achievement in PredefinedAchievements.all) {
+        if (!existingIdSet.contains(achievement.id)) {
+          await db.insert(
+            tableName,
+            achievement.toMap(),
+            conflictAlgorithm: ConflictAlgorithm.ignore,
+          );
+          debugPrint('✅ 누락된 업적 추가: ${achievement.id}');
+        }
+      }
+
+      // 4. 비정상적인 진행도 수정
+      debugPrint('📊 진행도 데이터 수정 중...');
+      await db.rawQuery('UPDATE $tableName SET currentValue = 0 WHERE currentValue < 0');
+      
+      // 5. 재검증
+      final revalidation = await validateAchievementDatabase();
+      final isRevalidationValid = revalidation['isValid'] as bool? ?? false;
+      if (isRevalidationValid) {
+        debugPrint('✅ 업적 데이터베이스 복구 완료');
+        return true;
+      } else {
+        debugPrint('❌ 복구 후에도 문제가 남아있습니다');
+        return false;
+      }
+
+    } catch (e) {
+      debugPrint('❌ 업적 데이터베이스 복구 실패: $e');
+      return false;
+    }
+  }
+
+  // 업적 진행도 동기화 (WorkoutHistory 기반으로 재계산)
+  static Future<void> synchronizeAchievementProgress() async {
+    try {
+      debugPrint('🔄 업적 진행도 동기화 시작');
+      
+      final workouts = await WorkoutHistoryService.getAllWorkouts();
+      final statistics = await WorkoutHistoryService.getStatistics();
+      final currentStreak = await WorkoutHistoryService.getCurrentStreak();
+      
+      debugPrint('📊 기준 데이터: 운동 ${workouts.length}회, 스트릭 ${currentStreak}일');
+      
+      // 모든 업적의 진행도를 다시 계산
+      for (final achievement in PredefinedAchievements.all) {
+        try {
+          int currentValue = 0;
+          
+          switch (achievement.type) {
+            case AchievementType.first:
+              currentValue = await _checkFirstAchievements(achievement, workouts);
+              break;
+            case AchievementType.streak:
+              currentValue = currentStreak;
+              break;
+            case AchievementType.volume:
+              currentValue = statistics['totalReps'] as int? ?? 0;
+              break;
+            case AchievementType.perfect:
+              currentValue = await _checkPerfectAchievements(workouts);
+              break;
+            case AchievementType.special:
+              currentValue = await _checkSpecialAchievements(achievement, workouts);
+              break;
+            case AchievementType.challenge:
+              currentValue = await _checkChallengeAchievements(achievement);
+              break;
+          }
+
+          // 진행도 업데이트 (잠금 해제 상태는 유지)
+          await updateAchievementProgress(achievement.id, currentValue);
+          
+          debugPrint('🔄 ${achievement.id}: $currentValue/${achievement.targetValue}');
+          
+        } catch (e) {
+          debugPrint('❌ ${achievement.id} 동기화 실패: $e');
+        }
+      }
+      
+      debugPrint('✅ 업적 진행도 동기화 완료');
+      
+    } catch (e) {
+      debugPrint('❌ 업적 진행도 동기화 실패: $e');
+    }
+  }
+
+  // === 성능 모니터링 유틸리티 ===
+  
+  /// 성능 메트릭 시작 측정
+  static Stopwatch _startPerformanceTimer(String operation) {
+    if (!_enablePerformanceLogging) return Stopwatch();
+    final stopwatch = Stopwatch()..start();
+    debugPrint('⏱️ 성능 측정 시작: $operation');
+    return stopwatch;
+  }
+  
+  /// 성능 메트릭 종료 및 기록
+  static void _endPerformanceTimer(String operation, Stopwatch stopwatch) {
+    if (!_enablePerformanceLogging) return;
+    stopwatch.stop();
+    final duration = stopwatch.elapsedMilliseconds;
+    
+    _performanceMetrics.putIfAbsent(operation, () => []);
+    _performanceMetrics[operation]!.add(duration);
+    
+    // 최근 10개 기록만 유지
+    if (_performanceMetrics[operation]!.length > 10) {
+      _performanceMetrics[operation]!.removeAt(0);
+    }
+    
+    debugPrint('📊 성능 측정 완료: $operation - ${duration}ms');
+    
+    // 경고 임계값 확인 (500ms 이상)
+    if (duration > 500) {
+      debugPrint('⚠️ 성능 경고: $operation이 ${duration}ms 소요됨');
+    }
+  }
+  
+  /// 성능 통계 조회
+  static Map<String, Map<String, double>> getPerformanceStats() {
+    final stats = <String, Map<String, double>>{};
+    
+    for (final entry in _performanceMetrics.entries) {
+      final times = entry.value;
+      if (times.isEmpty) continue;
+      
+      final avg = times.reduce((a, b) => a + b) / times.length;
+      final min = times.reduce((a, b) => a < b ? a : b).toDouble();
+      final max = times.reduce((a, b) => a > b ? a : b).toDouble();
+      
+      stats[entry.key] = {
+        'average': avg,
+        'min': min,
+        'max': max,
+        'count': times.length.toDouble(),
+      };
+    }
+    
+    return stats;
+  }
+  
+  // === 캐싱 관리 ===
+  
+  /// 캐시 유효성 확인
+  static bool _isCacheValid() {
+    if (_lastCacheUpdate == null) return false;
+    return DateTime.now().difference(_lastCacheUpdate!) < _cacheValidDuration;
+  }
+  
+  /// 캐시 무효화
+  static void _invalidateCache() {
+    _achievementCache.clear();
+    _lastCacheUpdate = null;
+    debugPrint('🗑️ 업적 캐시 무효화');
+  }
+  
+  /// 캐시에서 업적 조회
+  static Achievement? _getFromCache(String achievementId) {
+    if (!_isCacheValid()) return null;
+    return _achievementCache[achievementId];
+  }
+  
+  /// 캐시에 업적 저장
+  static void _updateCache(Achievement achievement) {
+    _achievementCache[achievement.id] = achievement;
+    _lastCacheUpdate = DateTime.now();
+  }
+  
+  // === 배치 처리 ===
+  
+  /// 업데이트를 배치 처리 대기열에 추가
+  static void _addToBatch(String achievementId, int newValue) {
+    _pendingUpdates.add({
+      'id': achievementId,
+      'value': newValue,
+      'timestamp': DateTime.now().millisecondsSinceEpoch,
+    });
+    
+    debugPrint('📝 배치 대기열에 추가: $achievementId = $newValue (대기열 크기: ${_pendingUpdates.length})');
+    
+    // 배치 크기에 도달하면 처리
+    if (_pendingUpdates.length >= _batchSize) {
+      _processBatch();
+    }
+  }
+  
+  /// 배치 처리 실행
+  static Future<void> _processBatch() async {
+    if (_isBatchProcessing || _pendingUpdates.isEmpty) return;
+    
+    _isBatchProcessing = true;
+    final timer = _startPerformanceTimer('batch_processing');
+    
+    try {
+      debugPrint('🔄 배치 처리 시작: ${_pendingUpdates.length}개 업데이트');
+      
+      final db = await database;
+      await db.transaction((txn) async {
+        for (final update in _pendingUpdates) {
+          final updateValue = update['value'] as int? ?? 0;
+          final updateId = update['id'] as String? ?? '';
+          await txn.update(
+            tableName,
+            {'currentValue': updateValue},
+            where: 'id = ?',
+            whereArgs: [updateId],
+          );
+        }
+      });
+      
+      // 캐시 업데이트
+      for (final update in _pendingUpdates) {
+        final updateId = update['id'] as String? ?? '';
+        final updateValue = update['value'] as int? ?? 0;
+        final cached = _getFromCache(updateId);
+        if (cached != null) {
+          final updated = cached.copyWith(currentValue: updateValue);
+          _updateCache(updated);
+        }
+      }
+      
+      debugPrint('✅ 배치 처리 완료: ${_pendingUpdates.length}개 업데이트');
+      _pendingUpdates.clear();
+      
+    } catch (e) {
+      debugPrint('❌ 배치 처리 실패: $e');
+      // 실패한 업데이트는 개별 처리로 재시도
+      await _retryFailedUpdates();
+    } finally {
+      _isBatchProcessing = false;
+      _endPerformanceTimer('batch_processing', timer);
+    }
+  }
+  
+  /// 실패한 업데이트 재시도
+  static Future<void> _retryFailedUpdates() async {
+    debugPrint('🔄 실패한 업데이트 개별 재시도 시작');
+    final failedUpdates = List.from(_pendingUpdates);
+    _pendingUpdates.clear();
+    
+    for (final update in failedUpdates) {
+      try {
+        final value = update['value'] as int? ?? 0;
+        final id = update['id'] as String? ?? '';
+        await updateAchievementProgress(id, value);
+        debugPrint('✅ 재시도 성공: $id');
+      } catch (e) {
+        debugPrint('❌ 재시도 실패: ${update['id']} - $e');
+      }
+    }
+  }
+  
+  // === 상태 백업 및 복구 ===
+  
+  /// 현재 상태 백업
+  static Future<void> _backupState() async {
+    try {
+      final achievements = await getAllAchievements();
+      _lastKnownState = {
+        'achievements': achievements.map((a) => a.toMap()).toList(),
+        'timestamp': DateTime.now().millisecondsSinceEpoch,
+      };
+      debugPrint('💾 상태 백업 완료: ${achievements.length}개 업적');
+    } catch (e) {
+      debugPrint('❌ 상태 백업 실패: $e');
+    }
+  }
+  
+  /// 백업된 상태로 복구
+  static Future<bool> _restoreState() async {
+    if (_lastKnownState == null) {
+      debugPrint('❌ 복구할 백업 상태가 없음');
+      return false;
+    }
+    
+    try {
+      final achievementMaps = _lastKnownState!['achievements'] as List<dynamic>;
+      final db = await database;
+      
+      await db.transaction((txn) async {
+        for (final mapDynamic in achievementMaps) {
+          final map = mapDynamic as Map<String, dynamic>;
+          await txn.update(
+            tableName,
+            map,
+            where: 'id = ?',
+            whereArgs: [map['id']],
+          );
+        }
+      });
+      
+      _invalidateCache(); // 캐시 무효화
+      debugPrint('✅ 상태 복구 완료: ${achievementMaps.length}개 업적');
+      return true;
+    } catch (e) {
+      debugPrint('❌ 상태 복구 실패: $e');
+      return false;
+    }
   }
 }

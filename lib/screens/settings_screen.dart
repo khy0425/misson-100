@@ -345,7 +345,10 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
 
   Widget _buildNotificationSettings() {
     return _buildSettingsSection(AppLocalizations.of(context).notificationSettings, [
-      _buildSwitchSetting(
+      // 알림 권한 상태 표시기
+      _buildNotificationPermissionStatus(),
+      
+      _buildNotificationToggle(
         AppLocalizations.of(context).pushNotifications,
         AppLocalizations.of(context).pushNotificationsDesc,
         _pushNotifications,
@@ -356,8 +359,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
             final hasPermission = await NotificationService.hasPermission();
             if (!hasPermission) {
               // 권한이 없으면 권한 요청 다이얼로그 표시
-              _showPermissionRequestDialog();
-              return;
+              await _showPermissionRequestDialog();
             }
           }
           
@@ -395,9 +397,135 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         AppLocalizations.of(context).workoutRemindersDesc,
         _workoutReminders,
         Icons.schedule,
-        (value) {
-          setState(() => _workoutReminders = value);
-          _saveBoolSetting('workout_reminders', value);
+        (value) async {
+          if (value) {
+            // 운동 리마인더를 켜려고 할 때 권한 상태 상세 확인
+            final hasNotifications = await NotificationService.hasPermission();
+            final hasExactAlarms = await NotificationService.canScheduleExactAlarms();
+            
+            if (!hasNotifications) {
+              // 기본 알림 권한이 없으면 권한 요청 다이얼로그 표시
+              if (mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: const Row(
+                      children: [
+                        Icon(Icons.warning, color: Colors.white),
+                        SizedBox(width: 8),
+                        Expanded(
+                          child: Text('⚠️ 기본 알림 권한이 필요합니다. 권한을 허용해주세요.'),
+                        ),
+                      ],
+                    ),
+                    backgroundColor: Colors.red,
+                    duration: const Duration(seconds: 4),
+                    action: SnackBarAction(
+                      label: '권한 설정',
+                      textColor: Colors.white,
+                      onPressed: () {
+                        _showPermissionRequestDialog();
+                      },
+                    ),
+                  ),
+                );
+              }
+            } else {
+              // 권한이 있으면 스마트 스케줄링 시도
+              final success = await NotificationService.scheduleWorkoutReminder(
+                hour: _reminderTime.hour,
+                minute: _reminderTime.minute,
+                enabled: true,
+              );
+              
+              if (success) {
+                // 성공시에만 UI 상태 업데이트
+                setState(() => _workoutReminders = value);
+                await _saveBoolSetting('workout_reminders', value);
+                
+                // 권한 상태에 따른 맞춤형 성공 메시지
+                String successMessage;
+                Icon successIcon;
+                Color backgroundColor;
+                
+                if (hasExactAlarms) {
+                  successMessage = '✅ 정확한 시간 운동 리마인더가 설정되었습니다!';
+                  successIcon = const Icon(Icons.check_circle, color: Colors.white);
+                  backgroundColor = Colors.green;
+                } else {
+                  successMessage = '⏰ 운동 리마인더가 설정되었습니다!\n(정확한 시간 권한이 없어 약간의 지연이 있을 수 있습니다)';
+                  successIcon = const Icon(Icons.schedule, color: Colors.white);
+                  backgroundColor = Colors.orange;
+                }
+                
+                if (mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Row(
+                        children: [
+                          successIcon,
+                          const SizedBox(width: 8),
+                          Expanded(child: Text(successMessage)),
+                        ],
+                      ),
+                      backgroundColor: backgroundColor,
+                      duration: const Duration(seconds: 4),
+                    ),
+                  );
+                }
+              } else {
+                // 실패시 사용자에게 상세한 피드백
+                if (mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: const Row(
+                        children: [
+                          Icon(Icons.error, color: Colors.white),
+                          SizedBox(width: 8),
+                          Expanded(
+                            child: Text('❌ 운동 리마인더 설정에 실패했습니다. 알림 권한을 확인해주세요.'),
+                          ),
+                        ],
+                      ),
+                      backgroundColor: Colors.red,
+                      duration: const Duration(seconds: 4),
+                      action: SnackBarAction(
+                        label: '권한 확인',
+                        textColor: Colors.white,
+                        onPressed: () {
+                          setState(() {}); // 권한 상태 새로고침
+                        },
+                      ),
+                    ),
+                  );
+                }
+                // 실패시 토글 상태 유지 (켜지지 않음)
+              }
+            }
+          } else {
+            // 운동 리마인더를 끄는 경우
+            setState(() => _workoutReminders = value);
+            await _saveBoolSetting('workout_reminders', value);
+            await NotificationService.scheduleWorkoutReminder(
+              hour: _reminderTime.hour,
+              minute: _reminderTime.minute,
+              enabled: false,
+            );
+            
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Row(
+                    children: [
+                      Icon(Icons.notifications_off, color: Colors.white),
+                      SizedBox(width: 8),
+                      Text('운동 리마인더가 비활성화되었습니다'),
+                    ],
+                  ),
+                  duration: Duration(seconds: 2),
+                ),
+              );
+            }
+          }
         },
         enabled: _pushNotifications,
       ),
@@ -454,6 +582,362 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
           _showTimePicker,
         ),
     ]);
+  }
+
+  /// 권한 상태 표시기
+  Widget _buildNotificationPermissionStatus() {
+    return FutureBuilder<Map<String, bool>>( 
+      future: _getNotificationPermissionStatus(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Card(
+            margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
+            child: ListTile(
+              leading: const SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
+              title: const Text('권한 상태 확인 중...'),
+              subtitle: Text(
+                '알림 권한 상태를 확인하고 있습니다',
+                style: TextStyle(color: Colors.grey.shade600),
+              ),
+            ),
+          );
+        }
+        
+        final permissions = snapshot.data ?? {
+          'notifications': false,
+          'exactAlarms': false,
+        };
+        
+        final hasNotifications = permissions['notifications'] ?? false;
+        final hasExactAlarms = permissions['exactAlarms'] ?? false;
+        final allPermissionsGranted = hasNotifications && hasExactAlarms;
+        
+        // 전체 상태에 따른 색상과 아이콘 결정
+        Color statusColor;
+        IconData statusIcon;
+        String statusTitle;
+        String statusSubtitle;
+        
+        if (allPermissionsGranted) {
+          statusColor = Colors.green;
+          statusIcon = Icons.verified_user;
+          statusTitle = '🔔 알림 권한 완벽!';
+          statusSubtitle = '모든 알림 기능을 사용할 수 있습니다';
+        } else if (hasNotifications) {
+          statusColor = Colors.orange;
+          statusIcon = Icons.warning;
+          statusTitle = '⚠️ 일부 권한 필요';
+          statusSubtitle = '정확한 시간 알림을 위해 추가 권한이 필요합니다';
+        } else {
+          statusColor = Colors.red;
+          statusIcon = Icons.error;
+          statusTitle = '❌ 알림 권한 필요';
+          statusSubtitle = '알림을 받으려면 권한 허용이 필요합니다';
+        }
+        
+        return Card(
+          margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
+          elevation: 2,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: statusColor.withValues(alpha: 0.3),
+                width: 1.5,
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // 헤더 섹션
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: statusColor.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Icon(
+                          statusIcon,
+                          color: statusColor,
+                          size: 24,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              statusTitle,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: statusColor,
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              statusSubtitle,
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: Colors.grey.shade600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  
+                  const SizedBox(height: 16),
+                  const Divider(height: 1),
+                  const SizedBox(height: 12),
+                  
+                  // 개별 권한 상태 표시
+                  _buildPermissionStatusRow(
+                    '기본 알림 권한',
+                    hasNotifications,
+                    hasNotifications 
+                      ? '앱에서 알림을 받을 수 있습니다' 
+                      : 'Android 13+에서 필요한 기본 알림 권한입니다',
+                    isRequired: true,
+                  ),
+                  
+                  const SizedBox(height: 8),
+                  
+                  _buildPermissionStatusRow(
+                    '정확한 알람 권한',
+                    hasExactAlarms,
+                    hasExactAlarms 
+                      ? '정확한 시간에 알림을 받을 수 있습니다' 
+                      : 'Android 12+에서 정확한 시간 알림을 위해 필요합니다',
+                    isRequired: false,
+                  ),
+                  
+                  // 권한 요청 버튼
+                  if (!allPermissionsGranted) ...[
+                    const SizedBox(height: 16),
+                    const Divider(height: 1),
+                    const SizedBox(height: 12),
+                    
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () async {
+                          await _showPermissionRequestDialog();
+                          setState(() {}); // 권한 상태 새로고침
+                        },
+                        icon: Icon(
+                          !hasNotifications ? Icons.notification_add : Icons.schedule,
+                          size: 20,
+                        ),
+                        label: Text(
+                          !hasNotifications 
+                            ? '알림 권한 허용하기' 
+                            : '정확한 알람 권한 설정하기',
+                          style: const TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: statusColor.withValues(alpha: 0.1),
+                          foregroundColor: statusColor,
+                          elevation: 0,
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            side: BorderSide(
+                              color: statusColor.withValues(alpha: 0.3),
+                              width: 1,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ] else ...[
+                    // 모든 권한이 있을 때 축하 메시지
+                    const SizedBox(height: 12),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.green.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: Colors.green.withValues(alpha: 0.3),
+                          width: 1,
+                        ),
+                      ),
+                      child: const Row(
+                        children: [
+                          Icon(Icons.celebration, color: Colors.green, size: 20),
+                          SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              '축하합니다! 모든 알림 기능을 완벽하게 사용할 수 있습니다! 🎉',
+                              style: TextStyle(
+                                color: Colors.green,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+  
+  /// 권한 상태 행 생성
+  Widget _buildPermissionStatusRow(String title, bool granted, String description, {bool isRequired = false}) {
+    final Color statusColor = granted ? Colors.green : (isRequired ? Colors.red : Colors.orange);
+    final IconData statusIcon = granted ? Icons.check_circle : (isRequired ? Icons.cancel : Icons.warning);
+    
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: statusColor.withValues(alpha: 0.05),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: statusColor.withValues(alpha: 0.2),
+          width: 1,
+        ),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              color: statusColor.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: Icon(
+              statusIcon,
+              color: statusColor,
+              size: 18,
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                        color: statusColor,
+                      ),
+                    ),
+                    if (isRequired) ...[
+                      const SizedBox(width: 6),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: Colors.red.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: const Text(
+                          '필수',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red,
+                          ),
+                        ),
+                      ),
+                    ] else ...[
+                      const SizedBox(width: 6),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: const Text(
+                          '권장',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  description,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey.shade600,
+                    height: 1.3,
+                  ),
+                ),
+                if (granted) ...[
+                  const SizedBox(height: 6),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.verified,
+                        size: 14,
+                        color: Colors.green.shade600,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        '활성화됨',
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.green.shade600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  
+  /// 알림 권한 상태 확인
+  Future<Map<String, bool>> _getNotificationPermissionStatus() async {
+    try {
+      final hasNotifications = await NotificationService.hasPermission();
+      final hasExactAlarms = await NotificationService.canScheduleExactAlarms();
+      
+      return {
+        'notifications': hasNotifications,
+        'exactAlarms': hasExactAlarms,
+      };
+    } catch (e) {
+      debugPrint('권한 상태 확인 오류: $e');
+      return {
+        'notifications': false,
+        'exactAlarms': false,
+      };
+    }
   }
 
   Widget _buildAppearanceSettings() {
@@ -1307,41 +1791,85 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     }
   }
 
-  void _showPermissionRequestDialog() {
-    showDialog<void>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(AppLocalizations.of(context)!.notificationPermissionRequired),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(AppLocalizations.of(context)!.notificationPermissionMessage),
-            const SizedBox(height: 12),
-            Text(AppLocalizations.of(context)!.notificationPermissionFeatures),
-            const SizedBox(height: 12),
-            Text(AppLocalizations.of(context)!.notificationPermissionRequest),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(AppLocalizations.of(context)!.cancel),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              Navigator.pop(context);
-              await NotificationService.openNotificationSettings();
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(AppColors.primaryColor),
-              foregroundColor: Colors.white,
+  Future<void> _showPermissionRequestDialog() async {
+    try {
+      // 새로운 사용자 친화적 권한 요청 다이얼로그 사용
+      final granted = await NotificationService.showPermissionRequestDialog(context);
+      
+      if (granted) {
+        // 권한이 허용되면 푸시 알림을 켜고 UI 업데이트
+        setState(() {
+          _pushNotifications = true;
+        });
+        await _saveBoolSetting('push_notifications', true);
+        
+        // 성공 메시지 표시
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Row(
+                children: [
+                  Icon(Icons.check_circle, color: Colors.white),
+                  SizedBox(width: 8),
+                  Text('✅ 알림 권한이 허용되었습니다!'),
+                ],
+              ),
+              backgroundColor: Colors.green,
+              duration: const Duration(seconds: 3),
             ),
-            child: Text(AppLocalizations.of(context)!.goToSettings),
+          );
+        }
+        
+        // 운동 리마인더가 활성화되어 있으면 스케줄링
+        if (_workoutReminders) {
+          await NotificationService.scheduleWorkoutReminder(
+            hour: _reminderTime.hour,
+            minute: _reminderTime.minute,
+            enabled: true,
+          );
+        }
+      } else {
+        // 권한이 거부되면 설명 메시지 표시
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Row(
+                children: [
+                  Icon(Icons.warning, color: Colors.white),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: Text('⚠️ 알림 권한이 필요합니다. 설정에서 수동으로 허용해주세요.'),
+                  ),
+                ],
+              ),
+              backgroundColor: Colors.orange,
+              duration: const Duration(seconds: 4),
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      debugPrint('권한 요청 오류: $e');
+      
+      // 오류 발생 시 기존 방식으로 폴백
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Row(
+              children: [
+                Icon(Icons.error, color: Colors.white),
+                SizedBox(width: 8),
+                Expanded(
+                  child: Text('❌ 권한 요청 중 오류가 발생했습니다. 설정에서 수동으로 허용해주세요.'),
+                ),
+              ],
+            ),
+            backgroundColor: Colors.red,
+            duration: const Duration(seconds: 4),
           ),
-        ],
-      ),
-    );
+        );
+      }
+    }
   }
 
   /// GitHub 저장소 열기

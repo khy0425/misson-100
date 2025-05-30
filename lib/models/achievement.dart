@@ -398,30 +398,6 @@ class PredefinedAchievements {
     ),
 
     Achievement(
-      id: 'first_perfect_set',
-      titleKey: 'achievementPerfect3Title',
-      descriptionKey: 'achievementPerfect3Desc',
-      motivationKey: 'achievementPerfect3Motivation',
-      type: AchievementType.first,
-      rarity: AchievementRarity.rare,
-      targetValue: 1,
-      xpReward: 200,
-      icon: Icons.star,
-    ),
-
-    Achievement(
-      id: 'first_level_up',
-      titleKey: 'achievementLevel5Title',
-      descriptionKey: 'achievementLevel5Desc',
-      motivationKey: 'achievementLevel5Motivation',
-      type: AchievementType.first,
-      rarity: AchievementRarity.rare,
-      targetValue: 1,
-      xpReward: 300,
-      icon: Icons.trending_up,
-    ),
-
-    Achievement(
       id: 'first_50_pushups',
       titleKey: 'achievementFirst50Title',
       descriptionKey: 'achievementFirst50Desc',
@@ -443,6 +419,18 @@ class PredefinedAchievements {
       targetValue: 1,
       xpReward: 500,
       icon: Icons.flash_on,
+    ),
+
+    Achievement(
+      id: 'first_level_up',
+      titleKey: 'achievementLevel5Title',
+      descriptionKey: 'achievementLevel5Desc',
+      motivationKey: 'achievementLevel5Motivation',
+      type: AchievementType.first,
+      rarity: AchievementRarity.rare,
+      targetValue: 1,
+      xpReward: 300,
+      icon: Icons.trending_up,
     ),
 
     // 연속 달성 시리즈
@@ -750,7 +738,7 @@ class PredefinedAchievements {
       icon: Icons.lunch_dining,
     ),
 
-    // 성능 기반 업적
+    // 성능 기반 업적 (구현 필요)
     Achievement(
       id: 'speed_demon',
       titleKey: 'achievementSpeedDemonTitle',

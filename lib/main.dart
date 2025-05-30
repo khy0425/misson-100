@@ -17,6 +17,9 @@ import 'services/permission_service.dart';
 import 'services/onboarding_service.dart';
 import 'services/chad_evolution_service.dart';
 import 'services/chad_image_service.dart';
+import 'services/achievement_service.dart';
+import 'services/database_service.dart';
+import 'screens/initial_test_screen.dart';
 // MemoryManager import 제거됨
 
 void main() async {
@@ -35,6 +38,20 @@ void main() async {
   await NotificationService.initialize();
   await NotificationService.createNotificationChannels();
   await ChadImageService().initialize();
+
+  // 업적 서비스 초기화
+  try {
+    debugPrint('🚀 업적 서비스 초기화 시작...');
+    await AchievementService.initialize();
+    
+    // 초기화 후 상태 확인
+    final totalCount = await AchievementService.getTotalCount();
+    final unlockedCount = await AchievementService.getUnlockedCount();
+    debugPrint('✅ 업적 서비스 초기화 완료 - 총 ${totalCount}개 업적, ${unlockedCount}개 잠금해제');
+  } catch (e, stackTrace) {
+    debugPrint('❌ 업적 서비스 초기화 오류: $e');
+    debugPrint('스택 트레이스: $stackTrace');
+  }
 
   // 테마 서비스 초기화
   final themeService = ThemeService();
@@ -90,8 +107,42 @@ class LocaleNotifier extends ChangeNotifier {
   }
 }
 
-class MissionApp extends StatelessWidget {
+class MissionApp extends StatefulWidget {
   const MissionApp({super.key});
+
+  @override
+  State<MissionApp> createState() => _MissionAppState();
+}
+
+class _MissionAppState extends State<MissionApp> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    // 앱 생명주기 관찰자 등록
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    // 앱 생명주기 관찰자 제거
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    
+    // 앱이 포그라운드로 돌아왔을 때 권한 상태 재확인
+    if (state == AppLifecycleState.resumed) {
+      debugPrint('🔄 앱이 포그라운드로 돌아왔습니다. 권한 상태 재확인...');
+      
+      // 알림 권한 재확인 (약간의 지연 후)
+      Future.delayed(const Duration(milliseconds: 500), () {
+        NotificationService.recheckPermissionsOnResume();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -197,14 +248,36 @@ class _SplashScreenState extends State<SplashScreen>
       // 온보딩 완료 여부 확인
       final isOnboardingCompleted = await OnboardingService.isOnboardingCompleted();
       
+      // UserProfile 생성 여부 확인 (난이도 선택 완료)
+      bool hasUserProfile = false;
+      try {
+        final databaseService = DatabaseService();
+        final userProfile = await databaseService.getUserProfile();
+        hasUserProfile = userProfile != null;
+        debugPrint('UserProfile 존재 여부: $hasUserProfile');
+      } catch (e) {
+        debugPrint('UserProfile 확인 오류: $e');
+        hasUserProfile = false;
+      }
+      
       // 화면 이동 결정
       Widget targetScreen;
       if (!hasAllPermissions) {
+        // 권한이 없으면 권한 요청 화면
         targetScreen = const PermissionScreen();
+        debugPrint('화면 이동: 권한 요청 화면');
       } else if (!isOnboardingCompleted) {
+        // 온보딩이 완료되지 않았으면 온보딩 화면
         targetScreen = const OnboardingScreen();
+        debugPrint('화면 이동: 온보딩 화면');
+      } else if (!hasUserProfile) {
+        // 온보딩은 완료했지만 난이도 선택이 안 되었으면 초기 테스트 화면
+        targetScreen = const InitialTestScreen();
+        debugPrint('화면 이동: 초기 테스트 화면 (난이도 선택)');
       } else {
+        // 모든 설정이 완료되었으면 메인 화면
         targetScreen = const MainNavigationScreen();
+        debugPrint('화면 이동: 메인 화면');
       }
       
       if (mounted) {
