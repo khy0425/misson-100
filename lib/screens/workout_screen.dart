@@ -55,6 +55,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>
   // 세션 관리
   String? _sessionId;
   bool _isRecoveredSession = false;
+  DateTime? _workoutStartTime; // 운동 시작 시간 추적
 
   // 스크롤 컨트롤러
   late ScrollController _scrollController;
@@ -86,6 +87,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>
     _targetReps = widget.workoutData.workout;
     _restTimeSeconds = widget.workoutData.restTimeSeconds;
     _completedReps = List.filled(_targetReps.length, 0);
+    _workoutStartTime = DateTime.now(); // 운동 시작 시간 기록
   }
   
   /// 세션 초기화 (복구 또는 새 세션 시작)
@@ -129,6 +131,9 @@ class _WorkoutScreenState extends State<WorkoutScreen>
       final completedRepsList = completedRepsStr.split(',').map(int.parse).toList();
       final currentSet = sessionData['currentSet'] as int;
       
+      // 복구된 세션의 운동 시작 시간 추정 (현재 시간에서 세트 수만큼 시간을 빼서 추정)
+      _workoutStartTime = DateTime.now().subtract(Duration(minutes: (currentSet + 1) * 3));
+      
       setState(() {
         _completedReps = completedRepsList;
         _currentSet = currentSet;
@@ -163,7 +168,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>
   /// 새 세션 시작
   Future<void> _startNewSession() async {
     try {
-      debugPrint('🆕 새 세션 시작');
+      debugPrint('🔄 새 세션 시작');
       
       _sessionId = await WorkoutHistoryService.startWorkoutSession(
         workoutTitle: widget.workoutData.title,
@@ -200,6 +205,9 @@ class _WorkoutScreenState extends State<WorkoutScreen>
       
       final currentSet = resumptionData['currentSet'] as int? ?? 0;
       final currentReps = resumptionData['currentReps'] as int? ?? 0;
+      
+      // 재개된 세션의 운동 시작 시간 추정
+      _workoutStartTime = DateTime.now().subtract(Duration(minutes: (currentSet + 1) * 3));
       
       setState(() {
         _completedReps = [...completedReps];
@@ -241,6 +249,9 @@ class _WorkoutScreenState extends State<WorkoutScreen>
       _currentMotivationalMessage = message;
       _showMotivationalMessage = true;
     });
+
+    // 운동 시작 시 업적 체크 (첫 운동 등)
+    _checkAchievementsDuringWorkout();
 
     // 3초 후 메시지 숨기기
     Timer(const Duration(seconds: 3), () {
@@ -362,6 +373,9 @@ class _WorkoutScreenState extends State<WorkoutScreen>
     // 즉시 데이터베이스에 세트 진행 상황 저장
     _saveSetProgressImmediately();
 
+    // 세트 완료 시 업적 체크 추가
+    _checkAchievementsDuringWorkout();
+
     // 세트 완료 동기부여 메시지 표시
     final message = _messageService.getSetCompletionMessage(
       userLevel: widget.userProfile.level.levelValue,
@@ -421,6 +435,86 @@ class _WorkoutScreenState extends State<WorkoutScreen>
           debugPrint('❌ 재개 세션 응급 백업 실패: $backupError');
         }
       }
+    }
+  }
+
+  /// 운동 중 실시간 업적 체크
+  Future<void> _checkAchievementsDuringWorkout() async {
+    try {
+      debugPrint('🏆 운동 중 업적 체크 시작');
+      
+      // 현재까지 완료된 총 횟수 계산
+      final currentTotalReps = _completedReps.fold(0, (sum, reps) => sum + reps);
+      debugPrint('📊 현재 총 완료 횟수: $currentTotalReps');
+      
+      // 현재 운동의 완료율 계산
+      final targetTotal = widget.workoutData.totalReps;
+      final completionRate = currentTotalReps / targetTotal;
+      debugPrint('📈 현재 완료율: ${(completionRate * 100).toStringAsFixed(1)}%');
+      
+      // 운동 시간 계산 (정확한 시간)
+      Duration workoutDuration = Duration.zero;
+      if (_workoutStartTime != null) {
+        workoutDuration = DateTime.now().difference(_workoutStartTime!);
+        debugPrint('⏱️ 운동 경과 시간: ${workoutDuration.inMinutes}분 ${workoutDuration.inSeconds % 60}초');
+      }
+      
+      // 특정 업적 조건 체크
+      bool shouldUpdateAchievements = false;
+      
+      // 1. 50개 달성 체크
+      if (currentTotalReps >= 50) {
+        debugPrint('🎯 50개 달성 조건 만족: $currentTotalReps개');
+        shouldUpdateAchievements = true;
+      }
+      
+      // 2. 100개 달성 체크
+      if (currentTotalReps >= 100) {
+        debugPrint('🎯 100개 달성 조건 만족: $currentTotalReps개');
+        shouldUpdateAchievements = true;
+      }
+      
+      // 3. 목표 초과달성 체크 (150% 이상)
+      if (completionRate >= 1.5) {
+        debugPrint('🎯 목표 150% 초과달성 조건 만족: ${(completionRate * 100).toStringAsFixed(1)}%');
+        shouldUpdateAchievements = true;
+      }
+      
+      // 4. 목표 200% 달성 체크
+      if (completionRate >= 2.0) {
+        debugPrint('🎯 목표 200% 달성 조건 만족: ${(completionRate * 100).toStringAsFixed(1)}%');
+        shouldUpdateAchievements = true;
+      }
+      
+      // 5. 스피드 데몬 체크 (5분 이내 50개)
+      if (currentTotalReps >= 50 && workoutDuration.inMinutes <= 5) {
+        debugPrint('🎯 스피드 데몬 조건 만족: ${workoutDuration.inMinutes}분 내 $currentTotalReps개');
+        shouldUpdateAchievements = true;
+      }
+      
+      // 6. 지구력 왕 체크 (30분 이상 운동)
+      if (workoutDuration.inMinutes >= 30) {
+        debugPrint('🎯 지구력 왕 조건 만족: ${workoutDuration.inMinutes}분 운동');
+        shouldUpdateAchievements = true;
+      }
+      
+      // 업적 업데이트 필요 시 실행
+      if (shouldUpdateAchievements) {
+        debugPrint('🔄 운동 중 업적 업데이트 실행');
+        final newlyUnlocked = await AchievementService.checkAndUpdateAchievements();
+        
+        if (newlyUnlocked.isNotEmpty) {
+          debugPrint('✨ 운동 중 새로 달성한 업적: ${newlyUnlocked.length}개');
+          for (final achievement in newlyUnlocked) {
+            debugPrint('🏆 업적 달성: ${achievement.titleKey}');
+          }
+        }
+      }
+      
+    } catch (e, stackTrace) {
+      debugPrint('⚠️ 운동 중 업적 체크 실패: $e');
+      debugPrint('스택 트레이스: $stackTrace');
+      // 업적 체크 실패해도 운동은 계속 진행
     }
   }
 
@@ -1178,6 +1272,14 @@ class _WorkoutScreenState extends State<WorkoutScreen>
                       _currentReps++;
                     });
                     HapticFeedback.lightImpact();
+                    
+                    // 마일스톤 체크 (빠른 입력에서도)
+                    final currentTotalReps = _completedReps.fold(0, (sum, reps) => sum + reps) + _currentReps;
+                    if (currentTotalReps >= 50 ||      // 50개 달성
+                        currentTotalReps >= 100 ||     // 100개 달성
+                        currentTotalReps >= 150) {     // 150개 이상
+                      _checkAchievementsDuringWorkout();
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(AppColors.primaryColor),
@@ -1263,6 +1365,14 @@ class _WorkoutScreenState extends State<WorkoutScreen>
           _currentReps = value;
         });
         HapticFeedback.lightImpact();
+        
+        // 마일스톤 체크 (빠른 입력에서도)
+        final currentTotalReps = _completedReps.fold(0, (sum, reps) => sum + reps) + _currentReps;
+        if (currentTotalReps >= 50 ||      // 50개 달성
+            currentTotalReps >= 100 ||     // 100개 달성
+            currentTotalReps >= 150) {     // 150개 이상
+          _checkAchievementsDuringWorkout();
+        }
         
         // 횟수를 설정한 후 자동으로 세트 완료 처리
         Future.delayed(const Duration(milliseconds: 300), () {

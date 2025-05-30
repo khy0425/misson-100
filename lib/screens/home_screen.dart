@@ -1049,6 +1049,14 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   }
 
   void _openTutorial(BuildContext context) async {
+    // 튜토리얼 조회 카운트 증가
+    try {
+      await AchievementService.incrementTutorialViewCount();
+      debugPrint('🎓 튜토리얼 조회 카운트 증가');
+    } catch (e) {
+      debugPrint('❌ 튜토리얼 카운트 증가 실패: $e');
+    }
+    
     if (context.mounted) {
       await Navigator.of(context).push(
         MaterialPageRoute<void>(builder: (context) => PushupTutorialScreen()),

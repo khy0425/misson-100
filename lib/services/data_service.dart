@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:file_picker/file_picker.dart';
@@ -32,10 +33,14 @@ class DataService {
       // JSON으로 변환
       final jsonString = jsonEncode(backupData);
       
-      // 파일 저장 위치 선택
+      // 백업 데이터를 bytes로 변환
+      final bytes = utf8.encode(jsonString);
+      
+      // 파일 저장 위치 선택 (bytes 사용)
       final result = await FilePicker.platform.saveFile(
         dialogTitle: 'Mission 100 백업 파일 저장',
         fileName: _backupFileName,
+        bytes: Uint8List.fromList(bytes), // bytes 파라미터 사용
         type: FileType.custom,
         allowedExtensions: ['json'],
       );
@@ -45,12 +50,8 @@ class DataService {
         return null;
       }
       
-      // 파일 저장
-      final file = File(result);
-      await file.writeAsString(jsonString);
-      
-      debugPrint('✅ 백업 완료: ${file.path}');
-      return file.path;
+      debugPrint('✅ 백업 완료: $result');
+      return result;
       
     } catch (e) {
       debugPrint('❌ 백업 실패: $e');

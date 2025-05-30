@@ -113,13 +113,18 @@ class DataBackupService {
       );
       
       if (!backupResult.success) {
+        debugPrint('❌ 백업 실패: ${backupResult.error}');
         return null;
       }
       
-      // 파일 저장 위치 선택
+      // 백업 데이터를 bytes로 변환
+      final bytes = utf8.encode(backupResult.data!);
+      
+      // 파일 저장 위치 선택 (새로운 방식 - bytes 사용)
       final result = await FilePicker.platform.saveFile(
         dialogTitle: 'Mission 100 백업 파일 저장',
         fileName: backupResult.fileName,
+        bytes: Uint8List.fromList(bytes), // bytes 파라미터 사용
         type: FileType.custom,
         allowedExtensions: ['json'],
       );
@@ -129,12 +134,8 @@ class DataBackupService {
         return null;
       }
       
-      // 파일 저장
-      final file = File(result);
-      await file.writeAsString(backupResult.data!);
-      
-      debugPrint('✅ 백업 파일 저장 완료: ${file.path}');
-      return file.path;
+      debugPrint('✅ 백업 파일 저장 완료: $result');
+      return result;
       
     } catch (e) {
       debugPrint('❌ 백업 파일 저장 실패: $e');

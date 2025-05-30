@@ -2,6 +2,7 @@ import '../models/user_profile.dart';
 import '../models/workout_session.dart';
 import '../utils/workout_data.dart';
 import 'database_service.dart';
+import 'package:flutter/foundation.dart';
 
 /// 사용자 레벨에 따른 6주 워크아웃 프로그램 생성 및 관리 서비스
 class WorkoutProgramService {
@@ -59,8 +60,14 @@ class WorkoutProgramService {
     final today = DateTime.now();
     final daysSinceStart = today.difference(startDate).inDays;
 
+    debugPrint('🏃 getTodayWorkout 시작');
+    debugPrint('📅 시작일: $startDate');
+    debugPrint('📅 오늘: $today');
+    debugPrint('📅 시작한지 $daysSinceStart일 경과');
+
     // 프로그램 완료 확인 (18일 = 6주 * 3일)
     if (daysSinceStart >= 18) {
+      debugPrint('✅ 프로그램 완료 (18일 초과)');
       return null; // 프로그램 완료
     }
 
@@ -68,20 +75,31 @@ class WorkoutProgramService {
     final weekIndex = daysSinceStart ~/ 7; // 0-based week index
     final dayInWeek = daysSinceStart % 7;
 
+    debugPrint('📊 주차 인덱스: $weekIndex (${weekIndex + 1}주차)');
+    debugPrint('📊 주 내 일차: $dayInWeek');
+
     // 운동일 확인 (월, 수, 금 = 0, 2, 4일차)
     final workoutDayMapping = {0: 1, 2: 2, 4: 3}; // 주 내 일차 -> 운동 일차
     final workoutDay = workoutDayMapping[dayInWeek];
 
+    debugPrint('📊 운동일 매핑: $dayInWeek -> $workoutDay');
+
     if (workoutDay == null) {
+      debugPrint('🛌 오늘은 휴식일 (화, 목, 토, 일)');
       return null; // 휴식일 (화, 목, 토, 일)
     }
 
     final week = weekIndex + 1; // 1-based week
+    debugPrint('📊 최종 주차: $week, 운동일: $workoutDay');
+    
     final workout = getWorkoutForDay(userProfile.level, week, workoutDay);
 
     if (workout == null) {
+      debugPrint('❌ 워크아웃 데이터가 null (레벨: ${userProfile.level}, 주차: $week, 일차: $workoutDay)');
       return null;
     }
+
+    debugPrint('✅ 오늘의 워크아웃 찾음: $week주차 $workoutDay일차 - $workout');
 
     return TodayWorkout(
       week: week,
