@@ -9,6 +9,7 @@ import '../models/workout_history.dart';
 import 'workout_history_service.dart';
 import 'notification_service.dart';
 import 'chad_evolution_service.dart';
+import 'dart:io';
 
 class AchievementService {
   static const String tableName = 'achievements';
@@ -381,6 +382,9 @@ class AchievementService {
               break;
             case AchievementType.challenge:
               currentValue = await _checkChallengeAchievements(achievement);
+              break;
+            case AchievementType.statistics:
+              currentValue = await _checkStatisticsAchievements(achievement, workouts);
               break;
           }
 
@@ -809,39 +813,116 @@ class AchievementService {
 
   // 모든 업적 데이터베이스 초기화 (데이터 초기화용)
   static Future<void> resetAchievementDatabase() async {
-    final db = await database;
-    await db.delete(tableName);
-    debugPrint('🗑️ 모든 업적 데이터 삭제 완료');
-    
-    // SharedPreferences에서 업적 관련 데이터도 삭제
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('tutorial_view_count');
-    await prefs.remove('pending_achievement_events');
-    
-    // 다시 초기화 (중복 방지를 위해 강제 초기화)
-    await _forceInitialize();
-    debugPrint('🔄 업적 데이터베이스 재초기화 완료');
-  }
-
-  // 강제 초기화 (중복 방지)
-  static Future<void> _forceInitialize() async {
-    final db = await database;
-
-    // 미리 정의된 업적들 추가 (중복 방지)
-    debugPrint('🚀 업적 강제 초기화 시작 - 총 ${PredefinedAchievements.all.length}개 업적');
-    for (final achievement in PredefinedAchievements.all) {
+    try {
+      debugPrint('🔄 업적 데이터베이스 완전 재설정 시작...');
+      
+      // 1. 모든 static 참조 완전히 초기화
+      _database = null;
+      _testDatabase = null;
+      _achievementCache.clear();
+      _lastCacheUpdate = null;
+      _pendingUpdates.clear();
+      _isBatchProcessing = false;
+      _lastKnownState = null;
+      debugPrint('📱 모든 static 참조 초기화 완료');
+      
+      // 2. 데이터베이스 파일 경로 확인
+      final String path = join(await getDatabasesPath(), 'achievements.db');
+      debugPrint('📂 데이터베이스 경로: $path');
+      
+      // 3. 파일이 존재하면 삭제 시도
+      final file = File(path);
+      if (await file.exists()) {
+        try {
+          await file.delete();
+          debugPrint('🗑️ 기존 데이터베이스 파일 삭제 완료');
+        } catch (e) {
+          debugPrint('⚠️ 파일 삭제 실패, 계속 진행: $e');
+        }
+      }
+      
+      // 4. SharedPreferences 정리
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.remove('tutorial_view_count');
+      await prefs.remove('pending_achievement_events');
+      debugPrint('🧹 SharedPreferences 데이터 정리 완료');
+      
+      // 5. 새 데이터베이스 생성 및 초기화 (강제)
+      debugPrint('🔨 새 데이터베이스 생성 시작...');
+      _database = await openDatabase(
+        path,
+        version: 2,
+        onCreate: _createDatabase,
+        onUpgrade: _upgradeDatabase,
+      );
+      
+      // 6. 업적 강제 초기화
+      await _forceInitializeAchievements();
+      
+      debugPrint('✅ 업적 데이터베이스 완전 재설정 완료');
+      
+    } catch (e) {
+      debugPrint('❌ 데이터 재설정 오류: $e');
+      
+      // 실패 시 대안: 테이블만 삭제하고 재생성
       try {
-        await db.insert(
-          tableName, 
-          achievement.toMap(),
-          conflictAlgorithm: ConflictAlgorithm.ignore, // 중복 시 무시
-        );
-        debugPrint('✅ 업적 추가: ${achievement.id}');
-      } catch (e) {
-        debugPrint('❌ 업적 추가 실패: ${achievement.id} - $e');
+        debugPrint('🔄 대안 방법: 테이블 재생성 시도...');
+        await _fallbackReset();
+      } catch (fallbackError) {
+        debugPrint('❌ 대안 방법도 실패: $fallbackError');
+        rethrow;
       }
     }
-    debugPrint('🎉 업적 강제 초기화 완료');
+  }
+  
+  // 대안 리셋 방법: 테이블만 재생성
+  static Future<void> _fallbackReset() async {
+    try {
+      final db = await database;
+      
+      // 테이블 삭제 후 재생성
+      await db.execute('DROP TABLE IF EXISTS $tableName');
+      await _createDatabase(db, 2);
+      await _forceInitializeAchievements();
+      
+      debugPrint('✅ 대안 방법으로 리셋 완료');
+    } catch (e) {
+      debugPrint('❌ 대안 방법 실패: $e');
+      rethrow;
+    }
+  }
+
+  // 강제 업적 초기화 (오류 무시)
+  static Future<void> _forceInitializeAchievements() async {
+    try {
+      final db = await database;
+      
+      debugPrint('🚀 업적 강제 초기화 시작 - 총 ${PredefinedAchievements.all.length}개 업적');
+      
+      // 트랜잭션으로 일괄 처리
+      await db.transaction((txn) async {
+        for (final achievement in PredefinedAchievements.all) {
+          try {
+            await txn.insert(
+              tableName, 
+              achievement.toMap(),
+              conflictAlgorithm: ConflictAlgorithm.replace, // 중복 시 교체
+            );
+            debugPrint('✅ 업적 추가: ${achievement.id}');
+          } catch (e) {
+            debugPrint('⚠️ 업적 ${achievement.id} 추가 실패 (계속 진행): $e');
+          }
+        }
+      });
+      
+      // 검증
+      final count = await getTotalCount();
+      debugPrint('🎉 업적 강제 초기화 완료: $count개 업적 추가됨');
+      
+    } catch (e) {
+      debugPrint('❌ 강제 초기화 실패: $e');
+      rethrow;
+    }
   }
 
   // 업적 업데이트 (복원용)
@@ -902,6 +983,60 @@ class AchievementService {
     
     // 업적 체크 및 업데이트
     await checkAndUpdateAchievements();
+  }
+
+  // 통계 기반 업적 체크
+  static Future<int> _checkStatisticsAchievements(
+    Achievement achievement,
+    List<WorkoutHistory> workouts,
+  ) async {
+    if (workouts.isEmpty) return 0;
+
+    switch (achievement.id) {
+      // 평균 완료율 관련 업적
+      case 'completion_rate_80':
+      case 'completion_rate_90': 
+      case 'completion_rate_95':
+        final totalCompletionRate = workouts.fold<double>(0, (sum, workout) => sum + workout.completionRate);
+        final averageCompletionRate = (totalCompletionRate / workouts.length * 100);
+        debugPrint('평균 완료율: ${averageCompletionRate.round()}%');
+        return averageCompletionRate.round();
+
+      // 총 운동 시간 관련 업적 (분 단위)
+      case 'total_workout_time_60':
+      case 'total_workout_time_300':
+      case 'total_workout_time_600':
+      case 'total_workout_time_1200':
+        final totalMinutes = workouts.fold<int>(0, (sum, workout) => sum + workout.duration.inMinutes);
+        debugPrint('총 운동 시간: ${totalMinutes}분');
+        return totalMinutes;
+
+      // 주간 운동 횟수 (최근 7일)
+      case 'weekly_sessions_5':
+      case 'weekly_sessions_7':
+        final now = DateTime.now();
+        final weekAgo = now.subtract(const Duration(days: 7));
+        final weeklyWorkouts = workouts.where((w) => w.date.isAfter(weekAgo)).length;
+        debugPrint('주간 운동 횟수: ${weeklyWorkouts}회');
+        return weeklyWorkouts;
+
+      // 월간 운동 횟수 (최근 30일)
+      case 'monthly_sessions_20':
+      case 'monthly_sessions_30':
+        final now = DateTime.now();
+        final monthAgo = now.subtract(const Duration(days: 30));
+        final monthlyWorkouts = workouts.where((w) => w.date.isAfter(monthAgo)).length;
+        debugPrint('월간 운동 횟수: ${monthlyWorkouts}회');
+        return monthlyWorkouts;
+
+      // 튜토리얼 조회 관련 업적
+      case 'weekly_tutorial_views_5':
+      case 'weekly_tutorial_views_10':
+        return await _getTutorialViewCount();
+
+      default:
+        return 0;
+    }
   }
 
   // 업적 데이터베이스 무결성 검증
@@ -1057,7 +1192,7 @@ class AchievementService {
       }
 
       // 4. 비정상적인 진행도 수정
-      debugPrint('📊 진행도 데이터 수정 중...');
+      debugPrint('🔄 진행도 데이터 수정 중...');
       await db.rawQuery('UPDATE $tableName SET currentValue = 0 WHERE currentValue < 0');
       
       // 5. 재검증
@@ -1112,6 +1247,9 @@ class AchievementService {
             case AchievementType.challenge:
               currentValue = await _checkChallengeAchievements(achievement);
               break;
+            case AchievementType.statistics:
+              currentValue = await _checkStatisticsAchievements(achievement, workouts);
+              break;
           }
 
           // 진행도 업데이트 (잠금 해제 상태는 유지)
@@ -1128,6 +1266,36 @@ class AchievementService {
       
     } catch (e) {
       debugPrint('❌ 업적 진행도 동기화 실패: $e');
+    }
+  }
+
+  // ================================
+  // 운동 완료 관련 메서드들  
+  // ================================
+  
+  /// 운동 완료 기록 및 자동 업적 체크
+  static Future<void> recordWorkoutCompleted(int totalReps, double completionRate) async {
+    try {
+      debugPrint('📝 운동 완료 기록: ${totalReps}개, 완료율: ${(completionRate * 100).round()}%');
+      
+      // SharedPreferences에 운동 기록 저장
+      final prefs = await SharedPreferences.getInstance();
+      
+      // 총 운동 횟수 증가
+      final totalWorkouts = prefs.getInt('total_workouts') ?? 0;
+      await prefs.setInt('total_workouts', totalWorkouts + 1);
+      
+      // 총 푸시업 개수 증가
+      final totalPushups = prefs.getInt('total_pushups') ?? 0;
+      await prefs.setInt('total_pushups', totalPushups + totalReps);
+      
+      debugPrint('✅ 운동 기록 저장 완료 - 총 ${totalWorkouts + 1}회, 총 ${totalPushups + totalReps}개');
+      
+      // 업적 체크 및 업데이트
+      await checkAndUpdateAchievements();
+      
+    } catch (e) {
+      debugPrint('❌ 운동 완료 기록 실패: $e');
     }
   }
 

@@ -45,79 +45,54 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   void initState() {
     super.initState();
-    _initializeApp();
-    
-    // 업적 서비스에 실시간 업데이트 콜백 설정
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      AchievementService.setGlobalContext(context);
-      
-      AchievementService.setOnAchievementUnlocked(() {
-        if (mounted) {
-          _refreshAllData();
-        }
-      });
-      
-      AchievementService.setOnStatsUpdated(() {
-        if (mounted) {
-          _refreshAllData();
-        }
-      });
-      
-      // 운동 기록 저장 시 달력 업데이트 콜백 설정
-      WorkoutHistoryService.addOnWorkoutSavedCallback(() {
-        if (mounted) {
-          _refreshAllData();
-        }
-      });
-    });
+    _initializeNavigationScreen();
   }
 
-  Future<void> _initializeApp() async {
+  Future<void> _initializeNavigationScreen() async {
     try {
-      // 앱 시작 시 권한 체크 (가장 먼저 실행)
+      debugPrint('🚀 메인 네비게이션 화면 초기화 시작');
+      
+      // 화면 로드 완료 후 업적 이벤트 확인
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        if (mounted) {
-          await PermissionService.checkInitialPermissions(context);
-        }
+        await Future.delayed(const Duration(milliseconds: 300));
+        await _checkPendingAchievementEvents();
+        
+        // 업적 서비스 콜백 설정
+        AchievementService.setGlobalContext(context);
+        
+        AchievementService.setOnAchievementUnlocked(() {
+          if (mounted) {
+            debugPrint('🎯 업적 달성 콜백 호출 - 이벤트 확인 시작');
+            _refreshAllData();
+            // 업적 달성 시 즉시 이벤트 확인
+            Future.delayed(const Duration(milliseconds: 300), () {
+              if (mounted) {
+                _checkPendingAchievementEvents();
+              }
+            });
+          }
+        });
+        
+        AchievementService.setOnStatsUpdated(() {
+          if (mounted) {
+            _refreshAllData();
+          }
+        });
+        
+        // 운동 기록 저장 시 달력 업데이트 콜백 설정
+        WorkoutHistoryService.addOnWorkoutSavedCallback(() {
+          if (mounted) {
+            _refreshAllData();
+          }
+        });
       });
       
-      // 데이터베이스 완전 재설정 (스키마 변경으로 인한 문제 해결)
-      await _resetAchievementDatabase();
-      
-      // 업적 서비스 초기화 (가장 먼저 실행)
-      await AchievementService.initialize();
-      debugPrint('✅ 업적 서비스 초기화 완료');
-      
-      // 업적 관련 데이터 완전 초기화 (배지 문제 해결)
-      await DebugHelper.clearAllAchievementData();
-      
-      // 디버그용: SharedPreferences 상태 확인
-      await DebugHelper.debugSharedPreferences();
-      
-      // 업적 이벤트 확인
-      _checkPendingAchievementEvents();
-      
-      // 전면 광고 미리 로드
-      await AdService.instance.loadInterstitialAd();
+      debugPrint('✅ 메인 네비게이션 화면 초기화 완료');
     } catch (e) {
-      debugPrint('❌ 앱 초기화 오류: $e');
+      debugPrint('❌ 메인 네비게이션 화면 초기화 실패: $e');
     }
   }
 
-  // 업적 데이터베이스 완전 재설정
-  Future<void> _resetAchievementDatabase() async {
-    try {
-      final dbPath = path.join(await getDatabasesPath(), 'achievements.db');
-      final file = File(dbPath);
-      if (await file.exists()) {
-        await file.delete();
-        debugPrint('🗑️ 기존 업적 데이터베이스 삭제');
-      }
-    } catch (e) {
-      debugPrint('⚠️ 데이터베이스 삭제 실패: $e');
-    }
-  }
-  
   /// 모든 화면 데이터 새로고침 (업적 달성 시 호출)
   Future<void> _refreshAllData() async {
     try {
@@ -150,6 +125,15 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     setState(() {
       _selectedIndex = index;
     });
+    
+    // 화면 전환 시 업적 이벤트 확인 (특히 홈 화면으로 돌아올 때)
+    if (index == 0) { // 홈 화면
+      Future.delayed(const Duration(milliseconds: 500), () {
+        if (mounted) {
+          _checkPendingAchievementEvents();
+        }
+      });
+    }
   }
 
   // 대기 중인 업적 달성 이벤트 확인 및 다이얼로그 표시
@@ -159,23 +143,48 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       await Future<void>.delayed(const Duration(milliseconds: 500));
       
       final events = await AchievementService.getPendingAchievementEvents();
+      debugPrint('🎯 대기 중인 업적 이벤트: ${events.length}개');
       
       if (events.isNotEmpty && mounted) {
         // 첫 번째 이벤트 표시
         final event = events.first;
+        debugPrint('🏆 업적 이벤트 처리: ${event}');
         
-        // Achievement 객체 생성
+        // 이벤트에서 실제 업적 데이터 읽기
+        final achievementId = event['id'] as String? ?? '';
+        final titleKey = event['titleKey'] as String? ?? 'achievementDefaultTitle';
+        final descriptionKey = event['descriptionKey'] as String? ?? 'achievementDefaultDesc';
+        final motivationKey = event['motivationKey'] as String? ?? 'achievementDefaultMotivation';
+        final rarityStr = event['rarity'] as String? ?? 'common';
+        final xpReward = event['xpReward'] as int? ?? 0;
+        final typeStr = event['type'] as String? ?? 'first';
+        final targetValue = event['targetValue'] as int? ?? 1;
+        
+        // 업적 타입 파싱
+        AchievementType type = AchievementType.first;
+        try {
+          type = AchievementType.values.firstWhere(
+            (t) => t.toString().split('.').last == typeStr,
+            orElse: () => AchievementType.first,
+          );
+        } catch (e) {
+          debugPrint('⚠️ 업적 타입 파싱 실패: $typeStr, 기본값 사용');
+        }
+        
+        // Achievement 객체 생성 (실제 데이터 사용)
         final achievement = Achievement(
-          id: (event['id'] as String?) ?? '',
-          titleKey: 'achievementTutorialExplorerTitle',
-          descriptionKey: 'achievementTutorialExplorerDesc',
-          motivationKey: 'achievementTutorialExplorerMotivation',
-          type: AchievementType.first, // 기본값
-          rarity: _parseRarity((event['rarity'] as String?) ?? 'common'),
-          targetValue: 1,
-          xpReward: (event['xpReward'] as int?) ?? 0,
-          icon: Icons.emoji_events,
+          id: achievementId,
+          titleKey: titleKey,
+          descriptionKey: descriptionKey,
+          motivationKey: motivationKey,
+          type: type,
+          rarity: _parseRarity(rarityStr),
+          targetValue: targetValue,
+          xpReward: xpReward,
+          icon: _getAchievementIcon(type),
         );
+        
+        debugPrint('✨ 업적 다이얼로그 표시: ${titleKey}');
         
         // 다이얼로그 표시
         showDialog<void>(
@@ -190,8 +199,29 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
         );
       }
-    } catch (e) {
-      print('업적 이벤트 확인 오류: $e');
+    } catch (e, stackTrace) {
+      debugPrint('❌ 업적 이벤트 확인 오류: $e');
+      debugPrint('스택 트레이스: $stackTrace');
+    }
+  }
+
+  // 업적 타입에 따른 아이콘 반환
+  IconData _getAchievementIcon(AchievementType type) {
+    switch (type) {
+      case AchievementType.first:
+        return Icons.star;
+      case AchievementType.streak:
+        return Icons.local_fire_department;
+      case AchievementType.volume:
+        return Icons.flag;
+      case AchievementType.perfect:
+        return Icons.emoji_events;
+      case AchievementType.special:
+        return Icons.fitness_center;
+      case AchievementType.challenge:
+        return Icons.emoji_events;
+      default:
+        return Icons.emoji_events;
     }
   }
 

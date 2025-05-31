@@ -3,6 +3,7 @@ import 'package:path/path.dart';
 import 'package:flutter/foundation.dart';
 import '../models/workout_history.dart';
 import 'notification_service.dart';
+import 'dart:io';
 
 class WorkoutHistoryService {
   static Database? _database;
@@ -51,11 +52,11 @@ class WorkoutHistoryService {
 
   static Future<Database> _initDatabase() async {
     final String path = join(await getDatabasesPath(), 'workout_history.db');
-    return await openDatabase(path, version: 2, onCreate: _createDatabase, onUpgrade: _upgradeDatabase);
+    return await openDatabase(path, version: 3, onCreate: _createDatabase, onUpgrade: _upgradeDatabase);
   }
 
   static Future<void> _createDatabase(Database db, int version) async {
-    // 기존 workout_history 테이블
+    // workout_history 테이블 (duration, pushupType 컬럼 포함)
     await db.execute('''
       CREATE TABLE $tableName (
         id TEXT PRIMARY KEY,
@@ -65,7 +66,9 @@ class WorkoutHistoryService {
         completedReps TEXT NOT NULL,
         totalReps INTEGER NOT NULL,
         completionRate REAL NOT NULL,
-        level TEXT NOT NULL
+        level TEXT NOT NULL,
+        duration INTEGER DEFAULT 10,
+        pushupType TEXT DEFAULT 'Push-up'
       )
     ''');
     
@@ -85,7 +88,7 @@ class WorkoutHistoryService {
       )
     ''');
     
-    debugPrint('✅ 운동 기록 및 세션 테이블 생성 완료');
+    debugPrint('✅ 운동 기록 및 세션 테이블 생성 완료 (v$version)');
   }
   
   static Future<void> _upgradeDatabase(Database db, int oldVersion, int newVersion) async {
@@ -108,6 +111,23 @@ class WorkoutHistoryService {
         )
       ''');
       debugPrint('✅ 세션 테이블 추가 완료');
+    }
+    
+    if (oldVersion < 3) {
+      // 버전 3: workout_history 테이블에 duration, pushupType 컬럼 추가
+      try {
+        await db.execute('ALTER TABLE $tableName ADD COLUMN duration INTEGER DEFAULT 10');
+        debugPrint('✅ duration 컬럼 추가 완료');
+      } catch (e) {
+        debugPrint('⚠️ duration 컬럼 추가 실패 (이미 존재할 수 있음): $e');
+      }
+      
+      try {
+        await db.execute('ALTER TABLE $tableName ADD COLUMN pushupType TEXT DEFAULT \'Push-up\'');
+        debugPrint('✅ pushupType 컬럼 추가 완료');
+      } catch (e) {
+        debugPrint('⚠️ pushupType 컬럼 추가 실패 (이미 존재할 수 있음): $e');
+      }
     }
   }
 
@@ -572,5 +592,70 @@ class WorkoutHistoryService {
     final db = await database;
     await db.delete(tableName);
     debugPrint('🗑️ 모든 운동 기록 삭제 완료');
+  }
+  
+  // 데이터베이스 완전 재생성 (스키마 문제 해결용)
+  static Future<void> resetDatabase() async {
+    try {
+      // 기존 데이터베이스 파일 삭제
+      final String path = join(await getDatabasesPath(), 'workout_history.db');
+      final file = File(path);
+      if (await file.exists()) {
+        await file.delete();
+        debugPrint('🗑️ 기존 데이터베이스 파일 삭제 완료');
+      }
+      
+      // 데이터베이스 참조 초기화
+      if (_database != null) {
+        await _database!.close();
+        _database = null;
+      }
+      
+      debugPrint('✅ 데이터베이스 완전 재설정 완료');
+    } catch (e) {
+      debugPrint('❌ 데이터베이스 재설정 오류: $e');
+      rethrow;
+    }
+  }
+
+  // 스키마 자동 수정 (누락된 컬럼 추가)
+  static Future<void> fixSchemaIfNeeded() async {
+    try {
+      final db = await database;
+      
+      // 테이블 구조 확인
+      final tableInfo = await db.rawQuery("PRAGMA table_info($tableName)");
+      final columnNames = tableInfo.map((row) => row['name'] as String).toSet();
+      
+      debugPrint('🔍 현재 테이블 컬럼: $columnNames');
+      
+      bool needsFix = false;
+      
+      // duration 컬럼 확인 및 추가
+      if (!columnNames.contains('duration')) {
+        debugPrint('🔧 duration 컬럼이 없음, 추가 중...');
+        await db.execute('ALTER TABLE $tableName ADD COLUMN duration INTEGER DEFAULT 10');
+        debugPrint('✅ duration 컬럼 추가 완료');
+        needsFix = true;
+      }
+      
+      // pushupType 컬럼 확인 및 추가
+      if (!columnNames.contains('pushupType')) {
+        debugPrint('🔧 pushupType 컬럼이 없음, 추가 중...');
+        await db.execute('ALTER TABLE $tableName ADD COLUMN pushupType TEXT DEFAULT \'Push-up\'');
+        debugPrint('✅ pushupType 컬럼 추가 완료');
+        needsFix = true;
+      }
+      
+      if (needsFix) {
+        debugPrint('🔄 스키마 수정 완료 - 앱을 재시작하면 정상 작동합니다');
+      } else {
+        debugPrint('✅ 스키마가 이미 최신 상태입니다');
+      }
+      
+    } catch (e) {
+      debugPrint('❌ 스키마 수정 실패: $e');
+      rethrow;
+    }
   }
 }

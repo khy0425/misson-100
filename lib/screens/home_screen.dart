@@ -25,6 +25,8 @@ import 'onboarding_screen.dart';
 import '../services/achievement_service.dart';
 import '../services/workout_history_service.dart';
 import '../services/notification_service.dart';
+import '../models/workout_history.dart';
+import 'package:flutter/services.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -40,6 +42,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   UserProfile? _userProfile;
   TodayWorkout? _todayWorkout;
   ProgramProgress? _programProgress;
+  WorkoutHistory? _todayCompletedWorkout; // 오늘 완료된 운동 기록
   bool _isLoading = true;
   String? _errorMessage;
 
@@ -126,6 +129,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         // 오늘의 워크아웃과 진행 상황 로드
         _todayWorkout = await _workoutProgramService.getTodayWorkout(_userProfile!);
         _programProgress = await _workoutProgramService.getProgramProgress(_userProfile!);
+        
+        // 오늘 완료된 운동 기록 확인
+        _todayCompletedWorkout = await WorkoutHistoryService.getWorkoutByDate(DateTime.now());
       }
     } catch (e) {
       _errorMessage = e.toString();
@@ -566,7 +572,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                     vertical: AppConstants.paddingS,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(AppColors.primaryColor),
+                    color: _todayCompletedWorkout != null 
+                        ? Colors.green 
+                        : const Color(AppColors.primaryColor),
                     borderRadius: BorderRadius.circular(AppConstants.radiusS),
                   ),
                   child: Text(
@@ -585,89 +593,256 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             Row(
               children: [
                 Icon(
-                  Icons.fitness_center,
-                  color: Colors.grey,
+                  _todayCompletedWorkout != null ? Icons.check_circle : Icons.fitness_center,
+                  color: _todayCompletedWorkout != null ? Colors.green : Colors.grey,
                   size: 16,
                 ),
                 const SizedBox(width: AppConstants.paddingS),
                 Text(
-                  '총 ${_todayWorkout!.totalReps}회 (${_todayWorkout!.setCount}세트)',
+                  _todayCompletedWorkout != null
+                      ? '완료됨: ${_todayCompletedWorkout!.totalReps}회 (${_todayWorkout!.setCount}세트)'
+                      : '총 ${_todayWorkout!.totalReps}회 (${_todayWorkout!.setCount}세트)',
                   style: theme.textTheme.bodyMedium?.copyWith(
-                    color: Colors.grey,
+                    color: _todayCompletedWorkout != null ? Colors.green[700] : Colors.grey,
+                    fontWeight: _todayCompletedWorkout != null ? FontWeight.w600 : FontWeight.normal,
                   ),
                 ),
               ],
             ),
             const SizedBox(height: AppConstants.paddingL),
             
-            // 시작 버튼
+            // 시작 버튼 또는 완료 버튼
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () => _startTodayWorkout(context),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(AppColors.primaryColor),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: AppConstants.paddingL,
+              child: _todayCompletedWorkout != null
+                  ? ElevatedButton(
+                      onPressed: _showAlreadyCompletedMessage,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        padding: const EdgeInsets.symmetric(
+                          vertical: AppConstants.paddingL,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(AppConstants.radiusM),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.check_circle,
+                            color: Colors.white,
+                            size: 24,
+                          ),
+                          const SizedBox(width: AppConstants.paddingS),
+                          Text(
+                            '오늘 운동 완료됨! 🎉',
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : ElevatedButton(
+                      onPressed: () => _startTodayWorkout(context),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(AppColors.primaryColor),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: AppConstants.paddingL,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(AppConstants.radiusM),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.play_arrow,
+                            color: Colors.white,
+                            size: 24,
+                          ),
+                          const SizedBox(width: AppConstants.paddingS),
+                          Text(
+                            AppLocalizations.of(context).startTodayWorkout,
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+            ),
+          ] else ...[
+            // 오늘 워크아웃이 없는 경우
+            if (_todayCompletedWorkout != null) ...[
+              // 오늘 운동을 완료한 경우 - 축하 메시지
+              Container(
+                padding: const EdgeInsets.all(AppConstants.paddingL),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      const Color(AppColors.primaryColor).withValues(alpha: 0.1),
+                      Colors.green.withValues(alpha: 0.1),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(AppConstants.radiusM),
+                  borderRadius: BorderRadius.circular(AppConstants.radiusM),
+                  border: Border.all(
+                    color: Colors.green.withValues(alpha: 0.3),
+                    width: 2,
                   ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                child: Column(
                   children: [
-                    const Icon(
-                      Icons.play_arrow,
-                      color: Colors.white,
-                      size: 24,
-                    ),
-                    const SizedBox(width: AppConstants.paddingS),
-                    Text(
-                      AppLocalizations.of(context).startTodayWorkout,
-                      style: theme.textTheme.titleMedium?.copyWith(
+                    // 축하 아이콘
+                    Container(
+                      width: 80,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.green.withValues(alpha: 0.3),
+                            blurRadius: 20,
+                            spreadRadius: 5,
+                          ),
+                        ],
+                      ),
+                      child: const Icon(
+                        Icons.emoji_events,
                         color: Colors.white,
+                        size: 40,
+                      ),
+                    ),
+                    const SizedBox(height: AppConstants.paddingM),
+                    
+                    // 축하 메시지
+                    Text(
+                      '🎉 오늘 운동 완료! 🎉',
+                      style: theme.textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
+                        color: Colors.green[700],
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: AppConstants.paddingS),
+                    Text(
+                      '수고하셨습니다! 정말 멋져요! 💪',
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: const Color(AppColors.primaryColor),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: AppConstants.paddingM),
+                    
+                    // 오늘의 성과
+                    Container(
+                      padding: const EdgeInsets.all(AppConstants.paddingM),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.7),
+                        borderRadius: BorderRadius.circular(AppConstants.radiusS),
+                      ),
+                      child: Column(
+                        children: [
+                          Text(
+                            '오늘의 성과',
+                            style: theme.textTheme.bodyLarge?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: AppConstants.paddingS),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              _buildAchievementStat(
+                                context, 
+                                '총 푸시업', 
+                                '${_todayCompletedWorkout!.totalReps}회',
+                                Icons.fitness_center,
+                                Colors.blue,
+                              ),
+                              _buildAchievementStat(
+                                context, 
+                                '완료율', 
+                                '${(_todayCompletedWorkout!.completionRate * 100).toStringAsFixed(1)}%',
+                                Icons.check_circle,
+                                Colors.green,
+                              ),
+                              _buildAchievementStat(
+                                context, 
+                                '운동 시간', 
+                                '${_todayCompletedWorkout!.duration.inMinutes}분',
+                                Icons.timer,
+                                Colors.orange,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: AppConstants.paddingM),
+                    
+                    // 격려 메시지
+                    Container(
+                      padding: const EdgeInsets.all(AppConstants.paddingM),
+                      decoration: BoxDecoration(
+                        color: Colors.amber.withValues(alpha: 0.2),
+                        borderRadius: BorderRadius.circular(AppConstants.radiusS),
+                      ),
+                      child: Text(
+                        '내일도 화이팅! 꾸준함이 최고의 힘입니다! 🔥',
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: Colors.amber[800],
+                          fontWeight: FontWeight.w600,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
-          ] else ...[
-            // 오늘 워크아웃이 없는 경우
-            Container(
-              padding: const EdgeInsets.all(AppConstants.paddingL),
-              decoration: BoxDecoration(
-                color: Colors.grey.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(AppConstants.radiusM),
-              ),
-              child: Column(
-                children: [
-                  Icon(
-                    Icons.celebration,
-                    color: Colors.grey,
-                    size: 48,
-                  ),
-                  const SizedBox(height: AppConstants.paddingM),
-                  Text(
-                    '오늘은 휴식일입니다!',
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: AppConstants.paddingS),
-                  Text(
-                    '내일의 워크아웃을 위해 충분히 휴식하세요.',
-                    style: theme.textTheme.bodyMedium?.copyWith(
+            ] else ...[
+              // 실제 휴식일인 경우
+              Container(
+                padding: const EdgeInsets.all(AppConstants.paddingL),
+                decoration: BoxDecoration(
+                  color: Colors.grey.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(AppConstants.radiusM),
+                ),
+                child: Column(
+                  children: [
+                    Icon(
+                      Icons.weekend,
                       color: Colors.grey,
+                      size: 48,
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
+                    const SizedBox(height: AppConstants.paddingM),
+                    Text(
+                      '오늘은 휴식일입니다! 😴',
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: AppConstants.paddingS),
+                    Text(
+                      '내일의 워크아웃을 위해 충분히 휴식하세요.',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: Colors.grey,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               ),
-            ),
+            ],
           ],
         ],
       ),
@@ -835,6 +1010,41 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildAchievementStat(BuildContext context, String label, String value, IconData icon, Color color) {
+    return Column(
+      children: [
+        Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            color: color.withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Icon(
+            icon,
+            color: color,
+            size: 20,
+          ),
+        ),
+        const SizedBox(height: AppConstants.paddingXS),
+        Text(
+          value,
+          style: Theme.of(context).textTheme.titleSmall?.copyWith(
+            fontWeight: FontWeight.bold,
+            color: color,
+          ),
+        ),
+        Text(
+          label,
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            color: Colors.grey[600],
+            fontSize: 11,
+          ),
+        ),
+      ],
     );
   }
 
@@ -1065,6 +1275,99 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     }
   }
 
+  void _showAlreadyCompletedMessage() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Row(
+          children: [
+            Icon(
+              Icons.sentiment_satisfied_alt,
+              color: Colors.green[600],
+              size: 28,
+            ),
+            const SizedBox(width: 8),
+            const Text('잠깐! 🛑'),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.green.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: Colors.green.withValues(alpha: 0.3),
+                  width: 2,
+                ),
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    '오늘의 운동은 이미 완료했습니다! 💪',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green[700],
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    '충분히 쉬면서 몸이 회복될 시간을 주세요.\n내일 더 강해진 모습으로 돌아오세요! 🌟',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      height: 1.5,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 16),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.amber.withValues(alpha: 0.2),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.tips_and_updates, color: Colors.amber, size: 20),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            '과훈련은 부상의 원인이 될 수 있어요',
+                            style: TextStyle(
+                              color: Colors.amber[800],
+                              fontWeight: FontWeight.w500,
+                              fontSize: 13,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(
+              '알겠습니다! 😊',
+              style: TextStyle(
+                color: Colors.green[600],
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   void _openTutorial(BuildContext context) async {
     // 튜토리얼 조회 카운트 증가
     try {
@@ -1182,7 +1485,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 icon: Icons.sync,
                 label: '동기화',
                 color: Colors.purple,
-                onPressed: _synchronizeAchievements,
+                onPressed: _synchronizeAchievementProgress,
               ),
               _buildDebugButton(
                 context: context,
@@ -1190,6 +1493,38 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 label: '초기화',
                 color: Colors.red,
                 onPressed: _resetAllData,
+              ),
+            ],
+          ),
+          
+          const SizedBox(height: AppConstants.paddingM),
+          
+          // 데이터베이스 관리 버튼들
+          Text(
+            '데이터베이스 관리',
+            style: theme.textTheme.bodyLarge?.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: AppConstants.paddingS),
+          
+          Wrap(
+            spacing: AppConstants.paddingS,
+            runSpacing: AppConstants.paddingS,
+            children: [
+              _buildDebugButton(
+                context: context,
+                icon: Icons.storage,
+                label: 'DB 재설정',
+                color: Colors.orange,
+                onPressed: _resetWorkoutDatabase,
+              ),
+              _buildDebugButton(
+                context: context,
+                icon: Icons.healing,
+                label: 'DB 수정',
+                color: Colors.cyan,
+                onPressed: _fixDatabaseSchema,
               ),
             ],
           ),
@@ -1335,65 +1670,118 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     }
   }
 
-  // 모든 데이터 초기화
+  // 모든 데이터 재설정 (운동 기록 + 업적)
   Future<void> _resetAllData() async {
     try {
-      // 확인 대화상자
-      final confirmed = await showDialog<bool>(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('⚠️ 데이터 초기화'),
-          content: const Text('모든 운동 데이터, 업적, Chad 진화 상태가 삭제됩니다.\n정말로 초기화하시겠습니까?'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('취소'),
-            ),
-            ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(true),
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-              child: const Text('초기화'),
-            ),
-          ],
-        ),
-      );
-
-      if (confirmed != true) return;
-
       setState(() {
         _isLoading = true;
       });
 
-      debugPrint('🔄 전체 데이터 초기화 시작...');
+      debugPrint('🔄 모든 데이터 재설정 시작...');
       
-      // 모든 서비스 초기화
-      await AchievementService.resetAchievementDatabase();
-      await WorkoutHistoryService.clearAllRecords();
+      // 경고 다이얼로그 표시
+      final confirmed = await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('⚠️ 주의'),
+          content: const Text(
+            '모든 데이터가 삭제됩니다!\n\n'
+            '• 운동 기록\n'
+            '• 업적 진행도\n'
+            '• 스트릭 정보\n'
+            '• 튜토리얼 조회 기록\n\n'
+            '정말로 계속하시겠습니까?'
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('취소'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, true),
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.red,
+              ),
+              child: const Text('모든 데이터 삭제'),
+            ),
+          ],
+        ),
+      );
       
-      // Chad 진화 서비스 인스턴스를 통해 초기화
-      final chadService = Provider.of<ChadEvolutionService>(context, listen: false);
-      await chadService.resetEvolution();
+      if (confirmed != true) {
+        setState(() {
+          _isLoading = false;
+        });
+        return;
+      }
       
-      debugPrint('✅ 전체 데이터 초기화 완료');
+      // 1. 운동 기록 데이터베이스 재설정
+      try {
+        await WorkoutHistoryService.resetDatabase();
+        debugPrint('✅ 운동 기록 데이터베이스 재설정 완료');
+      } catch (e) {
+        debugPrint('⚠️ 운동 기록 재설정 실패: $e');
+      }
+      
+      // 2. 업적 데이터베이스 재설정
+      try {
+        await AchievementService.resetAchievementDatabase();
+        debugPrint('✅ 업적 데이터베이스 재설정 완료');
+      } catch (e) {
+        debugPrint('⚠️ 업적 재설정 실패: $e');
+      }
+      
+      // 3. 업적 시스템 재초기화
+      try {
+        await AchievementService.initialize();
+        debugPrint('✅ 업적 시스템 재초기화 완료');
+      } catch (e) {
+        debugPrint('⚠️ 업적 초기화 실패: $e');
+      }
+      
+      debugPrint('✅ 모든 데이터 재설정 완료');
       
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('✅ 모든 데이터가 초기화되었습니다'),
-            backgroundColor: Colors.green,
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) => AlertDialog(
+            title: const Text('🎉 재설정 완료'),
+            content: const Text(
+              '모든 데이터가 성공적으로 재설정되었습니다!\n\n'
+              '변경사항을 완전히 적용하려면 '
+              '앱을 완전히 종료한 후 다시 시작해주세요.'
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  // 앱 종료 (Android)
+                  if (Platform.isAndroid) {
+                    SystemNavigator.pop();
+                  }
+                },
+                child: const Text('앱 종료'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  _refreshAllServiceData();
+                },
+                child: const Text('계속 사용'),
+              ),
+            ],
           ),
         );
-        
-        // UI 새로고침
-        _refreshAllServiceData();
       }
     } catch (e) {
-      debugPrint('❌ 데이터 초기화 오류: $e');
+      debugPrint('❌ 모든 데이터 재설정 실패: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('❌ 초기화 실패: $e'),
+            content: Text('❌ 재설정 실패: $e'),
             backgroundColor: Colors.red,
+            duration: const Duration(seconds: 5),
           ),
         );
       }
@@ -1417,35 +1805,56 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       
       final validation = await AchievementService.validateAchievementDatabase();
       final isValid = validation['isValid'] as bool? ?? false;
-      final issues = (validation['issues'] as List?)?.cast<String>() ?? <String>[];
+      final issues = validation['issues'] as List<String>? ?? <String>[];
       final stats = validation['stats'] as Map<String, dynamic>? ?? {};
       
       if (mounted) {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('📊 업적 검증 결과'),
+            title: Text(isValid ? '✅ 검증 완료' : '⚠️ 문제 발견'),
             content: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('상태: ${isValid ? '✅ 정상' : '❌ 문제 발견'}'),
-                  Text('총 업적: ${stats['totalCount'] ?? 0}개'),
-                  Text('완료 업적: ${stats['unlockedCount'] ?? 0}개'),
-                  Text('완료율: ${stats['completionRate'] ?? '0.0'}%'),
+                  const Text('📊 업적 시스템 상태:', 
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 8),
+                  
+                  if (stats.isNotEmpty) ...[
+                    Text('총 업적: ${stats['totalCount']}/${stats['expectedCount']}개'),
+                    Text('잠금 해제: ${stats['unlockedCount']}개 (${stats['completionRate']}%)'),
+                    const SizedBox(height: 12),
+                  ],
+                  
                   if (issues.isNotEmpty) ...[
+                    const Text('🚨 발견된 문제점들:', 
+                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red)),
                     const SizedBox(height: 8),
-                    const Text('발견된 문제:', style: TextStyle(fontWeight: FontWeight.bold)),
-                    ...issues.map<Widget>((issue) => Text('• $issue')),
+                    ...issues.map((issue) => Padding(
+                      padding: const EdgeInsets.only(left: 8, bottom: 4),
+                      child: Text('• $issue', style: const TextStyle(fontSize: 12)),
+                    )),
+                  ] else ...[
+                    const Text('✅ 모든 검증 통과', 
+                      style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold)),
                   ],
                 ],
               ),
             ),
             actions: [
+              if (!isValid)
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    _repairAchievements();
+                  },
+                  child: const Text('🔧 자동 복구'),
+                ),
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Text('확인'),
+                child: const Text('닫기'),
               ),
             ],
           ),
@@ -1479,38 +1888,20 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
       debugPrint('🔧 업적 데이터베이스 복구 시작...');
       
-      final repairResult = await AchievementService.repairAchievementDatabase();
+      final success = await AchievementService.repairAchievementDatabase();
       
       if (mounted) {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('🔧 업적 복구 결과'),
-            content: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    repairResult ? '✅ 복구 완료' : '❌ 복구 실패',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: repairResult ? Colors.green : Colors.red,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('확인'),
-              ),
-            ],
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(success 
+              ? '✅ 업적 데이터베이스 복구 완료' 
+              : '❌ 복구 실패 - 전체 재설정을 시도하세요'),
+            backgroundColor: success ? Colors.green : Colors.orange,
           ),
         );
         
-        if (repairResult) {
+        if (success) {
+          // UI 새로고침
           _refreshAllServiceData();
         }
       }
@@ -1533,8 +1924,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     }
   }
 
-  // 업적 동기화
-  Future<void> _synchronizeAchievements() async {
+  // 업적 진행도 동기화
+  Future<void> _synchronizeAchievementProgress() async {
     try {
       setState(() {
         _isLoading = true;
@@ -1545,35 +1936,14 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       await AchievementService.synchronizeAchievementProgress();
       
       if (mounted) {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('🔄 업적 동기화 결과'),
-            content: const SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    '✅ 동기화 완료',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green,
-                    ),
-                  ),
-                  Text('업적 진행도가 운동 기록과 동기화되었습니다.'),
-                ],
-              ),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('확인'),
-              ),
-            ],
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('✅ 업적 진행도 동기화 완료'),
+            backgroundColor: Colors.green,
           ),
         );
         
+        // UI 새로고침
         _refreshAllServiceData();
       }
     } catch (e) {
@@ -1592,6 +1962,255 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           _isLoading = false;
         });
       }
+    }
+  }
+
+  // 운동 데이터베이스 재설정
+  Future<void> _resetWorkoutDatabase() async {
+    try {
+      // 확인 대화상자
+      final confirmed = await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('⚠️ 데이터베이스 재설정'),
+          content: const Text('운동 기록 데이터베이스를 완전히 재설정합니다.\n스키마 문제를 해결할 수 있지만 모든 운동 기록이 삭제됩니다.\n\n'
+            '정말로 진행하시겠습니까?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('취소'),
+            ),
+            ElevatedButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
+              child: const Text('재설정'),
+            ),
+          ],
+        ),
+      );
+
+      if (confirmed != true) return;
+
+      setState(() {
+        _isLoading = true;
+      });
+
+      debugPrint('🔄 운동 데이터베이스 재설정 시작...');
+      
+      // 데이터베이스 완전 재설정
+      await WorkoutHistoryService.resetDatabase();
+      
+      debugPrint('✅ 운동 데이터베이스 재설정 완료');
+      
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('✅ 데이터베이스 재설정 완료'),
+            backgroundColor: Colors.green,
+          ),
+        );
+        
+        // UI 새로고침
+        _refreshAllServiceData();
+      }
+    } catch (e) {
+      debugPrint('❌ 데이터베이스 재설정 오류: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('❌ 재설정 실패: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  // 데이터베이스 스키마 수정
+  Future<void> _fixDatabaseSchema() async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+
+      debugPrint('🔧 데이터베이스 스키마 수정 시작...');
+      
+      // 스키마 자동 수정 (누락된 컬럼 추가)
+      await WorkoutHistoryService.fixSchemaIfNeeded();
+      
+      debugPrint('✅ 데이터베이스 스키마 수정 완료');
+      
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('✅ 스키마 수정 완료 - 이제 운동 기록이 정상 저장됩니다'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    } catch (e) {
+      debugPrint('❌ 스키마 수정 오류: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('❌ 스키마 수정 실패: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  /// 운동 재개 가능 여부 체크 및 다이얼로그 표시
+  Future<void> _checkWorkoutResumption() async {
+    if (!mounted) return;
+    
+    try {
+      debugPrint('🔍 운동 재개 체크 시작');
+      
+      final hasResumableWorkout = await WorkoutResumptionService.hasResumableWorkout();
+      
+      if (hasResumableWorkout && mounted) {
+        debugPrint('📋 재개 가능한 운동 발견, 다이얼로그 표시');
+        
+        final resumptionData = await WorkoutResumptionService.getResumptionData();
+        
+        if (resumptionData != null && resumptionData.hasResumableData && mounted) {
+          await _showWorkoutResumptionDialog(resumptionData);
+        }
+      } else {
+        debugPrint('✅ 재개할 운동 없음');
+      }
+    } catch (e) {
+      debugPrint('❌ 운동 재개 체크 오류: $e');
+    }
+  }
+
+  /// 운동 재개 다이얼로그 표시
+  Future<void> _showWorkoutResumptionDialog(WorkoutResumptionData resumptionData) async {
+    if (!mounted) return;
+    
+    try {
+      final shouldResume = await showWorkoutResumptionDialog(
+        context: context,
+        resumptionData: resumptionData,
+      );
+
+      if (shouldResume == true && mounted) {
+        debugPrint('🔄 운동 재개 선택됨');
+        await _resumeWorkout(resumptionData);
+      } else if (shouldResume == false && mounted) {
+        debugPrint('🆕 새 운동 시작 선택됨');
+        await _startNewWorkout();
+      }
+    } catch (e) {
+      debugPrint('❌ 운동 재개 다이얼로그 오류: $e');
+      
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('운동 재개 처리 중 오류가 발생했습니다.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  /// 운동 재개 실행
+  Future<void> _resumeWorkout(WorkoutResumptionData resumptionData) async {
+    if (!mounted) return;
+
+    try {
+      final primaryData = resumptionData.primaryData;
+      if (primaryData == null) return;
+
+      // 재개 통계 기록
+      final completedRepsStr = primaryData['completedReps'] as String? ?? '';
+      final completedReps = completedRepsStr.isNotEmpty 
+          ? completedRepsStr.split(',').map(int.parse).toList()
+          : <int>[];
+      
+      final completedSetsCount = completedReps.where((reps) => reps > 0).length;
+      final totalCompletedReps = completedReps.fold(0, (sum, reps) => sum + reps);
+      
+      await WorkoutResumptionService.recordResumptionStats(
+        resumptionSource: resumptionData.dataSource,
+        recoveredSets: completedSetsCount,
+        recoveredReps: totalCompletedReps,
+      );
+
+      // 운동 화면으로 이동 (재개 모드)
+      if (mounted) {
+        final result = await Navigator.push<bool>(
+          context,
+          MaterialPageRoute(
+            builder: (context) => WorkoutScreen(
+              userProfile: _userProfile!,
+              workoutData: _todayWorkout!,
+            ),
+          ),
+        );
+
+        // 운동 완료 후 데이터 새로고침
+        if (result == true && mounted) {
+          await _refreshData();
+          
+          // 백업 데이터 정리
+          await WorkoutResumptionService.clearBackupData();
+          
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('🎉 운동이 성공적으로 재개되었습니다!'),
+              backgroundColor: Colors.green,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      debugPrint('❌ 운동 재개 실행 오류: $e');
+      
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('운동 재개 중 오류가 발생했습니다.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  /// 새 운동 시작 (백업 데이터 정리)
+  Future<void> _startNewWorkout() async {
+    try {
+      debugPrint('🧹 새 운동 시작을 위한 백업 데이터 정리');
+      
+      // 백업 데이터 정리
+      await WorkoutResumptionService.clearBackupData();
+      
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('새로운 운동을 시작할 준비가 되었습니다!'),
+            backgroundColor: Colors.blue,
+          ),
+        );
+      }
+    } catch (e) {
+      debugPrint('❌ 새 운동 시작 준비 오류: $e');
     }
   }
 
@@ -1779,147 +2398,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           _isLoading = false;
         });
       }
-    }
-  }
-
-  /// 운동 재개 가능 여부 체크 및 다이얼로그 표시
-  Future<void> _checkWorkoutResumption() async {
-    if (!mounted) return;
-    
-    try {
-      debugPrint('🔍 운동 재개 체크 시작');
-      
-      final hasResumableWorkout = await WorkoutResumptionService.hasResumableWorkout();
-      
-      if (hasResumableWorkout && mounted) {
-        debugPrint('📋 재개 가능한 운동 발견, 다이얼로그 표시');
-        
-        final resumptionData = await WorkoutResumptionService.getResumptionData();
-        
-        if (resumptionData != null && resumptionData.hasResumableData && mounted) {
-          await _showWorkoutResumptionDialog(resumptionData);
-        }
-      } else {
-        debugPrint('✅ 재개할 운동 없음');
-      }
-    } catch (e) {
-      debugPrint('❌ 운동 재개 체크 오류: $e');
-    }
-  }
-
-  /// 운동 재개 다이얼로그 표시
-  Future<void> _showWorkoutResumptionDialog(WorkoutResumptionData resumptionData) async {
-    if (!mounted) return;
-    
-    try {
-      final shouldResume = await showWorkoutResumptionDialog(
-        context: context,
-        resumptionData: resumptionData,
-      );
-
-      if (shouldResume == true && mounted) {
-        debugPrint('🔄 운동 재개 선택됨');
-        await _resumeWorkout(resumptionData);
-      } else if (shouldResume == false && mounted) {
-        debugPrint('🆕 새 운동 시작 선택됨');
-        await _startNewWorkout();
-      }
-    } catch (e) {
-      debugPrint('❌ 운동 재개 다이얼로그 오류: $e');
-      
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('운동 재개 처리 중 오류가 발생했습니다.'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    }
-  }
-
-  /// 운동 재개 실행
-  Future<void> _resumeWorkout(WorkoutResumptionData resumptionData) async {
-    if (!mounted) return;
-
-    try {
-      final primaryData = resumptionData.primaryData;
-      if (primaryData == null) return;
-
-      // 재개 통계 기록
-      final completedRepsStr = primaryData['completedReps'] as String? ?? '';
-      final completedReps = completedRepsStr.isNotEmpty 
-          ? completedRepsStr.split(',').map(int.parse).toList()
-          : <int>[];
-      
-      final completedSetsCount = completedReps.where((reps) => reps > 0).length;
-      final totalCompletedReps = completedReps.fold(0, (sum, reps) => sum + reps);
-      
-      await WorkoutResumptionService.recordResumptionStats(
-        resumptionSource: resumptionData.dataSource,
-        recoveredSets: completedSetsCount,
-        recoveredReps: totalCompletedReps,
-      );
-
-      // 운동 화면으로 이동 (재개 모드)
-      if (mounted) {
-        final result = await Navigator.push<bool>(
-          context,
-          MaterialPageRoute(
-            builder: (context) => WorkoutScreen(
-              userProfile: _userProfile!,
-              workoutData: _todayWorkout!,
-            ),
-          ),
-        );
-
-        // 운동 완료 후 데이터 새로고침
-        if (result == true && mounted) {
-          await _refreshData();
-          
-          // 백업 데이터 정리
-          await WorkoutResumptionService.clearBackupData();
-          
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('🎉 운동이 성공적으로 재개되었습니다!'),
-              backgroundColor: Colors.green,
-            ),
-          );
-        }
-      }
-    } catch (e) {
-      debugPrint('❌ 운동 재개 실행 오류: $e');
-      
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('운동 재개 중 오류가 발생했습니다.'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    }
-  }
-
-  /// 새 운동 시작 (백업 데이터 정리)
-  Future<void> _startNewWorkout() async {
-    try {
-      debugPrint('🧹 새 운동 시작을 위한 백업 데이터 정리');
-      
-      // 백업 데이터 정리
-      await WorkoutResumptionService.clearBackupData();
-      
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('새로운 운동을 시작할 준비가 되었습니다!'),
-            backgroundColor: Colors.blue,
-          ),
-        );
-      }
-    } catch (e) {
-      debugPrint('❌ 새 운동 시작 준비 오류: $e');
     }
   }
 }

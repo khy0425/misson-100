@@ -591,32 +591,133 @@ class ChadEvolutionService extends ChangeNotifier {
   static Future<int> getCurrentLevel() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final stateJson = prefs.getString(_evolutionStateKey);
-      
-      if (stateJson != null) {
-        final stateData = jsonDecode(stateJson) as Map<String, dynamic>;
-        final evolutionState = ChadEvolutionState.fromJson(stateData);
-        
-        // Chad 진화 단계를 레벨로 변환 (0-based index + 1)
-        return evolutionState.currentStage.index + 1;
-      }
-      
-      // 기본값: 1레벨 (수면모자 Chad)
-      return 1;
+      return prefs.getInt('chad_level') ?? 1;
     } catch (e) {
-      debugPrint('현재 레벨 가져오기 오류: $e');
+      debugPrint('현재 레벨 로드 오류: $e');
       return 1;
     }
   }
 
-  /// 경험치 추가 (static 메서드) - 현재는 더미 구현
-  static Future<void> addExperience(int experience) async {
+  /// 현재 경험치 가져오기
+  static Future<int> getCurrentExperience() async {
     try {
-      debugPrint('Chad 경험치 추가: $experience (더미 구현)');
-      // 현재는 더미 구현으로, 실제 경험치 시스템이 필요하면 나중에 구현
-      // 필요시 SharedPreferences에 경험치를 저장하고 관리하는 로직 추가 가능
+      final prefs = await SharedPreferences.getInstance();
+      return prefs.getInt('chad_experience') ?? 0;
+    } catch (e) {
+      debugPrint('현재 경험치 로드 오류: $e');
+      return 0;
+    }
+  }
+
+  /// 경험치 추가
+  static Future<void> addExperience(int amount) async {
+    try {
+      if (amount <= 0) return;
+
+      final prefs = await SharedPreferences.getInstance();
+      final currentXP = await getCurrentExperience();
+      final newXP = currentXP + amount;
+
+      await prefs.setInt('chad_experience', newXP);
+      debugPrint('경험치 추가: $amount XP (총: $newXP XP)');
+
+      // 레벨업 확인
+      await _checkLevelUp(newXP);
     } catch (e) {
       debugPrint('경험치 추가 오류: $e');
+    }
+  }
+
+  /// 다음 레벨까지 필요한 경험치 계산
+  static Future<int> getExperienceNeededForNextLevel(int currentLevel) async {
+    // 레벨별 필요 경험치 (예: 100, 250, 450, 700, 1000, ...)
+    final requiredXP = _calculateRequiredXP(currentLevel + 1);
+    final currentXP = await getCurrentExperience();
+    
+    return (requiredXP - currentXP).clamp(0, double.infinity).toInt();
+  }
+
+  /// 레벨별 총 필요 경험치 계산
+  static int _calculateRequiredXP(int level) {
+    // 레벨 1: 0 XP (시작점)
+    // 레벨 2: 100 XP
+    // 레벨 3: 250 XP (150 추가)
+    // 레벨 4: 450 XP (200 추가)
+    // 레벨 5: 700 XP (250 추가)
+    if (level <= 1) return 0;
+    
+    int totalXP = 0;
+    for (int i = 2; i <= level; i++) {
+      totalXP += 50 + (i * 50); // 점진적 증가
+    }
+    return totalXP;
+  }
+
+  /// 레벨업 확인 및 처리
+  static Future<bool> _checkLevelUp(int currentXP) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final currentLevel = await getCurrentLevel();
+      final requiredXP = _calculateRequiredXP(currentLevel + 1);
+
+      if (currentXP >= requiredXP) {
+        // 레벨업!
+        final newLevel = currentLevel + 1;
+        await prefs.setInt('chad_level', newLevel);
+        
+        debugPrint('🎉 레벨업! 레벨 $currentLevel → $newLevel');
+        
+        // 레벨업 알림 전송
+        try {
+          await NotificationService.showChadEvolutionNotification(
+            chadName: '레벨 $newLevel Chad',
+            evolutionMessage: '업적을 통해 성장했습니다!',
+            stageNumber: 0, // 특별한 레벨업 단계
+          );
+        } catch (e) {
+          debugPrint('레벨업 알림 전송 오류: $e');
+        }
+
+        return true;
+      }
+
+      return false;
+    } catch (e) {
+      debugPrint('레벨업 확인 오류: $e');
+      return false;
+    }
+  }
+
+  /// XP 진행률 계산 (현재 레벨에서 다음 레벨까지)
+  static Future<double> getXPProgress() async {
+    try {
+      final currentLevel = await getCurrentLevel();
+      final currentXP = await getCurrentExperience();
+      
+      final currentLevelRequiredXP = _calculateRequiredXP(currentLevel);
+      final nextLevelRequiredXP = _calculateRequiredXP(currentLevel + 1);
+      
+      final xpInCurrentLevel = currentXP - currentLevelRequiredXP;
+      final xpNeededForNextLevel = nextLevelRequiredXP - currentLevelRequiredXP;
+      
+      if (xpNeededForNextLevel <= 0) return 1.0;
+      
+      return (xpInCurrentLevel / xpNeededForNextLevel).clamp(0.0, 1.0);
+    } catch (e) {
+      debugPrint('XP 진행률 계산 오류: $e');
+      return 0.0;
+    }
+  }
+
+  /// 경험치 시스템 리셋 (디버그용)
+  static Future<void> resetExperience() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.remove('chad_level');
+      await prefs.remove('chad_experience');
+      debugPrint('경험치 시스템 리셋 완료');
+    } catch (e) {
+      debugPrint('경험치 시스템 리셋 오류: $e');
     }
   }
 } 

@@ -33,9 +33,9 @@ class _PushupTutorialDetailScreenState
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       try {
         await AchievementService.incrementTutorialViewCount();
-        debugPrint('🎓 튜토리얼 상세 조회 카운트 증가');
+        debugPrint('🎓 튜토리얼 상세 조회 및 업적 체크 완료');
       } catch (e) {
-        debugPrint('❌ 튜토리얼 카운트 증가 실패: $e');
+        debugPrint('❌ 튜토리얼 상세 조회 처리 실패: $e');
       }
     });
     

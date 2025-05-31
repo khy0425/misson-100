@@ -42,6 +42,8 @@ class AchievementDetailDialog extends StatelessWidget {
         return '특별 업적';
       case AchievementType.challenge:
         return '챌린지 업적';
+      case AchievementType.statistics:
+        return '통계 업적';
     }
   }
 
