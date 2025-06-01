@@ -1056,8 +1056,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 ),
                 const SizedBox(height: 8),
                 LinearProgressIndicator(
-                  value: _programProgress!.totalWeeks > 0
-                      ? (_programProgress!.completedWeeks / _programProgress!.totalWeeks)
+                  value: (_programProgress!.totalWeeks as num? ?? 0) > 0
+                      ? ((_programProgress!.completedWeeks ?? 0) as num).toDouble() / (_programProgress!.totalWeeks as num).toDouble()
                       : 0.0,
                   backgroundColor: Colors.grey[300],
                   valueColor: const AlwaysStoppedAnimation<Color>(Color(AppColors.primaryColor)),
@@ -1114,7 +1114,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                   Localizations.localeOf(context).languageCode == 'ko'
                     ? '남은 목표'
                     : 'Remaining Goal',
-                  '${100 - _programProgress!.totalCompletedReps}회',
+                  '${(100 - ((_programProgress!.totalCompletedReps ?? 0) as num)).toInt()}회',
                   Icons.flag,
                   Colors.orange,
                 ),
