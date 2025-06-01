@@ -1782,7 +1782,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                child: const Text('확인'),
+                child: Text(AppLocalizations.of(context)!.confirm),
               ),
             ],
           ),
