@@ -329,7 +329,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             const SizedBox(height: AppConstants.paddingM),
             ElevatedButton(
               onPressed: _refreshData,
-              child: const Text('다시 시도'),
+              child: Text(AppLocalizations.of(context)!.retryButton),
             ),
           ],
         ),
@@ -1674,8 +1674,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           TextButton(
             onPressed: () => Navigator.pop(context),
             child: Text(
-              '다음에...',
-              style: TextStyle(color: Colors.grey[600]),
+              Localizations.localeOf(context).languageCode == 'ko' 
+                ? '나중에...' 
+                : 'Later...',
             ),
           ),
         ],
