@@ -1355,7 +1355,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
               backgroundColor: Colors.orange,
               foregroundColor: Colors.white,
             ),
-            child: const Text('복원'),
+            child: Text(AppLocalizations.of(context)!.confirm),
           ),
         ],
       ),
@@ -1428,7 +1428,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
           children: [
             const Icon(Icons.warning, color: Colors.red),
             const SizedBox(width: 8),
-            Text("레벨 리셋 확인"),
+            Text("데이터 초기화 확인"),
           ],
         ),
         content: const Column(
