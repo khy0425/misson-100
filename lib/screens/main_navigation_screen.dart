@@ -328,7 +328,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           _buildNavItem(0, Icons.home_outlined, Icons.home, l10n.home),
           _buildNavItem(1, Icons.calendar_today_outlined, Icons.calendar_today, l10n.calendar),
           _buildNavItem(2, Icons.emoji_events_outlined, Icons.emoji_events, l10n.achievements),
-          _buildNavItem(3, Icons.emoji_events_outlined, Icons.emoji_events, '챌린지'),
+          _buildNavItem(3, Icons.emoji_events_outlined, Icons.emoji_events, l10n.challengeTitle),
           _buildNavItem(4, Icons.analytics_outlined, Icons.analytics, l10n.statistics),
           _buildNavItem(5, Icons.settings_outlined, Icons.settings, l10n.settings),
         ],
