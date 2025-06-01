@@ -805,29 +805,76 @@ class NotificationService {
       final hasNotificationPermission = await _hasNotificationPermission();
       final hasExactAlarmPermission = await canScheduleExactAlarms();
       
+      // 운동일 전용 알림 설정 확인
+      final prefs = await SharedPreferences.getInstance();
+      final workoutDaysOnly = prefs.getBool('workout_days_only_notifications') ?? false;
+      
       debugPrint('📊 운동 리마인더 스케줄링 권한 상태:');
       debugPrint('  - 기본 알림: $hasNotificationPermission');
       debugPrint('  - 정확한 알람: $hasExactAlarmPermission');
+      debugPrint('  - 운동일 전용 모드: $workoutDaysOnly');
       
       if (!hasNotificationPermission) {
         debugPrint('❌ 기본 알림 권한이 없어 운동 리마인더를 설정할 수 없습니다');
         return false;
       }
 
-      // 다음 알림 시간 계산
+      // 다음 알림 시간들 계산 (운동일 전용 모드에 따라)
       final now = DateTime.now();
-      var nextNotification = DateTime(now.year, now.month, now.day, hour, minute);
+      List<DateTime> scheduledDates = [];
       
-      // 오늘 시간이 이미 지났으면 내일로 설정
-      if (nextNotification.isBefore(now)) {
-        nextNotification = nextNotification.add(const Duration(days: 1));
+      if (workoutDaysOnly) {
+        // 운동일(월,수,금)에만 알림 설정
+        for (int i = 0; i < 14; i++) { // 2주간 설정
+          final targetDate = now.add(Duration(days: i));
+          // 월요일(1), 수요일(3), 금요일(5)인지 확인
+          if (targetDate.weekday == DateTime.monday ||
+              targetDate.weekday == DateTime.wednesday ||
+              targetDate.weekday == DateTime.friday) {
+            var scheduledTime = DateTime(
+              targetDate.year,
+              targetDate.month,
+              targetDate.day,
+              hour,
+              minute,
+            );
+            
+            // 오늘 시간이 이미 지났으면 건너뛰기
+            if (scheduledTime.isAfter(now)) {
+              scheduledDates.add(scheduledTime);
+            }
+          }
+        }
+        debugPrint('💪 운동일 전용 모드: ${scheduledDates.length}개 알림 예약됨');
+      } else {
+        // 매일 알림 (기존 방식)
+        for (int i = 0; i < 7; i++) {
+          final targetDate = now.add(Duration(days: i));
+          var scheduledTime = DateTime(
+            targetDate.year,
+            targetDate.month,
+            targetDate.day,
+            hour,
+            minute,
+          );
+          
+          // 오늘 시간이 이미 지났으면 내일부터 시작
+          if (i == 0 && scheduledTime.isBefore(now)) {
+            continue;
+          }
+          
+          scheduledDates.add(scheduledTime);
+        }
+        debugPrint('📅 매일 알림 모드: ${scheduledDates.length}개 알림 예약됨');
       }
 
       final notificationDetails = NotificationDetails(
         android: AndroidNotificationDetails(
           'workout_reminder',
           'Workout Reminder',
-          channelDescription: '매일 운동 리마인더 알림',
+          channelDescription: workoutDaysOnly 
+            ? '운동일(월,수,금) 운동 리마인더 알림'
+            : '매일 운동 리마인더 알림',
           importance: Importance.high,
           priority: Priority.high,
           icon: '@mipmap/ic_launcher',
@@ -844,43 +891,69 @@ class NotificationService {
         ),
       );
 
-      // 권한에 따라 적절한 스케줄링 방식 선택
-      bool schedulingSuccess = false;
+      // 기존 알림 모두 취소
+      await cancelWorkoutReminder();
+
+      // 운동일 기반 알림 메시지
+      String title = workoutDaysOnly 
+        ? '💪 운동일이에요! 오늘도 도전!'
+        : '💪 운동할 시간이에요!';
+      String body = workoutDaysOnly
+        ? '월수금 챔피언! 오늘의 푸시업 도전을 시작해보세요! 🔥'
+        : '오늘의 푸시업 도전을 시작해보세요. 당신의 Chad가 기다리고 있어요!';
+
+      // 각 예정된 날짜에 알림 설정
+      bool allSchedulingSuccess = true;
       String schedulingMethod = '';
       
-      if (hasExactAlarmPermission) {
-        // 정확한 알람 권한이 있으면 정확한 스케줄링 시도
-        schedulingSuccess = await _safeScheduleNotification(
-          id: 1,
-          title: '💪 운동할 시간이에요!',
-          body: '오늘의 푸시업 도전을 시작해보세요. 당신의 Chad가 기다리고 있어요!',
-          scheduledDate: nextNotification,
-          notificationDetails: notificationDetails,
-        );
-        schedulingMethod = '정확한 알람';
-      } else {
-        // 정확한 알람 권한이 없으면 부정확한 스케줄링 사용
-        schedulingSuccess = await scheduleInexactNotification(
-          id: 1,
-          title: '💪 운동할 시간이에요!',
-          body: '오늘의 푸시업 도전을 시작해보세요. 당신의 Chad가 기다리고 있어요!',
-          scheduledDate: nextNotification,
-          notificationDetails: notificationDetails,
-        );
-        schedulingMethod = '부정확한 알람';
+      for (int i = 0; i < scheduledDates.length; i++) {
+        final scheduledDate = scheduledDates[i];
+        final notificationId = 1000 + i; // 고유 ID
+        
+        bool schedulingSuccess = false;
+        
+        if (hasExactAlarmPermission) {
+          // 정확한 알람 권한이 있으면 정확한 스케줄링 시도
+          schedulingSuccess = await _safeScheduleNotification(
+            id: notificationId,
+            title: title,
+            body: body,
+            scheduledDate: scheduledDate,
+            notificationDetails: notificationDetails,
+          );
+          schedulingMethod = '정확한 알람';
+        } else {
+          // 정확한 알람 권한이 없으면 부정확한 스케줄링 사용
+          schedulingSuccess = await scheduleInexactNotification(
+            id: notificationId,
+            title: title,
+            body: body,
+            scheduledDate: scheduledDate,
+            notificationDetails: notificationDetails,
+          );
+          schedulingMethod = '부정확한 알람';
+        }
+        
+        if (!schedulingSuccess) {
+          allSchedulingSuccess = false;
+          debugPrint('❌ 알림 설정 실패: ${scheduledDate.toString()}');
+        }
       }
 
-      if (schedulingSuccess) {
+      if (allSchedulingSuccess && scheduledDates.isNotEmpty) {
         debugPrint('✅ 운동 리마인더 설정 완료 ($schedulingMethod)');
-        debugPrint('   다음 알림: ${nextNotification.toString()}');
+        debugPrint('   설정된 알림 수: ${scheduledDates.length}개');
+        debugPrint('   운동일 전용 모드: $workoutDaysOnly');
         
         // 설정 성공을 SharedPreferences에 저장
-        final prefs = await SharedPreferences.getInstance();
         await prefs.setBool('workout_reminder_active', true);
         await prefs.setInt('workout_reminder_hour', hour);
         await prefs.setInt('workout_reminder_minute', minute);
         await prefs.setString('workout_reminder_method', schedulingMethod);
-        await prefs.setString('workout_reminder_next', nextNotification.toIso8601String());
+        await prefs.setBool('workout_days_only_active', workoutDaysOnly);
+        if (scheduledDates.isNotEmpty) {
+          await prefs.setString('workout_reminder_next', scheduledDates.first.toIso8601String());
+        }
         
         return true;
       } else {

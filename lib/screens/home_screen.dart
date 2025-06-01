@@ -815,31 +815,83 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
               Container(
                 padding: const EdgeInsets.all(AppConstants.paddingL),
                 decoration: BoxDecoration(
-                  color: Colors.grey.withValues(alpha: 0.1),
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.orange.withValues(alpha: 0.1),
+                      Colors.red.withValues(alpha: 0.1),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
                   borderRadius: BorderRadius.circular(AppConstants.radiusM),
+                  border: Border.all(
+                    color: Colors.orange.withValues(alpha: 0.3),
+                    width: 2,
+                  ),
                 ),
                 child: Column(
                   children: [
                     Icon(
-                      Icons.weekend,
-                      color: Colors.grey,
+                      Icons.sports_mma,
+                      color: Colors.orange[700],
                       size: 48,
                     ),
                     const SizedBox(height: AppConstants.paddingM),
                     Text(
-                      '오늘은 휴식일입니다! 😴',
-                      style: theme.textTheme.titleMedium?.copyWith(
+                      '💪 잠깐! 너 진짜 쉴 거야?',
+                      style: theme.textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
+                        color: Colors.orange[700],
                       ),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: AppConstants.paddingS),
                     Text(
-                      '내일의 워크아웃을 위해 충분히 휴식하세요.',
+                      '오늘은 프로그램상 휴식일이지만...\n진짜 챔피언들은 쉬지 않는다! 🔥\n\n'
+                      '몸이 쑤신다고? 그게 바로 성장의 신호야!',
                       style: theme.textTheme.bodyMedium?.copyWith(
-                        color: Colors.grey,
+                        color: Colors.grey[700],
+                        height: 1.5,
                       ),
                       textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: AppConstants.paddingM),
+                    
+                    // 도전 버튼
+                    ElevatedButton.icon(
+                      onPressed: () => _showExtraWorkoutChallenge(),
+                      icon: Icon(Icons.whatshot, color: Colors.white),
+                      label: Text(
+                        '그래도 도전한다! 🔥',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.orange[600],
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppConstants.paddingL,
+                          vertical: AppConstants.paddingM,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(AppConstants.radiusM),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: AppConstants.paddingS),
+                    
+                    // 쉬기 버튼
+                    TextButton.icon(
+                      onPressed: () => _showRestDayAcceptance(),
+                      icon: Icon(Icons.bed, color: Colors.grey[600]),
+                      label: Text(
+                        '오늘은 쉴래... 😴',
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 14,
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -1251,6 +1303,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       return;
     }
 
+    // 워크아웃 시작 전 챌린지 설정 다이얼로그 표시
+    await _showPreWorkoutChallengeDialog();
+
     try {
       // 워크아웃 화면으로 이동
       if (context.mounted) {
@@ -1281,6 +1336,101 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     }
   }
 
+  /// 워크아웃 시작 전 챌린지 설정 다이얼로그
+  Future<void> _showPreWorkoutChallengeDialog() async {
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Row(
+          children: [
+            Icon(Icons.local_fire_department, color: Colors.orange[700], size: 28),
+            const SizedBox(width: 8),
+            const Text('🔥 준비됐어?'),
+          ],
+        ),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.orange.withValues(alpha: 0.1),
+                      Colors.red.withValues(alpha: 0.1),
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: Colors.orange.withValues(alpha: 0.4),
+                    width: 2,
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      '이번엔 어떻게 도전할까? 💪',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.orange[700],
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      '그냥 기본 운동? 아니면 진짜 챔피언 모드? 🚀\n'
+                      '너의 한계를 시험해볼 시간이다!\n\n'
+                      '⚡ 챌린지 모드 ON 하면:\n'
+                      '• 시간 제한 도전 ⏱️\n'
+                      '• 완벽한 자세 체크 🎯\n'
+                      '• 보너스 포인트 획득 🏆',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        height: 1.4,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton.icon(
+            onPressed: () => Navigator.pop(context, false),
+            icon: Icon(Icons.fitness_center, color: Colors.grey[600]),
+            label: Text(
+              '그냥 기본만 할래... 😅',
+              style: TextStyle(color: Colors.grey[600]),
+            ),
+          ),
+          ElevatedButton.icon(
+            onPressed: () => Navigator.pop(context, true),
+            icon: const Icon(Icons.whatshot, color: Colors.white),
+            label: const Text(
+              '챌린지 모드 ON! 🔥',
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.orange[600]),
+          ),
+        ],
+      ),
+    );
+
+    // 챌린지 모드 선택에 따른 메시지
+    if (result == true) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('🔥 챌린지 모드 활성화! 정신력을 시험해보자! 💪'),
+          backgroundColor: Colors.orange,
+          duration: Duration(seconds: 3),
+        ),
+      );
+    }
+  }
+
+  /// 이미 완료된 운동에 대한 메시지
   void _showAlreadyCompletedMessage() {
     showDialog(
       context: context,
@@ -1374,6 +1524,220 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     );
   }
 
+  /// 휴식일 추가 운동 챌린지 다이얼로그
+  void _showExtraWorkoutChallenge() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Row(
+          children: [
+            Icon(Icons.local_fire_department, color: Colors.orange[700], size: 28),
+            const SizedBox(width: 8),
+            const Text('🔥 진짜 챔피언의 선택'),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.orange.withValues(alpha: 0.1),
+                    Colors.red.withValues(alpha: 0.1),
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: Colors.orange.withValues(alpha: 0.3),
+                  width: 2,
+                ),
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    '💪 오늘 너의 한계를 시험해볼까?',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.orange[700],
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    '휴식일이라고? 그런 건 약한 놈들이나 하는 거야!\n'
+                    '진짜 챔피언들은 매일이 전쟁이다! 🥊\n\n'
+                    '간단한 추가 챌린지로 너의 정신력을 증명해봐!',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      height: 1.5,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton.icon(
+            onPressed: () {
+              Navigator.pop(context);
+              _startExtraChallenge();
+            },
+            icon: Icon(Icons.fitness_center, color: Colors.orange[700]),
+            label: Text(
+              '도전한다! 💪',
+              style: TextStyle(
+                color: Colors.orange[700],
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(
+              '다음에...',
+              style: TextStyle(color: Colors.grey[600]),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// 휴식일 수용 다이얼로그 (살짝 놀리기)
+  void _showRestDayAcceptance() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Row(
+          children: [
+            Icon(Icons.sentiment_dissatisfied, color: Colors.grey[600], size: 28),
+            const SizedBox(width: 8),
+            const Text('😴 정말 쉴 거야?'),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.grey.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: Colors.grey.withValues(alpha: 0.3),
+                  width: 1,
+                ),
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    '아... 그럼 쉬어... 😮‍💨',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey[700],
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    '하지만 기억해... 🤔\n'
+                    '넷플릭스 보면서 과자 먹는 동안\n'
+                    '누군가는 100개 푸시업하고 있어! 💪\n\n'
+                    '내일은 두 배로 열심히 해야겠네! 🔥',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      height: 1.5,
+                      color: Colors.grey[600],
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          ElevatedButton.icon(
+            onPressed: () {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('😴 좋아, 오늘은 쉬어! 내일은 두 배로 화이팅! 💪'),
+                  backgroundColor: Colors.blue,
+                  duration: Duration(seconds: 3),
+                ),
+              );
+            },
+            icon: const Icon(Icons.check, color: Colors.white),
+            label: const Text(
+              '알겠어! 😴',
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.grey[600],
+            ),
+          ),
+          TextButton.icon(
+            onPressed: () {
+              Navigator.pop(context);
+              _showExtraWorkoutChallenge();
+            },
+            icon: Icon(Icons.fitness_center, color: Colors.orange[700]),
+            label: Text(
+              '아니다! 운동할래!',
+              style: TextStyle(
+                color: Colors.orange[700],
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// 추가 챌린지 시작
+  void _startExtraChallenge() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('🔥 보너스 챌린지'),
+        content: const Text(
+          '휴식일 보너스 챌린지! 💪\n\n'
+          '• 플랭크 30초 x 3세트\n'
+          '• 스쿼트 20개 x 2세트\n'
+          '• 푸시업 10개 (완벽한 자세로!)\n\n'
+          '준비됐어? 진짜 챔피언만 할 수 있어! 🏆'
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('🔥 훌륭해! 진짜 챔피언의 정신력이야! 💪'),
+                  backgroundColor: Colors.orange,
+                  duration: Duration(seconds: 3),
+                ),
+              );
+            },
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.orange[600]),
+            child: const Text(
+              '시작! 🔥',
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('나중에...'),
+          ),
+        ],
+      ),
+    );
+  }
+
   void _openTutorial(BuildContext context) async {
     // 튜토리얼 조회 카운트 증가
     try {
@@ -1419,663 +1783,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           ),
         ),
       );
-    }
-  }
-
-  void _openYoutubeShorts(BuildContext context) async {
-    if (context.mounted) {
-      await Navigator.of(context).push(
-        MaterialPageRoute<void>(
-          builder: (context) => const YoutubeShortsScreen(),
-        ),
-      );
-    }
-  }
-
-  Widget _buildDebugSection(BuildContext context, ThemeData theme) {
-    return Container(
-      padding: const EdgeInsets.all(AppConstants.paddingL),
-      decoration: BoxDecoration(
-        color: Colors.yellow.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(AppConstants.radiusM),
-        border: Border.all(color: Colors.orange, width: 2),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          // 디버그 섹션 헤더
-          Row(
-            children: [
-              const Icon(Icons.bug_report, color: Colors.orange),
-              const SizedBox(width: 8),
-              Text(
-                '🧪 디버그 도구',
-                style: theme.textTheme.titleMedium?.copyWith(
-                  color: Colors.orange,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppConstants.paddingM),
-          
-          // 업적 관리 버튼들
-          Text(
-            '업적 시스템',
-            style: theme.textTheme.bodyLarge?.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: AppConstants.paddingS),
-          
-          Wrap(
-            spacing: AppConstants.paddingS,
-            runSpacing: AppConstants.paddingS,
-            children: [
-              _buildDebugButton(
-                context: context,
-                icon: Icons.shield_outlined,
-                label: '검증',
-                color: Colors.blue,
-                onPressed: _validateAchievements,
-              ),
-              _buildDebugButton(
-                context: context,
-                icon: Icons.build,
-                label: '복구',
-                color: Colors.green,
-                onPressed: _repairAchievements,
-              ),
-              _buildDebugButton(
-                context: context,
-                icon: Icons.sync,
-                label: '동기화',
-                color: Colors.purple,
-                onPressed: _synchronizeAchievementProgress,
-              ),
-              _buildDebugButton(
-                context: context,
-                icon: Icons.delete_forever,
-                label: '초기화',
-                color: Colors.red,
-                onPressed: _resetAllData,
-              ),
-            ],
-          ),
-          
-          const SizedBox(height: AppConstants.paddingM),
-          
-          // 데이터베이스 관리 버튼들
-          Text(
-            '데이터베이스 관리',
-            style: theme.textTheme.bodyLarge?.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: AppConstants.paddingS),
-          
-          Wrap(
-            spacing: AppConstants.paddingS,
-            runSpacing: AppConstants.paddingS,
-            children: [
-              _buildDebugButton(
-                context: context,
-                icon: Icons.storage,
-                label: 'DB 재설정',
-                color: Colors.orange,
-                onPressed: _resetWorkoutDatabase,
-              ),
-              _buildDebugButton(
-                context: context,
-                icon: Icons.healing,
-                label: 'DB 수정',
-                color: Colors.cyan,
-                onPressed: _fixDatabaseSchema,
-              ),
-            ],
-          ),
-          
-          const SizedBox(height: AppConstants.paddingM),
-          
-          // Chad 시스템 버튼들
-          Text(
-            'Chad 시스템',
-            style: theme.textTheme.bodyLarge?.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: AppConstants.paddingS),
-          
-          Wrap(
-            spacing: AppConstants.paddingS,
-            runSpacing: AppConstants.paddingS,
-            children: [
-              _buildDebugButton(
-                context: context,
-                icon: Icons.trending_up,
-                label: 'Chad 진화',
-                color: const Color(AppColors.primaryColor),
-                onPressed: _testChadEvolution,
-              ),
-            ],
-          ),
-          
-          const SizedBox(height: AppConstants.paddingM),
-          
-          // 성능 모니터링 버튼들
-          Text(
-            '성능 모니터링',
-            style: theme.textTheme.bodyLarge?.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: AppConstants.paddingS),
-          
-          Wrap(
-            spacing: AppConstants.paddingS,
-            runSpacing: AppConstants.paddingS,
-            children: [
-              _buildDebugButton(
-                context: context,
-                icon: Icons.analytics,
-                label: '성능 통계',
-                color: Colors.teal,
-                onPressed: _showPerformanceStats,
-              ),
-              _buildDebugButton(
-                context: context,
-                icon: Icons.memory,
-                label: '캐시 상태',
-                color: Colors.indigo,
-                onPressed: _showCacheStatus,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDebugButton({
-    required BuildContext context,
-    required IconData icon,
-    required String label,
-    required Color color,
-    required VoidCallback onPressed,
-  }) {
-    return SizedBox(
-      height: 36,
-      child: ElevatedButton.icon(
-        onPressed: _isLoading ? null : onPressed,
-        icon: Icon(icon, size: 16),
-        label: Text(
-          label,
-          style: const TextStyle(fontSize: 12),
-        ),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: color,
-          foregroundColor: Colors.white,
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppConstants.paddingS,
-            vertical: AppConstants.paddingXS,
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppConstants.radiusS),
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _testChadEvolution() async {
-    try {
-      setState(() {
-        _isLoading = true;
-      });
-
-      debugPrint('🧪 Chad 진화 테스트 시작');
-      
-      // Provider에서 ChadEvolutionService 인스턴스 가져오기
-      final chadService = Provider.of<ChadEvolutionService>(context, listen: false);
-      
-      // 현재 레벨 확인
-      final currentLevel = await ChadEvolutionService.getCurrentLevel();
-      debugPrint('현재 레벨: $currentLevel');
-      
-      // 레벨업 테스트 (더미 메서드이므로 실제로는 아무것도 하지 않음)
-      await ChadEvolutionService.addExperience(100);
-      
-      // 다음 단계로 진화 테스트
-      await chadService.evolveToNextStage();
-      
-      // 업데이트된 레벨 확인
-      final newLevel = await ChadEvolutionService.getCurrentLevel();
-      debugPrint('새 레벨: $newLevel');
-      
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Chad 레벨: $currentLevel → $newLevel')),
-        );
-        
-        // UI 업데이트
-        _refreshAllServiceData();
-      }
-    } catch (e) {
-      debugPrint('❌ Chad 진화 테스트 오류: $e');
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Chad 테스트 실패: $e')),
-        );
-      }
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    }
-  }
-
-  // 모든 데이터 재설정 (운동 기록 + 업적)
-  Future<void> _resetAllData() async {
-    try {
-      setState(() {
-        _isLoading = true;
-      });
-
-      debugPrint('🔄 모든 데이터 재설정 시작...');
-      
-      // 경고 다이얼로그 표시
-      final confirmed = await showDialog<bool>(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('⚠️ 주의'),
-          content: const Text(
-            '모든 데이터가 삭제됩니다!\n\n'
-            '• 운동 기록\n'
-            '• 업적 진행도\n'
-            '• 스트릭 정보\n'
-            '• 튜토리얼 조회 기록\n\n'
-            '정말로 계속하시겠습니까?'
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context, false),
-              child: const Text('취소'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(context, true),
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.red,
-              ),
-              child: const Text('모든 데이터 삭제'),
-            ),
-          ],
-        ),
-      );
-      
-      if (confirmed != true) {
-        setState(() {
-          _isLoading = false;
-        });
-        return;
-      }
-      
-      // 1. 운동 기록 데이터베이스 재설정
-      try {
-        await WorkoutHistoryService.resetDatabase();
-        debugPrint('✅ 운동 기록 데이터베이스 재설정 완료');
-      } catch (e) {
-        debugPrint('⚠️ 운동 기록 재설정 실패: $e');
-      }
-      
-      // 2. 업적 데이터베이스 재설정
-      try {
-        await AchievementService.resetAchievementDatabase();
-        debugPrint('✅ 업적 데이터베이스 재설정 완료');
-      } catch (e) {
-        debugPrint('⚠️ 업적 재설정 실패: $e');
-      }
-      
-      // 3. 업적 시스템 재초기화
-      try {
-        await AchievementService.initialize();
-        debugPrint('✅ 업적 시스템 재초기화 완료');
-      } catch (e) {
-        debugPrint('⚠️ 업적 초기화 실패: $e');
-      }
-      
-      debugPrint('✅ 모든 데이터 재설정 완료');
-      
-      if (mounted) {
-        showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) => AlertDialog(
-            title: const Text('🎉 재설정 완료'),
-            content: const Text(
-              '모든 데이터가 성공적으로 재설정되었습니다!\n\n'
-              '변경사항을 완전히 적용하려면 '
-              '앱을 완전히 종료한 후 다시 시작해주세요.'
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  // 앱 종료 (Android)
-                  if (Platform.isAndroid) {
-                    SystemNavigator.pop();
-                  }
-                },
-                child: const Text('앱 종료'),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  _refreshAllServiceData();
-                },
-                child: const Text('계속 사용'),
-              ),
-            ],
-          ),
-        );
-      }
-    } catch (e) {
-      debugPrint('❌ 모든 데이터 재설정 실패: $e');
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('❌ 재설정 실패: $e'),
-            backgroundColor: Colors.red,
-            duration: const Duration(seconds: 5),
-          ),
-        );
-      }
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    }
-  }
-
-  // 업적 검증
-  Future<void> _validateAchievements() async {
-    try {
-      setState(() {
-        _isLoading = true;
-      });
-
-      debugPrint('🔍 업적 데이터베이스 검증 시작...');
-      
-      final validation = await AchievementService.validateAchievementDatabase();
-      final isValid = validation['isValid'] as bool? ?? false;
-      final issues = validation['issues'] as List<String>? ?? <String>[];
-      final stats = validation['stats'] as Map<String, dynamic>? ?? {};
-      
-      if (mounted) {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text(isValid ? '✅ 검증 완료' : '⚠️ 문제 발견'),
-            content: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text('📊 업적 시스템 상태:', 
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 8),
-                  
-                  if (stats.isNotEmpty) ...[
-                    Text('총 업적: ${stats['totalCount']}/${stats['expectedCount']}개'),
-                    Text('잠금 해제: ${stats['unlockedCount']}개 (${stats['completionRate']}%)'),
-                    const SizedBox(height: 12),
-                  ],
-                  
-                  if (issues.isNotEmpty) ...[
-                    const Text('🚨 발견된 문제점들:', 
-                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red)),
-                    const SizedBox(height: 8),
-                    ...issues.map((issue) => Padding(
-                      padding: const EdgeInsets.only(left: 8, bottom: 4),
-                      child: Text('• $issue', style: const TextStyle(fontSize: 12)),
-                    )),
-                  ] else ...[
-                    const Text('✅ 모든 검증 통과', 
-                      style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold)),
-                  ],
-                ],
-              ),
-            ),
-            actions: [
-              if (!isValid)
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    _repairAchievements();
-                  },
-                  child: const Text('🔧 자동 복구'),
-                ),
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('닫기'),
-              ),
-            ],
-          ),
-        );
-      }
-    } catch (e) {
-      debugPrint('❌ 업적 검증 오류: $e');
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('❌ 검증 실패: $e'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    }
-  }
-
-  // 업적 복구
-  Future<void> _repairAchievements() async {
-    try {
-      setState(() {
-        _isLoading = true;
-      });
-
-      debugPrint('🔧 업적 데이터베이스 복구 시작...');
-      
-      final success = await AchievementService.repairAchievementDatabase();
-      
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(success 
-              ? '✅ 업적 데이터베이스 복구 완료' 
-              : '❌ 복구 실패 - 전체 재설정을 시도하세요'),
-            backgroundColor: success ? Colors.green : Colors.orange,
-          ),
-        );
-        
-        if (success) {
-          // UI 새로고침
-          _refreshAllServiceData();
-        }
-      }
-    } catch (e) {
-      debugPrint('❌ 업적 복구 오류: $e');
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('❌ 복구 실패: $e'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    }
-  }
-
-  // 업적 진행도 동기화
-  Future<void> _synchronizeAchievementProgress() async {
-    try {
-      setState(() {
-        _isLoading = true;
-      });
-
-      debugPrint('🔄 업적 진행도 동기화 시작...');
-      
-      await AchievementService.synchronizeAchievementProgress();
-      
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('✅ 업적 진행도 동기화 완료'),
-            backgroundColor: Colors.green,
-          ),
-        );
-        
-        // UI 새로고침
-        _refreshAllServiceData();
-      }
-    } catch (e) {
-      debugPrint('❌ 업적 동기화 오류: $e');
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('❌ 동기화 실패: $e'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    }
-  }
-
-  // 운동 데이터베이스 재설정
-  Future<void> _resetWorkoutDatabase() async {
-    try {
-      // 확인 대화상자
-      final confirmed = await showDialog<bool>(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('⚠️ 데이터베이스 재설정'),
-          content: const Text('운동 기록 데이터베이스를 완전히 재설정합니다.\n스키마 문제를 해결할 수 있지만 모든 운동 기록이 삭제됩니다.\n\n'
-            '정말로 진행하시겠습니까?'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('취소'),
-            ),
-            ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(true),
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
-              child: const Text('재설정'),
-            ),
-          ],
-        ),
-      );
-
-      if (confirmed != true) return;
-
-      setState(() {
-        _isLoading = true;
-      });
-
-      debugPrint('🔄 운동 데이터베이스 재설정 시작...');
-      
-      // 데이터베이스 완전 재설정
-      await WorkoutHistoryService.resetDatabase();
-      
-      debugPrint('✅ 운동 데이터베이스 재설정 완료');
-      
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('✅ 데이터베이스 재설정 완료'),
-            backgroundColor: Colors.green,
-          ),
-        );
-        
-        // UI 새로고침
-        _refreshAllServiceData();
-      }
-    } catch (e) {
-      debugPrint('❌ 데이터베이스 재설정 오류: $e');
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('❌ 재설정 실패: $e'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    }
-  }
-
-  // 데이터베이스 스키마 수정
-  Future<void> _fixDatabaseSchema() async {
-    try {
-      setState(() {
-        _isLoading = true;
-      });
-
-      debugPrint('🔧 데이터베이스 스키마 수정 시작...');
-      
-      // 스키마 자동 수정 (누락된 컬럼 추가)
-      await WorkoutHistoryService.fixSchemaIfNeeded();
-      
-      debugPrint('✅ 데이터베이스 스키마 수정 완료');
-      
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('✅ 스키마 수정 완료 - 이제 운동 기록이 정상 저장됩니다'),
-            backgroundColor: Colors.green,
-          ),
-        );
-      }
-    } catch (e) {
-      debugPrint('❌ 스키마 수정 오류: $e');
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('❌ 스키마 수정 실패: $e'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
     }
   }
 
@@ -2220,190 +1927,27 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     }
   }
 
-  // 성능 통계 표시
-  void _showPerformanceStats() async {
-    try {
-      setState(() {
-        _isLoading = true;
-      });
-
-      debugPrint('📊 성능 통계 조회 시작');
-      
-      // AchievementService에서 성능 통계 가져오기
-      final stats = AchievementService.getPerformanceStats();
-      
-      if (mounted) {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('📊 성능 통계'),
-            content: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (stats.isEmpty) 
-                    const Text('아직 수집된 성능 데이터가 없습니다.')
-                  else
-                    ...stats.entries.map((entry) {
-                      final operation = entry.key;
-                      final metrics = entry.value;
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              operation.replaceAll('_', ' ').toUpperCase(),
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text('평균: ${metrics['average']?.toStringAsFixed(1)}ms'),
-                            Text('최소: ${metrics['min']?.toStringAsFixed(1)}ms'),
-                            Text('최대: ${metrics['max']?.toStringAsFixed(1)}ms'),
-                            Text('실행 횟수: ${metrics['count']?.toInt()}회'),
-                            if (metrics['average']! > 500)
-                              const Text(
-                                '⚠️ 성능 개선 필요',
-                                style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold),
-                              ),
-                            const Divider(),
-                          ],
-                        ),
-                      );
-                    }).toList(),
-                  const SizedBox(height: 8),
-                  const Text(
-                    '💡 팁: 500ms 이상의 작업은 성능 개선이 필요할 수 있습니다.',
-                    style: TextStyle(fontSize: 12, color: Colors.grey),
-                  ),
-                ],
-              ),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('확인'),
-              ),
-            ],
-          ),
-        );
-      }
-    } catch (e) {
-      debugPrint('❌ 성능 통계 조회 오류: $e');
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('❌ 성능 통계 조회 실패: $e'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    }
+  /// 완벽 자세 챌린지 시작
+  void _startFormChallenge() {
+    Navigator.pop(context);
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('🎯 완벽 자세 챌린지 활성화! 대충하면 안 된다! 💪'),
+        backgroundColor: Colors.blue,
+        duration: Duration(seconds: 3),
+      ),
+    );
   }
 
-  // 캐시 상태 표시
-  void _showCacheStatus() async {
-    try {
-      setState(() {
-        _isLoading = true;
-      });
-
-      debugPrint('🗂️ 캐시 상태 조회 시작');
-      
-      // 캐시 정보는 private이므로 getAllAchievements 호출하여 캐시 동작 확인
-      final stopwatch = Stopwatch()..start();
-      await AchievementService.getAllAchievements();
-      stopwatch.stop();
-      final firstCallTime = stopwatch.elapsedMilliseconds;
-      
-      // 두 번째 호출 (캐시 히트 예상)
-      stopwatch.reset();
-      stopwatch.start();
-      final achievements = await AchievementService.getAllAchievements();
-      stopwatch.stop();
-      final secondCallTime = stopwatch.elapsedMilliseconds;
-      
-      final cacheHit = secondCallTime < firstCallTime;
-      
-      if (mounted) {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('🗂️ 캐시 상태'),
-            content: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text('업적 개수: ${achievements.length}개'),
-                const SizedBox(height: 8),
-                Text('첫 번째 호출: ${firstCallTime}ms'),
-                Text('두 번째 호출: ${secondCallTime}ms'),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Icon(
-                      cacheHit ? Icons.check_circle : Icons.error,
-                      color: cacheHit ? Colors.green : Colors.orange,
-                      size: 16,
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      cacheHit ? '캐시 동작 중' : '캐시 미스',
-                      style: TextStyle(
-                        color: cacheHit ? Colors.green : Colors.orange,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                if (cacheHit)
-                  Text(
-                    '성능 향상: ${((firstCallTime - secondCallTime) / firstCallTime * 100).toStringAsFixed(1)}%',
-                    style: const TextStyle(color: Colors.green),
-                  ),
-                const SizedBox(height: 8),
-                const Text(
-                  '💡 캐시는 5분간 유효하며, 데이터 변경 시 자동으로 무효화됩니다.',
-                  style: TextStyle(fontSize: 12, color: Colors.grey),
-                ),
-              ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('확인'),
-              ),
-            ],
-          ),
-        );
-      }
-    } catch (e) {
-      debugPrint('❌ 캐시 상태 조회 오류: $e');
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('❌ 캐시 상태 조회 실패: $e'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    }
+  /// 연속 챌린지 시작
+  void _startStreakChallenge() {
+    Navigator.pop(context);
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('🔄 7일 연속 챌린지 시작! 하루라도 빠지면 처음부터! 🚀'),
+        backgroundColor: Colors.green,
+        duration: Duration(seconds: 3),
+      ),
+    );
   }
 }

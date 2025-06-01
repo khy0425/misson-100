@@ -365,10 +365,12 @@ class Achievement {
       descriptionKey: map['descriptionKey'] as String,
       motivationKey: map['motivationKey'] as String,
       type: AchievementType.values.firstWhere(
-        (e) => e.name == map['type'] as String,
+        (e) => e.toString() == map['type'],
+        orElse: () => AchievementType.first,
       ),
       rarity: AchievementRarity.values.firstWhere(
-        (e) => e.name == map['rarity'] as String,
+        (e) => e.toString() == map['rarity'],
+        orElse: () => AchievementRarity.common,
       ),
       targetValue: map['targetValue'] as int,
       currentValue: map['currentValue'] as int? ?? 0,
@@ -377,8 +379,12 @@ class Achievement {
           ? DateTime.parse(map['unlockedAt'] as String)
           : null,
       xpReward: map['xpReward'] as int? ?? 0,
-      icon: IconData(map['icon'] as int? ?? Icons.star.codePoint, fontFamily: 'MaterialIcons'),
+      icon: _getIconDataFromCodePoint(map['icon'] as int? ?? Icons.star.codePoint),
     );
+  }
+
+  static IconData _getIconDataFromCodePoint(int codePoint) {
+    return IconData(codePoint, fontFamily: 'MaterialIcons');
   }
 }
 

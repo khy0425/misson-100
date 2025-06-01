@@ -9,6 +9,16 @@
 -keep class io.flutter.**  { *; }
 -keep class io.flutter.plugins.**  { *; }
 
+# Google Play Core Split APK (R8 오류 해결)
+-dontwarn com.google.android.play.core.splitcompat.**
+-dontwarn com.google.android.play.core.splitinstall.**
+-dontwarn com.google.android.play.core.tasks.**
+-keep class com.google.android.play.core.** { *; }
+
+# Flutter Split APK 관련 클래스 무시 (현재 사용하지 않음)
+-dontwarn io.flutter.embedding.android.FlutterPlayStoreSplitApplication
+-dontwarn io.flutter.embedding.engine.deferredcomponents.**
+
 # Google Mobile Ads 최적화
 -keep class com.google.android.gms.** { *; }
 -dontwarn com.google.android.gms.**
