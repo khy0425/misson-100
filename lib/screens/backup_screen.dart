@@ -462,9 +462,13 @@ class _BackupScreenState extends State<BackupScreen> {
         content: TextField(
           controller: controller,
           obscureText: true,
-          decoration: const InputDecoration(
-            labelText: '비밀번호',
-            hintText: '백업 암호화에 사용할 비밀번호를 입력하세요',
+          decoration: InputDecoration(
+            labelText: Localizations.localeOf(context).languageCode == 'ko'
+              ? '비밀번호'
+              : 'Password',
+            hintText: Localizations.localeOf(context).languageCode == 'ko'
+              ? '백업 암호화에 사용할 비밀번호를 입력하세요'
+              : 'Enter password for backup encryption',
           ),
         ),
         actions: [

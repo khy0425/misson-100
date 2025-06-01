@@ -1725,7 +1725,11 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('언어 설정'),
+        title: Text(
+          Localizations.localeOf(context).languageCode == 'ko'
+            ? '언어 설정'
+            : 'Language Settings'
+        ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -1832,11 +1836,15 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: const Row(
+              content: Row(
                 children: [
-                  Icon(Icons.check_circle, color: Colors.white),
-                  SizedBox(width: 8),
-                  Text('✅ 알림 권한이 허용되었습니다!'),
+                  const Icon(Icons.check_circle, color: Colors.white),
+                  const SizedBox(width: 8),
+                  Text(
+                    Localizations.localeOf(context).languageCode == 'ko'
+                      ? '✅ 알림 권한이 허용되었습니다!'
+                      : '✅ Notification permission granted!'
+                  ),
                 ],
               ),
               backgroundColor: Colors.green,
@@ -1858,12 +1866,16 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: const Row(
+              content: Row(
                 children: [
-                  Icon(Icons.warning, color: Colors.white),
-                  SizedBox(width: 8),
+                  const Icon(Icons.warning, color: Colors.white),
+                  const SizedBox(width: 8),
                   Expanded(
-                    child: Text('⚠️ 알림 권한이 필요합니다. 설정에서 수동으로 허용해주세요.'),
+                    child: Text(
+                      Localizations.localeOf(context).languageCode == 'ko'
+                        ? '⚠️ 알림 권한이 필요합니다. 설정에서 수동으로 허용해주세요.'
+                        : '⚠️ Notification permission required. Please allow manually in settings.'
+                    ),
                   ),
                 ],
               ),
@@ -1880,12 +1892,16 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Row(
+            content: Row(
               children: [
-                Icon(Icons.error, color: Colors.white),
-                SizedBox(width: 8),
+                const Icon(Icons.error, color: Colors.white),
+                const SizedBox(width: 8),
                 Expanded(
-                  child: Text('❌ 권한 요청 중 오류가 발생했습니다. 설정에서 수동으로 허용해주세요.'),
+                  child: Text(
+                    Localizations.localeOf(context).languageCode == 'ko'
+                      ? '❌ 권한 요청 중 오류가 발생했습니다. 설정에서 수동으로 허용해주세요.'
+                      : '❌ Error occurred during permission request. Please allow manually in settings.'
+                  ),
                 ),
               ],
             ),
