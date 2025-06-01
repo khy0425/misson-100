@@ -58,7 +58,9 @@ class WorkoutResumptionDialog extends StatelessWidget {
           const SizedBox(width: 12),
           Expanded(
             child: Text(
-              '💪 운동 재개',
+              Localizations.localeOf(context).languageCode == 'ko'
+                ? '💪 운동 재개'
+                : '💪 Resume Workout',
               style: theme.textTheme.titleLarge?.copyWith(
                 color: const Color(AppColors.primaryColor),
                 fontWeight: FontWeight.bold,
@@ -71,85 +73,88 @@ class WorkoutResumptionDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 발견된 운동 정보
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: const Color(AppColors.secondaryColor).withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(AppConstants.radiusM),
-              border: Border.all(
-                color: const Color(AppColors.secondaryColor).withValues(alpha: 0.3),
+          if (workoutTitle.isNotEmpty) ...[
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.blue.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(8),
               ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    Localizations.localeOf(context).languageCode == 'ko'
+                      ? '🔍 발견된 운동'
+                      : '🔍 Found Workout',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue[700],
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    Localizations.localeOf(context).languageCode == 'ko'
+                      ? '운동: $workoutTitle'
+                      : 'Workout: $workoutTitle',
+                  ),
+                  if (currentSet > 0)
+                    Text(
+                      Localizations.localeOf(context).languageCode == 'ko'
+                        ? '진행: ${currentSet}세트 준비 중'
+                        : 'Progress: Set ${currentSet} ready',
+                    ),
+                  Text(
+                    Localizations.localeOf(context).languageCode == 'ko'
+                      ? '완료된 세트: ${completedSetsCount}개'
+                      : 'Completed sets: ${completedSetsCount}',
+                  ),
+                  if (totalCompletedReps > 0)
+                    Text(
+                      Localizations.localeOf(context).languageCode == 'ko'
+                        ? '총 완료 횟수: ${totalCompletedReps}회'
+                        : 'Total completed: ${totalCompletedReps} reps',
+                    ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+          ],
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.orange.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(8),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '🔍 발견된 운동',
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    color: const Color(AppColors.secondaryColor),
-                    fontWeight: FontWeight.bold,
-                  ),
+                Row(
+                  children: [
+                    const Icon(Icons.warning_amber, color: Colors.orange),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        Localizations.localeOf(context).languageCode == 'ko'
+                          ? '⚠️ 운동 중단 발견'
+                          : '⚠️ Workout Interruption Detected',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.orange,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  '운동: $workoutTitle',
-                  style: theme.textTheme.bodyMedium,
-                ),
-                Text(
-                  '진행: ${currentSet}세트 준비 중',
-                  style: theme.textTheme.bodyMedium,
-                ),
-                Text(
-                  '완료된 세트: ${completedSetsCount}개',
-                  style: theme.textTheme.bodyMedium,
-                ),
-                Text(
-                  '총 완료 횟수: ${totalCompletedReps}회',
-                  style: theme.textTheme.bodyMedium,
+                  Localizations.localeOf(context).languageCode == 'ko'
+                    ? '이전 운동을 이어서 계속하시겠습니까?\n아니면 새 운동을 시작하시겠습니까?'
+                    : 'Would you like to continue the previous workout?\nOr start a new workout?',
+                  style: const TextStyle(height: 1.4),
                 ),
               ],
             ),
-          ),
-          
-          const SizedBox(height: 16),
-          
-          // 데이터 소스 정보
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.grey.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(AppConstants.radiusS),
-            ),
-            child: Row(
-              children: [
-                Icon(
-                  resumptionData.dataSource == 'SharedPreferences'
-                      ? Icons.phone_android
-                      : Icons.storage,
-                  color: Colors.grey[600],
-                  size: 16,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  '데이터 소스: ${resumptionData.dataSource}',
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: Colors.grey[600],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          
-          const SizedBox(height: 20),
-          
-          // 안내 메시지
-          Text(
-            '이전 운동을 이어서 계속하시겠습니까?\n아니면 새 운동을 시작하시겠습니까?',
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: Colors.grey[700],
-            ),
-            textAlign: TextAlign.center,
           ),
         ],
       ),
@@ -157,20 +162,24 @@ class WorkoutResumptionDialog extends StatelessWidget {
         // 새 운동 시작 버튼
         TextButton(
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).pop(false);
             onStartNewWorkout();
           },
           style: TextButton.styleFrom(
             foregroundColor: Colors.grey[600],
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           ),
-          child: Text('새 운동 시작'),
+          child: Text(
+            Localizations.localeOf(context).languageCode == 'ko'
+              ? '새 운동 시작'
+              : 'Start New Workout',
+          ),
         ),
         
         // 운동 재개 버튼
         ElevatedButton(
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).pop(true);
             onResumeWorkout();
           },
           style: ElevatedButton.styleFrom(
@@ -187,7 +196,9 @@ class WorkoutResumptionDialog extends StatelessWidget {
               const Icon(Icons.play_arrow, size: 18),
               const SizedBox(width: 4),
               Text(
-                '운동 재개',
+                Localizations.localeOf(context).languageCode == 'ko'
+                  ? '운동 재개'
+                  : 'Resume Workout',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ],
@@ -226,84 +237,71 @@ Future<bool?> showWorkoutResumptionDialog({
 }
 
 /// 간단한 운동 재개 확인 다이얼로그
-Future<bool> showSimpleResumptionDialog({
+Future<bool?> showSimpleResumptionDialog({
   required BuildContext context,
   required String workoutTitle,
   required int completedSets,
   required int totalReps,
 }) async {
-  final result = await showDialog<bool>(
+  return showDialog<bool>(
     context: context,
     barrierDismissible: false,
-    builder: (BuildContext context) {
-      final theme = Theme.of(context);
-      
-      return AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppConstants.radiusL),
+    builder: (context) => AlertDialog(
+      title: Text(
+        Localizations.localeOf(context).languageCode == 'ko'
+          ? '💪 운동 재개'
+          : '💪 Resume Workout',
+        style: const TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
         ),
-        title: const Text(
-          '💪 운동 재개',
-          style: TextStyle(
-            color: Color(AppColors.primaryColor),
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(
-              Icons.fitness_center,
-              color: Color(AppColors.primaryColor),
-              size: 48,
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.orange.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(8),
             ),
-            const SizedBox(height: 16),
-            Text(
-              '미완료된 운동이 발견되었습니다!',
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              '운동: $workoutTitle\n완료된 세트: ${completedSets}개\n총 횟수: ${totalReps}회',
-              style: theme.textTheme.bodyMedium,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              '이어서 계속하시겠습니까?',
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: Colors.grey[600],
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: Text(
-              '새로 시작',
-              style: TextStyle(color: Colors.grey[600]),
-            ),
-          ),
-          ElevatedButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(AppColors.primaryColor),
-            ),
-            child: const Text(
-              '재개하기',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
+            child: Column(
+              children: [
+                Text(
+                  Localizations.localeOf(context).languageCode == 'ko'
+                    ? '미완료된 운동이 발견되었습니다!'
+                    : 'Incomplete workout found!',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.orange,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  Localizations.localeOf(context).languageCode == 'ko'
+                    ? '운동: $workoutTitle\n완료된 세트: ${completedSets}개\n총 횟수: ${totalReps}회'
+                    : 'Workout: $workoutTitle\nCompleted sets: ${completedSets}\nTotal reps: ${totalReps}',
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
           ),
         ],
-      );
-    },
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(false),
+          child: Text(AppLocalizations.of(context)!.cancel),
+        ),
+        ElevatedButton(
+          onPressed: () => Navigator.of(context).pop(true),
+          child: Text(
+            Localizations.localeOf(context).languageCode == 'ko'
+              ? '재개'
+              : 'Resume',
+          ),
+        ),
+      ],
+    ),
   );
-
-  return result ?? false;
 } 
