@@ -80,10 +80,10 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('알림 권한이 허용되었습니다! 🎉'),
-              backgroundColor: Color(AppColors.primaryColor),
-              duration: Duration(seconds: 2),
+            SnackBar(
+              content: Text(AppLocalizations.of(context)!.notificationPermissionGrantedMessage),
+              backgroundColor: const Color(AppColors.primaryColor),
+              duration: const Duration(seconds: 2),
             ),
           );
         }
