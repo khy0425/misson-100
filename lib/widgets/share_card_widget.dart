@@ -49,17 +49,17 @@ class ShareCardWidget extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildHeader(l10n),
+          _buildHeader(context, l10n),
           const SizedBox(height: 20),
           _buildContent(context, l10n),
           const SizedBox(height: 20),
-          _buildFooter(l10n),
+          _buildFooter(context, l10n),
         ],
       ),
     );
   }
 
-  Widget _buildHeader(AppLocalizations l10n) {
+  Widget _buildHeader(BuildContext context, AppLocalizations l10n) {
     return Row(
       children: [
         Container(
@@ -76,13 +76,15 @@ class ShareCardWidget extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 12),
-        const Expanded(
+        Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '💀 ALPHA EMPEROR DOMAIN 💀',
-                style: TextStyle(
+                Localizations.localeOf(context).languageCode == 'ko'
+                  ? '💀 ALPHA EMPEROR DOMAIN 💀'
+                  : '💀 ALPHA EMPEROR DOMAIN 💀',
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -90,8 +92,10 @@ class ShareCardWidget extends StatelessWidget {
                 ),
               ),
               Text(
-                '차드가 되는 정복의 여정',
-                style: TextStyle(
+                Localizations.localeOf(context).languageCode == 'ko'
+                  ? '차드가 되는 정복의 여정'
+                  : 'Journey to Become Chad',
+                style: const TextStyle(
                   color: Colors.white70,
                   fontSize: 12,
                 ),
@@ -106,19 +110,19 @@ class ShareCardWidget extends StatelessWidget {
   Widget _buildContent(BuildContext context, AppLocalizations l10n) {
     switch (type) {
       case ShareCardType.dailyWorkout:
-        return _buildDailyWorkoutContent(l10n);
+        return _buildDailyWorkoutContent(context, l10n);
       case ShareCardType.levelUp:
-        return _buildLevelUpContent(l10n);
+        return _buildLevelUpContent(context, l10n);
       case ShareCardType.achievement:
-        return _buildAchievementContent(l10n);
+        return _buildAchievementContent(context, l10n);
       case ShareCardType.weeklyProgress:
-        return _buildWeeklyProgressContent(l10n);
+        return _buildWeeklyProgressContent(context, l10n);
       case ShareCardType.mission100:
-        return _buildMission100Content(l10n);
+        return _buildMission100Content(context, l10n);
     }
   }
 
-  Widget _buildDailyWorkoutContent(AppLocalizations l10n) {
+  Widget _buildDailyWorkoutContent(BuildContext context, AppLocalizations l10n) {
     final pushupCount = data['pushupCount'] as int;
     final currentDay = data['currentDay'] as int;
     final level = data['level'] as UserLevel;
@@ -126,9 +130,11 @@ class ShareCardWidget extends StatelessWidget {
 
     return Column(
       children: [
-        const Text(
-          '🔥💀 일일 정복 기록 💀🔥',
-          style: TextStyle(
+        Text(
+          Localizations.localeOf(context).languageCode == 'ko'
+            ? '🔥💀 일일 정복 기록 💀🔥'
+            : '🔥💀 Daily Conquest Record 💀🔥',
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -146,9 +152,11 @@ class ShareCardWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    '📅 Day',
-                    style: TextStyle(color: Colors.white70, fontSize: 14),
+                  Text(
+                    Localizations.localeOf(context).languageCode == 'ko'
+                      ? '📅 Day'
+                      : '📅 Day',
+                    style: const TextStyle(color: Colors.white70, fontSize: 14),
                   ),
                   Text(
                     '$currentDay',
@@ -164,12 +172,16 @@ class ShareCardWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    '💪 푸시업',
-                    style: TextStyle(color: Colors.white70, fontSize: 14),
+                  Text(
+                    Localizations.localeOf(context).languageCode == 'ko'
+                      ? '💪 푸시업'
+                      : '💪 Push-ups',
+                    style: const TextStyle(color: Colors.white70, fontSize: 14),
                   ),
                   Text(
-                    '${pushupCount}개',
+                    Localizations.localeOf(context).languageCode == 'ko'
+                      ? '${pushupCount}개'
+                      : '${pushupCount} reps',
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 24,
@@ -182,9 +194,11 @@ class ShareCardWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    '🏆 레벨',
-                    style: TextStyle(color: Colors.white70, fontSize: 14),
+                  Text(
+                    Localizations.localeOf(context).languageCode == 'ko'
+                      ? '🏆 레벨'
+                      : '🏆 Level',
+                    style: const TextStyle(color: Colors.white70, fontSize: 14),
                   ),
                   Text(
                     levelName,
@@ -203,7 +217,7 @@ class ShareCardWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildLevelUpContent(AppLocalizations l10n) {
+  Widget _buildLevelUpContent(BuildContext context, AppLocalizations l10n) {
     final newLevel = data['newLevel'] as UserLevel;
     final totalDays = data['totalDays'] as int;
     final totalPushups = data['totalPushups'] as int;
@@ -213,7 +227,9 @@ class ShareCardWidget extends StatelessWidget {
     return Column(
       children: [
         Text(
-          '$levelEmoji💥 LEVEL UP! 한계 박살! 💥$levelEmoji',
+          Localizations.localeOf(context).languageCode == 'ko'
+            ? '$levelEmoji💥 LEVEL UP! 한계 박살! 💥$levelEmoji'
+            : '$levelEmoji💥 LEVEL UP! Limit Destroyed! 💥$levelEmoji',
           style: const TextStyle(
             color: Colors.white,
             fontSize: 20,
@@ -230,7 +246,9 @@ class ShareCardWidget extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                '새로운 차드 등급',
+                Localizations.localeOf(context).languageCode == 'ko'
+                  ? '새로운 차드 등급'
+                  : 'New Chad Level',
                 style: TextStyle(
                   color: Colors.white.withValues(alpha: 0.8),
                   fontSize: 14,
@@ -255,7 +273,9 @@ class ShareCardWidget extends StatelessWidget {
                         style: TextStyle(fontSize: 20),
                       ),
                       Text(
-                        '${totalDays}일',
+                        Localizations.localeOf(context).languageCode == 'ko'
+                          ? '${totalDays}일'
+                          : '${totalDays} days',
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -271,7 +291,9 @@ class ShareCardWidget extends StatelessWidget {
                         style: TextStyle(fontSize: 20),
                       ),
                       Text(
-                        '${totalPushups}개',
+                        Localizations.localeOf(context).languageCode == 'ko'
+                          ? '${totalPushups}개'
+                          : '${totalPushups} reps',
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -289,16 +311,18 @@ class ShareCardWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildAchievementContent(AppLocalizations l10n) {
+  Widget _buildAchievementContent(BuildContext context, AppLocalizations l10n) {
     final title = data['title'] as String;
     final description = data['description'] as String;
     final xpReward = data['xpReward'] as int;
 
     return Column(
       children: [
-        const Text(
-          '🏆 업적 달성! 🏆',
-          style: TextStyle(
+        Text(
+          Localizations.localeOf(context).languageCode == 'ko'
+            ? '🏆 업적 달성! 🏆'
+            : '🏆 Achievement Unlocked! 🏆',
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -354,7 +378,7 @@ class ShareCardWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildWeeklyProgressContent(AppLocalizations l10n) {
+  Widget _buildWeeklyProgressContent(BuildContext context, AppLocalizations l10n) {
     final weekNumber = data['weekNumber'] as int;
     final completedDays = data['completedDays'] as int;
     final totalPushups = data['totalPushups'] as int;
@@ -362,9 +386,11 @@ class ShareCardWidget extends StatelessWidget {
 
     return Column(
       children: [
-        const Text(
-          '📊 주간 리포트 📊',
-          style: TextStyle(
+        Text(
+          Localizations.localeOf(context).languageCode == 'ko'
+            ? '📊 주간 리포트 📊'
+            : '📊 Weekly Report 📊',
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -395,7 +421,9 @@ class ShareCardWidget extends StatelessWidget {
                     children: [
                       const Text('✅', style: TextStyle(fontSize: 20)),
                       Text(
-                        '${completedDays}일',
+                        Localizations.localeOf(context).languageCode == 'ko'
+                          ? '${completedDays}일'
+                          : '${completedDays} days',
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -408,7 +436,9 @@ class ShareCardWidget extends StatelessWidget {
                     children: [
                       const Text('💪', style: TextStyle(fontSize: 20)),
                       Text(
-                        '${totalPushups}개',
+                        Localizations.localeOf(context).languageCode == 'ko'
+                          ? '${totalPushups}개'
+                          : '${totalPushups} reps',
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -428,15 +458,17 @@ class ShareCardWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildMission100Content(AppLocalizations l10n) {
+  Widget _buildMission100Content(BuildContext context, AppLocalizations l10n) {
     final totalDays = data['totalDays'] as int;
     final duration = data['duration'] as int;
 
     return Column(
       children: [
-        const Text(
-          '🎉👑💀 MISSION COMPLETE! ALPHA EMPEROR 등극! 💀👑🎉',
-          style: TextStyle(
+        Text(
+          Localizations.localeOf(context).languageCode == 'ko'
+            ? '🎉👑💀 MISSION COMPLETE! ALPHA EMPEROR 등극! 💀👑🎉'
+            : '🎉👑💀 MISSION COMPLETE! ALPHA EMPEROR Ascension! 💀👑🎉',
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -452,9 +484,11 @@ class ShareCardWidget extends StatelessWidget {
           ),
           child: Column(
             children: [
-              const Text(
-                '💪💀 푸시업 100개 연속 달성! 인간 초월! 💀💪',
-                style: TextStyle(
+              Text(
+                Localizations.localeOf(context).languageCode == 'ko'
+                  ? '💪💀 푸시업 100개 연속 달성! 인간 초월! 💀💪'
+                  : '💪💀 100 Push-ups Streak! Human Transcendence! 💀💪',
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -469,7 +503,9 @@ class ShareCardWidget extends StatelessWidget {
                     children: [
                       const Text('📅', style: TextStyle(fontSize: 20)),
                       Text(
-                        '${duration}일',
+                        Localizations.localeOf(context).languageCode == 'ko'
+                          ? '${duration}일'
+                          : '${duration} days',
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -477,7 +513,9 @@ class ShareCardWidget extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '소요일',
+                        Localizations.localeOf(context).languageCode == 'ko'
+                          ? '소요일'
+                          : 'Duration',
                         style: TextStyle(
                           color: Colors.white.withValues(alpha: 0.7),
                           fontSize: 12,
@@ -489,7 +527,9 @@ class ShareCardWidget extends StatelessWidget {
                     children: [
                       const Text('🏆', style: TextStyle(fontSize: 20)),
                       Text(
-                        '${totalDays}회',
+                        Localizations.localeOf(context).languageCode == 'ko'
+                          ? '${totalDays}회'
+                          : '${totalDays} times',
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -497,7 +537,9 @@ class ShareCardWidget extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '완료',
+                        Localizations.localeOf(context).languageCode == 'ko'
+                          ? '완료'
+                          : 'Completed',
                         style: TextStyle(
                           color: Colors.white.withValues(alpha: 0.7),
                           fontSize: 12,
@@ -508,9 +550,11 @@ class ShareCardWidget extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 12),
-              const Text(
-                '🔥💀 진정한 기가차드 완성! ALPHA EMPEROR! 💀🔥',
-                style: TextStyle(
+              Text(
+                Localizations.localeOf(context).languageCode == 'ko'
+                  ? '🔥💀 진정한 기가차드 완성! ALPHA EMPEROR! 💀🔥'
+                  : '🔥💀 True Giga Chad Complete! ALPHA EMPEROR! 💀🔥',
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
@@ -556,7 +600,7 @@ class ShareCardWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildFooter(AppLocalizations l10n) {
+  Widget _buildFooter(BuildContext context, AppLocalizations l10n) {
     return Column(
       children: [
         Container(
@@ -565,15 +609,19 @@ class ShareCardWidget extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         Text(
-          '💀 너도 차드가 되고 싶다면? 💀',
+          Localizations.localeOf(context).languageCode == 'ko'
+            ? '💀 너도 차드가 되고 싶다면? 💀'
+            : '💀 Want to become Chad too? 💀',
           style: TextStyle(
             color: Colors.white.withValues(alpha: 0.8),
             fontSize: 12,
           ),
         ),
-        const Text(
-          'Mission: 100 앱 다운로드해라! 약자는 도망가라!',
-          style: TextStyle(
+        Text(
+          Localizations.localeOf(context).languageCode == 'ko'
+            ? 'Mission: 100 앱 다운로드해라! 약자는 도망가라!'
+            : 'Download Mission: 100 app! Weaklings run away!',
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 14,
             fontWeight: FontWeight.bold,
