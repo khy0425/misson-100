@@ -575,76 +575,83 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           if (_todayWorkout != null) ...[
             // 주차 및 일차 정보
             Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppConstants.paddingM,
-                vertical: AppConstants.paddingS,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: const Color(AppColors.primaryColor).withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(AppConstants.radiusS),
+                color: const Color(AppColors.primaryColor).withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
-                Localizations.localeOf(context).languageCode == 'ko' 
+                Localizations.localeOf(context).languageCode == 'ko'
                   ? '${(_todayWorkout!.week ?? 0)}주차 ${(_todayWorkout!.day ?? 0)}일차'
                   : 'Week ${(_todayWorkout!.week ?? 0)} Day ${(_todayWorkout!.day ?? 0)}',
-                style: theme.textTheme.labelLarge?.copyWith(
+                style: TextStyle(
                   color: const Color(AppColors.primaryColor),
-                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
-            const SizedBox(height: AppConstants.paddingM),
-            
+            const SizedBox(height: 16),
+
             // 세트별 목표 횟수
-            Text(
-              Localizations.localeOf(context).languageCode == 'ko' 
-                ? '오늘의 목표' 
-                : "Today's Goal",
-              style: theme.textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w600,
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                Localizations.localeOf(context).languageCode == 'ko'
+                  ? '오늘의 목표'
+                  : "Today's Goal",
+                style: TextStyle(
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
-            const SizedBox(height: AppConstants.paddingS),
-            Wrap(
-              spacing: AppConstants.paddingS,
-              runSpacing: AppConstants.paddingS,
-              children: (_todayWorkout!.sets as List<dynamic>?)?.asMap()?.entries?.map((entry) {
+            const SizedBox(height: 8),
+
+            // 세트별 목표 표시
+            if (_todayWorkout!.sets != null)
+              ...(((_todayWorkout!.sets as List<dynamic>?) ?? []).asMap().entries.map((entry) {
                 final setIndex = entry.key + 1;
-                final reps = entry.value?.reps ?? 0;
-                return Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppConstants.paddingM,
-                    vertical: AppConstants.paddingS,
-                  ),
-                  decoration: BoxDecoration(
-                    color: _todayCompletedWorkout != null 
-                        ? Colors.green 
-                        : const Color(AppColors.primaryColor),
-                    borderRadius: BorderRadius.circular(AppConstants.radiusS),
-                  ),
-                  child: Text(
-                    Localizations.localeOf(context).languageCode == 'ko' 
-                      ? '${setIndex}세트: ${reps}개'
-                      : 'Set ${setIndex}: ${reps} reps',
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
+                final reps = (entry.value as Map<String, dynamic>?)?['reps'] as int?;
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 2),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.fitness_center,
+                        size: 16,
+                        color: _todayCompletedWorkout != null ? Colors.green : Colors.grey,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        Localizations.localeOf(context).languageCode == 'ko'
+                          ? '${setIndex}세트: ${reps}개'
+                          : 'Set ${setIndex}: ${reps} reps',
+                        style: TextStyle(
+                          color: _todayCompletedWorkout != null
+                              ? Colors.green[700]
+                              : theme.colorScheme.onSurface.withValues(alpha: 0.8),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
                   ),
                 );
-              }).toList() ?? [],
-            ),
-            const SizedBox(height: AppConstants.paddingM),
-            
+              })),
+
+            const SizedBox(height: 16),
+
             // 총 횟수 정보
             Row(
               children: [
                 Icon(
                   _todayCompletedWorkout != null ? Icons.check_circle : Icons.fitness_center,
                   color: _todayCompletedWorkout != null ? Colors.green : Colors.grey,
-                  size: 16,
+                  size: 20,
                 ),
-                const SizedBox(width: AppConstants.paddingS),
+                const SizedBox(width: 8),
                 Text(
                   _todayCompletedWorkout != null
                       ? (Localizations.localeOf(context).languageCode == 'ko'
@@ -653,15 +660,17 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                       : (Localizations.localeOf(context).languageCode == 'ko'
                           ? '목표: ${(_todayWorkout!.sets as List<dynamic>?)?.fold<int>(0, (sum, set) => sum + (set?.reps as int? ?? 0)) ?? 0}개 / ${(_todayWorkout!.sets as List<dynamic>?)?.length ?? 0}세트'
                           : 'Goal: ${(_todayWorkout!.sets as List<dynamic>?)?.fold<int>(0, (sum, set) => sum + (set?.reps as int? ?? 0)) ?? 0} reps / ${(_todayWorkout!.sets as List<dynamic>?)?.length ?? 0} sets'),
-                  style: theme.textTheme.bodyMedium?.copyWith(
+                  style: TextStyle(
                     color: _todayCompletedWorkout != null ? Colors.green[700] : Colors.grey,
                     fontWeight: _todayCompletedWorkout != null ? FontWeight.w600 : FontWeight.normal,
+                    fontSize: 14,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: AppConstants.paddingL),
-            
+
+            const SizedBox(height: 16),
+
             // 시작 버튼 또는 완료 버튼
             SizedBox(
               width: double.infinity,
@@ -688,7 +697,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                           const SizedBox(width: AppConstants.paddingS),
                           Text(
                             AppLocalizations.of(context)!.todayWorkoutCompleted,
-                            style: theme.textTheme.titleMedium?.copyWith(
+                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                             ),
@@ -718,7 +727,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                           const SizedBox(width: AppConstants.paddingS),
                           Text(
                             AppLocalizations.of(context)!.startTodayWorkout,
-                            style: theme.textTheme.titleMedium?.copyWith(
+                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                             ),
@@ -778,94 +787,95 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                       Localizations.localeOf(context).languageCode == 'ko'
                         ? '🎉 오늘 운동 완료! 🎉'
                         : '🎉 Today\'s Workout Complete! 🎉',
-                      style: theme.textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
+                      style: TextStyle(
                         color: Colors.green[700],
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: AppConstants.paddingS),
-                    Text(
-                      Localizations.localeOf(context).languageCode == 'ko'
-                        ? '수고하셨습니다! 정말 멋져요! 💪'
-                        : 'Great job! You\'re amazing! 💪',
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: const Color(AppColors.primaryColor),
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: AppConstants.paddingM),
-                    
-                    // 오늘의 성과
+                    const SizedBox(height: 12),
+
+                    // 운동 결과 통계
                     Container(
-                      padding: const EdgeInsets.all(AppConstants.paddingM),
+                      padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.7),
-                        borderRadius: BorderRadius.circular(AppConstants.radiusS),
+                        color: Colors.green.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       child: Column(
                         children: [
                           Text(
-                            Localizations.localeOf(context).languageCode == 'ko' 
-                              ? '오늘의 성과' 
+                            Localizations.localeOf(context).languageCode == 'ko'
+                              ? '오늘의 성과'
                               : "Today's Achievement",
-                            style: theme.textTheme.bodyLarge?.copyWith(
-                              fontWeight: FontWeight.bold,
+                            style: TextStyle(
+                              color: Colors.green[700],
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
-                          const SizedBox(height: AppConstants.paddingS),
+                          const SizedBox(height: 12),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              _buildAchievementStat(
-                                context, 
-                                Localizations.localeOf(context).languageCode == 'ko' 
-                                  ? '총 푸시업' 
-                                  : 'Total Push-ups', 
-                                '${_todayCompletedWorkout!.totalReps}회',
-                                Icons.fitness_center,
-                                Colors.blue,
+                              Column(
+                                children: [
+                                  Text(
+                                    Localizations.localeOf(context).languageCode == 'ko'
+                                      ? '총 푸시업'
+                                      : 'Total Push-ups',
+                                    style: const TextStyle(fontSize: 12, color: Colors.grey),
+                                  ),
+                                  Text(
+                                    '${_todayCompletedWorkout!.totalReps}회',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.green[700],
+                                    ),
+                                  ),
+                                ],
                               ),
-                              _buildAchievementStat(
-                                context, 
-                                Localizations.localeOf(context).languageCode == 'ko' 
-                                  ? '완료율' 
-                                  : 'Completion', 
-                                '${(_todayCompletedWorkout!.completionRate * 100).toStringAsFixed(1)}%',
-                                Icons.check_circle,
-                                Colors.green,
+                              Column(
+                                children: [
+                                  Text(
+                                    Localizations.localeOf(context).languageCode == 'ko'
+                                      ? '완료율'
+                                      : 'Completion Rate',
+                                    style: const TextStyle(fontSize: 12, color: Colors.grey),
+                                  ),
+                                  Text(
+                                    '${(_todayCompletedWorkout!.completionRate * 100).toStringAsFixed(1)}%',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.green[700],
+                                    ),
+                                  ),
+                                ],
                               ),
-                              _buildAchievementStat(
-                                context, 
-                                Localizations.localeOf(context).languageCode == 'ko' 
-                                  ? '운동 시간' 
-                                  : 'Workout Time', 
-                                '${_todayCompletedWorkout!.duration.inMinutes}분',
-                                Icons.timer,
-                                Colors.orange,
+                              Column(
+                                children: [
+                                  Text(
+                                    Localizations.localeOf(context).languageCode == 'ko'
+                                      ? '운동시간'
+                                      : 'Duration',
+                                    style: const TextStyle(fontSize: 12, color: Colors.grey),
+                                  ),
+                                  Text(
+                                    '${_todayCompletedWorkout!.duration.inMinutes}분',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.green[700],
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
                         ],
-                      ),
-                    ),
-                    const SizedBox(height: AppConstants.paddingM),
-                    
-                    // 격려 메시지
-                    Container(
-                      padding: const EdgeInsets.all(AppConstants.paddingM),
-                      decoration: BoxDecoration(
-                        color: Colors.amber.withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(AppConstants.radiusS),
-                      ),
-                      child: Text(
-                        '내일도 화이팅! 꾸준함이 최고의 힘입니다! 🔥',
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: Colors.amber[800],
-                          fontWeight: FontWeight.w600,
-                        ),
-                        textAlign: TextAlign.center,
                       ),
                     ),
                   ],
@@ -1005,89 +1015,108 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           const SizedBox(height: AppConstants.paddingM),
           
           // 전체 프로그램 진행률
-          LinearProgressIndicator(
-            value: (_programProgress!.progressPercentage as num?)?.toDouble() ?? 0.0,
-            backgroundColor: Colors.grey.withValues(alpha: 0.3),
-            valueColor: const AlwaysStoppedAnimation<Color>(
-              Color(0xFF4DABF7),
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: theme.cardColor,
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.1),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
             ),
-          ),
-          const SizedBox(height: AppConstants.paddingS),
-          
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '전체 진행률: ${(_programProgress!.progressPercentage * 100).toStringAsFixed(1)}%',
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              Text(
-                '${_programProgress!.completedWeeks}/${_programProgress!.totalWeeks} 주차',
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: Colors.grey,
-                ),
-              ),
-            ],
-          ),
-          
-          const SizedBox(height: AppConstants.paddingM),
-          
-          // 이번 주 진행률
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                   children: [
+                    const Icon(Icons.track_changes, color: Color(AppColors.primaryColor)),
+                    const SizedBox(width: 8),
                     Text(
-                      '이번 주 (${_programProgress!.completedWeeks}주차)',
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: AppConstants.paddingS),
-                    LinearProgressIndicator(
-                      value: (_programProgress!.progressPercentage as num?)?.toDouble() ?? 0.0,
-                      backgroundColor: Colors.grey.withValues(alpha: 0.3),
-                      valueColor: const AlwaysStoppedAnimation<Color>(
-                        Color(0xFF4DABF7),
-                      ),
-                    ),
-                    const SizedBox(height: AppConstants.paddingS),
-                    Text(
-                      '${_programProgress!.completedWeeks}/${_programProgress!.totalWeeks} 주 완료',
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: Colors.grey,
+                      Localizations.localeOf(context).languageCode == 'ko'
+                        ? '전체 프로그램 진행도'
+                        : 'Overall Program Progress',
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
                 ),
-              ),
-            ],
+                const SizedBox(height: 16),
+                Text(
+                  Localizations.localeOf(context).languageCode == 'ko'
+                    ? '${_programProgress!.completedWeeks}/${_programProgress!.totalWeeks} 주차'
+                    : '${_programProgress!.completedWeeks}/${_programProgress!.totalWeeks} weeks',
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                LinearProgressIndicator(
+                  value: _programProgress!.totalWeeks > 0
+                      ? (_programProgress!.completedWeeks / _programProgress!.totalWeeks)
+                      : 0.0,
+                  backgroundColor: Colors.grey[300],
+                  valueColor: const AlwaysStoppedAnimation<Color>(Color(AppColors.primaryColor)),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  Localizations.localeOf(context).languageCode == 'ko'
+                    ? '이번 주 (${_programProgress!.completedWeeks}주차)'
+                    : 'This Week (Week ${_programProgress!.completedWeeks})',
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '${_programProgress!.completedDaysThisWeek}/${_programProgress!.totalDaysThisWeek}',
+                      style: theme.textTheme.bodyMedium,
+                    ),
+                    Text(
+                      Localizations.localeOf(context).languageCode == 'ko'
+                        ? '${_programProgress!.completedWeeks}/${_programProgress!.totalWeeks} 주 완료'
+                        : '${_programProgress!.completedWeeks}/${_programProgress!.totalWeeks} weeks completed',
+                      style: theme.textTheme.bodySmall,
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-          
-          const SizedBox(height: AppConstants.paddingM),
-          
-          // 통계 정보
+
+          const SizedBox(height: 20),
+
+          // 통계 카드들
           Row(
             children: [
               Expanded(
-                child: _buildStatItem(
+                child: _buildStatCard(
                   context,
-                  '총 푸시업',
+                  Localizations.localeOf(context).languageCode == 'ko'
+                    ? '총 푸시업'
+                    : 'Total Push-ups',
                   '${_programProgress!.totalCompletedReps}회',
                   Icons.fitness_center,
+                  const Color(AppColors.primaryColor),
                 ),
               ),
-              const SizedBox(width: AppConstants.paddingM),
+              const SizedBox(width: 12),
               Expanded(
-                child: _buildStatItem(
+                child: _buildStatCard(
                   context,
-                  '남은 목표',
-                  '${_programProgress!.totalReps}회',
+                  Localizations.localeOf(context).languageCode == 'ko'
+                    ? '남은 목표'
+                    : 'Remaining Goal',
+                  '${100 - _programProgress!.totalCompletedReps}회',
                   Icons.flag,
+                  Colors.orange,
                 ),
               ),
             ],
@@ -1097,18 +1126,18 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     );
   }
 
-  Widget _buildStatItem(BuildContext context, String label, String value, IconData icon) {
+  Widget _buildStatCard(BuildContext context, String label, String value, IconData icon, Color color) {
     return Container(
       padding: const EdgeInsets.all(AppConstants.paddingM),
       decoration: BoxDecoration(
-        color: const Color(AppColors.primaryColor).withValues(alpha: 0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(AppConstants.radiusS),
       ),
       child: Column(
         children: [
           Icon(
             icon,
-            color: const Color(AppColors.primaryColor),
+            color: color,
             size: 20,
           ),
           const SizedBox(height: AppConstants.paddingS),
@@ -1116,7 +1145,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             value,
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
               fontWeight: FontWeight.bold,
-              color: const Color(AppColors.primaryColor),
+              color: color,
             ),
           ),
           Text(
@@ -1512,91 +1541,20 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Row(
-          children: [
-            Icon(
-              Icons.sentiment_satisfied_alt,
-              color: Colors.green[600],
-              size: 28,
-            ),
-            const SizedBox(width: 8),
-            const Text('잠깐! 🛑'),
-          ],
+        title: Text(
+          Localizations.localeOf(context).languageCode == 'ko'
+            ? '운동 이미 완료'
+            : 'Already Completed',
         ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.green.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: Colors.green.withValues(alpha: 0.3),
-                  width: 2,
-                ),
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    Localizations.localeOf(context).languageCode == 'ko' 
-                      ? '오늘의 운동은 이미 완료했습니다! 💪' 
-                      : "Today's workout is already completed! 💪",
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green[700],
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    '충분히 쉬면서 몸이 회복될 시간을 주세요.\n내일 더 강해진 모습으로 돌아오세요! 🌟',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      height: 1.5,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 16),
-                  Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: Colors.amber.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.tips_and_updates, color: Colors.amber, size: 20),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            '과훈련은 부상의 원인이 될 수 있어요',
-                            style: TextStyle(
-                              color: Colors.amber[800],
-                              fontWeight: FontWeight.w500,
-                              fontSize: 13,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+        content: Text(
+          Localizations.localeOf(context).languageCode == 'ko'
+            ? '오늘의 운동은 이미 완료했습니다! 💪'
+            : "Today's workout is already completed! 💪",
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text(
-              '알겠습니다! 😊',
-              style: TextStyle(
-                color: Colors.green[600],
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            child: Text(AppLocalizations.of(context)!.confirm),
           ),
         ],
       ),
@@ -1690,91 +1648,106 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   void _showRestDayAcceptance() {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Row(
-          children: [
-            Icon(Icons.sentiment_dissatisfied, color: Colors.grey[600], size: 28),
-            const SizedBox(width: 8),
-            const Text('😴 정말 쉴 거야?'),
-          ],
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.grey.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: Colors.grey.withValues(alpha: 0.3),
-                  width: 1,
-                ),
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    '아... 그럼 쉬어... 😮‍💨',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey[700],
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    '하지만 기억해... 🤔\n'
-                    '넷플릭스 보면서 과자 먹는 동안\n'
-                    '누군가는 100개 푸시업하고 있어! 💪\n\n'
-                    '내일은 두 배로 열심히 해야겠네! 🔥',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      height: 1.5,
-                      color: Colors.grey[600],
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          ElevatedButton.icon(
-            onPressed: () {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('😴 좋아, 오늘은 쉬어! 내일은 두 배로 화이팅! 💪'),
-                  backgroundColor: Colors.blue,
-                  duration: Duration(seconds: 3),
-                ),
-              );
-            },
-            icon: const Icon(Icons.check, color: Colors.white),
-            label: const Text(
-              '알겠어! 😴',
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.grey[600],
-            ),
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Theme.of(context).cardColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
           ),
-          TextButton.icon(
-            onPressed: () {
-              Navigator.pop(context);
-              _showExtraWorkoutChallenge();
-            },
-            icon: Icon(Icons.fitness_center, color: Colors.orange[700]),
-            label: Text(
-              '아니다! 운동할래!',
-              style: TextStyle(
+          title: Column(
+            children: [
+              Icon(
+                Icons.local_fire_department,
+                size: 40,
                 color: Colors.orange[700],
-                fontWeight: FontWeight.bold,
               ),
+              const SizedBox(height: 8),
+              Text(
+                Localizations.localeOf(context).languageCode == 'ko'
+                  ? '휴식일 챌린지! 💪'
+                  : 'Rest Day Challenge! 💪',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.orange[700],
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.orange.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    Localizations.localeOf(context).languageCode == 'ko'
+                      ? '누군가는 100개 푸시업하고 있어! 💪\n\n'
+                        '휴식일이지만 가벼운 챌린지는 어때요?\n\n'
+                        '✨ 오늘의 보너스 챌린지:\n'
+                        '• 푸시업 10개 (완벽한 자세로!)\n\n'
+                        '참여하면 특별 포인트를 드려요! 🎁'
+                      : 'Someone is doing 100 push-ups! 💪\n\n'
+                        'It\'s a rest day, but how about a light challenge?\n\n'
+                        '✨ Today\'s Bonus Challenge:\n'
+                        '• 10 push-ups (perfect form!)\n\n'
+                        'Join and get special points! 🎁',
+                    style: const TextStyle(fontSize: 15),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+          actions: [
+            Row(
+              children: [
+                Expanded(
+                  child: TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                    ),
+                    child: Text(
+                      Localizations.localeOf(context).languageCode == 'ko'
+                        ? '오늘은 진짜 쉴래요'
+                        : 'I really want to rest today',
+                      style: const TextStyle(color: Colors.grey),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      // 여기에 보너스 챌린지 시작 로직 추가
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.orange[700],
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: Text(
+                      Localizations.localeOf(context).languageCode == 'ko'
+                        ? '챌린지 해볼게요!'
+                        : 'Let\'s do the challenge!',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
     );
   }
 
