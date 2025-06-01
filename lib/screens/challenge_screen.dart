@@ -109,8 +109,12 @@ class _ChallengeScreenState extends State<ChallengeScreen>
       debugPrint('Error starting challenge: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('오류가 발생했습니다.'),
+          SnackBar(
+            content: Text(
+              Localizations.localeOf(context).languageCode == 'ko'
+                ? '오류가 발생했습니다.'
+                : 'An error occurred.',
+            ),
             backgroundColor: Colors.red,
           ),
         );

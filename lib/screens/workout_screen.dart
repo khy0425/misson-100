@@ -727,7 +727,9 @@ class _WorkoutScreenState extends State<WorkoutScreen>
             backgroundColor: Colors.red,
             duration: Duration(seconds: 5),
             action: SnackBarAction(
-              label: '재시도',
+              label: Localizations.localeOf(context).languageCode == 'ko'
+                ? '재시도'
+                : 'Retry',
               textColor: Colors.white,
               onPressed: () {
                 // 재시도 로직 (선택사항)
@@ -838,9 +840,11 @@ class _WorkoutScreenState extends State<WorkoutScreen>
                           fontSize: 16,
                         ),
                       ),
-                      const Text(
-                        '달성',
-                        style: TextStyle(fontSize: 12),
+                      Text(
+                        Localizations.localeOf(context).languageCode == 'ko'
+                          ? '달성'
+                          : 'Achieved',
+                        style: const TextStyle(fontSize: 12),
                       ),
                     ],
                   ),
@@ -1863,7 +1867,9 @@ class _WorkoutScreenState extends State<WorkoutScreen>
           final emergencyHistory = WorkoutHistory(
             id: _sessionId!,
             date: DateTime.now(),
-            workoutTitle: widget.workoutData.title + ' (긴급 저장)',
+            workoutTitle: widget.workoutData.title + (Localizations.localeOf(context).languageCode == 'ko'
+              ? ' (응급 백업)'
+              : ' (Emergency Backup)'),
             targetReps: _targetReps,
             completedReps: [..._completedReps]..addAll([_currentReps]),
             totalReps: totalCompletedReps,
@@ -1937,7 +1943,9 @@ class _WorkoutScreenState extends State<WorkoutScreen>
         final emergencyHistory = WorkoutHistory(
           id: '${_sessionId}_emergency_${DateTime.now().millisecondsSinceEpoch}',
           date: DateTime.now(),
-          workoutTitle: widget.workoutData.title + ' (응급 백업)',
+          workoutTitle: widget.workoutData.title + (Localizations.localeOf(context).languageCode == 'ko'
+            ? ' (응급 백업)'
+            : ' (Emergency Backup)'),
           targetReps: _targetReps,
           completedReps: [..._completedReps]..addAll([_currentReps]),
           totalReps: totalCompletedReps,
@@ -2026,7 +2034,9 @@ class _WorkoutScreenState extends State<WorkoutScreen>
       
       // 백업 타입 확인
       final isEmergencyBackup = backupData!['isEmergencyBackup'] as bool? ?? false;
-      final backupType = isEmergencyBackup ? '응급' : '일반';
+      final backupType = isEmergencyBackup 
+        ? (Localizations.localeOf(context).languageCode == 'ko' ? '응급' : 'Emergency')
+        : (Localizations.localeOf(context).languageCode == 'ko' ? '일반' : 'Regular');
       
       debugPrint('✅ $backupType 백업 복원 완료');
       debugPrint('📊 복원된 데이터: 세트 ${_currentSet + 1}/${targetReps.length}, 현재 ${_currentReps}회');
@@ -2047,7 +2057,9 @@ class _WorkoutScreenState extends State<WorkoutScreen>
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('🔄 이전 운동이 복원되었습니다! (세트 ${_currentSet + 1}/${targetReps.length})'),
+            content: Text(Localizations.localeOf(context).languageCode == 'ko'
+              ? '🔄 이전 운동이 복원되었습니다! (세트 ${_currentSet + 1}/${targetReps.length})'
+              : '🔄 Previous workout restored! (Set ${_currentSet + 1}/${targetReps.length})'),
             backgroundColor: Colors.green,
             duration: Duration(seconds: 3),
           ),

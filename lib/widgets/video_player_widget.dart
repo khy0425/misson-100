@@ -9,7 +9,7 @@ class VideoPlayerWidget extends StatefulWidget {
   final bool autoPlay;
   final bool showControls;
   final double aspectRatio;
-  final String placeholderText;
+  final String? placeholderText;
 
   const VideoPlayerWidget({
     super.key,
@@ -18,7 +18,7 @@ class VideoPlayerWidget extends StatefulWidget {
     this.autoPlay = false,
     this.showControls = true,
     this.aspectRatio = 16 / 9,
-    this.placeholderText = '비디오 시연',
+    this.placeholderText,
   });
 
   @override
@@ -194,10 +194,13 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   }
 
   Widget _buildPlaceholder() {
+    final placeholderText = widget.placeholderText ?? 
+      (Localizations.localeOf(context).languageCode == 'ko' ? '비디오 시연' : 'Video Demo');
+    
     return Semantics(
       label: Localizations.localeOf(context).languageCode == 'ko'
-        ? '${widget.placeholderText} 플레이스홀더. 비디오가 준비되지 않았습니다.'
-        : '${widget.placeholderText} placeholder. Video is not ready.',
+        ? '$placeholderText 플레이스홀더. 비디오가 준비되지 않았습니다.'
+        : '$placeholderText placeholder. Video is not ready.',
       child: Container(
         color: const Color(0xFF2A2A2A),
         child: Column(
@@ -213,7 +216,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
             ),
             const SizedBox(height: 8),
             Text(
-              widget.placeholderText,
+              placeholderText,
               style: const TextStyle(
                 color: Color(0xFF4DABF7),
                 fontSize: 14,

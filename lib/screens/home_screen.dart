@@ -218,7 +218,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: _refreshData,
-            tooltip: '새로고침',
+            tooltip: Localizations.localeOf(context).languageCode == 'ko'
+              ? '새로고침'
+              : 'Refresh',
           ),
         ],
       ),
@@ -314,7 +316,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             ),
             const SizedBox(height: AppConstants.paddingM),
             Text(
-              '데이터를 불러오는 중 오류가 발생했습니다',
+              Localizations.localeOf(context).languageCode == 'ko'
+                ? '데이터를 불러오는 중 오류가 발생했습니다'
+                : 'An error occurred while loading data',
               style: Theme.of(context).textTheme.titleMedium,
               textAlign: TextAlign.center,
             ),

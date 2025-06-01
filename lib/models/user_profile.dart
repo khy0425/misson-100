@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class UserProfile {
   final int? id;
   final UserLevel level;
@@ -86,16 +88,17 @@ extension UserLevelExtension on UserLevel {
     }
   }
 
-  String get description {
+  String getDescription(BuildContext context) {
+    final isKorean = Localizations.localeOf(context).languageCode == 'ko';
     switch (this) {
       case UserLevel.rookie:
-        return '5개 이하 → 100개 달성';
+        return isKorean ? '5개 이하 → 100개 달성' : '≤5 reps → Achieve 100';
       case UserLevel.rising:
-        return '6-10개 → 100개 달성';
+        return isKorean ? '6-10개 → 100개 달성' : '6-10 reps → Achieve 100';
       case UserLevel.alpha:
-        return '11-20개 → 100개 달성';
+        return isKorean ? '11-20개 → 100개 달성' : '11-20 reps → Achieve 100';
       case UserLevel.giga:
-        return '21개 이상 → 100개+ 달성';
+        return isKorean ? '21개 이상 → 100개+ 달성' : '21+ reps → Achieve 100+';
     }
   }
 

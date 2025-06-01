@@ -16,16 +16,17 @@ class AchievementDetailDialog extends StatelessWidget {
     return achievement.getRarityColor();
   }
 
-  String _getRarityText() {
+  String _getRarityText(BuildContext context) {
+    final isKorean = Localizations.localeOf(context).languageCode == 'ko';
     switch (achievement.rarity) {
       case AchievementRarity.common:
-        return '일반';
+        return isKorean ? '일반' : 'Common';
       case AchievementRarity.rare:
-        return '레어';
+        return isKorean ? '레어' : 'Rare';
       case AchievementRarity.epic:
-        return '에픽';
+        return isKorean ? '에픽' : 'Epic';
       case AchievementRarity.legendary:
-        return '전설';
+        return isKorean ? '전설' : 'Legendary';
     }
   }
 
@@ -148,7 +149,7 @@ class AchievementDetailDialog extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      _buildBadge(_getRarityText(), rarityColor),
+                      _buildBadge(_getRarityText(context), rarityColor),
                       const SizedBox(width: AppConstants.paddingS),
                       _buildBadge(_getTypeText(context), theme.colorScheme.primary),
                     ],

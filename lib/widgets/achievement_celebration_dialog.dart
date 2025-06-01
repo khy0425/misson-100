@@ -157,16 +157,17 @@ class _AchievementCelebrationDialogState
     }
   }
 
-  String _getRarityText() {
+  String _getRarityText(BuildContext context) {
+    final isKorean = Localizations.localeOf(context).languageCode == 'ko';
     switch (widget.achievement.rarity) {
       case AchievementRarity.common:
-        return '일반';
+        return isKorean ? '일반' : 'Common';
       case AchievementRarity.rare:
-        return '레어';
+        return isKorean ? '레어' : 'Rare';
       case AchievementRarity.epic:
-        return '에픽';
+        return isKorean ? '에픽' : 'Epic';
       case AchievementRarity.legendary:
-        return '전설';
+        return isKorean ? '전설' : 'Legendary';
     }
   }
 
@@ -313,7 +314,7 @@ class _AchievementCelebrationDialogState
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Text(
-                                _getRarityText(),
+                                _getRarityText(context),
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 12,

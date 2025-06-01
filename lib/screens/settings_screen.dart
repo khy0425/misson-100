@@ -1467,7 +1467,11 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
               backgroundColor: Colors.red,
               foregroundColor: Colors.white,
             ),
-            child: const Text('초기화'),
+            child: Text(
+              Localizations.localeOf(context).languageCode == 'ko'
+                ? '초기화'
+                : 'Reset',
+            ),
           ),
         ],
       ),
@@ -1622,7 +1626,11 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
               backgroundColor: const Color(AppColors.primaryColor),
               foregroundColor: Colors.white,
             ),
-            child: const Text('라이선스'),
+            child: Text(
+              Localizations.localeOf(context).languageCode == 'ko'
+                ? '라이선스'
+                : 'Licenses',
+            ),
           ),
         ],
       ),
@@ -2193,13 +2201,21 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         await launchUrl(uri, mode: LaunchMode.externalApplication);
       } else {
         if (mounted) {
-          _showUrlNotAvailableDialog('개인정보 처리방침');
+          _showUrlNotAvailableDialog(
+            Localizations.localeOf(context).languageCode == 'ko'
+              ? '개인정보 처리방침'
+              : 'Privacy Policy'
+          );
         }
       }
     } catch (e) {
       debugPrint('개인정보 처리방침 열기 실패: $e');
       if (mounted) {
-        _showUrlNotAvailableDialog('개인정보 처리방침');
+        _showUrlNotAvailableDialog(
+          Localizations.localeOf(context).languageCode == 'ko'
+            ? '개인정보 처리방침'
+            : 'Privacy Policy'
+        );
       }
     }
   }
@@ -2215,43 +2231,48 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         await launchUrl(uri, mode: LaunchMode.externalApplication);
       } else {
         if (mounted) {
-          _showUrlNotAvailableDialog('이용약관');
+          _showUrlNotAvailableDialog(
+            Localizations.localeOf(context).languageCode == 'ko'
+              ? '이용약관'
+              : 'Terms of Service'
+          );
         }
       }
     } catch (e) {
       debugPrint('이용약관 열기 실패: $e');
       if (mounted) {
-        _showUrlNotAvailableDialog('이용약관');
+        _showUrlNotAvailableDialog(
+          Localizations.localeOf(context).languageCode == 'ko'
+            ? '이용약관'
+            : 'Terms of Service'
+        );
       }
     }
   }
 
   /// URL을 열 수 없을 때 표시할 다이얼로그
-  void _showUrlNotAvailableDialog(String documentName) {
+  void _showUrlNotAvailableDialog(String serviceName) {
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('$documentName 열기 실패'),
+        title: Text(
+          Localizations.localeOf(context).languageCode == 'ko'
+            ? '서비스 준비 중'
+            : 'Service Preparing',
+        ),
         content: Text(
-          '$documentName을 열 수 없습니다.\n'
-          '인터넷 연결을 확인하거나 나중에 다시 시도해주세요.\n\n'
-          '문의사항이 있으시면 개발자에게 연락해주세요.'
+          Localizations.localeOf(context).languageCode == 'ko'
+            ? '$serviceName 페이지를 준비 중입니다.\n빠른 시일 내에 제공하겠습니다.'
+            : 'The $serviceName page is being prepared.\nWe will provide it soon.',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(AppLocalizations.of(context)!.confirm),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-              _sendFeedback();
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(AppColors.primaryColor),
-              foregroundColor: Colors.white,
+            child: Text(
+              Localizations.localeOf(context).languageCode == 'ko'
+                ? '확인'
+                : 'OK',
             ),
-            child: const Text('문의하기'),
           ),
         ],
       ),

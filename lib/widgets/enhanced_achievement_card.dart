@@ -306,7 +306,9 @@ class _EnhancedAchievementCardState extends State<EnhancedAchievementCard>
                               ),
                               const SizedBox(width: AppConstants.paddingS / 2),
                               Text(
-                                '완료: ${_formatDate(widget.achievement.unlockedAt!)}',
+                                Localizations.localeOf(context).languageCode == 'ko'
+                                  ? '완료: ${_formatDate(widget.achievement.unlockedAt!)}'
+                                  : 'Completed: ${_formatDate(widget.achievement.unlockedAt!)}',
                                 style: theme.textTheme.bodySmall?.copyWith(
                                   color: rarityColor,
                                   fontWeight: FontWeight.w500,

@@ -238,7 +238,12 @@ class _BackupScreenState extends State<BackupScreen> {
               ],
             ),
             const SizedBox(height: 12),
-            _buildStatusRow('상태', status.statusText),
+            _buildStatusRow(
+              Localizations.localeOf(context).languageCode == 'ko'
+                ? '상태'
+                : 'Status', 
+              status.statusText
+            ),
             if (status.lastBackupTime != null)
               _buildStatusRow(
                 '마지막 백업',
@@ -254,8 +259,12 @@ class _BackupScreenState extends State<BackupScreen> {
               _getFrequencyText(status.frequency),
             ),
             _buildStatusRow(
-              '암호화',
-              status.encryptionEnabled ? '활성화' : '비활성화',
+              Localizations.localeOf(context).languageCode == 'ko'
+                ? '암호화'
+                : 'Encryption',
+              status.encryptionEnabled 
+                ? (Localizations.localeOf(context).languageCode == 'ko' ? '활성화' : 'Enabled')
+                : (Localizations.localeOf(context).languageCode == 'ko' ? '비활성화' : 'Disabled'),
             ),
             if (status.failureCount > 0)
               _buildStatusRow(
@@ -437,7 +446,11 @@ class _BackupScreenState extends State<BackupScreen> {
                 leading: const Icon(Icons.check_circle, color: Colors.green),
                 title: const Text('마지막 백업'),
                 subtitle: Text(_formatDateTime(_backupStatus!.lastBackupTime!)),
-                trailing: const Text('성공'),
+                trailing: Text(
+                  Localizations.localeOf(context).languageCode == 'ko'
+                    ? '성공'
+                    : 'Success',
+                ),
               )
             else
               const ListTile(
@@ -534,15 +547,16 @@ class _BackupScreenState extends State<BackupScreen> {
 
   /// 백업 빈도 텍스트
   String _getFrequencyText(BackupFrequency frequency) {
+    final isKorean = Localizations.localeOf(context).languageCode == 'ko';
     switch (frequency) {
       case BackupFrequency.daily:
-        return '매일';
+        return isKorean ? '매일' : 'Daily';
       case BackupFrequency.weekly:
-        return '매주';
+        return isKorean ? '매주' : 'Weekly';
       case BackupFrequency.monthly:
-        return '매월';
+        return isKorean ? '매월' : 'Monthly';
       case BackupFrequency.manual:
-        return '수동';
+        return isKorean ? '수동' : 'Manual';
     }
   }
 

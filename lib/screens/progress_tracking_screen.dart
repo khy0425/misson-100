@@ -793,7 +793,9 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                       ),
                     ),
                     Text(
-                      isCompleted ? '완료됨' : '진행 중',
+                      isCompleted 
+                        ? (Localizations.localeOf(context).languageCode == 'ko' ? '완료됨' : 'Completed')
+                        : (Localizations.localeOf(context).languageCode == 'ko' ? '진행 중' : 'In Progress'),
                       style: TextStyle(
                         fontSize: 14,
                         color: isCompleted ? const Color(0xFF51CF66) : const Color(0xFFFFD43B),
@@ -975,7 +977,9 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                     const Color(0xFFFFD43B),
                   ),
                   _buildStatCard(
-                    '완료율',
+                    Localizations.localeOf(context).languageCode == 'ko'
+                      ? '완료율'
+                      : 'Completion',
                     '${(completionRate * 100).toStringAsFixed(1)}%',
                     Icons.pie_chart,
                     const Color(0xFFFF6B6B),
@@ -1224,7 +1228,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
     } else if (isGood) {
       statusColor = const Color(0xFF4DABF7);
       statusIcon = Icons.thumb_up;
-      statusText = '좋음';
+      statusText = Localizations.localeOf(context).languageCode == 'ko' ? '좋음' : 'Good';
     } else {
       statusColor = const Color(0xFFFFD43B);
       statusIcon = Icons.trending_up;
@@ -1782,9 +1786,11 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                             color: const Color(0xFFFFD43B),
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: const Text(
-                            '현재',
-                            style: TextStyle(
+                          child: Text(
+                            Localizations.localeOf(context).languageCode == 'ko'
+                              ? '현재'
+                              : 'Current',
+                            style: const TextStyle(
                               color: Colors.black,
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
