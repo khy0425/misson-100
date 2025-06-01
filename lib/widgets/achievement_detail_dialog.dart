@@ -29,22 +29,23 @@ class AchievementDetailDialog extends StatelessWidget {
     }
   }
 
-  String _getTypeText() {
+  String _getTypeText(BuildContext context) {
+    final isKorean = Localizations.localeOf(context).languageCode == 'ko';
     switch (achievement.type) {
       case AchievementType.first:
-        return '첫 번째 도전';
+        return isKorean ? '첫 번째 도전' : 'First Challenge';
       case AchievementType.volume:
-        return '총량 달성';
+        return isKorean ? '총량 달성' : 'Volume Achievement';
       case AchievementType.streak:
-        return '연속 기록';
+        return isKorean ? '연속 기록' : 'Streak Record';
       case AchievementType.perfect:
-        return '완벽한 수행';
+        return isKorean ? '완벽한 수행' : 'Perfect Performance';
       case AchievementType.special:
-        return '특별 업적';
+        return isKorean ? '특별 업적' : 'Special Achievement';
       case AchievementType.challenge:
-        return '챌린지 업적';
+        return isKorean ? '챌린지 업적' : 'Challenge Achievement';
       case AchievementType.statistics:
-        return '통계 업적';
+        return isKorean ? '통계 업적' : 'Statistics Achievement';
     }
   }
 
@@ -149,7 +150,7 @@ class AchievementDetailDialog extends StatelessWidget {
                     children: [
                       _buildBadge(_getRarityText(), rarityColor),
                       const SizedBox(width: AppConstants.paddingS),
-                      _buildBadge(_getTypeText(), theme.colorScheme.primary),
+                      _buildBadge(_getTypeText(context), theme.colorScheme.primary),
                     ],
                   ),
                 ],
@@ -164,7 +165,7 @@ class AchievementDetailDialog extends StatelessWidget {
                 children: [
                   // 설명
                   Text(
-                    '설명',
+                    Localizations.localeOf(context).languageCode == 'ko' ? '설명' : 'Description',
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -180,7 +181,7 @@ class AchievementDetailDialog extends StatelessWidget {
                   // 진행도 (미완료 업적만)
                   if (!achievement.isCompleted) ...[
                     Text(
-                      '진행도',
+                      Localizations.localeOf(context).languageCode == 'ko' ? '진행도' : 'Progress',
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -197,7 +198,7 @@ class AchievementDetailDialog extends StatelessWidget {
                   // 완료 정보 (완료된 업적만)
                   if (achievement.isCompleted && achievement.unlockedAt != null) ...[
                     Text(
-                      '완료 정보',
+                      Localizations.localeOf(context).languageCode == 'ko' ? '완료 정보' : 'Completion Info',
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -226,7 +227,9 @@ class AchievementDetailDialog extends StatelessWidget {
                               ),
                               const SizedBox(width: AppConstants.paddingS),
                               Text(
-                                '완료일: ${_formatDate(achievement.unlockedAt!)}',
+                                Localizations.localeOf(context).languageCode == 'ko'
+                                  ? '완료일: ${_formatDate(achievement.unlockedAt!)}'
+                                  : 'Completed: ${_formatDate(achievement.unlockedAt!)}',
                                 style: theme.textTheme.bodyMedium?.copyWith(
                                   fontWeight: FontWeight.w500,
                                 ),

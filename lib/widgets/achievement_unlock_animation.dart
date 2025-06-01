@@ -207,7 +207,9 @@ class _AchievementUnlockAnimationState extends State<AchievementUnlockAnimation>
                           children: [
                             // "업적 달성!" 텍스트
                             Text(
-                              '🏆 업적 달성! 🏆',
+                              Localizations.localeOf(context).languageCode == 'ko'
+                                ? '🏆 업적 달성! 🏆'
+                                : '🏆 Achievement Unlocked! 🏆',
                               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                                 color: _getRarityColor(),
                                 fontWeight: FontWeight.bold,

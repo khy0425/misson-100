@@ -151,9 +151,11 @@ class _AchievementNotificationOverlayState extends State<AchievementNotification
                             children: [
                               Row(
                                 children: [
-                                  const Text(
-                                    '🎉 업적 달성!',
-                                    style: TextStyle(
+                                  Text(
+                                    Localizations.localeOf(context).languageCode == 'ko'
+                                      ? '🎉 업적 달성!'
+                                      : '🎉 Achievement!',
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold,

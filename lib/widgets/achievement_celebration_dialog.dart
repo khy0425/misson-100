@@ -250,7 +250,9 @@ class _AchievementCelebrationDialogState
                                   ),
                                   const SizedBox(width: 8),
                                   Text(
-                                    '업적 달성!',
+                                    Localizations.localeOf(context).languageCode == 'ko'
+                                      ? '업적 달성!'
+                                      : 'Achievement Unlocked!',
                                     style: theme.textTheme.titleMedium?.copyWith(
                                       color: rarityColor,
                                       fontWeight: FontWeight.bold,
@@ -434,9 +436,11 @@ class _AchievementCelebrationDialogState
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                 ),
-                                child: const Text(
-                                  '차드의 힘을 느꼈다! 💪',
-                                  style: TextStyle(
+                                child: Text(
+                                  Localizations.localeOf(context).languageCode == 'ko'
+                                    ? '차드의 힘을 느꼈다! 💪'
+                                    : 'Feel the Power of Chad! 💪',
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
