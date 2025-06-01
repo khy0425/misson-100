@@ -66,7 +66,9 @@ class ChallengeCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  '목표: ${challenge.targetValue}${challenge.targetUnit}',
+                  Localizations.localeOf(context).languageCode == 'ko'
+                    ? '목표: ${challenge.targetValue}${challenge.targetUnit}'
+                    : 'Goal: ${challenge.targetValue}${challenge.targetUnit}',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w500,
                   ),
@@ -74,7 +76,9 @@ class ChallengeCard extends StatelessWidget {
                 const Spacer(),
                 if (challenge.estimatedDuration > 0)
                   Text(
-                    '예상 기간: ${challenge.estimatedDuration}일',
+                    Localizations.localeOf(context).languageCode == 'ko'
+                      ? '예상 기간: ${challenge.estimatedDuration}일'
+                      : 'Estimated: ${challenge.estimatedDuration} days',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Colors.grey[600],
                     ),
@@ -85,7 +89,7 @@ class ChallengeCard extends StatelessWidget {
             // 진행률 (활성 챌린지인 경우)
             if (challenge.isActive) ...[
               const SizedBox(height: 12),
-              _buildProgressBar(),
+              _buildProgressBar(context),
             ],
             
             // 완료 날짜 (완료된 챌린지인 경우)
@@ -96,7 +100,9 @@ class ChallengeCard extends StatelessWidget {
                   const Icon(Icons.check_circle, color: Colors.green, size: 20),
                   const SizedBox(width: 8),
                   Text(
-                    '완료일: ${_formatDate(challenge.completionDate!)}',
+                    Localizations.localeOf(context).languageCode == 'ko'
+                      ? '완료일: ${_formatDate(challenge.completionDate!)}'
+                      : 'Completed: ${_formatDate(challenge.completionDate!)}',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Colors.green[700],
                       fontWeight: FontWeight.w500,
@@ -109,13 +115,13 @@ class ChallengeCard extends StatelessWidget {
             // 보상 정보
             if (challenge.rewards.isNotEmpty) ...[
               const SizedBox(height: 12),
-              _buildRewardsSection(),
+              _buildRewardsSection(context),
             ],
             
             // 액션 버튼들
             if (showStartButton || showAbandonButton) ...[
               const SizedBox(height: 16),
-              _buildActionButtons(),
+              _buildActionButtons(context),
             ],
           ],
         ),
@@ -181,7 +187,7 @@ class ChallengeCard extends StatelessWidget {
     );
   }
 
-  Widget _buildProgressBar() {
+  Widget _buildProgressBar(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -189,7 +195,9 @@ class ChallengeCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '진행률',
+              Localizations.localeOf(context).languageCode == 'ko'
+                ? '진행률'
+                : 'Progress',
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
@@ -216,7 +224,9 @@ class ChallengeCard extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          '${(challenge.progressPercentage * 100).toInt()}% 완료',
+          Localizations.localeOf(context).languageCode == 'ko'
+            ? '${(challenge.progressPercentage * 100).toInt()}% 완료'
+            : '${(challenge.progressPercentage * 100).toInt()}% Complete',
           style: TextStyle(
             fontSize: 12,
             color: Colors.grey[600],
@@ -226,12 +236,14 @@ class ChallengeCard extends StatelessWidget {
     );
   }
 
-  Widget _buildRewardsSection() {
+  Widget _buildRewardsSection(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '보상',
+          Localizations.localeOf(context).languageCode == 'ko'
+            ? '보상'
+            : 'Rewards',
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w500,
@@ -265,7 +277,7 @@ class ChallengeCard extends StatelessWidget {
     );
   }
 
-  Widget _buildActionButtons() {
+  Widget _buildActionButtons(BuildContext context) {
     return Row(
       children: [
         if (showStartButton && onStart != null) ...[
@@ -273,7 +285,9 @@ class ChallengeCard extends StatelessWidget {
             child: ElevatedButton.icon(
               onPressed: challenge.isLocked ? null : onStart,
               icon: const Icon(Icons.play_arrow),
-              label: const Text('시작하기'),
+              label: Text(Localizations.localeOf(context).languageCode == 'ko'
+                ? '시작하기'
+                : 'Start'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
                 foregroundColor: Colors.white,
@@ -286,7 +300,9 @@ class ChallengeCard extends StatelessWidget {
             child: OutlinedButton.icon(
               onPressed: onAbandon,
               icon: const Icon(Icons.stop),
-              label: const Text('포기하기'),
+              label: Text(Localizations.localeOf(context).languageCode == 'ko'
+                ? '포기하기'
+                : 'Abandon'),
               style: OutlinedButton.styleFrom(
                 foregroundColor: Colors.red,
                 side: const BorderSide(color: Colors.red),
