@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:provider/provider.dart';
+import '../generated/app_localizations.dart';
 import '../models/user_profile.dart';
 import '../models/workout_session.dart';
 import '../models/progress.dart' as progress_model;
@@ -196,9 +197,9 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
     return Scaffold(
       backgroundColor: isDark ? const Color(0xFF0D0D0D) : Colors.grey[50],
       appBar: AppBar(
-        title: const Text(
-          '진행률 추적',
-          style: TextStyle(
+        title: Text(
+          AppLocalizations.of(context)!.progressTracking,
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
@@ -210,11 +211,11 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
           indicatorColor: const Color(0xFF4DABF7),
           labelColor: const Color(0xFF4DABF7),
           unselectedLabelColor: isDark ? Colors.grey[400] : Colors.grey[600],
-          tabs: const [
-            Tab(text: '주간 성장'),
-            Tab(text: '캘린더'),
-            Tab(text: '통계'),
-            Tab(text: 'Chad 진화'),
+          tabs: [
+            Tab(text: AppLocalizations.of(context)!.weekly),
+            Tab(text: AppLocalizations.of(context)!.calendar),
+            Tab(text: AppLocalizations.of(context)!.statistics),
+            const Tab(text: 'Chad 진화'),
           ],
         ),
       ),
@@ -264,7 +265,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
               backgroundColor: const Color(0xFF4DABF7),
               foregroundColor: Colors.white,
             ),
-            child: const Text('다시 시도'),
+            child: Text(AppLocalizations.of(context)!.retryButton),
           ),
         ],
       ),
