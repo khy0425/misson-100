@@ -280,49 +280,43 @@ class AppLocalizationsEn extends AppLocalizations {
       '⚡ ALPHA SETTINGS LOCKED! PERFECT CONFIG ARMED! ⚡';
 
   @override
-  String get firstWorkoutMessage =>
-      '🔥 ALPHA JOURNEY BEGINS! LEGENDARY TRANSFORMATION STARTS TODAY! 🔥';
+  String get firstWorkoutMessage => 'Starting your first workout! Let\'s go!';
 
   @override
-  String get weekCompletedMessage =>
-      '👑 WEEK COMPLETE DOMINATION! CHAD POWER LEVEL MASSIVELY INCREASED! 👑';
+  String get weekCompletedMessage => 'Week completed! Congratulations!';
 
   @override
-  String get programCompletedMessage =>
-      '🚀 CONGRATULATIONS! TRUE ULTRA GIGA CHAD EMPEROR BORN! UNIVERSE BOWS! 🚀';
+  String get programCompletedMessage => 'Program completed! Amazing job!';
 
   @override
-  String get streakStartMessage =>
-      '⚡ CHAD STREAK ACTIVATED! CONQUEST MODE ENGAGED! ⚡';
+  String get streakStartMessage => 'Workout streak started!';
 
   @override
-  String get streakContinueMessage =>
-      '🔱 STREAK DOMINATION CONTINUES! UNSTOPPABLE ALPHA FORCE! 🔱';
+  String get streakContinueMessage => 'Workout streak continues!';
 
   @override
-  String get streakBrokenMessage =>
-      '🦁 STREAK BROKEN? NO MATTER! REAL EMPERORS RETURN STRONGER! 🦁';
+  String get streakBrokenMessage => 'Workout streak broken';
 
   @override
-  String get chadTitleSleepy => 'SLEEPY CHAD';
+  String get chadTitleSleepy => 'Sleepy Chad';
 
   @override
-  String get chadTitleBasic => 'BASIC CHAD';
+  String get chadTitleBasic => 'Basic Chad';
 
   @override
-  String get chadTitleCoffee => 'COFFEE CHAD';
+  String get chadTitleCoffee => 'Coffee Chad';
 
   @override
-  String get chadTitleFront => 'FRONT CHAD';
+  String get chadTitleFront => 'Front Chad';
 
   @override
-  String get chadTitleCool => 'COOL CHAD';
+  String get chadTitleCool => 'Cool Chad';
 
   @override
-  String get chadTitleLaser => 'LASER CHAD';
+  String get chadTitleLaser => 'Laser Chad';
 
   @override
-  String get chadTitleDouble => 'DOUBLE CHAD';
+  String get chadTitleDouble => 'Double Chad';
 
   @override
   String get levelNameRookie => 'ROOKIE CHAD';
@@ -1323,7 +1317,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chadHashtag => '#Chad';
 
   @override
-  String get perfectPushupForm => 'Perfect Pushup Form 💪';
+  String get perfectPushupForm => 'Perfect Pushup Form';
 
   @override
   String get pushupVariations => 'Pushup Variations 🔥';
@@ -1444,13 +1438,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get privacyPolicy => 'Privacy Policy';
 
   @override
-  String get privacyPolicyDesc => 'View privacy policy';
+  String get privacyPolicyDesc =>
+      'Check privacy protection and processing policy';
 
   @override
   String get termsOfService => 'Terms of Service';
 
   @override
-  String get termsOfServiceDesc => 'View terms of service';
+  String get termsOfServiceDesc => 'Check terms of service for app usage';
 
   @override
   String get openSourceLicenses => 'Open Source Licenses';
@@ -2493,4 +2488,222 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get shareButton => 'Share';
+
+  @override
+  String get todayMission => 'Today\'s Mission';
+
+  @override
+  String get todayTarget => 'Today\'s Target:';
+
+  @override
+  String setFormat2(int number, int reps) {
+    return 'Set $number: $reps reps';
+  }
+
+  @override
+  String completedFormat(int reps, int sets) {
+    return 'Completed: $reps reps ($sets sets)';
+  }
+
+  @override
+  String totalFormat(int reps, int sets) {
+    return 'Total $reps reps ($sets sets)';
+  }
+
+  @override
+  String get todayWorkoutCompleted => 'Today\'s workout completed! 🎉';
+
+  @override
+  String get justWait => 'Wait! Are you really going to rest?';
+
+  @override
+  String get progressTracking => 'Progress Tracking';
+
+  @override
+  String get sleepyHatChad => 'Sleepy Hat Chad';
+
+  @override
+  String get journeyStartingChad =>
+      'Starting your journey Chad.\nStill a bit sleepy but will wake up soon!';
+
+  @override
+  String weekDayFormat(int week, int day) {
+    return 'Week $week - Day $day';
+  }
+
+  @override
+  String get notificationPermissionPerfect =>
+      '🔔 Notification Permission Perfect!';
+
+  @override
+  String get basicNotificationPermission => 'Basic Notification Permission';
+
+  @override
+  String get exactNotificationPermission => 'Exact Notification Permission';
+
+  @override
+  String get congratulationsMessage =>
+      'Congratulations! All permissions are perfectly set up! 🎉';
+
+  @override
+  String get workoutDayNotification => 'Workout Day Notification';
+
+  @override
+  String get chadEvolutionCompleteNotification =>
+      'Chad Evolution Complete Notification';
+
+  @override
+  String get chadEvolutionPreviewNotification =>
+      'Chad Evolution Preview Notification';
+
+  @override
+  String get chadEvolutionQuarantineNotification =>
+      'Chad Evolution Quarantine Notification';
+
+  @override
+  String get themeColor => 'Theme Color';
+
+  @override
+  String get fontSize => 'Font Size';
+
+  @override
+  String get animationEffect => 'Animation Effect';
+
+  @override
+  String get highContrastMode => 'High Contrast Mode';
+
+  @override
+  String get backupManagement => 'Backup Management';
+
+  @override
+  String get backupManagementDesc =>
+      'Manage data backup, restore and auto-backup settings';
+
+  @override
+  String get levelReset => 'Level Reset';
+
+  @override
+  String get levelResetDesc =>
+      'Reset all progress and start from the beginning';
+
+  @override
+  String get licenseInfo => 'License Information';
+
+  @override
+  String get licenseInfoDesc =>
+      'Check licenses of open source libraries used in the app';
+
+  @override
+  String get todayMissionTitle => 'Today\'s Mission';
+
+  @override
+  String get todayGoalTitle => 'Today\'s Goal:';
+
+  @override
+  String setRepsFormat(int setCount, int repsCount) {
+    return 'Set: reps';
+  }
+
+  @override
+  String completedRepsFormat(int completed) {
+    return 'Completed: reps (sets)';
+  }
+
+  @override
+  String totalRepsFormat(int total) {
+    return 'Total: reps (sets)';
+  }
+
+  @override
+  String get notificationPermissionCheckingStatus =>
+      'Checking notification permission status';
+
+  @override
+  String get notificationPermissionNeeded =>
+      '❌ Notification Permission Required';
+
+  @override
+  String get exactAlarmPermission => 'Exact Alarm Permission';
+
+  @override
+  String get allowNotificationPermission => 'Allow Notification Permission';
+
+  @override
+  String get setExactAlarmPermission => 'Set Exact Alarm Permission';
+
+  @override
+  String get requiredLabel => 'Required';
+
+  @override
+  String get recommendedLabel => 'Recommended';
+
+  @override
+  String get activatedStatus => 'Activated';
+
+  @override
+  String themeColorDesc(String color) {
+    return 'Change the app\'s primary color (Current: $color)';
+  }
+
+  @override
+  String get fontScale => 'Font Size';
+
+  @override
+  String get fontScaleDesc => 'Adjust text size throughout the app';
+
+  @override
+  String get animationsEnabled => 'Animation Effects';
+
+  @override
+  String get animationsEnabledDesc =>
+      'Enable or disable app-wide animation effects';
+
+  @override
+  String get highContrastModeDesc =>
+      'Enable high contrast mode for visual accessibility';
+
+  @override
+  String get levelResetConfirm => 'Level Reset Confirmation';
+
+  @override
+  String get urlNotAvailableTitle => 'Page Not Available';
+
+  @override
+  String urlNotAvailableMessage(String page) {
+    return 'The $page page is not available yet. It will be provided in a future update.';
+  }
+
+  @override
+  String get openInBrowser => 'Open in Browser';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get loadingText => 'Loading...';
+
+  @override
+  String get refreshButton => 'Refresh';
+
+  @override
+  String get errorLoadingData => 'Error occurred while loading data';
+
+  @override
+  String get retryButton => 'Retry';
+
+  @override
+  String get noUserProfile => 'No user profile found';
+
+  @override
+  String get completeInitialTest =>
+      'Please complete the initial test to create your profile';
+
+  @override
+  String get sleepyChadEvolution => 'Sleepy Chad';
+
+  @override
+  String get journeyChadEvolution => 'Chad Starting the Journey';
+
+  @override
+  String get setRepsDisplayFormat => '세트 × 횟수';
 }

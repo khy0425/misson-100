@@ -55,4 +55,50 @@
 
 # 경고 억제
 -dontwarn javax.annotation.**
--dontwarn org.codehaus.mojo.animal_sniffer.* 
+-dontwarn org.codehaus.mojo.animal_sniffer.*
+
+# 🚀 Mission: 100 ProGuard 설정
+
+# Google Mobile Ads 보존
+-keep class com.google.android.gms.ads.** { *; }
+-keep class com.google.ads.** { *; }
+
+# Firebase 보존 (향후 추가 시)
+-keep class com.google.firebase.** { *; }
+
+# JSON 직렬화 보존
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @com.google.gson.annotations.SerializedName <fields>;
+}
+
+# 앱 특정 모델 클래스 보존
+-keep class com.reaf.misson100.models.** { *; }
+
+# 네이티브 라이브러리 보존
+-keep class com.reaf.misson100.** { *; }
+
+# 일반적인 Android 컴포넌트 보존
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+
+# 로그 제거 (릴리즈 빌드에서)
+-assumenosideeffects class android.util.Log {
+    public static boolean isLoggable(java.lang.String, int);
+    public static int v(...);
+    public static int i(...);
+    public static int w(...);
+    public static int d(...);
+    public static int e(...);
+}
+
+# 기본 최적화 설정
+-optimizationpasses 5
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
+-dontpreverify
+-verbose
+-optimizations !code/simplification/arithmetic,!field/*,!class/merging/* 

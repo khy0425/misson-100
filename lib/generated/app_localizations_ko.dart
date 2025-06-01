@@ -271,49 +271,43 @@ class AppLocalizationsKo extends AppLocalizations {
       '⚡ ALPHA SETTINGS LOCKED! 완벽한 설정으로 무장 완료! ⚡';
 
   @override
-  String get firstWorkoutMessage =>
-      '🔥 ALPHA JOURNEY 시작! 오늘부터 LEGENDARY TRANSFORMATION이 시작된다! 🔥';
+  String get firstWorkoutMessage => '첫 번째 운동을 시작합니다! 화이팅!';
 
   @override
-  String get weekCompletedMessage =>
-      '👑 한 주 COMPLETE DOMINATION! CHAD POWER LEVEL 대폭 상승, 만삣삐! 👑';
+  String get weekCompletedMessage => '주차 완료! 축하드립니다!';
 
   @override
-  String get programCompletedMessage =>
-      '🚀 축하한다! 진정한 ULTRA GIGA CHAD EMPEROR 탄생! 우주가 경배한다! 🚀';
+  String get programCompletedMessage => '프로그램 완료! 정말 대단합니다!';
 
   @override
-  String get streakStartMessage =>
-      '⚡ CHAD STREAK ACTIVATED! 연속 정복 모드 돌입이다, 만삣삐! ⚡';
+  String get streakStartMessage => '연속 운동 시작!';
 
   @override
-  String get streakContinueMessage =>
-      '🔱 STREAK DOMINATION CONTINUES! 멈출 수 없는 ALPHA FORCE! 🔱';
+  String get streakContinueMessage => '연속 운동 계속 중!';
 
   @override
-  String get streakBrokenMessage =>
-      '🦁 스트릭이 끊어졌다고? 상관없다! 진짜 EMPEROR는 더 강해져서 돌아온다! 🦁';
+  String get streakBrokenMessage => '연속 운동이 끊어졌습니다';
 
   @override
-  String get chadTitleSleepy => 'Sleepy Chad';
+  String get chadTitleSleepy => '수면모자 Chad';
 
   @override
-  String get chadTitleBasic => 'Basic Chad';
+  String get chadTitleBasic => '기본 Chad';
 
   @override
-  String get chadTitleCoffee => 'Coffee Chad';
+  String get chadTitleCoffee => '커피 Chad';
 
   @override
-  String get chadTitleFront => 'Front Chad';
+  String get chadTitleFront => '정면 Chad';
 
   @override
-  String get chadTitleCool => 'Cool Chad';
+  String get chadTitleCool => '썬글 Chad';
 
   @override
-  String get chadTitleLaser => 'Laser Chad';
+  String get chadTitleLaser => '눈빨 Chad';
 
   @override
-  String get chadTitleDouble => 'Double Chad';
+  String get chadTitleDouble => '더블 Chad';
 
   @override
   String get levelNameRookie => 'Rookie Chad';
@@ -1277,7 +1271,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get chadHashtag => '#차드';
 
   @override
-  String get perfectPushupForm => '완벽한 팔굽혀펴기 자세 💪';
+  String get perfectPushupForm => '완벽한 푸시업 자세';
 
   @override
   String get pushupVariations => '팔굽혀펴기 변형 동작 🔥';
@@ -1394,13 +1388,13 @@ class AppLocalizationsKo extends AppLocalizations {
   String get privacyPolicy => '개인정보 처리방침';
 
   @override
-  String get privacyPolicyDesc => '개인정보 처리방침 보기';
+  String get privacyPolicyDesc => '개인정보 보호 및 처리 방침을 확인';
 
   @override
-  String get termsOfService => '서비스 이용약관';
+  String get termsOfService => '이용약관';
 
   @override
-  String get termsOfServiceDesc => '서비스 이용약관 보기';
+  String get termsOfServiceDesc => '앱 사용시 약관 확인';
 
   @override
   String get openSourceLicenses => '오픈소스 라이선스';
@@ -2370,4 +2364,209 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get shareButton => '공유';
+
+  @override
+  String get todayMission => '오늘의 미션';
+
+  @override
+  String get todayTarget => '오늘의 목표:';
+
+  @override
+  String setFormat2(int number, int reps) {
+    return '$number세트: $reps회';
+  }
+
+  @override
+  String completedFormat(int reps, int sets) {
+    return '완료됨: $reps회 ($sets세트)';
+  }
+
+  @override
+  String totalFormat(int reps, int sets) {
+    return '총 $reps회 ($sets세트)';
+  }
+
+  @override
+  String get todayWorkoutCompleted => '오늘 운동 완료됨! 🎉';
+
+  @override
+  String get justWait => '잠깐! 너 진짜 쉴거야?';
+
+  @override
+  String get progressTracking => '진행률 추적';
+
+  @override
+  String get sleepyHatChad => '수면모자 Chad';
+
+  @override
+  String get journeyStartingChad =>
+      '여정을 시작하는 Chad입니다.\n아직 잠이 덜 깬 상태지만 곧 깨어날 것입니다!';
+
+  @override
+  String weekDayFormat(int week, int day) {
+    return '$week주차 $day일차';
+  }
+
+  @override
+  String get notificationPermissionPerfect => '알림 권한 완벽!';
+
+  @override
+  String get basicNotificationPermission => '기본 알림 권한';
+
+  @override
+  String get exactNotificationPermission => '정확한 알림 권한';
+
+  @override
+  String get congratulationsMessage => '축하합니다! 모든 권한이 완벽하게 설정되었습니다! 🎉';
+
+  @override
+  String get workoutDayNotification => '운동일 전용 알림';
+
+  @override
+  String get chadEvolutionCompleteNotification => 'Chad 진화 완료 알림';
+
+  @override
+  String get chadEvolutionPreviewNotification => 'Chad 진화 예고 알림';
+
+  @override
+  String get chadEvolutionQuarantineNotification => 'Chad 진화 격리 알림';
+
+  @override
+  String get themeColor => '테마 색상';
+
+  @override
+  String get fontSize => '폰트 크기';
+
+  @override
+  String get animationEffect => '애니메이션 효과';
+
+  @override
+  String get highContrastMode => '고대비 모드';
+
+  @override
+  String get backupManagement => '백업 관리';
+
+  @override
+  String get backupManagementDesc => '데이터 백업, 복원 및 자동 백업 설정을 관리합니다.';
+
+  @override
+  String get levelReset => '레벨 리셋';
+
+  @override
+  String get levelResetDesc => '모든 진행 상황을 초기화하고 처음부터 시작합니다.';
+
+  @override
+  String get licenseInfo => '라이선스 정보';
+
+  @override
+  String get licenseInfoDesc => '앱에서 사용된 라이선스 정보..';
+
+  @override
+  String get todayMissionTitle => '오늘의 미션';
+
+  @override
+  String get todayGoalTitle => '오늘의 목표';
+
+  @override
+  String setRepsFormat(int setCount, int repsCount) {
+    return '$setCount세트 × $repsCount회';
+  }
+
+  @override
+  String completedRepsFormat(int completed) {
+    return '완료: $completed회';
+  }
+
+  @override
+  String totalRepsFormat(int total) {
+    return '총 $total회';
+  }
+
+  @override
+  String get notificationPermissionCheckingStatus => '알림 권한 상태를 확인하고 있습니다';
+
+  @override
+  String get notificationPermissionNeeded => '❌ 알림 권한 필요';
+
+  @override
+  String get exactAlarmPermission => '정확한 알람 권한';
+
+  @override
+  String get allowNotificationPermission => '알림 권한 허용하기';
+
+  @override
+  String get setExactAlarmPermission => '정확한 알람 권한 설정하기';
+
+  @override
+  String get requiredLabel => '필수';
+
+  @override
+  String get recommendedLabel => '권장';
+
+  @override
+  String get activatedStatus => '활성화됨';
+
+  @override
+  String themeColorDesc(String color) {
+    return '앱의 메인 색상을 변경합니다 (현재: $color)';
+  }
+
+  @override
+  String get fontScale => '글자 크기';
+
+  @override
+  String get fontScaleDesc => '앱 전체의 텍스트 크기를 조정합니다';
+
+  @override
+  String get animationsEnabled => '애니메이션 효과';
+
+  @override
+  String get animationsEnabledDesc => '앱 전체의 애니메이션 효과를 켜거나 끕니다';
+
+  @override
+  String get highContrastModeDesc => '시각적 접근성을 위한 고대비 모드를 활성화합니다';
+
+  @override
+  String get levelResetConfirm => '레벨 리셋 확인';
+
+  @override
+  String get urlNotAvailableTitle => '페이지 준비 중';
+
+  @override
+  String urlNotAvailableMessage(String page) {
+    return '$page 페이지는 아직 준비되지 않았습니다. 향후 업데이트에서 제공될 예정입니다.';
+  }
+
+  @override
+  String get openInBrowser => '브라우저에서 열기';
+
+  @override
+  String get ok => '확인';
+
+  @override
+  String get loadingText => '로딩 중...';
+
+  @override
+  String get refreshButton => '새로고침';
+
+  @override
+  String get errorLoadingData => '데이터를 불러오는 중 오류가 발생했습니다';
+
+  @override
+  String get retryButton => '다시 시도';
+
+  @override
+  String get noUserProfile => '사용자 프로필이 없습니다';
+
+  @override
+  String get completeInitialTest => '초기 테스트를 완료하여 프로필을 생성해주세요';
+
+  @override
+  String get sleepyChadEvolution => '수면모자 Chad';
+
+  @override
+  String get journeyChadEvolution => '여정을 시작하는 Chad';
+
+  @override
+  String get setRepsDisplayFormat => '세트 × 횟수';
 }

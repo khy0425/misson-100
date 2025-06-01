@@ -5,6 +5,13 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+// 🔐 키스토어 설정 로드
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
     namespace = "com.reaf.misson100"
     compileSdk = flutter.compileSdkVersion
@@ -32,11 +39,22 @@ android {
         versionName = flutter.versionName
     }
 
+    // 🔐 서명 설정
+    signingConfigs {
+        release {
+            if (keystorePropertiesFile.exists()) {
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+            }
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.debug
+            // 🔐 릴리즈 서명 적용
+            signingConfig signingConfigs.release
             
             // 🚀 릴리스 빌드 최적화
             minifyEnabled true
@@ -51,6 +69,7 @@ android {
             debuggable true
             minifyEnabled false
             shrinkResources false
+            signingConfig signingConfigs.debug
         }
     }
     

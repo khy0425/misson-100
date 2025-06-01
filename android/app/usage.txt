@@ -3272,7 +3272,19 @@ androidx.browser.browseractions.BrowserActionsIntent
 androidx.browser.browseractions.BrowserServiceFileProvider$1
 androidx.browser.browseractions.BrowserServiceFileProvider$FileCleanupTask
 androidx.browser.browseractions.BrowserServiceFileProvider$FileSaveTask
-androidx.browser.browseractions.BrowserServiceFileProvider
+androidx.browser.browseractions.BrowserServiceFileProvider:
+    private static final java.lang.String AUTHORITY_SUFFIX
+    private static final java.lang.String CLIP_DATA_LABEL
+    private static final java.lang.String CONTENT_SCHEME
+    private static final java.lang.String FILE_EXTENSION
+    private static final java.lang.String FILE_SUB_DIR
+    private static final java.lang.String FILE_SUB_DIR_NAME
+    private static final java.lang.String LAST_CLEANUP_TIME_KEY
+    private static final java.lang.String TAG
+    private static android.net.Uri generateUri(android.content.Context,java.lang.String)
+    public static void grantReadPermission(android.content.Intent,java.util.List,android.content.Context)
+    public static com.google.common.util.concurrent.ListenableFuture loadBitmap(android.content.ContentResolver,android.net.Uri)
+    public static androidx.concurrent.futures.ResolvableFuture saveBitmap(android.content.Context,android.graphics.Bitmap,java.lang.String,int)
 androidx.browser.customtabs.Api33Impl:
     private void <init>()
 androidx.browser.customtabs.CustomTabColorSchemeParams:
@@ -6727,7 +6739,6 @@ androidx.core.app.ComponentActivity$ExtraData:
     public void <init>()
 androidx.core.app.ComponentActivity:
     private static synthetic void getExtraDataMap$annotations()
-    public androidx.lifecycle.Lifecycle getLifecycle()
     private static synthetic void getLifecycleRegistry$annotations()
 androidx.core.app.DialogCompat$Api28Impl
 androidx.core.app.DialogCompat
@@ -21846,7 +21857,6 @@ androidx.viewpager.widget.ViewPager$ViewPositionComparator
 androidx.viewpager.widget.ViewPager
 androidx.webkit.CookieManagerCompat:
     private void <init>()
-androidx.webkit.DropDataContentProvider
 androidx.webkit.Profile
 androidx.webkit.ProfileStore
 androidx.webkit.ProxyConfig$Builder:
@@ -22033,7 +22043,6 @@ androidx.webkit.internal.AssetHelper:
     public static final java.lang.String DEFAULT_MIME_TYPE
 androidx.webkit.internal.IncompatibleApkWebViewProviderFactory:
     private static final java.lang.String UNSUPPORTED_EXCEPTION_EXPLANATION
-    public org.chromium.support_lib_boundary.DropDataContentProviderBoundaryInterface getDropDataProvider()
     public org.chromium.support_lib_boundary.ProfileStoreBoundaryInterface getProfileStore()
 androidx.webkit.internal.MimeUtil:
     void <init>()
@@ -22076,10 +22085,8 @@ androidx.webkit.internal.WebViewProviderAdapter:
     public boolean isAudioMuted()
     public void setProfileWithName(java.lang.String)
 androidx.webkit.internal.WebViewProviderFactory:
-    public abstract org.chromium.support_lib_boundary.DropDataContentProviderBoundaryInterface getDropDataProvider()
     public abstract org.chromium.support_lib_boundary.ProfileStoreBoundaryInterface getProfileStore()
 androidx.webkit.internal.WebViewProviderFactoryAdapter:
-    public org.chromium.support_lib_boundary.DropDataContentProviderBoundaryInterface getDropDataProvider()
     public org.chromium.support_lib_boundary.ProfileStoreBoundaryInterface getProfileStore()
 androidx.webkit.internal.WebViewRenderProcessClientAdapter:
     public androidx.webkit.WebViewRenderProcessClient getWebViewRenderProcessClient()
@@ -26187,9 +26194,6 @@ com.google.errorprone.annotations.concurrent.GuardedBy
 com.google.errorprone.annotations.concurrent.LazyInit
 com.google.errorprone.annotations.concurrent.LockMethod
 com.google.errorprone.annotations.concurrent.UnlockMethod
-com.google.firebase.FirebaseApiNotAvailableException
-com.google.firebase.FirebaseException
-com.google.firebase.FirebaseExceptionMapper
 com.google.gson.FieldAttributes:
     java.lang.Object get(java.lang.Object)
     public java.lang.annotation.Annotation getAnnotation(java.lang.Class)
@@ -26484,10 +26488,6 @@ com.mr.flutter.plugin.filepicker.FileUtils:
     public static boolean isGooglePhotosUri(android.net.Uri)
     public static boolean isMediaDocument(android.net.Uri)
 com.mr.flutter.plugin.filepicker.R
-com.reaf.misson100.R$drawable
-com.reaf.misson100.R$mipmap
-com.reaf.misson100.R$style
-com.reaf.misson100.R
 com.tekartik.sqflite.Constant:
     static final java.lang.String CMD_GET
     static final java.lang.String ERROR_BAD_PARAM
@@ -34641,6 +34641,7 @@ android.support.v4.media.MediaBrowserCompat$ServiceBinderWrapper:
 android.support.v4.media.MediaBrowserCompat$Subscription
 android.support.v4.media.MediaBrowserCompat$SubscriptionCallback
 android.support.v4.media.MediaBrowserCompat:
+    public static final boolean DEBUG
     public static void connect()
     public static void disconnect()
     public static android.support.v4.media.session.MediaSessionCompat$Token getSessionToken()
@@ -34746,10 +34747,10 @@ androidx.activity.ComponentActivity$ReportFullyDrawnExecutorApi16Impl:
     public static synthetic void lambda$execute$0()
 androidx.activity.ComponentActivity$ReportFullyDrawnExecutorApi1
 androidx.activity.ComponentActivity:
-    public abstract androidx.activity.ComponentActivity$ReportFullyDrawnExecutor createFullyDrawnExecutor()
-    public synthetic abstract kotlin.Unit lambda$new$0()
-    public abstract android.os.Bundle lambda$new$1()
-    public abstract void lambda$new$2()
+    public static androidx.activity.ComponentActivity$ReportFullyDrawnExecutor createFullyDrawnExecutor()
+    public static synthetic kotlin.Unit lambda$new$0()
+    public static android.os.Bundle lambda$new$1()
+    public static void lambda$new$2()
 androidx.activity.FullyDrawnReporter$$InternalSyntheticLambda$2$a343797b216b654af6e45b210590a59b008b0897ac1072415ad77f5c0c5544cc$0
 androidx.activity.FullyDrawnReporter:
     public final androidx.activity.ComponentActivity$ReportFullyDrawnExecutorApi16Impl executor
@@ -35172,8 +35173,8 @@ androidx.appcompat.app.AlertDialog:
     public static void setView()
     public final boolean supportRequestWindowFeature(int)
 androidx.appcompat.app.AppCompatActivity:
-    public abstract void initDelegate()
-    public abstract boolean performMenuItemShortcut()
+    public static void initDelegate()
+    public static boolean performMenuItemShortcut()
 androidx.appcompat.app.AppCompatDelegate:
     public abstract void addContentView(android.view.View,android.view.ViewGroup$LayoutParams)
     public abstract void attachBaseContext()
@@ -35184,6 +35185,7 @@ androidx.appcompat.app.AppCompatDelegate:
     public abstract int getLocalNightMode()
     public abstract android.view.MenuInflater getMenuInflater()
     public abstract androidx.appcompat.app.ActionBar getSupportActionBar()
+    public abstract void installViewFactory()
     public abstract void onConfigurationChanged()
     public abstract void onPostCreate()
     public abstract void onPostResume()
@@ -35258,6 +35260,7 @@ androidx.appcompat.app.AppCompatDelegateImpl:
     public static boolean initializePanelContent()
     public static boolean initializePanelDecor()
     public static boolean initializePanelMenu()
+    public final void installViewFactory()
     public static boolean isHandleNativeActionModesEnabled()
     public final void onConfigurationChanged()
     public static boolean onKeyDown()
@@ -35893,7 +35896,6 @@ androidx.appcompat.widget.AppCompatTextViewAutoSizeHelper:
     public static int getAutoSizeStepGranularity()
     public static int[] getAutoSizeTextAvailableSizes()
     public static int getAutoSizeTextType()
-    public static java.lang.reflect.Field getTextViewField(java.lang.String)
     public static void initTempTextPaint()
     public static void loadFromAttributes()
     public static void setAutoSizeTextTypeUniformWithConfiguration()
@@ -36370,6 +36372,9 @@ androidx.arch.core.internal.SafeIterableMap:
     public java.lang.Object putIfAbsent(java.lang.Object,java.lang.Object)
     public static int size()
 androidx.browser.R$dimen
+androidx.browser.browseractions.BrowserServiceFileProvider:
+    public static java.lang.Object sFileCleanupLock
+    static void <clinit>()
 androidx.browser.customtabs.CustomTabColorSchemeParams$Builder:
     public java.lang.Integer mNavigationBarColor
     public java.lang.Integer mNavigationBarDividerColor
@@ -37002,6 +37007,7 @@ androidx.constraintlayout.widget.ConstraintLayout:
     public int mLastMeasureWidthMode
     public int mLastMeasureWidthSize
     static void <clinit>()
+    public static void applyConstraintsFromLayoutParams()
     public static androidx.constraintlayout.widget.ConstraintLayout$LayoutParams generateLayoutParams()
     public final java.lang.Object getDesignInformation(java.lang.String)
     public static androidx.constraintlayout.core.widgets.ConstraintWidget getTargetWidget()
@@ -37010,10 +37016,10 @@ androidx.constraintlayout.widget.ConstraintLayout:
     public final boolean isRtl()
     public final void markHierarchyDirty()
     public final void resolveMeasuredDimension(int,int,int,int,boolean,boolean)
+    public static void resolveSystem()
     public static void setChildrenConstraints()
     public static void setDesignInformation()
     public static void setSelfDimensionBehaviour()
-    public static boolean updateHierarchy()
 androidx.constraintlayout.widget.ConstraintLayoutStates$State:
     public androidx.constraintlayout.widget.ConstraintSet mConstraintSet
     public static void add()
@@ -37542,7 +37548,7 @@ androidx.core.app.AppOpsManagerCompat
 androidx.core.app.BundleCompat
 androidx.core.app.ComponentActivity$$InternalSyntheticThrowCCEIfNotNull$22$c52a63c170f0c5d26e139227b25a3bfaba89cf57e2edc403a6856767fa377046$0
 androidx.core.app.ComponentActivity:
-    public abstract boolean shouldSkipDump()
+    public static boolean shouldSkipDump()
 androidx.core.app.CoreComponentFactory$$InternalSyntheticThrowCCEIfNotNull$10$28d6d52be828bd520f37653069cdb0fd59ddc413967dd43deec606fddf5e864e$0
 androidx.core.app.CoreComponentFactory$CompatWrapped
 androidx.core.app.JobIntentService$CommandProcessor:
@@ -37903,6 +37909,7 @@ androidx.core.graphics.TypefaceCompatApi24Impl:
     public static java.lang.Object newFamily$1()
 androidx.core.graphics.TypefaceCompatApi26Impl:
     public static boolean addFontFromBuffer()
+    public final boolean isFontFamilyPrivateAPIAvailable()
     public static java.lang.reflect.Method obtainAbortCreationMethod()
     public static java.lang.reflect.Method obtainAddFontFromBufferMethod()
     public static java.lang.Class obtainFontFamily()
@@ -37938,6 +37945,8 @@ androidx.core.graphics.drawable.WrappedDrawable:
 androidx.core.graphics.drawable.WrappedDrawableApi14:
     public final android.graphics.drawable.Drawable getWrappedDrawable()
     public static void updateLocalState()
+androidx.core.graphics.drawable.WrappedDrawableApi21:
+    public static void findAndCacheIsProjectedDrawableMethod()
 androidx.core.graphics.drawable.WrappedDrawableState:
     public static boolean canConstantState()
 androidx.core.internal.view.SupportSubMenu
@@ -39902,11 +39911,11 @@ androidx.fragment.app.FragmentActivity$HostCallbacks:
     public final boolean onShouldShowRequestPermissionRationale()
     public final void onSupportInvalidateOptionsMenu()
 androidx.fragment.app.FragmentActivity:
-    public abstract void init$1$1()
-    public synthetic abstract android.os.Bundle lambda$init$0()
-    public synthetic abstract void lambda$init$1()
-    public synthetic abstract void lambda$init$2()
-    public abstract void lambda$init$3()
+    public static void init$1$1()
+    public static synthetic android.os.Bundle lambda$init$0()
+    public static synthetic void lambda$init$1()
+    public static synthetic void lambda$init$2()
+    public static void lambda$init$3()
 androidx.fragment.app.FragmentContainer:
     public abstract androidx.fragment.app.Fragment instantiate()
 androidx.fragment.app.FragmentContainerView$Api20Impl
@@ -40058,11 +40067,14 @@ androidx.fragment.app.FragmentManager:
     public abstract void prepareBackStackTransition()
     public abstract void removeRetainedFragment()
     public abstract void reportBackStackChanged()
+    public static void showFragment(androidx.fragment.app.Fragment)
 androidx.fragment.app.FragmentManagerState$1:
     public static androidx.fragment.app.FragmentManagerState createFromParcel()
     public static androidx.fragment.app.FragmentManagerState[] newArray()
 androidx.fragment.app.FragmentManagerViewModel:
     public boolean mHasSavedSnapshot
+    public static void clearNonConfigState()
+    public final void clearNonConfigState(androidx.fragment.app.Fragment,boolean)
     public static androidx.fragment.app.Fragment findRetainedFragmentByWho()
     public static androidx.fragment.app.FragmentManagerViewModel getChildNonConfig()
     public static java.util.Collection getRetainedFragments()
@@ -40079,6 +40091,8 @@ androidx.fragment.app.FragmentStateManager$1:
     public final synthetic androidx.fragment.app.FragmentStateManager this$0
 androidx.fragment.app.FragmentStateManager$2
 androidx.fragment.app.FragmentStateManager:
+    public static void activityCreated()
+    public static void create()
     public static androidx.fragment.app.Fragment getFragment()
     public static boolean isFragmentViewChild()
     public static void pause()
@@ -40136,6 +40150,7 @@ androidx.fragment.app.FragmentTransitionCompat21$4:
 androidx.fragment.app.FragmentTransitionCompat21$5:
     public final synthetic androidx.fragment.app.FragmentTransitionCompat21 this$0
 androidx.fragment.app.FragmentTransitionCompat21:
+    public final void isSeekingSupported()
     public final void isSeekingSupported(java.lang.Object)
 androidx.fragment.app.FragmentTransitionImpl$1:
     public final synthetic androidx.fragment.app.FragmentTransitionImpl this$0
@@ -40144,6 +40159,7 @@ androidx.fragment.app.FragmentTransitionImpl:
     public abstract void animateToStart()
     public static boolean containedBeforeIndex(java.util.List,android.view.View,int)
     public abstract java.lang.Object controlDelayedTransition()
+    public void isSeekingSupported()
     public void isSeekingSupported(java.lang.Object)
     public abstract java.util.ArrayList prepareSetNameOverridesReordered()
     public abstract void setCurrentPlayTime()
@@ -40154,6 +40170,8 @@ androidx.fragment.app.FragmentViewLifecycleOwner:
     public static void performRestore()
     public static void performSave()
     public static void setCurrentState()
+androidx.fragment.app.LogWriter:
+    public final java.lang.String mTag
 androidx.fragment.app.SpecialEffectsController$Companion
 androidx.fragment.app.SpecialEffectsController$Effect:
     public final boolean isSeekingSupported
@@ -40173,7 +40191,6 @@ androidx.fragment.app.SpecialEffectsController$Operation$State$EnumUnboxingLocal
     static void <clinit>()
     public static int _valueOf(java.lang.String)
     public static int[] _values()
-    public static synthetic java.lang.String name(int)
     public static synthetic int valueOf(java.lang.String)
 androidx.fragment.app.SpecialEffectsController$Operation$State$WhenMappings
 androidx.fragment.app.SpecialEffectsController$Operation$State
@@ -40197,9 +40214,10 @@ androidx.fragment.app.SpecialEffectsController:
     public static final androidx.fragment.app.SpecialEffectsController$Companion Companion
     static void <clinit>()
     public abstract void completeBack()
-    public abstract void enqueueHide(androidx.fragment.app.FragmentStateManager)
-    public abstract void enqueueRemove(androidx.fragment.app.FragmentStateManager)
-    public abstract void enqueueShow(androidx.fragment.app.FragmentStateManager)
+    public abstract void enqueueAdd()
+    public abstract void enqueueHide()
+    public abstract void enqueueRemove()
+    public abstract void enqueueShow()
     public abstract void forcePostponedExecutePendingOperations()
     public abstract int getAwaitingCompletionLifecycleImpact()
     public abstract android.view.ViewGroup getContainer()
@@ -40463,10 +40481,15 @@ androidx.media.MediaBrowserServiceCompat$ResultWrapper:
     public static java.util.List parcelListToItemList()
 androidx.media.MediaBrowserServiceCompat$ServiceBinderImpl$1:
     public final synthetic android.os.Bundle val$rootHints
+androidx.media.MediaBrowserServiceCompat$ServiceBinderImpl$5:
+    public final synthetic java.lang.String val$mediaId
 androidx.media.MediaBrowserServiceCompat$ServiceBinderImpl$6:
     public final synthetic android.os.Bundle val$rootHints
 androidx.media.MediaBrowserServiceCompat$ServiceBinderImpl$8:
     public final synthetic android.os.Bundle val$extras
+    public final synthetic java.lang.String val$query
+androidx.media.MediaBrowserServiceCompat$ServiceBinderImpl$9:
+    public final synthetic java.lang.String val$action
 androidx.media.MediaBrowserServiceCompat$ServiceBinderImpl:
     public static void addSubscription()
     public static void connect()
@@ -40490,6 +40513,7 @@ androidx.media.MediaBrowserServiceCompat:
     public static final boolean DEBUG
     public androidx.media.MediaBrowserServiceCompat$ConnectionRecord mCurConnection
     public android.support.v4.media.session.MediaSessionCompat$Token mSession
+    static void <clinit>()
     public abstract void addSubscription()
     public static java.util.List applyOptions(android.os.Bundle)
     public abstract boolean isValidPackage()
@@ -45823,6 +45847,7 @@ androidx.multidex.MultiDexExtractor$1:
     public final synthetic androidx.multidex.MultiDexExtractor this$0
 androidx.multidex.MultiDexExtractor:
     public static void clearDexDir()
+    public static void closeQuietly(java.io.Closeable)
     public static android.content.SharedPreferences getMultiDexPreferences(androidx.multidex.MultiDexApplication)
     public static long getTimeStamp(java.io.File)
 androidx.preference.CheckBoxPreference$Listener
@@ -45915,7 +45940,7 @@ androidx.preference.Preference:
     public static void getPreferenceManager()
     public static androidx.preference.Preference$SummaryProvider getSummaryProvider()
     public static java.lang.CharSequence getTitle()
-    public final boolean hasKey()
+    public final void hasKey()
     public boolean isEnabled()
     public static boolean isPersistent()
     public static boolean isSelectable()
@@ -46264,7 +46289,15 @@ androidx.profileinstaller.FileSectionType$EnumUnboxingLocalUtility:
 androidx.profileinstaller.FileSectionType
 androidx.profileinstaller.ProfileInstallReceiver$$InternalSyntheticLambda$1$b8056259efc6618d8822a2f6f8b34382c99cd5fda1709d66753a15573777084f$1
 androidx.profileinstaller.ProfileInstallReceiver$$InternalSyntheticLambda$1$b8056259efc6618d8822a2f6f8b34382c99cd5fda1709d66753a15573777084f$2
+androidx.profileinstaller.ProfileInstallReceiver$ResultDiagnostics:
+    public final void onDiagnosticReceived()
 androidx.profileinstaller.ProfileInstaller$$InternalSyntheticLambda$2$1679bfe60b3e8c01d7361319bfe66183a1d1244366929c97030723f2b9188d2f$0
+androidx.profileinstaller.ProfileInstaller$1:
+    public final void onDiagnosticReceived()
+androidx.profileinstaller.ProfileInstaller$2:
+    public final void onDiagnosticReceived()
+androidx.profileinstaller.ProfileInstaller$DiagnosticsCallback:
+    public abstract void onDiagnosticReceived()
 androidx.profileinstaller.ProfileInstaller:
     public static final androidx.profileinstaller.ProfileInstaller$2 LOG_DIAGNOSTICS
     public static void result(java.util.concurrent.Executor,androidx.profileinstaller.ProfileInstallReceiver$ResultDiagnostics,int,android.content.pm.PackageManager$NameNotFoundException)
@@ -46497,6 +46530,7 @@ androidx.recyclerview.widget.GridLayoutManager:
     public final void ensureViewSet()
     public final android.view.View findReferenceChild()
     public final int getSpaceForSpanRange(int)
+    public final int getSpanGroupIndex(androidx.recyclerview.widget.RecyclerView$Recycler,androidx.recyclerview.widget.RecyclerView$State,int)
     public static int getSpanIndex()
     public static int getSpanSize()
     public static void guessMeasurement()
@@ -48328,6 +48362,7 @@ androidx.work.Data$Builder:
     public static androidx.work.Data$Builder putAll()
     public final void putString(java.lang.String)
 androidx.work.Data:
+    public static final java.lang.String TAG
     public static java.util.Map getKeyValueMap()
     public static int size()
 androidx.work.ExistingWorkPolicy$EnumUnboxingLocalUtility
@@ -48338,6 +48373,8 @@ androidx.work.ForegroundInfo:
     public static int getNotificationId()
 androidx.work.ForegroundUpdater
 androidx.work.InitializationExceptionHandler
+androidx.work.InputMerger:
+    public static final java.lang.String TAG
 androidx.work.InputMergerFactory$1:
     public static androidx.work.InputMerger createInputMerger()
     public static androidx.work.InputMerger createInputMergerWithDefaultFallback()
@@ -48398,12 +48435,14 @@ androidx.work.WorkManager:
     public abstract androidx.work.Operation cancelAllWorkByTag()
     public abstract androidx.work.Operation enqueue()
 androidx.work.WorkManagerInitializer:
+    public static final java.lang.String TAG
     public static androidx.work.WorkManager create()
 androidx.work.WorkRequest$Builder
 androidx.work.WorkRequest
 androidx.work.WorkerFactory$1:
     public final androidx.work.ListenableWorker createWorker()
 androidx.work.WorkerFactory:
+    public static final java.lang.String TAG
     public abstract androidx.work.ListenableWorker createWorker()
 androidx.work.WorkerParameters:
     public static java.util.concurrent.Executor getBackgroundExecutor()
@@ -48422,11 +48461,15 @@ androidx.work.impl.DefaultRunnableScheduler:
     public final void cancel(java.lang.Runnable)
     public static void scheduleWithDelay()
 androidx.work.impl.Processor:
+    public static final java.lang.String TAG
     public static boolean isEnqueuedInForeground()
     public static boolean startWork()
     public static boolean stopAndCancelWork()
     public final void stopForeground()
+androidx.work.impl.Schedulers:
+    public static final java.lang.String TAG
 androidx.work.impl.WorkContinuationImpl:
+    public static final java.lang.String TAG
     public final int mExistingWorkPolicy
     public final java.lang.String mName
     public androidx.work.impl.OperationImpl mOperation
@@ -48447,6 +48490,7 @@ androidx.work.impl.WorkDatabase$2:
     public static void onOpen()
     public static void onOpen$androidx$room$RoomDatabase$Callback()
 androidx.work.impl.WorkDatabasePathHelper:
+    public static final java.lang.String TAG
     public static java.lang.String getWorkDatabaseName()
 androidx.work.impl.WorkDatabase_Impl$1:
     public final int version
@@ -48473,8 +48517,11 @@ androidx.work.impl.WorkManagerImpl:
     public static void setReschedulePendingResult()
     public static void startWork()
     public static void stopForegroundWork()
+androidx.work.impl.WorkerWrapper$2:
+    public final synthetic java.lang.String val$workDescription
 androidx.work.impl.WorkerWrapper$Builder
 androidx.work.impl.WorkerWrapper:
+    public static final java.lang.String TAG
     public static java.lang.String createWorkDescription()
     public static com.google.common.util.concurrent.ListenableFuture getFuture()
     public static void interrupt()
@@ -48483,13 +48530,18 @@ androidx.work.impl.WorkerWrapper:
     public static void setSucceededAndResolve()
     public static boolean trySetRunning()
 androidx.work.impl.background.greedy.DelayedWorkTracker:
+    public static final java.lang.String TAG
     public static void schedule()
     public static void unschedule()
 androidx.work.impl.background.greedy.GreedyScheduler:
+    public static final java.lang.String TAG
     public final void checkDefaultProcess()
     public final void registerExecutionListenerIfNeeded()
     public static void removeConstraintTrackingFor()
+androidx.work.impl.background.systemalarm.Alarms:
+    public static final java.lang.String TAG
 androidx.work.impl.background.systemalarm.CommandHandler:
+    public static final java.lang.String TAG
     public static android.content.Intent createConstraintsChangedIntent(android.content.Context)
     public static android.content.Intent createStopWorkIntent(android.content.Context,java.lang.String)
     public static void handleConstraintsChanged()
@@ -48498,15 +48550,24 @@ androidx.work.impl.background.systemalarm.CommandHandler:
     public static void handleReschedule()
     public static void handleScheduleWorkIntent()
     public static void handleStopWork()
+androidx.work.impl.background.systemalarm.ConstraintProxy:
+    public static final java.lang.String TAG
 androidx.work.impl.background.systemalarm.ConstraintProxyUpdateReceiver$1:
     public final synthetic androidx.work.impl.background.systemalarm.ConstraintProxyUpdateReceiver this$0
+androidx.work.impl.background.systemalarm.ConstraintProxyUpdateReceiver:
+    public static final java.lang.String TAG
 androidx.work.impl.background.systemalarm.ConstraintsCommandHandler:
+    public static final java.lang.String TAG
     public final androidx.work.impl.background.systemalarm.SystemAlarmDispatcher mDispatcher
     public static void handleConstraintsChanged()
 androidx.work.impl.background.systemalarm.DelayMetCommandHandler:
+    public static final java.lang.String TAG
     public final void onTimeLimitExceeded()
+androidx.work.impl.background.systemalarm.RescheduleReceiver:
+    public static final java.lang.String TAG
 androidx.work.impl.background.systemalarm.SystemAlarmDispatcher$CommandsCompletedListener
 androidx.work.impl.background.systemalarm.SystemAlarmDispatcher:
+    public static final java.lang.String TAG
     public static void dequeueAndCheckForCompletion()
     public static androidx.work.impl.Processor getProcessor()
     public final androidx.work.impl.utils.taskexecutor.TaskExecutor getTaskExecutor()
@@ -48514,15 +48575,20 @@ androidx.work.impl.background.systemalarm.SystemAlarmDispatcher:
     public static androidx.work.impl.utils.WorkTimer getWorkTimer()
     public static void setCompletedListener()
 androidx.work.impl.background.systemalarm.SystemAlarmScheduler:
+    public static final java.lang.String TAG
     public static void scheduleWorkSpec()
 androidx.work.impl.background.systemalarm.SystemAlarmService:
+    public static final java.lang.String TAG
     public final void initializeDispatcher()
 androidx.work.impl.background.systemjob.SystemJobInfoConverter$1
 androidx.work.impl.background.systemjob.SystemJobInfoConverter:
+    public static final java.lang.String TAG
     public static android.app.job.JobInfo convert()
 androidx.work.impl.background.systemjob.SystemJobScheduler:
+    public static final java.lang.String TAG
     public static java.lang.String getWorkSpecIdFromJobInfo(android.app.job.JobInfo)
 androidx.work.impl.background.systemjob.SystemJobService:
+    public static final java.lang.String TAG
     public static java.lang.String getWorkSpecIdFromJobParameters(android.app.job.JobParameters)
 androidx.work.impl.constraints.ConstraintListener
 androidx.work.impl.constraints.NetworkState:
@@ -48531,6 +48597,7 @@ androidx.work.impl.constraints.NetworkState:
     public static boolean isNotRoaming()
     public static boolean isValidated()
 androidx.work.impl.constraints.WorkConstraintsTracker:
+    public static final java.lang.String TAG
     public final void onConstraintMet()
 androidx.work.impl.constraints.controllers.BatteryChargingController:
     public final boolean isConstrained()
@@ -48545,34 +48612,46 @@ androidx.work.impl.constraints.controllers.ConstraintController:
 androidx.work.impl.constraints.controllers.NetworkConnectedController:
     public final boolean isConstrained$1()
 androidx.work.impl.constraints.controllers.NetworkMeteredController:
+    public static final java.lang.String TAG
     public final boolean isConstrained$1()
 androidx.work.impl.constraints.controllers.NetworkNotRoamingController:
+    public static final java.lang.String TAG
     public final boolean isConstrained$1()
 androidx.work.impl.constraints.controllers.NetworkUnmeteredController:
     public final boolean isConstrained$1()
 androidx.work.impl.constraints.controllers.StorageNotLowController:
     public final boolean isConstrained()
 androidx.work.impl.constraints.trackers.BatteryChargingTracker:
+    public static final java.lang.String TAG
     public final java.lang.Boolean getInitialState()
     public static boolean isBatteryChangedIntentCharging()
 androidx.work.impl.constraints.trackers.BatteryNotLowTracker:
+    public static final java.lang.String TAG
     public final java.lang.Boolean getInitialState()
+androidx.work.impl.constraints.trackers.BroadcastReceiverConstraintTracker:
+    public static final java.lang.String TAG
 androidx.work.impl.constraints.trackers.ConstraintTracker:
+    public static final java.lang.String TAG
     public abstract void addListener()
 androidx.work.impl.constraints.trackers.NetworkStateTracker:
+    public static final java.lang.String TAG
     public static androidx.work.impl.constraints.NetworkState getInitialState()
     public static boolean isActiveNetworkValidated()
     public static boolean isNetworkCallbackSupported()
 androidx.work.impl.constraints.trackers.StorageNotLowTracker:
+    public static final java.lang.String TAG
     public final java.lang.Boolean getInitialState()
 androidx.work.impl.constraints.trackers.Trackers:
     public static androidx.work.impl.constraints.trackers.BatteryChargingTracker getBatteryChargingTracker()
     public static androidx.work.impl.constraints.trackers.BatteryNotLowTracker getBatteryNotLowTracker()
     public static androidx.work.impl.constraints.trackers.NetworkStateTracker getNetworkStateTracker()
     public static androidx.work.impl.constraints.trackers.StorageNotLowTracker getStorageNotLowTracker()
+androidx.work.impl.diagnostics.DiagnosticsReceiver:
+    public static final java.lang.String TAG
 androidx.work.impl.foreground.ForegroundProcessor
 androidx.work.impl.foreground.SystemForegroundDispatcher$Callback
 androidx.work.impl.foreground.SystemForegroundDispatcher:
+    public static final java.lang.String TAG
     public android.content.Context mContext
     public static void handleCancelWork()
     public static void handleStartForeground()
@@ -48580,6 +48659,7 @@ androidx.work.impl.foreground.SystemForegroundDispatcher:
     public static void onStartCommand()
     public static void setCallback()
 androidx.work.impl.foreground.SystemForegroundService:
+    public static final java.lang.String TAG
     public static androidx.work.impl.foreground.SystemForegroundService sForegroundService
     public final void cancelNotification(int)
     public final void notify$1()
@@ -48678,34 +48758,50 @@ androidx.work.impl.utils.CancelWorkRunnable:
     public abstract void iterativelyCancelWorkAndDependents()
     public static void reschedulePendingWorkers(androidx.work.impl.WorkManagerImpl)
 androidx.work.impl.utils.EnqueueRunnable:
+    public static final java.lang.String TAG
     public static boolean addToDatabase()
     public static androidx.work.Operation getOperation()
     public static void scheduleWorkInBackground()
+androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver:
+    public static final java.lang.String TAG
 androidx.work.impl.utils.ForceStopRunnable:
+    public static final java.lang.String TAG
     public static boolean cleanUp()
     public static android.app.PendingIntent getPendingIntent(android.content.Context,int)
     public static boolean isForceStopped()
+    public final boolean multiProcessChecks()
     public static boolean shouldRescheduleWorkers()
     public static void sleep()
 androidx.work.impl.utils.IdGenerator:
     public static int nextAlarmManagerId()
     public final int nextId(java.lang.String)
     public final void update(java.lang.String,int)
+androidx.work.impl.utils.PackageManagerHelper:
+    public static final java.lang.String TAG
 androidx.work.impl.utils.PreferenceUtils:
     public static boolean getNeedsReschedule()
     public static void setNeedsReschedule()
+androidx.work.impl.utils.ProcessUtils:
+    public static final java.lang.String TAG
+androidx.work.impl.utils.StopWorkRunnable:
+    public static final java.lang.String TAG
+androidx.work.impl.utils.WakeLocks:
+    public static final java.lang.String TAG
 androidx.work.impl.utils.WorkForegroundRunnable:
+    public static final java.lang.String TAG
     public static com.google.common.util.concurrent.ListenableFuture getFuture()
 androidx.work.impl.utils.WorkForegroundUpdater:
     public static final java.lang.String TAG
     public final androidx.work.impl.utils.futures.SettableFuture setForegroundAsync(android.content.Context,java.util.UUID,androidx.work.ForegroundInfo)
 androidx.work.impl.utils.WorkProgressUpdater:
+    public static final java.lang.String TAG
     public final com.google.common.util.concurrent.ListenableFuture updateProgress()
 androidx.work.impl.utils.WorkTimer$1:
     public final synthetic androidx.work.impl.utils.WorkTimer this$0
 androidx.work.impl.utils.WorkTimer$TimeLimitExceededListener:
     public abstract void onTimeLimitExceeded()
 androidx.work.impl.utils.WorkTimer:
+    public static final java.lang.String TAG
     public final androidx.work.impl.utils.WorkTimer$1 mBackgroundThreadFactory
     public static void onDestroy()
 androidx.work.impl.utils.futures.AbstractFuture$1
@@ -48733,10 +48829,13 @@ androidx.work.impl.utils.taskexecutor.WorkManagerTaskExecutor:
     public final java.util.concurrent.Executor getMainThreadExecutor()
     public static void postToMainThread()
 androidx.work.impl.workers.ConstraintTrackingWorker:
+    public static final java.lang.String TAG
     public static androidx.work.impl.WorkDatabase getWorkDatabase()
     public final void setFutureFailed()
     public final void setFutureRetry()
     public static void setupAndRunConstraintTrackingWork()
+androidx.work.impl.workers.DiagnosticsWorker:
+    public static final java.lang.String TAG
 com.baseflow.permissionhandler.AppSettingsManager$OpenAppSettingsSuccessCallback
 com.baseflow.permissionhandler.AppSettingsManager:
     public static void openAppSettings()
@@ -49813,13 +49912,11 @@ com.pichillilorenzo.flutter_inappwebview_android.webview.in_app_webview.InAppWeb
     static void <clinit>()
 com.pichillilorenzo.flutter_inappwebview_android.webview.web_message.WebMessageListener:
     static void <clinit>()
-com.reaf.misson100.MainActivity:
-    public static boolean canScheduleExactAlarms()
-    public static void requestExactAlarmPermission()
 com.tekartik.sqflite.Database$1:
     public final synthetic com.tekartik.sqflite.Database this$0
 com.tekartik.sqflite.Database:
     public static void batch()
+    public static void close()
     public static void closeCursor()
     public static boolean doExecute()
     public static boolean doQueryCursorNext()

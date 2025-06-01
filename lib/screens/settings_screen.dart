@@ -634,17 +634,17 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         if (allPermissionsGranted) {
           statusColor = Colors.green;
           statusIcon = Icons.verified_user;
-          statusTitle = '🔔 알림 권한 완벽!';
+          statusTitle = AppLocalizations.of(context)!.notificationPermissionPerfect;
           statusSubtitle = '모든 알림 기능을 사용할 수 있습니다';
         } else if (hasNotifications) {
           statusColor = Colors.orange;
           statusIcon = Icons.warning;
-          statusTitle = '⚠️ 일부 권한 필요';
+          statusTitle = AppLocalizations.of(context)!.notificationPermissionNeeded;
           statusSubtitle = '정확한 시간 알림을 위해 추가 권한이 필요합니다';
         } else {
           statusColor = Colors.red;
           statusIcon = Icons.error;
-          statusTitle = '❌ 알림 권한 필요';
+          statusTitle = AppLocalizations.of(context)!.notificationPermissionNeeded;
           statusSubtitle = '알림을 받으려면 권한 허용이 필요합니다';
         }
         
@@ -712,22 +712,22 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                   
                   // 개별 권한 상태 표시
                   _buildPermissionStatusRow(
-                    '기본 알림 권한',
+                    AppLocalizations.of(context)!.basicNotificationPermission,
                     hasNotifications,
                     hasNotifications 
-                      ? '앱에서 알림을 받을 수 있습니다' 
-                      : 'Android 13+에서 필요한 기본 알림 권한입니다',
+                      ? AppLocalizations.of(context)!.notificationPermissionGranted 
+                      : AppLocalizations.of(context)!.notificationPermissionNeeded,
                     isRequired: true,
                   ),
                   
                   const SizedBox(height: 8),
                   
                   _buildPermissionStatusRow(
-                    '정확한 알람 권한',
+                    AppLocalizations.of(context)!.exactAlarmPermission,
                     hasExactAlarms,
                     hasExactAlarms 
-                      ? '정확한 시간에 알림을 받을 수 있습니다' 
-                      : 'Android 12+에서 정확한 시간 알림을 위해 필요합니다',
+                      ? AppLocalizations.of(context)!.notificationPermissionGranted 
+                      : AppLocalizations.of(context)!.notificationPermissionNeeded,
                     isRequired: false,
                   ),
                   
@@ -750,8 +750,8 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                         ),
                         label: Text(
                           !hasNotifications 
-                            ? '알림 권한 허용하기' 
-                            : '정확한 알람 권한 설정하기',
+                            ? AppLocalizations.of(context)!.allowNotificationPermission
+                            : AppLocalizations.of(context)!.setExactAlarmPermission,
                           style: const TextStyle(fontWeight: FontWeight.w600),
                         ),
                         style: ElevatedButton.styleFrom(
@@ -783,14 +783,14 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                           width: 1,
                         ),
                       ),
-                      child: const Row(
+                      child: Row(
                         children: [
-                          Icon(Icons.celebration, color: Colors.green, size: 20),
-                          SizedBox(width: 8),
+                          const Icon(Icons.celebration, color: Colors.green, size: 20),
+                          const SizedBox(width: 8),
                           Expanded(
                             child: Text(
-                              '축하합니다! 모든 알림 기능을 완벽하게 사용할 수 있습니다! 🎉',
-                              style: TextStyle(
+                              AppLocalizations.of(context)!.notificationPermissionGranted,
+                              style: const TextStyle(
                                 color: Colors.green,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 13,
@@ -863,9 +863,9 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                           color: Colors.red.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child: const Text(
-                          '필수',
-                          style: TextStyle(
+                        child: Text(
+                          "필수",
+                          style: const TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
                             color: Colors.red,
@@ -880,9 +880,9 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                           color: Colors.grey.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child: const Text(
-                          '권장',
-                          style: TextStyle(
+                        child: Text(
+                          "권장",
+                          style: const TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
                             color: Colors.grey,
@@ -912,7 +912,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        '활성화됨',
+                        "활성화됨",
                         style: TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w500,
@@ -976,20 +976,20 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
             },
           ),
           _buildTapSetting(
-            '테마 색상',
-            '앱의 기본 색상을 변경합니다 (현재: ${themeService.themeColor.name})',
+            "테마 색상",
+            "앱의 메인 색상을 변경합니다 (현재: ${themeService.themeColor.name})",
             Icons.palette,
             () => _showThemeColorDialog(themeService),
           ),
           _buildTapSetting(
-            '폰트 크기',
-            '텍스트 크기를 조절합니다 (현재: ${themeService.fontScale.name})',
+            "글자 크기",
+            "앱의 글자 크기를 조정합니다",
             Icons.text_fields,
             () => _showFontScaleDialog(themeService),
           ),
           _buildSwitchSetting(
-            '애니메이션 효과',
-            '앱 전체의 애니메이션 효과를 켜거나 끕니다',
+            "애니메이션",
+            "앱의 애니메이션 효과를 활성화/비활성화합니다",
             themeService.animationsEnabled,
             Icons.animation,
             (value) async {
@@ -1005,8 +1005,8 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
             },
           ),
           _buildSwitchSetting(
-            '고대비 모드',
-            '시각적 접근성을 위한 고대비 모드를 활성화합니다',
+            "고대비 모드",
+            "시각적 접근성을 위한 고대비 모드를 활성화합니다",
             themeService.highContrastMode,
             Icons.contrast,
             (value) async {
@@ -1037,8 +1037,8 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
   Widget _buildDataSettings() {
     return _buildSettingsSection(AppLocalizations.of(context).dataSettings, [
       _buildTapSetting(
-        '백업 관리',
-        '데이터 백업, 복원 및 자동 백업 설정을 관리합니다',
+        AppLocalizations.of(context).backupManagement,
+        AppLocalizations.of(context).backupManagementDesc,
         Icons.backup,
         () => Navigator.push(
           context,
@@ -1058,8 +1058,8 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         () => _performDataRestore(),
       ),
       _buildTapSetting(
-        '레벨 리셋',
-        '모든 진행 상황을 초기화하고 처음부터 시작합니다',
+        AppLocalizations.of(context).levelReset,
+        AppLocalizations.of(context).levelResetDesc,
         Icons.refresh,
         () => _showResetDataDialog(),
         isDestructive: true,
@@ -1082,20 +1082,20 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         () => _showDeveloperDialog(),
       ),
       _buildTapSetting(
-        '라이선스 정보',
-        '앱에서 사용된 오픈소스 라이브러리의 라이선스를 확인합니다',
+        AppLocalizations.of(context).licenseInfo,
+        AppLocalizations.of(context).licenseInfoDesc,
         Icons.description,
         () => _showLicensePage(),
       ),
       _buildTapSetting(
-        '개인정보 처리방침',
-        '개인정보 보호 및 처리 방침을 확인합니다',
+        AppLocalizations.of(context).privacyPolicy,
+        AppLocalizations.of(context).privacyPolicyDesc,
         Icons.privacy_tip,
         () => _openPrivacyPolicy(),
       ),
       _buildTapSetting(
-        '이용약관',
-        '앱 사용에 관한 약관을 확인합니다',
+        AppLocalizations.of(context).termsOfService,
+        AppLocalizations.of(context).termsOfServiceDesc,
         Icons.article,
         () => _openTermsOfService(),
       ),
@@ -1424,11 +1424,11 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Row(
+        title: Row(
           children: [
-            Icon(Icons.warning, color: Colors.red),
-            SizedBox(width: 8),
-            Text('레벨 리셋 확인'),
+            const Icon(Icons.warning, color: Colors.red),
+            const SizedBox(width: 8),
+            Text("레벨 리셋 확인"),
           ],
         ),
         content: const Column(
@@ -1652,7 +1652,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                                  color: const Color(AppColors.primaryColor).withValues(alpha: 0.1),
+                color: const Color(AppColors.primaryColor).withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Column(
@@ -1725,7 +1725,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('🌍 ${AppLocalizations.of(context)!.languageSettings}'),
+        title: Text('언어 설정'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

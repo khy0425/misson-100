@@ -3429,5 +3429,465 @@
   "selectedState": "Selected",
   "@selectedState": {
     "description": "Selected state"
+  },
+
+  "todayMission": "Today's Mission",
+  "@todayMission": {
+    "description": "Today's mission"
+  },
+
+  "todayTarget": "Today's Target:",
+  "@todayTarget": {
+    "description": "Today's target label"
+  },
+
+  "setFormat2": "Set {number}: {reps} reps",
+  "@setFormat2": {
+    "description": "Set format with number and reps",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      },
+      "reps": {
+        "type": "int"
+      }
+    }
+  },
+
+  "completedFormat": "Completed: {reps} reps ({sets} sets)",
+  "@completedFormat": {
+    "description": "Completed workout format",
+    "placeholders": {
+      "reps": {
+        "type": "int"
+      },
+      "sets": {
+        "type": "int"
+      }
+    }
+  },
+
+  "totalFormat": "Total {reps} reps ({sets} sets)",
+  "@totalFormat": {
+    "description": "Total workout format",
+    "placeholders": {
+      "reps": {
+        "type": "int"
+      },
+      "sets": {
+        "type": "int"
+      }
+    }
+  },
+
+  "todayWorkoutCompleted": "Today's workout completed! 🎉",
+  "@todayWorkoutCompleted": {
+    "description": "Today's workout completed message"
+  },
+
+  "justWait": "Wait! Are you really going to rest?",
+  "@justWait": {
+    "description": "Rest prevention message"
+  },
+
+  "perfectPushupForm": "Perfect Pushup Form",
+  "@perfectPushupForm": {
+    "description": "Perfect pushup form title"
+  },
+
+  "progressTracking": "Progress Tracking",
+  "@progressTracking": {
+    "description": "Progress tracking title"
+  },
+
+  "sleepyHatChad": "Sleepy Hat Chad",
+  "@sleepyHatChad": {
+    "description": "Sleepy hat chad name"
+  },
+
+  "journeyStartingChad": "Starting your journey Chad.\nStill a bit sleepy but will wake up soon!",
+  "@journeyStartingChad": {
+    "description": "Journey starting chad description"
+  },
+
+  "weekDayFormat": "Week {week} - Day {day}",
+  "@weekDayFormat": {
+    "description": "Week and day format display",
+    "placeholders": {
+      "week": {
+        "type": "int"
+      },
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+
+  "notificationPermissionPerfect": "Notification Permission Perfect!",
+  "@notificationPermissionPerfect": {
+    "description": "Perfect notification permission status"
+  },
+
+  "basicNotificationPermission": "Basic Notification Permission",
+  "@basicNotificationPermission": {
+    "description": "Basic notification permission"
+  },
+
+  "exactNotificationPermission": "Exact Notification Permission",
+  "@exactNotificationPermission": {
+    "description": "Exact notification permission"
+  },
+
+  "congratulationsMessage": "Congratulations! All permissions are perfectly set up! 🎉",
+  "@congratulationsMessage": {
+    "description": "Congratulations message for permissions"
+  },
+
+  "workoutDayNotification": "Workout Day Notification",
+  "@workoutDayNotification": {
+    "description": "Workout day notification"
+  },
+
+  "chadEvolutionCompleteNotification": "Chad Evolution Complete Notification",
+  "@chadEvolutionCompleteNotification": {
+    "description": "Chad evolution complete notification"
+  },
+
+  "chadEvolutionPreviewNotification": "Chad Evolution Preview Notification",
+  "@chadEvolutionPreviewNotification": {
+    "description": "Chad evolution preview notification"
+  },
+
+  "chadEvolutionQuarantineNotification": "Chad Evolution Quarantine Notification",
+  "@chadEvolutionQuarantineNotification": {
+    "description": "Chad evolution quarantine notification"
+  },
+
+  "themeColor": "Theme Color",
+  "@themeColor": {
+    "description": "Theme color setting"
+  },
+
+  "fontSize": "Font Size",
+  "@fontSize": {
+    "description": "Font size setting"
+  },
+
+  "animationEffect": "Animation Effect",
+  "@animationEffect": {
+    "description": "Animation effect setting"
+  },
+
+  "highContrastMode": "High Contrast Mode",
+  "@highContrastMode": {
+    "description": "High contrast mode setting"
+  },
+
+  "backupManagement": "Backup Management",
+  "@backupManagement": {
+    "description": "Backup management menu title"
+  },
+
+  "backupManagementDesc": "Manage data backup, restore and auto-backup settings",
+  "@backupManagementDesc": {
+    "description": "Backup management description"
+  },
+
+  "levelReset": "Level Reset",
+  "@levelReset": {
+    "description": "Level reset menu title"
+  },
+
+  "levelResetDesc": "Reset all progress and start from the beginning",
+  "@levelResetDesc": {
+    "description": "Level reset description"
+  },
+
+  "licenseInfo": "License Information",
+  "@licenseInfo": {
+    "description": "License information menu title"
+  },
+
+  "licenseInfoDesc": "Check licenses of open source libraries used in the app",
+  "@licenseInfoDesc": {
+    "description": "License information description"
+  },
+
+  "privacyPolicy": "Privacy Policy",
+  "@privacyPolicy": {
+    "description": "Privacy policy menu title"
+  },
+
+  "privacyPolicyDesc": "Check privacy protection and processing policy",
+  "@privacyPolicyDesc": {
+    "description": "Privacy policy description"
+  },
+
+  "termsOfService": "Terms of Service",
+  "@termsOfService": {
+    "description": "Terms of service menu title"
+  },
+
+  "termsOfServiceDesc": "Check terms of service for app usage",
+  "@termsOfServiceDesc": {
+    "description": "Terms of service description"
+  },
+
+  "notificationPermissionGranted": "Notification permission granted! 🎉",
+  "@notificationPermissionGranted": {
+    "description": "Notification permission granted message"
+  },
+
+  "notificationPermissionCheckingStatus": "Checking notification permission status",
+  "@notificationPermissionCheckingStatus": {
+    "description": "Checking permission status message"
+  },
+
+  "notificationPermissionPerfect": "🔔 Notification Permission Perfect!",
+  "@notificationPermissionPerfect": {
+    "description": "Perfect notification permission status"
+  },
+
+  "notificationPermissionNeeded": "❌ Notification Permission Required",
+  "@notificationPermissionNeeded": {
+    "description": "Notification permission needed status"
+  },
+
+  "basicNotificationPermission": "Basic Notification Permission",
+  "@basicNotificationPermission": {
+    "description": "Basic notification permission label"
+  },
+
+  "exactAlarmPermission": "Exact Alarm Permission",
+  "@exactAlarmPermission": {
+    "description": "Exact alarm permission label"
+  },
+
+  "allowNotificationPermission": "Allow Notification Permission",
+  "@allowNotificationPermission": {
+    "description": "Allow notification permission button"
+  },
+
+  "setExactAlarmPermission": "Set Exact Alarm Permission",
+  "@setExactAlarmPermission": {
+    "description": "Set exact alarm permission button"
+  },
+
+  "todayMissionTitle": "Today's Mission",
+  "@todayMissionTitle": {
+    "description": "Today's mission card title"
+  },
+
+  "todayGoalTitle": "Today's Goal:",
+  "@todayGoalTitle": {
+    "description": "Today's goal label"
+  },
+
+  "weekDayFormat": "Week {week} - Day {day}",
+  "@weekDayFormat": {
+    "description": "Week and day format display",
+    "placeholders": {
+      "week": {
+        "type": "int"
+      },
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+
+  "setRepsFormat": "Set: reps",
+  "@setRepsFormat": {
+    "description": "Set and reps format display"
+  },
+
+  "completedRepsFormat": "Completed: reps (sets)",
+  "@completedRepsFormat": {
+    "description": "Completed workout summary"
+  },
+
+  "totalRepsFormat": "Total: reps (sets)",
+  "@totalRepsFormat": {
+    "description": "Total workout summary"
+  },
+
+  "todayWorkoutCompleted": "Today's workout completed! 🎉",
+  "@todayWorkoutCompleted": {
+    "description": "Today's workout completion message"
+  },
+
+  "requiredLabel": "Required",
+  "@requiredLabel": {
+    "description": "Required permission label"
+  },
+
+  "recommendedLabel": "Recommended",
+  "@recommendedLabel": {
+    "description": "Recommended permission label"
+  },
+
+  "activatedStatus": "Activated",
+  "@activatedStatus": {
+    "description": "Permission activated status"
+  },
+
+  "themeColor": "Theme Color",
+  "@themeColor": {
+    "description": "Theme color setting title"
+  },
+
+  "themeColorDesc": "Change the app's primary color (Current: {color})",
+  "@themeColorDesc": {
+    "description": "Theme color setting description",
+    "placeholders": {
+      "color": {
+        "type": "String"
+      }
+    }
+  },
+
+  "fontScale": "Font Size",
+  "@fontScale": {
+    "description": "Font scale setting title"
+  },
+
+  "fontScaleDesc": "Adjust text size throughout the app",
+  "@fontScaleDesc": {
+    "description": "Font scale setting description"
+  },
+
+  "animationsEnabled": "Animation Effects",
+  "@animationsEnabled": {
+    "description": "Animation effects setting title"
+  },
+
+  "animationsEnabledDesc": "Enable or disable app-wide animation effects",
+  "@animationsEnabledDesc": {
+    "description": "Animation effects setting description"
+  },
+
+  "highContrastModeDesc": "Enable high contrast mode for visual accessibility",
+  "@highContrastModeDesc": {
+    "description": "High contrast mode setting description"
+  },
+
+  "levelResetConfirm": "Level Reset Confirmation",
+  "@levelResetConfirm": {
+    "description": "Level reset confirmation dialog title"
+  },
+
+  "urlNotAvailableTitle": "Page Not Available",
+  "@urlNotAvailableTitle": {
+    "description": "URL not available dialog title"
+  },
+
+  "urlNotAvailableMessage": "The {page} page is not available yet. It will be provided in a future update.",
+  "@urlNotAvailableMessage": {
+    "description": "URL not available dialog message",
+    "placeholders": {
+      "page": {
+        "type": "String"
+      }
+    }
+  },
+
+  "openInBrowser": "Open in Browser",
+  "@openInBrowser": {
+    "description": "Open in browser button text"
+  },
+
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+
+  "ok": "OK",
+  "@ok": {
+    "description": "OK button text"
+  },
+
+  "loadingText": "Loading...",
+  "@loadingText": {
+    "description": "Loading text display"
+  },
+  "refreshButton": "Refresh",
+  "@refreshButton": {
+    "description": "Refresh button"
+  },
+  "errorLoadingData": "Error occurred while loading data",
+  "@errorLoadingData": {
+    "description": "Data loading error message"
+  },
+  "retryButton": "Retry",
+  "@retryButton": {
+    "description": "Retry button"
+  },
+  "noUserProfile": "No user profile found",
+  "@noUserProfile": {
+    "description": "No user profile message"
+  },
+  "completeInitialTest": "Please complete the initial test to create your profile",
+  "@completeInitialTest": {
+    "description": "Initial test completion guide"
+  },
+  "sleepyChadEvolution": "Sleepy Chad",
+  "@sleepyChadEvolution": {
+    "description": "Sleepy Chad evolution state"
+  },
+  "journeyChadEvolution": "Chad Starting the Journey",
+  "@journeyChadEvolution": {
+    "description": "Chad starting journey evolution state"
+  },
+  "chadTitleSleepy": "Sleepy Chad",
+  "@chadTitleSleepy": {
+    "description": "Sleepy Chad title"
+  },
+  "chadTitleBasic": "Basic Chad",
+  "@chadTitleBasic": {
+    "description": "Basic Chad title"
+  },
+  "chadTitleCoffee": "Coffee Chad",
+  "@chadTitleCoffee": {
+    "description": "Coffee Chad title"
+  },
+  "chadTitleFront": "Front Chad",
+  "@chadTitleFront": {
+    "description": "Front Chad title"
+  },
+  "chadTitleCool": "Cool Chad",
+  "@chadTitleCool": {
+    "description": "Cool Chad title"
+  },
+  "chadTitleLaser": "Laser Chad",
+  "@chadTitleLaser": {
+    "description": "Laser Chad title"
+  },
+  "chadTitleDouble": "Double Chad",
+  "@chadTitleDouble": {
+    "description": "Double Chad title"
+  },
+  "firstWorkoutMessage": "Starting your first workout! Let's go!",
+  "@firstWorkoutMessage": {
+    "description": "First workout start message"
+  },
+  "weekCompletedMessage": "Week completed! Congratulations!",
+  "@weekCompletedMessage": {
+    "description": "Week completion message"
+  },
+  "programCompletedMessage": "Program completed! Amazing job!",
+  "@programCompletedMessage": {
+    "description": "Program completion message"
+  },
+  "streakStartMessage": "Workout streak started!",
+  "@streakStartMessage": {
+    "description": "Workout streak start message"
+  },
+  "streakContinueMessage": "Workout streak continues!",
+  "@streakContinueMessage": {
+    "description": "Workout streak continue message"
+  },
+  "streakBrokenMessage": "Workout streak broken",
+  "@streakBrokenMessage": {
+    "description": "Workout streak broken message"
   }
 }  

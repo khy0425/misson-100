@@ -2715,5 +2715,486 @@
   "shareButton": "공유",
   "@shareButton": {
     "description": "Share button"
+  },
+
+  "todayMission": "오늘의 미션",
+  "@todayMission": {
+    "description": "Today's mission"
+  },
+
+  "todayTarget": "오늘의 목표:",
+  "@todayTarget": {
+    "description": "Today's target label"
+  },
+
+  "setFormat2": "{number}세트: {reps}회",
+  "@setFormat2": {
+    "description": "Set format with number and reps",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      },
+      "reps": {
+        "type": "int"
+      }
+    }
+  },
+
+  "completedFormat": "완료됨: {reps}회 ({sets}세트)",
+  "@completedFormat": {
+    "description": "Completed workout format",
+    "placeholders": {
+      "reps": {
+        "type": "int"
+      },
+      "sets": {
+        "type": "int"
+      }
+    }
+  },
+
+  "totalFormat": "총 {reps}회 ({sets}세트)",
+  "@totalFormat": {
+    "description": "Total workout format",
+    "placeholders": {
+      "reps": {
+        "type": "int"
+      },
+      "sets": {
+        "type": "int"
+      }
+    }
+  },
+
+  "todayWorkoutCompleted": "오늘 운동 완료됨! 🎉",
+  "@todayWorkoutCompleted": {
+    "description": "Today's workout completed message"
+  },
+
+  "justWait": "잠깐! 너 진짜 쉴거야?",
+  "@justWait": {
+    "description": "Rest prevention message"
+  },
+
+  "perfectPushupForm": "완벽한 푸시업 자세",
+  "@perfectPushupForm": {
+    "description": "Perfect pushup form title"
+  },
+
+  "progressTracking": "진행률 추적",
+  "@progressTracking": {
+    "description": "Progress tracking title"
+  },
+
+  "sleepyHatChad": "수면모자 Chad",
+  "@sleepyHatChad": {
+    "description": "Sleepy hat chad name"
+  },
+
+  "journeyStartingChad": "여정을 시작하는 Chad입니다.\n아직 잠이 덜 깬 상태지만 곧 깨어날 것입니다!",
+  "@journeyStartingChad": {
+    "description": "Journey starting chad description"
+  },
+
+  "weekDayFormat": "{week}주차 - {day}일차",
+  "@weekDayFormat": {
+    "description": "Week and day format display",
+    "placeholders": {
+      "week": {
+        "type": "int"
+      },
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+
+  "notificationPermissionPerfect": "알림 권한 완벽!",
+  "@notificationPermissionPerfect": {
+    "description": "Perfect notification permission status"
+  },
+
+  "basicNotificationPermission": "기본 알림 권한",
+  "@basicNotificationPermission": {
+    "description": "Basic notification permission"
+  },
+
+  "exactNotificationPermission": "정확한 알림 권한",
+  "@exactNotificationPermission": {
+    "description": "Exact notification permission"
+  },
+
+  "congratulationsMessage": "축하합니다! 모든 권한이 완벽하게 설정되었습니다! 🎉",
+  "@congratulationsMessage": {
+    "description": "Congratulations message for permissions"
+  },
+
+  "workoutDayNotification": "운동일 전용 알림",
+  "@workoutDayNotification": {
+    "description": "Workout day notification"
+  },
+
+  "chadEvolutionCompleteNotification": "Chad 진화 완료 알림",
+  "@chadEvolutionCompleteNotification": {
+    "description": "Chad evolution complete notification"
+  },
+
+  "chadEvolutionPreviewNotification": "Chad 진화 예고 알림",
+  "@chadEvolutionPreviewNotification": {
+    "description": "Chad evolution preview notification"
+  },
+
+  "chadEvolutionQuarantineNotification": "Chad 진화 격리 알림",
+  "@chadEvolutionQuarantineNotification": {
+    "description": "Chad evolution quarantine notification"
+  },
+
+  "themeColor": "테마 색상",
+  "@themeColor": {
+    "description": "Theme color setting"
+  },
+
+  "fontSize": "폰트 크기",
+  "@fontSize": {
+    "description": "Font size setting"
+  },
+
+  "animationEffect": "애니메이션 효과",
+  "@animationEffect": {
+    "description": "Animation effect setting"
+  },
+
+  "highContrastMode": "고대비 모드",
+  "@highContrastMode": {
+    "description": "High contrast mode setting"
+  },
+
+  "backupManagement": "백업 관리",
+  "@backupManagement": {
+    "description": "Backup management title"
+  },
+
+  "backupManagementDesc": "데이터 백업, 복원 및 자동 백업 설정을 관리합니다.",
+  "@backupManagementDesc": {
+    "description": "Backup management description"
+  },
+
+  "levelReset": "레벨 리셋",
+  "@levelReset": {
+    "description": "Level reset title"
+  },
+
+  "levelResetDesc": "모든 진행 상황을 초기화하고 처음부터 시작합니다.",
+  "@levelResetDesc": {
+    "description": "Level reset description"
+  },
+
+  "licenseInfo": "라이선스 정보",
+  "@licenseInfo": {
+    "description": "License information title"
+  },
+
+  "licenseInfoDesc": "앱에서 사용된 라이선스 정보..",
+  "@licenseInfoDesc": {
+    "description": "License information description"
+  },
+
+  "privacyPolicy": "개인정보 처리방침",
+  "@privacyPolicy": {
+    "description": "Privacy policy title"
+  },
+
+  "privacyPolicyDesc": "개인정보 보호 및 처리 방침을 확인",
+  "@privacyPolicyDesc": {
+    "description": "Privacy policy description"
+  },
+
+  "termsOfServiceDesc": "앱 사용시 약관 확인",
+  "@termsOfServiceDesc": {
+    "description": "Terms of service description"
+  },
+
+  "todayMissionTitle": "오늘의 미션",
+  "@todayMissionTitle": {
+    "description": "Today's mission card title"
+  },
+
+  "todayGoalTitle": "오늘의 목표:",
+  "@todayGoalTitle": {
+    "description": "Today's goal label"
+  },
+
+  "setRepsFormat": "세트 × 횟수",
+  "@setRepsFormat": {
+    "description": "세트 수 및 횟수 표시 형식"
+  },
+
+  "completedRepsFormat": "완료: 횟수",
+  "@completedRepsFormat": {
+    "description": "완료된 횟수 형식"
+  },
+
+  "totalRepsFormat": "총: 횟수",
+  "@totalRepsFormat": {
+    "description": "총 횟수 형식"
+  },
+
+  "termsOfService": "이용약관",
+  "@termsOfService": {
+    "description": "Terms of service menu title"
+  },
+
+  "notificationPermissionGranted": "알림 권한이 허용되었습니다! 🎉",
+  "@notificationPermissionGranted": {
+    "description": "Notification permission granted message"
+  },
+
+  "notificationPermissionCheckingStatus": "알림 권한 상태를 확인하고 있습니다",
+  "@notificationPermissionCheckingStatus": {
+    "description": "Checking permission status message"
+  },
+
+  "notificationPermissionNeeded": "❌ 알림 권한 필요",
+  "@notificationPermissionNeeded": {
+    "description": "Notification permission needed status"
+  },
+
+  "exactAlarmPermission": "정확한 알람 권한",
+  "@exactAlarmPermission": {
+    "description": "Exact alarm permission label"
+  },
+
+  "allowNotificationPermission": "알림 권한 허용하기",
+  "@allowNotificationPermission": {
+    "description": "Allow notification permission button"
+  },
+
+  "setExactAlarmPermission": "정확한 알람 권한 설정하기",
+  "@setExactAlarmPermission": {
+    "description": "Set exact alarm permission button"
+  },
+
+  "requiredLabel": "필수",
+  "@requiredLabel": {
+    "description": "Required permission label"
+  },
+
+  "recommendedLabel": "권장",
+  "@recommendedLabel": {
+    "description": "Recommended permission label"
+  },
+
+  "activatedStatus": "활성화됨",
+  "@activatedStatus": {
+    "description": "Permission activated status"
+  },
+
+  "themeColorDesc": "앱의 메인 색상을 변경합니다 (현재: {color})",
+  "@themeColorDesc": {
+    "description": "Theme color setting description",
+    "placeholders": {
+      "color": {
+        "type": "String"
+      }
+    }
+  },
+
+  "fontScale": "글자 크기",
+  "@fontScale": {
+    "description": "Font scale setting title"
+  },
+
+  "fontScaleDesc": "앱 전체의 텍스트 크기를 조정합니다",
+  "@fontScaleDesc": {
+    "description": "Font scale setting description"
+  },
+
+  "animationsEnabled": "애니메이션 효과",
+  "@animationsEnabled": {
+    "description": "Animation effects setting title"
+  },
+
+  "animationsEnabledDesc": "앱 전체의 애니메이션 효과를 켜거나 끕니다",
+  "@animationsEnabledDesc": {
+    "description": "Animation effects setting description"
+  },
+
+  "highContrastModeDesc": "시각적 접근성을 위한 고대비 모드를 활성화합니다",
+  "@highContrastModeDesc": {
+    "description": "High contrast mode setting description"
+  },
+
+  "levelResetConfirm": "레벨 리셋 확인",
+  "@levelResetConfirm": {
+    "description": "Level reset confirmation dialog title"
+  },
+
+  "urlNotAvailableTitle": "페이지 준비 중",
+  "@urlNotAvailableTitle": {
+    "description": "URL not available dialog title"
+  },
+
+  "urlNotAvailableMessage": "{page} 페이지는 아직 준비되지 않았습니다. 향후 업데이트에서 제공될 예정입니다.",
+  "@urlNotAvailableMessage": {
+    "description": "URL not available dialog message",
+    "placeholders": {
+      "page": {
+        "type": "String"
+      }
+    }
+  },
+
+  "openInBrowser": "브라우저에서 열기",
+  "@openInBrowser": {
+    "description": "Open in browser button text"
+  },
+
+  "cancel": "취소",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+
+  "ok": "확인",
+  "@ok": {
+    "description": "OK button text"
+  },
+
+  "loadingText": "로딩 중...",
+  "@loadingText": {
+    "description": "로딩 중 표시 텍스트"
+  },
+  "refreshButton": "새로고침",
+  "@refreshButton": {
+    "description": "새로고침 버튼"
+  },
+  "errorLoadingData": "데이터를 불러오는 중 오류가 발생했습니다",
+  "@errorLoadingData": {
+    "description": "데이터 로딩 오류 메시지"
+  },
+  "retryButton": "다시 시도",
+  "@retryButton": {
+    "description": "다시 시도 버튼"
+  },
+  "noUserProfile": "사용자 프로필이 없습니다",
+  "@noUserProfile": {
+    "description": "사용자 프로필 없음 메시지"
+  },
+  "completeInitialTest": "초기 테스트를 완료하여 프로필을 생성해주세요",
+  "@completeInitialTest": {
+    "description": "초기 테스트 완료 안내"
+  },
+  "todayMissionTitle": "오늘의 미션",
+  "@todayMissionTitle": {
+    "description": "오늘의 미션 제목"
+  },
+  "todayGoalTitle": "오늘의 목표",
+  "@todayGoalTitle": {
+    "description": "오늘의 목표 제목"
+  },
+  "weekDayFormat": "{week}주차 {day}일차",
+  "@weekDayFormat": {
+    "description": "주차/일차 표시 형식",
+    "placeholders": {
+      "week": {
+        "type": "int"
+      },
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "setRepsFormat": "{setCount}세트 × {repsCount}회",
+  "@setRepsFormat": {
+    "description": "세트 수 및 횟수 표시 형식",
+    "placeholders": {
+      "setCount": {
+        "type": "int"
+      },
+      "repsCount": {
+        "type": "int"
+      }
+    }
+  },
+  "completedRepsFormat": "완료: {completed}회",
+  "@completedRepsFormat": {
+    "description": "완료된 횟수 형식",
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      }
+    }
+  },
+  "totalRepsFormat": "총 {total}회",
+  "@totalRepsFormat": {
+    "description": "총 횟수 형식",
+    "placeholders": {
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "sleepyChadEvolution": "수면모자 Chad",
+  "@sleepyChadEvolution": {
+    "description": "수면모자 차드 진화 상태"
+  },
+  "journeyChadEvolution": "여정을 시작하는 Chad",
+  "@journeyChadEvolution": {
+    "description": "여정을 시작하는 차드 진화 상태"
+  },
+  "chadTitleSleepy": "수면모자 Chad",
+  "@chadTitleSleepy": {
+    "description": "수면모자 차드 타이틀"
+  },
+  "chadTitleBasic": "기본 Chad",
+  "@chadTitleBasic": {
+    "description": "기본 차드 타이틀"
+  },
+  "chadTitleCoffee": "커피 Chad",
+  "@chadTitleCoffee": {
+    "description": "커피 차드 타이틀"
+  },
+  "chadTitleFront": "정면 Chad",
+  "@chadTitleFront": {
+    "description": "정면 차드 타이틀"
+  },
+  "chadTitleCool": "썬글 Chad",
+  "@chadTitleCool": {
+    "description": "썬글 차드 타이틀"
+  },
+  "chadTitleLaser": "눈빨 Chad",
+  "@chadTitleLaser": {
+    "description": "눈빨 차드 타이틀"
+  },
+  "chadTitleDouble": "더블 Chad",
+  "@chadTitleDouble": {
+    "description": "더블 차드 타이틀"
+  },
+  "firstWorkoutMessage": "첫 번째 운동을 시작합니다! 화이팅!",
+  "@firstWorkoutMessage": {
+    "description": "첫 운동 시작 메시지"
+  },
+  "weekCompletedMessage": "주차 완료! 축하드립니다!",
+  "@weekCompletedMessage": {
+    "description": "주차 완료 메시지"
+  },
+  "programCompletedMessage": "프로그램 완료! 정말 대단합니다!",
+  "@programCompletedMessage": {
+    "description": "프로그램 완료 메시지"
+  },
+  "streakStartMessage": "연속 운동 시작!",
+  "@streakStartMessage": {
+    "description": "연속 운동 시작 메시지"
+  },
+  "streakContinueMessage": "연속 운동 계속 중!",
+  "@streakContinueMessage": {
+    "description": "연속 운동 지속 메시지"
+  },
+  "streakBrokenMessage": "연속 운동이 끊어졌습니다",
+  "@streakBrokenMessage": {
+    "description": "연속 운동 중단 메시지"
+  },
+  "setRepsDisplayFormat": "세트 × 횟수",
+  "@setRepsDisplayFormat": {
+    "description": "세트 수 및 횟수 표시 형식"
   }
 }

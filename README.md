@@ -348,3 +348,64 @@ CREATE TABLE achievement (
 **"Push Your Limits, Embrace Your Inner Chad"** 💪
 
 *Every rep counts, every Chad matters. 6주 후 거울 속에 진정한 차드가 있을 것입니다.*
+
+## 🛠️ 개발 환경
+- Flutter 3.24.3
+- Dart 3.5.3
+- Android API Level 21+ (Android 5.0+)
+
+## 📱 빌드 방법
+
+### 개발 빌드
+```bash
+flutter run
+```
+
+### 🚀 릴리즈 빌드 (Google Play 업로드용)
+
+1. **키스토어 생성 (최초 1회만)**
+   ```cmd
+   cd android
+   create_keystore.bat
+   ```
+   - 키스토어 비밀번호, 키 별칭, 개인 정보를 입력합니다
+   - 생성된 `app-release.jks` 파일을 안전하게 보관하세요
+
+2. **키 설정 파일 수정**
+   ```
+   android/key.properties 파일을 편집하여 실제 비밀번호를 입력:
+   storePassword=실제_키스토어_비밀번호
+   keyPassword=실제_키_비밀번호
+   keyAlias=mission100
+   storeFile=app-release.jks
+   ```
+
+3. **릴리즈 빌드 실행**
+   ```cmd
+   build_release.bat
+   ```
+   
+   또는 수동으로:
+   ```bash
+   flutter clean
+   flutter pub get
+   flutter build appbundle --release  # Google Play용 AAB
+   flutter build apk --release        # 직접 설치용 APK
+   ```
+
+4. **생성된 파일 위치**
+   - **AAB (Google Play 업로드용)**: `build/app/outputs/bundle/release/app-release.aab`
+   - **APK (직접 설치용)**: `build/app/outputs/flutter-apk/app-release.apk`
+
+### 📋 릴리즈 체크리스트
+- [ ] 키스토어 파일 생성 완료
+- [ ] key.properties 설정 완료
+- [ ] 버전 번호 업데이트 (pubspec.yaml)
+- [ ] 코드 분석 통과 (`flutter analyze`)
+- [ ] AAB 파일로 빌드
+- [ ] Google Play Console에 업로드
+
+### ⚠️ 중요 참고사항
+- **키스토어 파일 백업**: `android/app-release.jks` 파일을 안전한 곳에 백업하세요
+- **비밀번호 보안**: `android/key.properties` 파일을 Git에 커밋하지 마세요
+- **AAB 권장**: Google Play Store에는 APK 대신 AAB 파일을 업로드하세요

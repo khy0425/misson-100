@@ -26,6 +26,16 @@ migrate_working_dir/
 # Flutter/Dart/Pub related
 **/doc/api/
 **/ios/Flutter/.last_build_id
+**/ios/Flutter/flutter_assets/
+**/ios/Flutter/Flutter.framework/
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/ephemeral/
+**/ios/Flutter/app.flx
+**/ios/Flutter/app.zip
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/ServiceDefinitions.json
+**/ios/Runner/GeneratedPluginRegistrant.*
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
@@ -43,6 +53,19 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# 🔐 릴리즈 서명 관련 보안 파일들 (절대 커밋하면 안됨!)
+android/key.properties
+android/app-release.jks
+android/*.jks
+android/*.keystore
+**/android/key.properties
+**/android/*.jks
+**/android/*.keystore
+
+# iOS 서명 관련
+ios/Runner.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings
+ios/Flutter/Flutter.podspec
 
 # Added by Claude Task Master
 # Logs

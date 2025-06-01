@@ -572,82 +572,82 @@ abstract class AppLocalizations {
   /// **'⚡ ALPHA SETTINGS LOCKED! 완벽한 설정으로 무장 완료! ⚡'**
   String get successSettingsSaved;
 
-  /// 첫 운동 특별 메시지
+  /// 첫 운동 시작 메시지
   ///
   /// In ko, this message translates to:
-  /// **'🔥 ALPHA JOURNEY 시작! 오늘부터 LEGENDARY TRANSFORMATION이 시작된다! 🔥'**
+  /// **'첫 번째 운동을 시작합니다! 화이팅!'**
   String get firstWorkoutMessage;
 
-  /// 주간 완료 특별 메시지
+  /// 주차 완료 메시지
   ///
   /// In ko, this message translates to:
-  /// **'👑 한 주 COMPLETE DOMINATION! CHAD POWER LEVEL 대폭 상승, 만삣삐! 👑'**
+  /// **'주차 완료! 축하드립니다!'**
   String get weekCompletedMessage;
 
-  /// 프로그램 완료 특별 메시지
+  /// 프로그램 완료 메시지
   ///
   /// In ko, this message translates to:
-  /// **'🚀 축하한다! 진정한 ULTRA GIGA CHAD EMPEROR 탄생! 우주가 경배한다! 🚀'**
+  /// **'프로그램 완료! 정말 대단합니다!'**
   String get programCompletedMessage;
 
-  /// 스트릭 시작 메시지
+  /// 연속 운동 시작 메시지
   ///
   /// In ko, this message translates to:
-  /// **'⚡ CHAD STREAK ACTIVATED! 연속 정복 모드 돌입이다, 만삣삐! ⚡'**
+  /// **'연속 운동 시작!'**
   String get streakStartMessage;
 
-  /// 스트릭 지속 메시지
+  /// 연속 운동 지속 메시지
   ///
   /// In ko, this message translates to:
-  /// **'🔱 STREAK DOMINATION CONTINUES! 멈출 수 없는 ALPHA FORCE! 🔱'**
+  /// **'연속 운동 계속 중!'**
   String get streakContinueMessage;
 
-  /// 스트릭 중단 메시지
+  /// 연속 운동 중단 메시지
   ///
   /// In ko, this message translates to:
-  /// **'🦁 스트릭이 끊어졌다고? 상관없다! 진짜 EMPEROR는 더 강해져서 돌아온다! 🦁'**
+  /// **'연속 운동이 끊어졌습니다'**
   String get streakBrokenMessage;
 
-  /// 수면모자차드 타이틀
+  /// 수면모자 차드 타이틀
   ///
   /// In ko, this message translates to:
-  /// **'Sleepy Chad'**
+  /// **'수면모자 Chad'**
   String get chadTitleSleepy;
 
-  /// 기본차드 타이틀
+  /// 기본 차드 타이틀
   ///
   /// In ko, this message translates to:
-  /// **'Basic Chad'**
+  /// **'기본 Chad'**
   String get chadTitleBasic;
 
-  /// 커피차드 타이틀
+  /// 커피 차드 타이틀
   ///
   /// In ko, this message translates to:
-  /// **'Coffee Chad'**
+  /// **'커피 Chad'**
   String get chadTitleCoffee;
 
-  /// 정면차드 타이틀
+  /// 정면 차드 타이틀
   ///
   /// In ko, this message translates to:
-  /// **'Front Chad'**
+  /// **'정면 Chad'**
   String get chadTitleFront;
 
-  /// 썬글차드 타이틀
+  /// 썬글 차드 타이틀
   ///
   /// In ko, this message translates to:
-  /// **'Cool Chad'**
+  /// **'썬글 Chad'**
   String get chadTitleCool;
 
-  /// 눈빨차드 타이틀
+  /// 눈빨 차드 타이틀
   ///
   /// In ko, this message translates to:
-  /// **'Laser Chad'**
+  /// **'눈빨 Chad'**
   String get chadTitleLaser;
 
-  /// 더블차드 타이틀
+  /// 더블 차드 타이틀
   ///
   /// In ko, this message translates to:
-  /// **'Double Chad'**
+  /// **'더블 Chad'**
   String get chadTitleDouble;
 
   /// 초급 차드 이름
@@ -2360,10 +2360,10 @@ abstract class AppLocalizations {
   /// **'#차드'**
   String get chadHashtag;
 
-  /// 영상 제목 1
+  /// Perfect pushup form title
   ///
   /// In ko, this message translates to:
-  /// **'완벽한 팔굽혀펴기 자세 💪'**
+  /// **'완벽한 푸시업 자세'**
   String get perfectPushupForm;
 
   /// 영상 제목 2
@@ -2432,7 +2432,7 @@ abstract class AppLocalizations {
   /// **'꾸준한 운동으로 근력 향상'**
   String get consistentStrengthImprovement;
 
-  /// 취소 버튼 텍스트
+  /// Cancel button text
   ///
   /// In ko, this message translates to:
   /// **'취소'**
@@ -2588,28 +2588,28 @@ abstract class AppLocalizations {
   /// **'휴식 후 자동으로 다음 세트 시작'**
   String get autoStartNextSetDesc;
 
-  /// 개인정보 처리방침
+  /// Privacy policy title
   ///
   /// In ko, this message translates to:
   /// **'개인정보 처리방침'**
   String get privacyPolicy;
 
-  /// 개인정보 처리방침 설명
+  /// Privacy policy description
   ///
   /// In ko, this message translates to:
-  /// **'개인정보 처리방침 보기'**
+  /// **'개인정보 보호 및 처리 방침을 확인'**
   String get privacyPolicyDesc;
 
-  /// 서비스 이용약관
+  /// Terms of service menu title
   ///
   /// In ko, this message translates to:
-  /// **'서비스 이용약관'**
+  /// **'이용약관'**
   String get termsOfService;
 
-  /// 서비스 이용약관 설명
+  /// Terms of service description
   ///
   /// In ko, this message translates to:
-  /// **'서비스 이용약관 보기'**
+  /// **'앱 사용시 약관 확인'**
   String get termsOfServiceDesc;
 
   /// 오픈소스 라이선스
@@ -2774,7 +2774,7 @@ abstract class AppLocalizations {
   /// **'💪 난이도 설정'**
   String get difficultySettingsTitle;
 
-  /// 알림 권한 허용 메시지
+  /// Notification permission granted message
   ///
   /// In ko, this message translates to:
   /// **'알림 권한이 허용되었습니다! 🎉'**
@@ -4471,6 +4471,378 @@ abstract class AppLocalizations {
   /// In ko, this message translates to:
   /// **'공유'**
   String get shareButton;
+
+  /// Today's mission
+  ///
+  /// In ko, this message translates to:
+  /// **'오늘의 미션'**
+  String get todayMission;
+
+  /// Today's target label
+  ///
+  /// In ko, this message translates to:
+  /// **'오늘의 목표:'**
+  String get todayTarget;
+
+  /// Set format with number and reps
+  ///
+  /// In ko, this message translates to:
+  /// **'{number}세트: {reps}회'**
+  String setFormat2(int number, int reps);
+
+  /// Completed workout format
+  ///
+  /// In ko, this message translates to:
+  /// **'완료됨: {reps}회 ({sets}세트)'**
+  String completedFormat(int reps, int sets);
+
+  /// Total workout format
+  ///
+  /// In ko, this message translates to:
+  /// **'총 {reps}회 ({sets}세트)'**
+  String totalFormat(int reps, int sets);
+
+  /// Today's workout completed message
+  ///
+  /// In ko, this message translates to:
+  /// **'오늘 운동 완료됨! 🎉'**
+  String get todayWorkoutCompleted;
+
+  /// Rest prevention message
+  ///
+  /// In ko, this message translates to:
+  /// **'잠깐! 너 진짜 쉴거야?'**
+  String get justWait;
+
+  /// Progress tracking title
+  ///
+  /// In ko, this message translates to:
+  /// **'진행률 추적'**
+  String get progressTracking;
+
+  /// Sleepy hat chad name
+  ///
+  /// In ko, this message translates to:
+  /// **'수면모자 Chad'**
+  String get sleepyHatChad;
+
+  /// Journey starting chad description
+  ///
+  /// In ko, this message translates to:
+  /// **'여정을 시작하는 Chad입니다.\n아직 잠이 덜 깬 상태지만 곧 깨어날 것입니다!'**
+  String get journeyStartingChad;
+
+  /// 주차/일차 표시 형식
+  ///
+  /// In ko, this message translates to:
+  /// **'{week}주차 {day}일차'**
+  String weekDayFormat(int week, int day);
+
+  /// Perfect notification permission status
+  ///
+  /// In ko, this message translates to:
+  /// **'알림 권한 완벽!'**
+  String get notificationPermissionPerfect;
+
+  /// Basic notification permission
+  ///
+  /// In ko, this message translates to:
+  /// **'기본 알림 권한'**
+  String get basicNotificationPermission;
+
+  /// Exact notification permission
+  ///
+  /// In ko, this message translates to:
+  /// **'정확한 알림 권한'**
+  String get exactNotificationPermission;
+
+  /// Congratulations message for permissions
+  ///
+  /// In ko, this message translates to:
+  /// **'축하합니다! 모든 권한이 완벽하게 설정되었습니다! 🎉'**
+  String get congratulationsMessage;
+
+  /// Workout day notification
+  ///
+  /// In ko, this message translates to:
+  /// **'운동일 전용 알림'**
+  String get workoutDayNotification;
+
+  /// Chad evolution complete notification
+  ///
+  /// In ko, this message translates to:
+  /// **'Chad 진화 완료 알림'**
+  String get chadEvolutionCompleteNotification;
+
+  /// Chad evolution preview notification
+  ///
+  /// In ko, this message translates to:
+  /// **'Chad 진화 예고 알림'**
+  String get chadEvolutionPreviewNotification;
+
+  /// Chad evolution quarantine notification
+  ///
+  /// In ko, this message translates to:
+  /// **'Chad 진화 격리 알림'**
+  String get chadEvolutionQuarantineNotification;
+
+  /// Theme color setting
+  ///
+  /// In ko, this message translates to:
+  /// **'테마 색상'**
+  String get themeColor;
+
+  /// Font size setting
+  ///
+  /// In ko, this message translates to:
+  /// **'폰트 크기'**
+  String get fontSize;
+
+  /// Animation effect setting
+  ///
+  /// In ko, this message translates to:
+  /// **'애니메이션 효과'**
+  String get animationEffect;
+
+  /// High contrast mode setting
+  ///
+  /// In ko, this message translates to:
+  /// **'고대비 모드'**
+  String get highContrastMode;
+
+  /// Backup management title
+  ///
+  /// In ko, this message translates to:
+  /// **'백업 관리'**
+  String get backupManagement;
+
+  /// Backup management description
+  ///
+  /// In ko, this message translates to:
+  /// **'데이터 백업, 복원 및 자동 백업 설정을 관리합니다.'**
+  String get backupManagementDesc;
+
+  /// Level reset title
+  ///
+  /// In ko, this message translates to:
+  /// **'레벨 리셋'**
+  String get levelReset;
+
+  /// Level reset description
+  ///
+  /// In ko, this message translates to:
+  /// **'모든 진행 상황을 초기화하고 처음부터 시작합니다.'**
+  String get levelResetDesc;
+
+  /// License information title
+  ///
+  /// In ko, this message translates to:
+  /// **'라이선스 정보'**
+  String get licenseInfo;
+
+  /// License information description
+  ///
+  /// In ko, this message translates to:
+  /// **'앱에서 사용된 라이선스 정보..'**
+  String get licenseInfoDesc;
+
+  /// 오늘의 미션 제목
+  ///
+  /// In ko, this message translates to:
+  /// **'오늘의 미션'**
+  String get todayMissionTitle;
+
+  /// 오늘의 목표 제목
+  ///
+  /// In ko, this message translates to:
+  /// **'오늘의 목표'**
+  String get todayGoalTitle;
+
+  /// 세트 수 및 횟수 표시 형식
+  ///
+  /// In ko, this message translates to:
+  /// **'{setCount}세트 × {repsCount}회'**
+  String setRepsFormat(int setCount, int repsCount);
+
+  /// 완료된 횟수 형식
+  ///
+  /// In ko, this message translates to:
+  /// **'완료: {completed}회'**
+  String completedRepsFormat(int completed);
+
+  /// 총 횟수 형식
+  ///
+  /// In ko, this message translates to:
+  /// **'총 {total}회'**
+  String totalRepsFormat(int total);
+
+  /// Checking permission status message
+  ///
+  /// In ko, this message translates to:
+  /// **'알림 권한 상태를 확인하고 있습니다'**
+  String get notificationPermissionCheckingStatus;
+
+  /// Notification permission needed status
+  ///
+  /// In ko, this message translates to:
+  /// **'❌ 알림 권한 필요'**
+  String get notificationPermissionNeeded;
+
+  /// Exact alarm permission label
+  ///
+  /// In ko, this message translates to:
+  /// **'정확한 알람 권한'**
+  String get exactAlarmPermission;
+
+  /// Allow notification permission button
+  ///
+  /// In ko, this message translates to:
+  /// **'알림 권한 허용하기'**
+  String get allowNotificationPermission;
+
+  /// Set exact alarm permission button
+  ///
+  /// In ko, this message translates to:
+  /// **'정확한 알람 권한 설정하기'**
+  String get setExactAlarmPermission;
+
+  /// Required permission label
+  ///
+  /// In ko, this message translates to:
+  /// **'필수'**
+  String get requiredLabel;
+
+  /// Recommended permission label
+  ///
+  /// In ko, this message translates to:
+  /// **'권장'**
+  String get recommendedLabel;
+
+  /// Permission activated status
+  ///
+  /// In ko, this message translates to:
+  /// **'활성화됨'**
+  String get activatedStatus;
+
+  /// Theme color setting description
+  ///
+  /// In ko, this message translates to:
+  /// **'앱의 메인 색상을 변경합니다 (현재: {color})'**
+  String themeColorDesc(String color);
+
+  /// Font scale setting title
+  ///
+  /// In ko, this message translates to:
+  /// **'글자 크기'**
+  String get fontScale;
+
+  /// Font scale setting description
+  ///
+  /// In ko, this message translates to:
+  /// **'앱 전체의 텍스트 크기를 조정합니다'**
+  String get fontScaleDesc;
+
+  /// Animation effects setting title
+  ///
+  /// In ko, this message translates to:
+  /// **'애니메이션 효과'**
+  String get animationsEnabled;
+
+  /// Animation effects setting description
+  ///
+  /// In ko, this message translates to:
+  /// **'앱 전체의 애니메이션 효과를 켜거나 끕니다'**
+  String get animationsEnabledDesc;
+
+  /// High contrast mode setting description
+  ///
+  /// In ko, this message translates to:
+  /// **'시각적 접근성을 위한 고대비 모드를 활성화합니다'**
+  String get highContrastModeDesc;
+
+  /// Level reset confirmation dialog title
+  ///
+  /// In ko, this message translates to:
+  /// **'레벨 리셋 확인'**
+  String get levelResetConfirm;
+
+  /// URL not available dialog title
+  ///
+  /// In ko, this message translates to:
+  /// **'페이지 준비 중'**
+  String get urlNotAvailableTitle;
+
+  /// URL not available dialog message
+  ///
+  /// In ko, this message translates to:
+  /// **'{page} 페이지는 아직 준비되지 않았습니다. 향후 업데이트에서 제공될 예정입니다.'**
+  String urlNotAvailableMessage(String page);
+
+  /// Open in browser button text
+  ///
+  /// In ko, this message translates to:
+  /// **'브라우저에서 열기'**
+  String get openInBrowser;
+
+  /// OK button text
+  ///
+  /// In ko, this message translates to:
+  /// **'확인'**
+  String get ok;
+
+  /// 로딩 중 표시 텍스트
+  ///
+  /// In ko, this message translates to:
+  /// **'로딩 중...'**
+  String get loadingText;
+
+  /// 새로고침 버튼
+  ///
+  /// In ko, this message translates to:
+  /// **'새로고침'**
+  String get refreshButton;
+
+  /// 데이터 로딩 오류 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'데이터를 불러오는 중 오류가 발생했습니다'**
+  String get errorLoadingData;
+
+  /// 다시 시도 버튼
+  ///
+  /// In ko, this message translates to:
+  /// **'다시 시도'**
+  String get retryButton;
+
+  /// 사용자 프로필 없음 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'사용자 프로필이 없습니다'**
+  String get noUserProfile;
+
+  /// 초기 테스트 완료 안내
+  ///
+  /// In ko, this message translates to:
+  /// **'초기 테스트를 완료하여 프로필을 생성해주세요'**
+  String get completeInitialTest;
+
+  /// 수면모자 차드 진화 상태
+  ///
+  /// In ko, this message translates to:
+  /// **'수면모자 Chad'**
+  String get sleepyChadEvolution;
+
+  /// 여정을 시작하는 차드 진화 상태
+  ///
+  /// In ko, this message translates to:
+  /// **'여정을 시작하는 Chad'**
+  String get journeyChadEvolution;
+
+  /// 세트 수 및 횟수 표시 형식
+  ///
+  /// In ko, this message translates to:
+  /// **'세트 × 횟수'**
+  String get setRepsDisplayFormat;
 }
 
 class _AppLocalizationsDelegate

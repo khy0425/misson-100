@@ -902,78 +902,89 @@ class _WorkoutScreenState extends State<WorkoutScreen>
     final isDark = theme.brightness == Brightness.dark;
     final mediaQuery = MediaQuery.of(context);
     final screenHeight = mediaQuery.size.height;
+    final screenWidth = mediaQuery.size.width;
 
-    // 화면 크기별 동적 값 계산
+    // 태블릿 감지 및 반응형 값 계산
+    final isTablet = screenWidth > 600;
+    final isLargeTablet = screenWidth > 900;
     final isSmallScreen = screenHeight < 700;
     final isMediumScreen = screenHeight >= 700 && screenHeight < 900;
 
-    // 반응형 패딩 값 (더 컴팩트하게)
-    final responsivePadding = isSmallScreen
-        ? AppConstants.paddingS
-        : isMediumScreen
-        ? AppConstants.paddingM
-        : AppConstants.paddingL;
-
-    // 반응형 여백 값
-    final responsiveSpacing = isSmallScreen
-        ? AppConstants.paddingS
-        : isMediumScreen
-        ? AppConstants.paddingM
-        : AppConstants.paddingL;
+    // 반응형 패딩 값
+    final responsivePadding = isLargeTablet ? 32.0 : (isTablet ? 24.0 : 16.0);
+    final responsiveSpacing = isLargeTablet ? 40.0 : (isTablet ? 24.0 : 16.0);
 
     // 배너 광고 높이
-    final adHeight = isSmallScreen ? 50.0 : 60.0;
+    final adHeight = isSmallScreen ? 50.0 : (isTablet ? 80.0 : 60.0);
+
+    // 태블릿을 위한 컨텐츠 최대 너비 설정
+    final maxContentWidth = isLargeTablet ? 800.0 : (isTablet ? 600.0 : double.infinity);
 
     return Scaffold(
       backgroundColor: Color(
         isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       ),
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).appTitle),
+        title: Text(
+          AppLocalizations.of(context).appTitle,
+          style: TextStyle(fontSize: isLargeTablet ? 28.0 : (isTablet ? 24.0 : 20.0)),
+        ),
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
+        iconTheme: IconThemeData(
+          size: isLargeTablet ? 32.0 : (isTablet ? 28.0 : 24.0),
+        ),
       ),
       body: Stack(
         children: [
-          Column(
-            children: [
-              // 스크롤 가능한 메인 콘텐츠
-              Expanded(
-                child: SingleChildScrollView(
-                  controller: _scrollController,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.all(responsivePadding),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      // 헤더 (화면 크기에 따라 조정)
-                      _buildResponsiveHeader(context, isSmallScreen),
-
-                      SizedBox(height: responsiveSpacing),
-
-                      // 메인 컨텐츠 (반응형)
-                      _buildResponsiveContent(
-                        context,
-                        isSmallScreen,
-                        responsiveSpacing,
+          Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: maxContentWidth),
+              child: Column(
+                children: [
+                  // 스크롤 가능한 메인 콘텐츠
+                  Expanded(
+                    child: SingleChildScrollView(
+                      controller: _scrollController,
+                      physics: const BouncingScrollPhysics(),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: isLargeTablet ? 60.0 : (isTablet ? 40.0 : 20.0),
+                        vertical: responsiveSpacing,
                       ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          // 헤더 (반응형)
+                          _buildResponsiveHeader(context, isTablet, isLargeTablet),
 
-                      SizedBox(height: responsiveSpacing),
+                          SizedBox(height: responsiveSpacing),
 
-                      // 하단 컨트롤 (반응형)
-                      _buildResponsiveControls(context, isSmallScreen),
+                          // 메인 컨텐츠 (반응형)
+                          _buildResponsiveContent(
+                            context,
+                            isTablet,
+                            isLargeTablet,
+                            responsiveSpacing,
+                          ),
 
-                      // 추가 여백 (광고 공간 확보)
-                      SizedBox(height: adHeight + responsivePadding),
-                    ],
+                          SizedBox(height: responsiveSpacing),
+
+                          // 하단 컨트롤 (반응형)
+                          _buildResponsiveControls(context, isTablet, isLargeTablet),
+
+                          // 추가 여백 (광고 공간 확보)
+                          SizedBox(height: adHeight + responsiveSpacing),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-              ),
 
-              // 하단 배너 광고
-              _buildBannerAd(),
-            ],
+                  // 하단 배너 광고
+                  _buildBannerAd(),
+                ],
+              ),
+            ),
           ),
 
           // 동기부여 메시지 오버레이
@@ -985,12 +996,10 @@ class _WorkoutScreenState extends State<WorkoutScreen>
   }
 
   /// 반응형 헤더 위젯
-  Widget _buildResponsiveHeader(BuildContext context, bool isSmallScreen) {
+  Widget _buildResponsiveHeader(BuildContext context, bool isTablet, bool isLargeTablet) {
     final theme = Theme.of(context);
-    final titleFontSize = isSmallScreen ? 18.0 : 20.0;
-    final padding = isSmallScreen
-        ? AppConstants.paddingS
-        : AppConstants.paddingM;
+    final titleFontSize = isLargeTablet ? 24.0 : (isTablet ? 20.0 : 18.0);
+    final padding = isLargeTablet ? 32.0 : (isTablet ? 24.0 : 16.0);
 
     return Container(
       padding: EdgeInsets.all(padding),
@@ -1021,7 +1030,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Color(AppColors.primaryColor),
                     fontWeight: FontWeight.w600,
-                    fontSize: isSmallScreen ? 14.0 : 16.0,
+                    fontSize: isLargeTablet ? 16.0 : (isTablet ? 14.0 : 12.0),
                   ),
                 ),
               ),
@@ -1041,7 +1050,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
-                    fontSize: isSmallScreen ? 12.0 : 14.0,
+                    fontSize: isLargeTablet ? 14.0 : (isTablet ? 12.0 : 10.0),
                   ),
                 ),
               ),
@@ -1063,13 +1072,14 @@ class _WorkoutScreenState extends State<WorkoutScreen>
   /// 반응형 메인 컨텐츠 위젯
   Widget _buildResponsiveContent(
     BuildContext context,
-    bool isSmallScreen,
+    bool isTablet,
+    bool isLargeTablet,
     double spacing,
   ) {
     return Center(
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxWidth: isSmallScreen ? double.infinity : 400,
+          maxWidth: isLargeTablet ? 400 : (isTablet ? 300 : double.infinity),
         ),
         child: _buildRepCounter(),
       ),
@@ -1077,10 +1087,10 @@ class _WorkoutScreenState extends State<WorkoutScreen>
   }
 
   /// 반응형 컨트롤 위젯
-  Widget _buildResponsiveControls(BuildContext context, bool isSmallScreen) {
+  Widget _buildResponsiveControls(BuildContext context, bool isTablet, bool isLargeTablet) {
     return ConstrainedBox(
       constraints: BoxConstraints(
-        maxWidth: isSmallScreen ? double.infinity : 400,
+        maxWidth: isLargeTablet ? 400 : (isTablet ? 300 : double.infinity),
       ),
       child: _buildControls(),
     );

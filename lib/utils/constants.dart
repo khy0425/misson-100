@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class AppConstants {
   // 앱 정보
   static const String appName = '💥 Mission: 100 💥';
@@ -89,6 +91,17 @@ class AppConstants {
   // URL들 (추후 필요 시)
   static const String githubUrl = 'https://github.com/yourusername/mission100';
   static const String supportEmail = 'support@mission100chad.com';
+
+  // 색상 관련 상수들
+  static const Color primaryColor = Color(0xFF4A90E2);
+  static const Color secondaryColor = Color(0xFF7BD05F);
+  static const Color accentColor = Color(0xFFFFB74D);
+  static const Color backgroundLight = Color(0xFFF8F9FA);
+  static const Color backgroundDark = Color(0xFF121212);
+  static const Color surfaceLight = Color(0xFFFFFFFF);
+  static const Color surfaceDark = Color(0xFF1E1E1E);
+  static const Color cardLight = Color(0xFFFFFFFF);
+  static const Color cardDark = Color(0xFF2C2C2C);
 }
 
 // 앱 색상 정의
@@ -162,4 +175,86 @@ class ChadConstants {
   static const String streakStartMessageKey = 'streakStartMessage';
   static const String streakContinueMessageKey = 'streakContinueMessage';
   static const String streakBrokenMessageKey = 'streakBrokenMessage';
+}
+
+// 태블릿 반응형 디자인 헬퍼 클래스
+class ResponsiveHelper {
+  static bool isTablet(BuildContext context) {
+    return MediaQuery.of(context).size.width > 600;
+  }
+  
+  static bool isLargeTablet(BuildContext context) {
+    return MediaQuery.of(context).size.width > 900;
+  }
+  
+  static double getHorizontalPadding(BuildContext context) {
+    if (isLargeTablet(context)) return 60.0;
+    if (isTablet(context)) return 40.0;
+    return 20.0;
+  }
+  
+  static double getVerticalPadding(BuildContext context) {
+    if (isLargeTablet(context)) return 40.0;
+    if (isTablet(context)) return 24.0;
+    return 16.0;
+  }
+  
+  static double getCardPadding(BuildContext context) {
+    if (isLargeTablet(context)) return 32.0;
+    if (isTablet(context)) return 24.0;
+    return 16.0;
+  }
+  
+  static double getTitleFontSize(BuildContext context) {
+    if (isLargeTablet(context)) return 32.0;
+    if (isTablet(context)) return 28.0;
+    return 24.0;
+  }
+  
+  static double getSubtitleFontSize(BuildContext context) {
+    if (isLargeTablet(context)) return 18.0;
+    if (isTablet(context)) return 16.0;
+    return 14.0;
+  }
+  
+  static double getBodyFontSize(BuildContext context) {
+    if (isLargeTablet(context)) return 16.0;
+    if (isTablet(context)) return 15.0;
+    return 14.0;
+  }
+  
+  static double getButtonHeight(BuildContext context) {
+    if (isLargeTablet(context)) return 60.0;
+    if (isTablet(context)) return 56.0;
+    return 52.0;
+  }
+  
+  static double getIconSize(BuildContext context) {
+    if (isLargeTablet(context)) return 32.0;
+    if (isTablet(context)) return 28.0;
+    return 24.0;
+  }
+  
+  static double getImageSize(BuildContext context) {
+    if (isLargeTablet(context)) return 200.0;
+    if (isTablet(context)) return 160.0;
+    return 120.0;
+  }
+  
+  static EdgeInsets getPagePadding(BuildContext context) {
+    return EdgeInsets.symmetric(
+      horizontal: getHorizontalPadding(context),
+      vertical: getVerticalPadding(context),
+    );
+  }
+  
+  static EdgeInsets getCardMargin(BuildContext context) {
+    if (isLargeTablet(context)) {
+      return const EdgeInsets.symmetric(horizontal: 40.0, vertical: 16.0);
+    }
+    if (isTablet(context)) {
+      return const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0);
+    }
+    return const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0);
+  }
 }
