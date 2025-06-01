@@ -35,6 +35,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
   bool _chadEvolutionNotifications = true;
   bool _chadEvolutionPreviewNotifications = true;
   bool _chadEvolutionEncouragementNotifications = true;
+  bool _workoutDaysOnlyNotifications = false;
   DifficultyLevel _currentDifficulty = DifficultyLevel.beginner;
   Locale _currentLocale = LocaleService.koreanLocale;
   TimeOfDay _reminderTime = const TimeOfDay(hour: 19, minute: 0); // 기본 오후 7시
@@ -133,6 +134,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
       _chadEvolutionNotifications = prefs.getBool('chad_evolution_notifications') ?? true;
       _chadEvolutionPreviewNotifications = prefs.getBool('chad_evolution_preview_notifications') ?? true;
       _chadEvolutionEncouragementNotifications = prefs.getBool('chad_evolution_encouragement_notifications') ?? true;
+      _workoutDaysOnlyNotifications = prefs.getBool('workout_days_only_notifications') ?? false;
       _currentDifficulty = difficulty;
       _currentLocale = locale;
       _reminderTime = TimeOfDay(hour: hour, minute: minute);
@@ -494,6 +496,47 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
           }
         },
         enabled: _pushNotifications,
+      ),
+      // 운동일 기반 알림 설정 추가
+      _buildNotificationToggle(
+        '🔥 운동일 전용 알림',
+        '매일이 아닌 운동일(월,수,금)에만 알림을 받습니다. 휴식일엔 방해받지 않아요!',
+        _workoutDaysOnlyNotifications,
+        Icons.event_note,
+        (value) async {
+          setState(() => _workoutDaysOnlyNotifications = value);
+          await _saveBoolSetting('workout_days_only_notifications', value);
+          
+          if (value) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Row(
+                  children: [
+                    Icon(Icons.fitness_center, color: Colors.white),
+                    SizedBox(width: 8),
+                    Text('💪 운동일 전용 알림 모드 활성화! 월,수,금에만 알림이 옵니다!'),
+                  ],
+                ),
+                backgroundColor: Colors.orange,
+                duration: Duration(seconds: 3),
+              ),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Row(
+                  children: [
+                    Icon(Icons.notifications, color: Colors.white),
+                    SizedBox(width: 8),
+                    Text('📅 매일 알림 모드로 변경되었습니다'),
+                  ],
+                ),
+                duration: Duration(seconds: 2),
+              ),
+            );
+          }
+        },
+        enabled: _pushNotifications && _workoutReminders,
       ),
       // Chad Evolution 알림 설정들 추가
       _buildNotificationToggle(
@@ -2125,8 +2168,8 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
 
   /// 개인정보 처리방침 열기
   Future<void> _openPrivacyPolicy() async {
-    // 실제 개인정보 처리방침 URL로 교체 필요
-    const privacyPolicyUrl = 'https://github.com/khy0425/mission100-privacy-policy';
+    // GitHub Pages에 호스팅된 개인정보처리방침 페이지
+    const privacyPolicyUrl = 'https://khy0425.github.io/misson-100/privacy-policy.html';
     final uri = Uri.parse(privacyPolicyUrl);
     
     try {
@@ -2147,8 +2190,8 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
 
   /// 이용약관 열기
   Future<void> _openTermsOfService() async {
-    // 실제 이용약관 URL로 교체 필요
-    const termsUrl = 'https://github.com/khy0425/mission100-terms-of-service';
+    // GitHub Pages에 호스팅된 이용약관 페이지 (추후 생성 예정)
+    const termsUrl = 'https://khy0425.github.io/misson-100/terms-of-service.html';
     final uri = Uri.parse(termsUrl);
     
     try {
