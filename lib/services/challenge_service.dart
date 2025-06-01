@@ -9,6 +9,7 @@ import '../services/workout_history_service.dart';
 import '../generated/app_localizations.dart';
 import 'achievement_service.dart';
 import '../services/notification_service.dart';
+import 'package:flutter/material.dart';
 
 /// 챌린지 관리 서비스
 class ChallengeService {
@@ -48,7 +49,7 @@ class ChallengeService {
         type: ChallengeType.consecutiveDays,
         difficulty: ChallengeDifficulty.medium,
         targetValue: 7,
-        targetUnit: '일',
+        targetUnit: 'days',
         estimatedDuration: 7,
         rewards: [
           ChallengeReward(
@@ -74,7 +75,7 @@ class ChallengeService {
         type: ChallengeType.singleSession,
         difficulty: ChallengeDifficulty.hard,
         targetValue: 50,
-        targetUnit: '개',
+        targetUnit: 'reps',
         estimatedDuration: 1,
         rewards: [
           ChallengeReward(
@@ -100,7 +101,7 @@ class ChallengeService {
         type: ChallengeType.cumulative,
         difficulty: ChallengeDifficulty.extreme,
         targetValue: 200,
-        targetUnit: '개',
+        targetUnit: 'reps',
         prerequisites: ['cumulative_100_pushups'], // 100개 챌린지 완료 필요
         estimatedDuration: 14,
         rewards: [
@@ -133,7 +134,7 @@ class ChallengeService {
         type: ChallengeType.cumulative,
         difficulty: ChallengeDifficulty.medium,
         targetValue: 100,
-        targetUnit: '개',
+        targetUnit: 'reps',
         estimatedDuration: 7,
         rewards: [
           ChallengeReward(
@@ -159,7 +160,7 @@ class ChallengeService {
         type: ChallengeType.consecutiveDays,
         difficulty: ChallengeDifficulty.hard,
         targetValue: 14,
-        targetUnit: '일',
+        targetUnit: 'days',
         prerequisites: ['consecutive_7_days'],
         estimatedDuration: 14,
         rewards: [
@@ -622,5 +623,21 @@ class ChallengeService {
     size += challenge.rewards.length * 100; // 보상 객체들의 추정 크기
     size += 200; // 기본 객체 오버헤드
     return size;
+  }
+
+  /// 단위 텍스트를 언어에 맞게 반환하는 헬퍼 함수
+  String getLocalizedUnit(String unit, BuildContext context) {
+    final isKorean = Localizations.localeOf(context).languageCode == 'ko';
+    
+    switch (unit) {
+      case 'days':
+        return isKorean ? '일' : 'days';
+      case 'reps':
+        return isKorean ? '개' : 'reps';
+      case 'count':
+        return isKorean ? '개' : 'count';
+      default:
+        return unit;
+    }
   }
 } 
