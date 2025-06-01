@@ -222,11 +222,13 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                         
                         const SizedBox(height: AppConstants.paddingL),
                         
-                        // 디버그 섹션 (디버그 모드에서만 표시)
+                        // 디버그 섹션 (비활성화)
+                        /*
                         if (kDebugMode) ...[
                           _buildDebugSection(context, theme),
                           const SizedBox(height: AppConstants.paddingL),
                         ],
+                        */
                         
                         // 하단 정보
                         _buildBottomInfo(context, theme),
@@ -1094,7 +1096,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           child: ElevatedButton(
             onPressed: () => _openFormGuide(context),
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF51CF66),
+              backgroundColor: const Color(AppColors.secondaryColor), // 앱 테마의 secondaryColor 사용
               padding: const EdgeInsets.symmetric(
                 vertical: AppConstants.paddingL,
               ),
@@ -1131,7 +1133,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           child: ElevatedButton(
             onPressed: () => _openProgressTracking(context),
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFFFD43B),
+              backgroundColor: const Color(AppColors.primaryColor), // 앱 테마의 primaryColor 사용
               padding: const EdgeInsets.symmetric(
                 vertical: AppConstants.paddingL,
               ),
@@ -1162,7 +1164,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         
         const SizedBox(height: AppConstants.paddingM),
         
-        // 차드 쇼츠 버튼
+        // 차드 쇼츠 버튼 (비활성화)
+        /*
         SizedBox(
           width: double.infinity,
           child: ElevatedButton(
@@ -1196,6 +1199,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             ),
           ),
         ),
+        */
+        
+        // const SizedBox(height: AppConstants.paddingM),
         
         const SizedBox(height: AppConstants.paddingM),
         

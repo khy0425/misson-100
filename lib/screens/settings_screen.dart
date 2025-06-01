@@ -229,7 +229,6 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                 SliverToBoxAdapter(child: _buildHeader()),
 
                 // 설정 섹션들
-                SliverToBoxAdapter(child: _buildDataManagementSettings()),
                 SliverToBoxAdapter(child: _buildNotificationSettings()),
                 SliverToBoxAdapter(child: _buildAppearanceSettings()),
                 SliverToBoxAdapter(child: _buildDataSettings()),
@@ -308,39 +307,6 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         ],
       ),
     );
-  }
-
-  Widget _buildDataManagementSettings() {
-    return _buildSettingsSection('데이터 관리', [
-      _buildTapSetting(
-        '백업 관리',
-        '데이터 백업, 복원 및 자동 백업 설정을 관리합니다',
-        Icons.backup,
-        () => Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const BackupScreen()),
-        ),
-      ),
-      _buildTapSetting(
-        '레벨 리셋',
-        '모든 진행 상황을 초기화하고 처음부터 시작합니다',
-        Icons.refresh,
-        () => _showResetDataDialog(),
-        isDestructive: true,
-      ),
-      _buildTapSetting(
-        '데이터 백업',
-        '현재 진행 상황을 파일로 백업합니다',
-        Icons.backup,
-        () => _performDataBackup(),
-      ),
-      _buildTapSetting(
-        '데이터 복원',
-        '백업 파일에서 진행 상황을 복원합니다',
-        Icons.restore,
-        () => _performDataRestore(),
-      ),
-    ]);
   }
 
   Widget _buildNotificationSettings() {
@@ -1028,6 +994,15 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
   Widget _buildDataSettings() {
     return _buildSettingsSection(AppLocalizations.of(context).dataSettings, [
       _buildTapSetting(
+        '백업 관리',
+        '데이터 백업, 복원 및 자동 백업 설정을 관리합니다',
+        Icons.backup,
+        () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const BackupScreen()),
+        ),
+      ),
+      _buildTapSetting(
         AppLocalizations.of(context).dataBackup,
         AppLocalizations.of(context).dataBackupDesc,
         Icons.backup,
@@ -1038,6 +1013,13 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         AppLocalizations.of(context).dataRestoreDesc,
         Icons.restore,
         () => _performDataRestore(),
+      ),
+      _buildTapSetting(
+        '레벨 리셋',
+        '모든 진행 상황을 초기화하고 처음부터 시작합니다',
+        Icons.refresh,
+        () => _showResetDataDialog(),
+        isDestructive: true,
       ),
     ]);
   }
