@@ -247,11 +247,9 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                     shadowColor: const Color(0xFF4DABF7).withValues(alpha: 0.4),
                   ),
                   child: Text(
-                    step.buttonText ?? (
-                      Localizations.localeOf(context).languageCode == 'ko'
-                        ? '시작하기'
-                        : 'Get Started'
-                    ),
+                    step.buttonText ?? (Localizations.localeOf(context).languageCode == 'ko'
+                      ? '시작하기'
+                      : 'Get Started'),
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -416,11 +414,9 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                     shadowColor: const Color(0xFF51CF66).withValues(alpha: 0.4),
                   ),
                   child: Text(
-                    step.buttonText ?? (
-                      Localizations.localeOf(context).languageCode == 'ko'
-                        ? '다음'
-                        : 'Next'
-                    ),
+                    step.buttonText ?? (Localizations.localeOf(context).languageCode == 'ko'
+                      ? '다음'
+                      : 'Next'),
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -571,7 +567,9 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                     shadowColor: const Color(0xFFFFD43B).withValues(alpha: 0.4),
                   ),
                   child: Text(
-                    step.buttonText ?? '멋져요!',
+                    step.buttonText ?? (Localizations.localeOf(context).languageCode == 'ko'
+                      ? '멋져요!'
+                      : 'Awesome!'),
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -749,7 +747,9 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                     shadowColor: const Color(0xFFFF6B6B).withValues(alpha: 0.4),
                   ),
                   child: Text(
-                    step.buttonText ?? '테스트 시작',
+                    step.buttonText ?? (Localizations.localeOf(context).languageCode == 'ko'
+                      ? '테스트 시작'
+                      : 'Start Test'),
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
