@@ -1253,41 +1253,53 @@ class NotificationService {
                 const SizedBox(height: 16),
                 
                 if (!hasNotificationPermission) ...[
-                  const Row(
+                  Row(
                     children: [
-                      Icon(Icons.notification_important, color: Colors.red, size: 20),
-                      SizedBox(width: 8),
+                      const Icon(Icons.notifications, color: Colors.blue, size: 20),
+                      const SizedBox(width: 8),
                       Expanded(
                         child: Text(
-                          '기본 알림 권한',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          Localizations.localeOf(context).languageCode == 'ko'
+                            ? '기본 알림 권한'
+                            : 'Basic Notification Permission',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 28),
-                    child: Text('알림을 받기 위한 기본 권한입니다.'),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 28),
+                    child: Text(
+                      Localizations.localeOf(context).languageCode == 'ko'
+                        ? '알림을 받기 위한 기본 권한입니다.'
+                        : 'Basic permission to receive notifications.',
+                    ),
                   ),
                   const SizedBox(height: 12),
                 ],
                 
                 if (!hasExactAlarmPermission) ...[
-                  const Row(
+                  Row(
                     children: [
-                      Icon(Icons.schedule, color: Colors.orange, size: 20),
-                      SizedBox(width: 8),
+                      const Icon(Icons.schedule, color: Colors.orange, size: 20),
+                      const SizedBox(width: 8),
                       Expanded(
                         child: Text(
-                          '정확한 알람 권한 (Android 12+)',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          Localizations.localeOf(context).languageCode == 'ko'
+                            ? '정확한 알람 권한 (Android 12+)'
+                            : 'Exact Alarm Permission (Android 12+)',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 28),
-                    child: Text('정확한 시간에 운동 알림을 받기 위한 권한입니다.'),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 28),
+                    child: Text(
+                      Localizations.localeOf(context).languageCode == 'ko'
+                        ? '정확한 시간에 운동 알림을 받기 위한 권한입니다.'
+                        : 'Permission to receive workout notifications at precise times.',
+                    ),
                   ),
                   const SizedBox(height: 12),
                 ],
@@ -1307,9 +1319,11 @@ class NotificationService {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text(
-                '나중에',
-                style: TextStyle(color: Colors.grey),
+              child: Text(
+                Localizations.localeOf(context).languageCode == 'ko'
+                  ? '나중에'
+                  : 'Later',
+                style: const TextStyle(color: Colors.grey),
               ),
             ),
             ElevatedButton(
@@ -1318,7 +1332,11 @@ class NotificationService {
                 backgroundColor: Colors.blue,
                 foregroundColor: Colors.white,
               ),
-              child: const Text('권한 허용'),
+              child: Text(
+                Localizations.localeOf(context).languageCode == 'ko'
+                  ? '권한 허용'
+                  : 'Allow Permissions',
+              ),
             ),
           ],
         );
