@@ -177,9 +177,11 @@ class PermissionService {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text(
-                '나중에',
-                style: TextStyle(color: Colors.grey),
+              child: Text(
+                Localizations.localeOf(context).languageCode == 'ko'
+                  ? '나중에'
+                  : 'Later',
+                style: const TextStyle(color: Colors.grey),
               ),
             ),
             ElevatedButton(
@@ -188,7 +190,11 @@ class PermissionService {
                 backgroundColor: Colors.orange,
                 foregroundColor: Colors.white,
               ),
-              child: const Text('허용'),
+              child: Text(
+                Localizations.localeOf(context).languageCode == 'ko'
+                  ? '허용'
+                  : 'Allow',
+              ),
             ),
           ],
         );
@@ -260,9 +266,11 @@ class PermissionService {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text(
-                '나중에',
-                style: TextStyle(color: Colors.grey),
+              child: Text(
+                Localizations.localeOf(context).languageCode == 'ko'
+                  ? '나중에'
+                  : 'Later',
+                style: const TextStyle(color: Colors.grey),
               ),
             ),
             ElevatedButton(
@@ -271,7 +279,11 @@ class PermissionService {
                 backgroundColor: Colors.blue,
                 foregroundColor: Colors.white,
               ),
-              child: const Text('허용'),
+              child: Text(
+                Localizations.localeOf(context).languageCode == 'ko'
+                  ? '허용'
+                  : 'Allow',
+              ),
             ),
           ],
         );
@@ -397,11 +409,15 @@ class PermissionService {
     return await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Row(
+        title: Row(
           children: [
-            Icon(Icons.backup, color: Colors.orange),
-            SizedBox(width: 8),
-            Text('저장소 권한 필요'),
+            const Icon(Icons.backup, color: Colors.orange),
+            const SizedBox(width: 8),
+            Text(
+              Localizations.localeOf(context).languageCode == 'ko'
+                ? '저장소 권한 필요'
+                : 'Storage Permission Required',
+            ),
           ],
         ),
         content: const Text(
@@ -411,7 +427,12 @@ class PermissionService {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('취소'),
+            child: Text(
+              Localizations.localeOf(context).languageCode == 'ko'
+                ? '취소'
+                : 'Cancel',
+              style: TextStyle(color: Colors.grey),
+            ),
           ),
           ElevatedButton(
             onPressed: () => Navigator.pop(context, true),
@@ -419,7 +440,11 @@ class PermissionService {
               backgroundColor: Colors.orange,
               foregroundColor: Colors.white,
             ),
-            child: const Text('권한 허용'),
+            child: Text(
+              Localizations.localeOf(context).languageCode == 'ko'
+                ? '권한 허용'
+                : 'Grant Permission',
+            ),
           ),
         ],
       ),
@@ -431,11 +456,15 @@ class PermissionService {
     await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Row(
+        title: Row(
           children: [
-            Icon(Icons.warning, color: Colors.red),
-            SizedBox(width: 8),
-            Text('권한 필요'),
+            const Icon(Icons.warning, color: Colors.red),
+            const SizedBox(width: 8),
+            Text(
+              Localizations.localeOf(context).languageCode == 'ko'
+                ? '권한 필요'
+                : 'Permission Required',
+            ),
           ],
         ),
         content: const Text(
@@ -446,14 +475,22 @@ class PermissionService {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('확인'),
+            child: Text(
+              Localizations.localeOf(context).languageCode == 'ko'
+                ? '확인'
+                : 'OK',
+            ),
           ),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               Navigator.pop(context);
-              openAppSettings();
+              await openAppSettings();
             },
-            child: const Text('설정으로 이동'),
+            child: Text(
+              Localizations.localeOf(context).languageCode == 'ko'
+                ? '설정으로 이동'
+                : 'Go to Settings',
+            ),
           ),
         ],
       ),
