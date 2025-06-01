@@ -786,7 +786,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                     ),
                     const SizedBox(height: AppConstants.paddingS),
                     Text(
-                      '수고하셨습니다! 정말 멋져요! 💪',
+                      Localizations.localeOf(context).languageCode == 'ko'
+                        ? '수고하셨습니다! 정말 멋져요! 💪'
+                        : 'Great job! You\'re amazing! 💪',
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w600,
                         color: const Color(AppColors.primaryColor),

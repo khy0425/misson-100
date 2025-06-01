@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../generated/app_localizations.dart';
 import '../utils/constants.dart';
 import '../services/workout_resumption_service.dart';
 
@@ -17,6 +18,7 @@ class WorkoutResumptionDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final primaryData = resumptionData.primaryData;
     
@@ -25,7 +27,7 @@ class WorkoutResumptionDialog extends StatelessWidget {
     }
 
     // 복원 가능한 데이터 분석
-    final workoutTitle = primaryData['workoutTitle'] as String? ?? '운동';
+    final workoutTitle = primaryData['workoutTitle'] as String? ?? l10n.workout;
     final currentSet = (primaryData['currentSet'] as int? ?? 0) + 1; // 1-based index
     final completedRepsStr = primaryData['completedReps'] as String? ?? '';
     final completedReps = completedRepsStr.isNotEmpty 
@@ -162,7 +164,7 @@ class WorkoutResumptionDialog extends StatelessWidget {
             foregroundColor: Colors.grey[600],
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           ),
-          child: const Text('새 운동 시작'),
+          child: Text('새 운동 시작'),
         ),
         
         // 운동 재개 버튼
@@ -184,7 +186,7 @@ class WorkoutResumptionDialog extends StatelessWidget {
             children: [
               const Icon(Icons.play_arrow, size: 18),
               const SizedBox(width: 4),
-              const Text(
+              Text(
                 '운동 재개',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
