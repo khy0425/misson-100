@@ -43,7 +43,9 @@ class ChallengeProgressWidget extends StatelessWidget {
                 Icon(Icons.calendar_today, color: Colors.blue.shade700),
                 const SizedBox(width: 8),
                 Text(
-                  '연속 운동 진행 상황',
+                  Localizations.localeOf(context).languageCode == 'ko'
+                    ? '연속 운동 진행 상황'
+                    : 'Consecutive Workout Progress',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -62,14 +64,18 @@ class ChallengeProgressWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '연속 일수',
+                      Localizations.localeOf(context).languageCode == 'ko'
+                        ? '연속 일수'
+                        : 'Streak Days',
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.grey[600],
                       ),
                     ),
                     Text(
-                      '$current일',
+                      Localizations.localeOf(context).languageCode == 'ko'
+                        ? '$current일'
+                        : '$current days',
                       style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -82,14 +88,18 @@ class ChallengeProgressWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      '목표',
+                      Localizations.localeOf(context).languageCode == 'ko'
+                        ? '목표'
+                        : 'Goal',
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.grey[600],
                       ),
                     ),
                     Text(
-                      '$target일',
+                      Localizations.localeOf(context).languageCode == 'ko'
+                        ? '$target일'
+                        : '$target days',
                       style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -120,7 +130,13 @@ class ChallengeProgressWidget extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    todayCompleted ? '오늘 운동 완료!' : '오늘 운동을 완료하세요',
+                    todayCompleted 
+                      ? (Localizations.localeOf(context).languageCode == 'ko'
+                          ? '오늘 운동 완료!'
+                          : "Today's Workout Complete!")
+                      : (Localizations.localeOf(context).languageCode == 'ko'
+                          ? '오늘 운동을 완료하세요'
+                          : 'Complete Today\'s Workout'),
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       color: todayCompleted ? Colors.green.shade700 : Colors.orange.shade700,
@@ -168,7 +184,9 @@ class ChallengeProgressWidget extends StatelessWidget {
                     Icon(Icons.fitness_center, color: Colors.orange.shade700),
                     const SizedBox(width: 8),
                     Text(
-                      '단일 세션 챌린지',
+                      Localizations.localeOf(context).languageCode == 'ko'
+                        ? '단일 세션 챌린지'
+                        : 'Single Session Challenge',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -187,14 +205,18 @@ class ChallengeProgressWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '최고 기록',
+                          Localizations.localeOf(context).languageCode == 'ko'
+                            ? '최고 기록'
+                            : 'Best Record',
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey[600],
                           ),
                         ),
                         Text(
-                          '${recordValue}개',
+                          Localizations.localeOf(context).languageCode == 'ko'
+                            ? '${recordValue}개'
+                            : '$recordValue reps',
                           style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -207,14 +229,18 @@ class ChallengeProgressWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          '목표',
+                          Localizations.localeOf(context).languageCode == 'ko'
+                            ? '목표'
+                            : 'Goal',
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey[600],
                           ),
                         ),
                         Text(
-                          '$target개',
+                          Localizations.localeOf(context).languageCode == 'ko'
+                            ? '$target개'
+                            : '$target reps',
                           style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -234,7 +260,9 @@ class ChallengeProgressWidget extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('진행률'),
+                        Text(Localizations.localeOf(context).languageCode == 'ko' 
+                          ? '진행률' 
+                          : 'Progress'),
                         Text('${(progressPercentage * 100).toInt()}%'),
                       ],
                     ),
@@ -264,7 +292,9 @@ class ChallengeProgressWidget extends StatelessWidget {
                         const Icon(Icons.trending_up, color: Colors.blue),
                         const SizedBox(width: 8),
                         Text(
-                          '${target - recordValue}개 더 하면 달성!',
+                          Localizations.localeOf(context).languageCode == 'ko'
+                            ? '${target - recordValue}개 더 하면 달성!'
+                            : '${target - recordValue} more reps to achieve!',
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
                             color: Colors.blue.shade700,
@@ -315,7 +345,9 @@ class ChallengeProgressWidget extends StatelessWidget {
                     Icon(Icons.trending_up, color: Colors.green.shade700),
                     const SizedBox(width: 8),
                     Text(
-                      '누적 챌린지',
+                      Localizations.localeOf(context).languageCode == 'ko'
+                        ? '누적 챌린지'
+                        : 'Cumulative Challenge',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -334,14 +366,18 @@ class ChallengeProgressWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '현재 누적',
+                          Localizations.localeOf(context).languageCode == 'ko'
+                            ? '현재 누적'
+                            : 'Current Total',
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey[600],
                           ),
                         ),
                         Text(
-                          '$current개',
+                          Localizations.localeOf(context).languageCode == 'ko'
+                            ? '$current개'
+                            : '$current reps',
                           style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -354,14 +390,18 @@ class ChallengeProgressWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          '목표',
+                          Localizations.localeOf(context).languageCode == 'ko'
+                            ? '목표'
+                            : 'Goal',
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey[600],
                           ),
                         ),
                         Text(
-                          '$target개',
+                          Localizations.localeOf(context).languageCode == 'ko'
+                            ? '$target개'
+                            : '$target reps',
                           style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -381,7 +421,9 @@ class ChallengeProgressWidget extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('진행률'),
+                        Text(Localizations.localeOf(context).languageCode == 'ko' 
+                          ? '진행률' 
+                          : 'Progress'),
                         Text('${(percentage * 100).toInt()}%'),
                       ],
                     ),
@@ -411,7 +453,9 @@ class ChallengeProgressWidget extends StatelessWidget {
                         const Icon(Icons.flag, color: Colors.blue),
                         const SizedBox(width: 8),
                         Text(
-                          '$remaining개 더 하면 달성!',
+                          Localizations.localeOf(context).languageCode == 'ko'
+                            ? '$remaining개 더 하면 달성!'
+                            : '$remaining more reps to achieve!',
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
                             color: Colors.blue.shade700,
