@@ -199,7 +199,7 @@ class WorkoutResumptionDialog extends StatelessWidget {
                 Localizations.localeOf(context).languageCode == 'ko'
                   ? '운동 재개'
                   : 'Resume Workout',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ],
           ),
