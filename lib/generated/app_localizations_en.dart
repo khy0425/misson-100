@@ -543,17 +543,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tutorialButton => '💥 BECOME PUSHUP MASTER 💥';
 
   @override
-  String get difficultyBeginner => 'Beginner';
+  String get difficultyBeginner => 'PUSH - Starting Alphas';
 
   @override
-  String get difficultyIntermediate => 'Intermediate';
+  String get difficultyIntermediate => 'Alpha Wannabe - Growing Chads';
 
   @override
-  String get difficultyAdvanced => 'Advanced';
+  String get difficultyAdvanced => 'Chad - Powerful Gigas';
 
   @override
-  String get difficultyExtreme =>
-      '🚀 ULTRA GIGA CHAD - LEGENDARY GODLIKE TERRITORY 🚀';
+  String get difficultyExtreme => 'Giga Chad - Legendary Territory';
 
   @override
   String get targetMuscleChest => 'CHEST';
@@ -598,7 +597,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pushupStandardDesc =>
-      'THE STARTING POINT OF ALL CHADS. PERFECT BASICS ARE TRUE STRENGTH!';
+      'Starting point of all chads. Perfect basics are true strength!';
 
   @override
   String get pushupStandardBenefits =>
@@ -625,7 +624,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pushupKneeDesc =>
-      'FIRST STEP OF CHAD JOURNEY. DON\'T BE ASHAMED, ALL LEGENDS START HERE!';
+      'Beginners can do it too! Don\'t be ashamed of knee pushups!';
 
   @override
   String get pushupKneeBenefits =>
@@ -652,7 +651,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pushupInclineDesc =>
-      'HANDS ON HIGH SURFACE. CLIMB THE STAIRS TO CHAD STATUS!';
+      'Use incline to adjust difficulty! Stairs or bench are enough!';
 
   @override
   String get pushupInclineBenefits =>
@@ -679,7 +678,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pushupWideGripDesc =>
-      'SPREAD HANDS WIDE FOR BROADER CHEST. BUILD THAT CHAD CHEST PLATE!';
+      'Spread wide for broader chest! Build that real chad chest!';
 
   @override
   String get pushupWideGripBenefits =>
@@ -706,7 +705,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pushupDiamondDesc =>
-      'HANDS IN DIAMOND SHAPE. MAKE TRICEPS DIAMOND-HARD!';
+      'Focused triceps attack! Diamond shape is the symbol of real chad!';
 
   @override
   String get pushupDiamondBenefits =>
@@ -733,7 +732,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pushupDeclineDesc =>
-      'FEET ELEVATED HIGH. REAL CHADS DEFEAT GRAVITY!';
+      'Raise feet for increased intensity! Properly stimulate shoulders and upper body!';
 
   @override
   String get pushupDeclineBenefits =>
@@ -760,7 +759,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pushupArcherDesc =>
-      'LEAN TO ONE SIDE LIKE DRAWING A BOW. ACCURACY AND POWER COMBINED!';
+      'Advanced technique focusing on one side! Requires balance and core!';
 
   @override
   String get pushupArcherBenefits =>
@@ -787,7 +786,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pushupPikeDesc =>
-      'INVERTED TRIANGLE POSITION. CHAD\'S SECRET TO ROCK SHOULDERS!';
+      'Shoulder focused attack! Pre-stage to handstand pushups!';
 
   @override
   String get pushupPikeBenefits =>
@@ -814,7 +813,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pushupClapDesc =>
-      'EXPLOSIVE POWER TO CLAP. REAL POWER IS PROVEN HERE!';
+      'Explosive power with clapping! Only real chads can do this!';
 
   @override
   String get pushupClapBenefits =>
@@ -841,7 +840,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pushupOneArmDesc =>
-      'ULTIMATE PUSHUP WITH ONE HAND. ONLY GIGA CHADS CAN REACH THIS REALM!';
+      'One-arm pushup is the ultimate chad form! Do this even once and you\'re recognized as a real giga chad!';
 
   @override
   String get pushupOneArmBenefits =>
@@ -2456,7 +2455,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get challengeFailed => 'Challenge Failed';
 
   @override
-  String get challengeStarted => 'Challenge Started!';
+  String get challengeStarted => 'Challenge started! 🔥';
 
   @override
   String get challengeAbandoned => 'Challenge Abandoned';
@@ -2827,4 +2826,129 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get permissionStorageMessage =>
       'Storage permission is required. Please allow in settings.';
+
+  @override
+  String get challengeCannotStart => 'Cannot start challenge.';
+
+  @override
+  String get challengeGiveUpTitle => 'Give Up Challenge';
+
+  @override
+  String get challengeGiveUpMessage =>
+      'Are you sure you want to give up this challenge?';
+
+  @override
+  String get challengeGaveUp => 'Challenge given up.';
+
+  @override
+  String get challengeTitle => 'Challenge';
+
+  @override
+  String get challengeTabCompleted => 'Completed';
+
+  @override
+  String get noChallengesAvailable => 'No challenges available';
+
+  @override
+  String get unlockMoreChallenges =>
+      'Complete more workouts to unlock new challenges!';
+
+  @override
+  String get noActiveChallenges => 'No active challenges';
+
+  @override
+  String get startNewChallenge => 'Start a new challenge!';
+
+  @override
+  String get noCompletedChallenges => 'No completed challenges';
+
+  @override
+  String get completeFirstChallenge => 'Complete your first challenge!';
+
+  @override
+  String get pushupTutorialTitle => 'Chad Pushup Dojo';
+
+  @override
+  String get pushupTutorialSubtitle =>
+      'Real chads start with different form! 💪';
+
+  @override
+  String get pushupStandard => 'Standard Pushup';
+
+  @override
+  String get pushupKnee => 'Knee Pushup';
+
+  @override
+  String get pushupIncline => 'Incline Pushup';
+
+  @override
+  String get pushupWideGrip => 'Wide Grip Pushup';
+
+  @override
+  String get pushupDiamond => 'Diamond Pushup';
+
+  @override
+  String get pushupDecline => 'Decline Pushup';
+
+  @override
+  String get pushupArcher => 'Archer Pushup';
+
+  @override
+  String get pushupPike => 'Pike Pushup';
+
+  @override
+  String get pushupClap => 'Clap Pushup';
+
+  @override
+  String get pushupOneArm => 'One-Arm Pushup';
+
+  @override
+  String get chadDescription => '💪 Chad Description';
+
+  @override
+  String get chadAdvice => '🔥 Chad\'s Advice';
+
+  @override
+  String get chadMotivationStandard =>
+      'Basics are most important! Build up one by one with perfect form and you\'ll become a real chad!';
+
+  @override
+  String get chadMotivationKnee =>
+      'Starting is half the battle! Do knee pushups properly and you\'ll quickly advance to regular pushups!';
+
+  @override
+  String get chadMotivationIncline =>
+      'Step-by-step progression is the chad way! Challenge yourself by gradually lowering the angle!';
+
+  @override
+  String get chadMotivationWideGrip =>
+      'Spread your chest wide and receive chad energy! A broad chest is the symbol of a real chad!';
+
+  @override
+  String get chadMotivationDiamond =>
+      'Build your precious triceps like diamonds! Feel your arm muscles explode!';
+
+  @override
+  String get chadMotivationDecline =>
+      'Challenging higher ground is what chads do! Feel your shoulders and upper body burning!';
+
+  @override
+  String get chadMotivationArcher =>
+      'Advanced technique requiring balance and focus! Master each side perfectly and you\'re a real chad!';
+
+  @override
+  String get chadMotivationPike =>
+      'First step to handstands! Enjoy the feeling of your shoulder muscles bursting!';
+
+  @override
+  String get chadMotivationClap =>
+      'Clap with explosive power! Master this and you\'re a real chad, f**k yeah!';
+
+  @override
+  String get chadMotivationOneArm =>
+      'One-arm pushup is the ultimate chad form! Do this even once and you\'re recognized as a real giga chad, f**k yeah!';
+
+  @override
+  String get chadMotivationDefault =>
+      'The chad path is tough but that makes it more valuable! Don\'t give up!';
 }

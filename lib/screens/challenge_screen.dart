@@ -88,8 +88,12 @@ class _ChallengeScreenState extends State<ChallengeScreen>
         await _loadChallenges();
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('챌린지가 시작되었습니다! 🔥'),
+            SnackBar(
+              content: Text(
+                Localizations.localeOf(context).languageCode == 'ko'
+                  ? '챌린지가 시작되었습니다! 🔥'
+                  : 'Challenge started! 🔥',
+              ),
               backgroundColor: Colors.green,
             ),
           );
@@ -97,8 +101,12 @@ class _ChallengeScreenState extends State<ChallengeScreen>
       } else {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('챌린지를 시작할 수 없습니다.'),
+            SnackBar(
+              content: Text(
+                Localizations.localeOf(context).languageCode == 'ko'
+                  ? '챌린지를 시작할 수 없습니다.'
+                  : 'Cannot start challenge.',
+              ),
               backgroundColor: Colors.red,
             ),
           );
@@ -121,16 +129,32 @@ class _ChallengeScreenState extends State<ChallengeScreen>
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('챌린지 포기'),
-        content: const Text('정말로 이 챌린지를 포기하시겠습니까?'),
+        title: Text(
+          Localizations.localeOf(context).languageCode == 'ko'
+            ? '챌린지 포기'
+            : 'Give Up Challenge',
+        ),
+        content: Text(
+          Localizations.localeOf(context).languageCode == 'ko'
+            ? '정말로 이 챌린지를 포기하시겠습니까?'
+            : 'Are you sure you want to give up this challenge?',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('취소'),
+            child: Text(
+              Localizations.localeOf(context).languageCode == 'ko'
+                ? '취소'
+                : 'Cancel',
+            ),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('포기'),
+            child: Text(
+              Localizations.localeOf(context).languageCode == 'ko'
+                ? '포기'
+                : 'Give Up',
+            ),
           ),
         ],
       ),
@@ -143,8 +167,12 @@ class _ChallengeScreenState extends State<ChallengeScreen>
           await _loadChallenges();
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('챌린지를 포기했습니다.'),
+              SnackBar(
+                content: Text(
+                  Localizations.localeOf(context).languageCode == 'ko'
+                    ? '챌린지를 포기했습니다.'
+                    : 'Challenge given up.',
+                ),
                 backgroundColor: Colors.orange,
               ),
             );
@@ -166,14 +194,33 @@ class _ChallengeScreenState extends State<ChallengeScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('챌린지'),
+        title: Text(
+          Localizations.localeOf(context).languageCode == 'ko'
+            ? '챌린지'
+            : 'Challenge',
+        ),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(text: '사용 가능', icon: Icon(Icons.play_arrow)),
-            Tab(text: '진행 중', icon: Icon(Icons.timer)),
-            Tab(text: '완료', icon: Icon(Icons.check_circle)),
+          tabs: [
+            Tab(
+              text: Localizations.localeOf(context).languageCode == 'ko'
+                ? '사용 가능'
+                : 'Available',
+              icon: const Icon(Icons.play_arrow),
+            ),
+            Tab(
+              text: Localizations.localeOf(context).languageCode == 'ko'
+                ? '진행 중'
+                : 'Active',
+              icon: const Icon(Icons.timer),
+            ),
+            Tab(
+              text: Localizations.localeOf(context).languageCode == 'ko'
+                ? '완료'
+                : 'Completed',
+              icon: const Icon(Icons.check_circle),
+            ),
           ],
         ),
       ),
@@ -192,20 +239,24 @@ class _ChallengeScreenState extends State<ChallengeScreen>
 
   Widget _buildAvailableChallengesTab() {
     if (_availableChallenges.isEmpty) {
-      return const Center(
+      return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.emoji_events, size: 64, color: Colors.grey),
-            SizedBox(height: 16),
+            const Icon(Icons.emoji_events, size: 64, color: Colors.grey),
+            const SizedBox(height: 16),
             Text(
-              '사용 가능한 챌린지가 없습니다',
-              style: TextStyle(fontSize: 18, color: Colors.grey),
+              Localizations.localeOf(context).languageCode == 'ko'
+                ? '사용 가능한 챌린지가 없습니다'
+                : 'No challenges available',
+              style: const TextStyle(fontSize: 18, color: Colors.grey),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
-              '더 많은 운동을 완료하여 새로운 챌린지를 해금하세요!',
-              style: TextStyle(color: Colors.grey),
+              Localizations.localeOf(context).languageCode == 'ko'
+                ? '더 많은 운동을 완료하여 새로운 챌린지를 해금하세요!'
+                : 'Complete more workouts to unlock new challenges!',
+              style: const TextStyle(color: Colors.grey),
               textAlign: TextAlign.center,
             ),
           ],
@@ -232,20 +283,24 @@ class _ChallengeScreenState extends State<ChallengeScreen>
 
   Widget _buildActiveChallengesTab() {
     if (_activeChallenges.isEmpty) {
-      return const Center(
+      return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.timer_off, size: 64, color: Colors.grey),
-            SizedBox(height: 16),
+            const Icon(Icons.timer_off, size: 64, color: Colors.grey),
+            const SizedBox(height: 16),
             Text(
-              '진행 중인 챌린지가 없습니다',
-              style: TextStyle(fontSize: 18, color: Colors.grey),
+              Localizations.localeOf(context).languageCode == 'ko'
+                ? '진행 중인 챌린지가 없습니다'
+                : 'No active challenges',
+              style: const TextStyle(fontSize: 18, color: Colors.grey),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
-              '새로운 챌린지를 시작해보세요!',
-              style: TextStyle(color: Colors.grey),
+              Localizations.localeOf(context).languageCode == 'ko'
+                ? '새로운 챌린지를 시작해보세요!'
+                : 'Start a new challenge!',
+              style: const TextStyle(color: Colors.grey),
             ),
           ],
         ),
@@ -281,20 +336,24 @@ class _ChallengeScreenState extends State<ChallengeScreen>
 
   Widget _buildCompletedChallengesTab() {
     if (_completedChallenges.isEmpty) {
-      return const Center(
+      return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.check_circle_outline, size: 64, color: Colors.grey),
-            SizedBox(height: 16),
+            const Icon(Icons.check_circle_outline, size: 64, color: Colors.grey),
+            const SizedBox(height: 16),
             Text(
-              '완료된 챌린지가 없습니다',
-              style: TextStyle(fontSize: 18, color: Colors.grey),
+              Localizations.localeOf(context).languageCode == 'ko'
+                ? '완료된 챌린지가 없습니다'
+                : 'No completed challenges',
+              style: const TextStyle(fontSize: 18, color: Colors.grey),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
-              '첫 번째 챌린지를 완료해보세요!',
-              style: TextStyle(color: Colors.grey),
+              Localizations.localeOf(context).languageCode == 'ko'
+                ? '첫 번째 챌린지를 완료해보세요!'
+                : 'Complete your first challenge!',
+              style: const TextStyle(color: Colors.grey),
             ),
           ],
         ),

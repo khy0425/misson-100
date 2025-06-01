@@ -4102,5 +4102,252 @@
   "permissionStorageMessage": "Storage permission is required. Please allow in settings.",
   "@permissionStorageMessage": {
     "description": "Storage permission request message"
+  },
+  "challengeStarted": "Challenge started! 🔥",
+  "@challengeStarted": {
+    "description": "Challenge started message"
+  },
+  "challengeCannotStart": "Cannot start challenge.",
+  "@challengeCannotStart": {
+    "description": "Challenge cannot start message"
+  },
+  "challengeGiveUpTitle": "Give Up Challenge",
+  "@challengeGiveUpTitle": {
+    "description": "Challenge give up confirmation title"
+  },
+  "challengeGiveUpMessage": "Are you sure you want to give up this challenge?",
+  "@challengeGiveUpMessage": {
+    "description": "Challenge give up confirmation message"
+  },
+  "challengeGaveUp": "Challenge given up.",
+  "@challengeGaveUp": {
+    "description": "Challenge give up completed message"
+  },
+  "challengeTitle": "Challenge",
+  "@challengeTitle": {
+    "description": "Challenge screen title"
+  },
+  "challengeTabCompleted": "Completed",
+  "@challengeTabCompleted": {
+    "description": "Completed challenges tab"
+  },
+  "noChallengesAvailable": "No challenges available",
+  "@noChallengesAvailable": {
+    "description": "No available challenges message"
+  },
+  "unlockMoreChallenges": "Complete more workouts to unlock new challenges!",
+  "@unlockMoreChallenges": {
+    "description": "Challenge unlock guide message"
+  },
+  "noActiveChallenges": "No active challenges",
+  "@noActiveChallenges": {
+    "description": "No active challenges message"
+  },
+  "startNewChallenge": "Start a new challenge!",
+  "@startNewChallenge": {
+    "description": "Start new challenge guide message"
+  },
+  "noCompletedChallenges": "No completed challenges",
+  "@noCompletedChallenges": {
+    "description": "No completed challenges message"
+  },
+  "completeFirstChallenge": "Complete your first challenge!",
+  "@completeFirstChallenge": {
+    "description": "Complete first challenge guide message"
+  },
+
+  "pushupTutorialTitle": "Chad Pushup Dojo",
+  "@pushupTutorialTitle": {
+    "description": "Pushup tutorial screen title"
+  },
+
+  "pushupTutorialSubtitle": "Real chads start with different form! 💪",
+  "@pushupTutorialSubtitle": {
+    "description": "Pushup tutorial screen subtitle"
+  },
+
+  "difficultyBeginner": "PUSH - Starting Alphas",
+  "@difficultyBeginner": {
+    "description": "Beginner difficulty level for pushups"
+  },
+
+  "difficultyIntermediate": "Alpha Wannabe - Growing Chads",
+  "@difficultyIntermediate": {
+    "description": "Intermediate difficulty level for pushups"
+  },
+
+  "difficultyAdvanced": "Chad - Powerful Gigas",
+  "@difficultyAdvanced": {
+    "description": "Advanced difficulty level for pushups"
+  },
+
+  "difficultyExtreme": "Giga Chad - Legendary Territory",
+  "@difficultyExtreme": {
+    "description": "Extreme difficulty level for pushups"
+  },
+
+  "pushupStandard": "Standard Pushup",
+  "@pushupStandard": {
+    "description": "Standard pushup name"
+  },
+
+  "pushupKnee": "Knee Pushup",
+  "@pushupKnee": {
+    "description": "Knee pushup name"
+  },
+
+  "pushupIncline": "Incline Pushup",
+  "@pushupIncline": {
+    "description": "Incline pushup name"
+  },
+
+  "pushupWideGrip": "Wide Grip Pushup",
+  "@pushupWideGrip": {
+    "description": "Wide grip pushup name"
+  },
+
+  "pushupDiamond": "Diamond Pushup",
+  "@pushupDiamond": {
+    "description": "Diamond pushup name"
+  },
+
+  "pushupDecline": "Decline Pushup",
+  "@pushupDecline": {
+    "description": "Decline pushup name"
+  },
+
+  "pushupArcher": "Archer Pushup",
+  "@pushupArcher": {
+    "description": "Archer pushup name"
+  },
+
+  "pushupPike": "Pike Pushup",
+  "@pushupPike": {
+    "description": "Pike pushup name"
+  },
+
+  "pushupClap": "Clap Pushup",
+  "@pushupClap": {
+    "description": "Clap pushup name"
+  },
+
+  "pushupOneArm": "One-Arm Pushup",
+  "@pushupOneArm": {
+    "description": "One-arm pushup name"
+  },
+
+  "pushupStandardDesc": "Starting point of all chads. Perfect basics are true strength!",
+  "@pushupStandardDesc": {
+    "description": "Standard pushup description"
+  },
+
+  "pushupKneeDesc": "Beginners can do it too! Don't be ashamed of knee pushups!",
+  "@pushupKneeDesc": {
+    "description": "Knee pushup description"
+  },
+
+  "pushupInclineDesc": "Use incline to adjust difficulty! Stairs or bench are enough!",
+  "@pushupInclineDesc": {
+    "description": "Incline pushup description"
+  },
+
+  "pushupWideGripDesc": "Spread wide for broader chest! Build that real chad chest!",
+  "@pushupWideGripDesc": {
+    "description": "Wide grip pushup description"
+  },
+
+  "pushupDiamondDesc": "Focused triceps attack! Diamond shape is the symbol of real chad!",
+  "@pushupDiamondDesc": {
+    "description": "Diamond pushup description"
+  },
+
+  "pushupDeclineDesc": "Raise feet for increased intensity! Properly stimulate shoulders and upper body!",
+  "@pushupDeclineDesc": {
+    "description": "Decline pushup description"
+  },
+
+  "pushupArcherDesc": "Advanced technique focusing on one side! Requires balance and core!",
+  "@pushupArcherDesc": {
+    "description": "Archer pushup description"
+  },
+
+  "pushupPikeDesc": "Shoulder focused attack! Pre-stage to handstand pushups!",
+  "@pushupPikeDesc": {
+    "description": "Pike pushup description"
+  },
+
+  "pushupClapDesc": "Explosive power with clapping! Only real chads can do this!",
+  "@pushupClapDesc": {
+    "description": "Clap pushup description"
+  },
+
+  "pushupOneArmDesc": "One-arm pushup is the ultimate chad form! Do this even once and you're recognized as a real giga chad!",
+  "@pushupOneArmDesc": {
+    "description": "One-arm pushup description"
+  },
+
+  "chadDescription": "💪 Chad Description",
+  "@chadDescription": {
+    "description": "Chad description section title"
+  },
+
+  "chadAdvice": "🔥 Chad's Advice",
+  "@chadAdvice": {
+    "description": "Chad advice section title"
+  },
+
+  "chadMotivationStandard": "Basics are most important! Build up one by one with perfect form and you'll become a real chad!",
+  "@chadMotivationStandard": {
+    "description": "Chad motivation for standard pushups"
+  },
+
+  "chadMotivationKnee": "Starting is half the battle! Do knee pushups properly and you'll quickly advance to regular pushups!",
+  "@chadMotivationKnee": {
+    "description": "Chad motivation for knee pushups"
+  },
+
+  "chadMotivationIncline": "Step-by-step progression is the chad way! Challenge yourself by gradually lowering the angle!",
+  "@chadMotivationIncline": {
+    "description": "Chad motivation for incline pushups"
+  },
+
+  "chadMotivationWideGrip": "Spread your chest wide and receive chad energy! A broad chest is the symbol of a real chad!",
+  "@chadMotivationWideGrip": {
+    "description": "Chad motivation for wide grip pushups"
+  },
+
+  "chadMotivationDiamond": "Build your precious triceps like diamonds! Feel your arm muscles explode!",
+  "@chadMotivationDiamond": {
+    "description": "Chad motivation for diamond pushups"
+  },
+
+  "chadMotivationDecline": "Challenging higher ground is what chads do! Feel your shoulders and upper body burning!",
+  "@chadMotivationDecline": {
+    "description": "Chad motivation for decline pushups"
+  },
+
+  "chadMotivationArcher": "Advanced technique requiring balance and focus! Master each side perfectly and you're a real chad!",
+  "@chadMotivationArcher": {
+    "description": "Chad motivation for archer pushups"
+  },
+
+  "chadMotivationPike": "First step to handstands! Enjoy the feeling of your shoulder muscles bursting!",
+  "@chadMotivationPike": {
+    "description": "Chad motivation for pike pushups"
+  },
+
+  "chadMotivationClap": "Clap with explosive power! Master this and you're a real chad, f**k yeah!",
+  "@chadMotivationClap": {
+    "description": "Chad motivation for clap pushups"
+  },
+
+  "chadMotivationOneArm": "One-arm pushup is the ultimate chad form! Do this even once and you're recognized as a real giga chad, f**k yeah!",
+  "@chadMotivationOneArm": {
+    "description": "Chad motivation for one-arm pushups"
+  },
+
+  "chadMotivationDefault": "The chad path is tough but that makes it more valuable! Don't give up!",
+  "@chadMotivationDefault": {
+    "description": "Default chad motivation message"
   }
 }  

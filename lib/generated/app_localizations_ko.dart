@@ -517,16 +517,16 @@ class AppLocalizationsKo extends AppLocalizations {
   String get tutorialButton => '💥 PUSHUP MASTER 되기 💥';
 
   @override
-  String get difficultyBeginner => '🔥 FUTURE EMPEROR - 시작하는 ALPHA들 🔥';
+  String get difficultyBeginner => '푸시 - 시작하는 만삣삐들';
 
   @override
-  String get difficultyIntermediate => '⚡ ALPHA RISING - 성장하는 BEAST들 ⚡';
+  String get difficultyIntermediate => '알파 지망생 - 성장하는 차드들';
 
   @override
-  String get difficultyAdvanced => '👑 EMPEROR MODE - 강력한 CHAD들 👑';
+  String get difficultyAdvanced => '차드 - 강력한 기가들';
 
   @override
-  String get difficultyExtreme => '🚀 ULTRA GIGA CHAD - 전설의 GODLIKE 영역 🚀';
+  String get difficultyExtreme => '기가 차드 - 전설의 영역';
 
   @override
   String get targetMuscleChest => '가슴';
@@ -596,7 +596,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get pushupKneeName => '무릎 푸시업';
 
   @override
-  String get pushupKneeDesc => '차드 여정의 첫 걸음. 부끄러워하지 마라, 모든 전설은 여기서 시작된다!';
+  String get pushupKneeDesc => '입문자도 할 수 있다! 무릎 대고 하는 거 부끄러워하지 마라, 만삣삐!';
 
   @override
   String get pushupKneeBenefits =>
@@ -621,7 +621,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get pushupInclineName => '인클라인 푸시업';
 
   @override
-  String get pushupInclineDesc => '높은 곳에 손을 올리고 하는 푸시업. 계단을 올라가듯 차드로 진화한다!';
+  String get pushupInclineDesc => '경사면을 이용해서 난이도 조절! 계단이나 벤치면 충분하다, 만삣삐!';
 
   @override
   String get pushupInclineBenefits =>
@@ -647,7 +647,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get pushupWideGripName => '와이드 그립 푸시업';
 
   @override
-  String get pushupWideGripDesc => '손 간격을 넓혀서 가슴을 더 넓게 만드는 푸시업. 차드의 가슴판을 키운다!';
+  String get pushupWideGripDesc => '와이드하게 벌려서 가슴을 더 넓게! 진짜 차드 가슴을 만들어라!';
 
   @override
   String get pushupWideGripBenefits =>
@@ -673,7 +673,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get pushupDiamondName => '다이아몬드 푸시업';
 
   @override
-  String get pushupDiamondDesc => '손가락으로 다이아몬드를 만들어 하는 푸시업. 삼두근을 다이아몬드처럼 단단하게!';
+  String get pushupDiamondDesc => '삼두근 집중 공략! 다이아몬드 모양이 진짜 차드의 상징이다!';
 
   @override
   String get pushupDiamondBenefits =>
@@ -698,7 +698,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get pushupDeclineName => '디클라인 푸시업';
 
   @override
-  String get pushupDeclineDesc => '발을 높이 올리고 하는 푸시업. 중력을 이겨내는 진짜 차드들의 운동!';
+  String get pushupDeclineDesc => '발을 높게 올려서 강도 업! 어깨와 상체 근육을 제대로 자극한다!';
 
   @override
   String get pushupDeclineBenefits =>
@@ -724,7 +724,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get pushupArcherName => '아처 푸시업';
 
   @override
-  String get pushupArcherDesc => '활을 당기듯 한쪽으로 기울여 하는 푸시업. 정확성과 파워를 동시에!';
+  String get pushupArcherDesc => '한쪽씩 집중하는 고급 기술! 균형감각과 코어가 필요하다, 만삣삐!';
 
   @override
   String get pushupArcherBenefits =>
@@ -750,7 +750,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get pushupPikeName => '파이크 푸시업';
 
   @override
-  String get pushupPikeDesc => '역삼각형 자세로 하는 푸시업. 어깨를 바위로 만드는 차드의 비밀!';
+  String get pushupPikeDesc => '어깨 집중 공략! 핸드스탠드 푸시업의 전 단계다!';
 
   @override
   String get pushupPikeBenefits =>
@@ -775,7 +775,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get pushupClapName => '박수 푸시업';
 
   @override
-  String get pushupClapDesc => '폭발적인 힘으로 박수를 치는 푸시업. 진짜 파워는 여기서 증명된다!';
+  String get pushupClapDesc => '박수치면서 하는 폭발적인 파워! 진짜 차드만이 할 수 있다!';
 
   @override
   String get pushupClapBenefits =>
@@ -801,7 +801,8 @@ class AppLocalizationsKo extends AppLocalizations {
   String get pushupOneArmName => '원핸드 푸시업';
 
   @override
-  String get pushupOneArmDesc => '한 손으로만 하는 궁극의 푸시업. 기가 차드만이 도달할 수 있는 영역!';
+  String get pushupOneArmDesc =>
+      '원핸드 푸시업은 차드의 완성형이다! 이거 한 번이라도 하면 진짜 기가 차드 인정!';
 
   @override
   String get pushupOneArmBenefits =>
@@ -2334,7 +2335,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get challengeFailed => '챌린지 실패';
 
   @override
-  String get challengeStarted => '챌린지 시작!';
+  String get challengeStarted => '챌린지가 시작되었습니다! 🔥';
 
   @override
   String get challengeAbandoned => '챌린지 포기됨';
@@ -2685,4 +2686,124 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get permissionStorageMessage => '저장소 권한이 필요합니다. 설정에서 허용해주세요.';
+
+  @override
+  String get challengeCannotStart => '챌린지를 시작할 수 없습니다.';
+
+  @override
+  String get challengeGiveUpTitle => '챌린지 포기';
+
+  @override
+  String get challengeGiveUpMessage => '정말로 이 챌린지를 포기하시겠습니까?';
+
+  @override
+  String get challengeGaveUp => '챌린지를 포기했습니다.';
+
+  @override
+  String get challengeTitle => '챌린지';
+
+  @override
+  String get challengeTabCompleted => '완료';
+
+  @override
+  String get noChallengesAvailable => '사용 가능한 챌린지가 없습니다';
+
+  @override
+  String get unlockMoreChallenges => '더 많은 운동을 완료하여 새로운 챌린지를 해금하세요!';
+
+  @override
+  String get noActiveChallenges => '진행 중인 챌린지가 없습니다';
+
+  @override
+  String get startNewChallenge => '새로운 챌린지를 시작해보세요!';
+
+  @override
+  String get noCompletedChallenges => '완료된 챌린지가 없습니다';
+
+  @override
+  String get completeFirstChallenge => '첫 번째 챌린지를 완료해보세요!';
+
+  @override
+  String get pushupTutorialTitle => '차드 푸시업 도장';
+
+  @override
+  String get pushupTutorialSubtitle => '진짜 차드들은 자세부터 다르다! 💪';
+
+  @override
+  String get pushupStandard => '기본 푸시업';
+
+  @override
+  String get pushupKnee => '무릎 푸시업';
+
+  @override
+  String get pushupIncline => '인클라인 푸시업';
+
+  @override
+  String get pushupWideGrip => '와이드 그립 푸시업';
+
+  @override
+  String get pushupDiamond => '다이아몬드 푸시업';
+
+  @override
+  String get pushupDecline => '디클라인 푸시업';
+
+  @override
+  String get pushupArcher => '아처 푸시업';
+
+  @override
+  String get pushupPike => '파이크 푸시업';
+
+  @override
+  String get pushupClap => '박수 푸시업';
+
+  @override
+  String get pushupOneArm => '원핸드 푸시업';
+
+  @override
+  String get chadDescription => '💪 차드 설명';
+
+  @override
+  String get chadAdvice => '🔥 차드의 조언';
+
+  @override
+  String get chadMotivationStandard =>
+      '기본이 제일 중요하다, 만삣삐! 완벽한 폼으로 하나하나 쌓아가면 진짜 차드가 된다!';
+
+  @override
+  String get chadMotivationKnee =>
+      '시작이 반이다! 무릎 푸시업도 제대로 하면 금방 일반 푸시업으로 갈 수 있어!';
+
+  @override
+  String get chadMotivationIncline =>
+      '단계적으로 올라가는 것이 차드의 길이다! 각도를 점점 낮춰가면서 도전해봐!';
+
+  @override
+  String get chadMotivationWideGrip =>
+      '가슴을 활짝 펴고 차드의 기운을 받아라! 넓은 가슴이 진짜 차드의 상징이다!';
+
+  @override
+  String get chadMotivationDiamond =>
+      '다이아몬드처럼 귀한 네 삼두근을 만들어라! 팔 근육 폭발하는 기분을 느껴봐!';
+
+  @override
+  String get chadMotivationDecline =>
+      '높은 곳을 향해 도전하는 것이 차드다! 어깨와 상체가 불타오르는 걸 느껴봐!';
+
+  @override
+  String get chadMotivationArcher =>
+      '균형과 집중력이 필요한 고급 기술! 한쪽씩 완벽하게 해내면 진짜 차드 인정!';
+
+  @override
+  String get chadMotivationPike => '핸드스탠드의 첫걸음! 어깨 근육이 터져나갈 것 같은 기분을 만끽해라!';
+
+  @override
+  String get chadMotivationClap =>
+      '폭발적인 파워로 박수를 쳐라! 이거 되면 너도 진짜 차드다, fxxk yeah!';
+
+  @override
+  String get chadMotivationOneArm =>
+      '원핸드 푸시업은 차드의 완성형이다! 이거 한 번이라도 하면 진짜 기가 차드 인정, fxxk yeah!';
+
+  @override
+  String get chadMotivationDefault => '차드의 길은 험하지만 그래서 더 가치있다! 포기하지 마라, 만삣삐!';
 }

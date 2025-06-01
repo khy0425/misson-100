@@ -3405,5 +3405,252 @@
   "permissionStorageMessage": "저장소 권한이 필요합니다. 설정에서 허용해주세요.",
   "@permissionStorageMessage": {
     "description": "저장소 권한 요청 메시지"
+  },
+  "challengeStarted": "챌린지가 시작되었습니다! 🔥",
+  "@challengeStarted": {
+    "description": "챌린지 시작 메시지"
+  },
+  "challengeCannotStart": "챌린지를 시작할 수 없습니다.",
+  "@challengeCannotStart": {
+    "description": "챌린지 시작 불가 메시지"
+  },
+  "challengeGiveUpTitle": "챌린지 포기",
+  "@challengeGiveUpTitle": {
+    "description": "챌린지 포기 확인 제목"
+  },
+  "challengeGiveUpMessage": "정말로 이 챌린지를 포기하시겠습니까?",
+  "@challengeGiveUpMessage": {
+    "description": "챌린지 포기 확인 메시지"
+  },
+  "challengeGaveUp": "챌린지를 포기했습니다.",
+  "@challengeGaveUp": {
+    "description": "챌린지 포기 완료 메시지"
+  },
+  "challengeTitle": "챌린지",
+  "@challengeTitle": {
+    "description": "챌린지 화면 제목"
+  },
+  "challengeTabCompleted": "완료",
+  "@challengeTabCompleted": {
+    "description": "완료된 챌린지 탭"
+  },
+  "noChallengesAvailable": "사용 가능한 챌린지가 없습니다",
+  "@noChallengesAvailable": {
+    "description": "사용 가능한 챌린지 없음 메시지"
+  },
+  "unlockMoreChallenges": "더 많은 운동을 완료하여 새로운 챌린지를 해금하세요!",
+  "@unlockMoreChallenges": {
+    "description": "챌린지 해금 안내 메시지"
+  },
+  "noActiveChallenges": "진행 중인 챌린지가 없습니다",
+  "@noActiveChallenges": {
+    "description": "진행 중인 챌린지 없음 메시지"
+  },
+  "startNewChallenge": "새로운 챌린지를 시작해보세요!",
+  "@startNewChallenge": {
+    "description": "새 챌린지 시작 안내 메시지"
+  },
+  "noCompletedChallenges": "완료된 챌린지가 없습니다",
+  "@noCompletedChallenges": {
+    "description": "완료된 챌린지 없음 메시지"
+  },
+  "completeFirstChallenge": "첫 번째 챌린지를 완료해보세요!",
+  "@completeFirstChallenge": {
+    "description": "첫 챌린지 완료 안내 메시지"
+  },
+
+  "pushupTutorialTitle": "차드 푸시업 도장",
+  "@pushupTutorialTitle": {
+    "description": "푸시업 튜토리얼 화면 제목"
+  },
+
+  "pushupTutorialSubtitle": "진짜 차드들은 자세부터 다르다! 💪",
+  "@pushupTutorialSubtitle": {
+    "description": "푸시업 튜토리얼 화면 부제목"
+  },
+
+  "difficultyBeginner": "푸시 - 시작하는 만삣삐들",
+  "@difficultyBeginner": {
+    "description": "푸시업 초급 난이도"
+  },
+
+  "difficultyIntermediate": "알파 지망생 - 성장하는 차드들",
+  "@difficultyIntermediate": {
+    "description": "푸시업 중급 난이도"
+  },
+
+  "difficultyAdvanced": "차드 - 강력한 기가들",
+  "@difficultyAdvanced": {
+    "description": "푸시업 상급 난이도"
+  },
+
+  "difficultyExtreme": "기가 차드 - 전설의 영역",
+  "@difficultyExtreme": {
+    "description": "푸시업 극한 난이도"
+  },
+
+  "pushupStandard": "기본 푸시업",
+  "@pushupStandard": {
+    "description": "기본 푸시업 이름"
+  },
+
+  "pushupKnee": "무릎 푸시업",
+  "@pushupKnee": {
+    "description": "무릎 푸시업 이름"
+  },
+
+  "pushupIncline": "인클라인 푸시업",
+  "@pushupIncline": {
+    "description": "인클라인 푸시업 이름"
+  },
+
+  "pushupWideGrip": "와이드 그립 푸시업",
+  "@pushupWideGrip": {
+    "description": "와이드 그립 푸시업 이름"
+  },
+
+  "pushupDiamond": "다이아몬드 푸시업",
+  "@pushupDiamond": {
+    "description": "다이아몬드 푸시업 이름"
+  },
+
+  "pushupDecline": "디클라인 푸시업",
+  "@pushupDecline": {
+    "description": "디클라인 푸시업 이름"
+  },
+
+  "pushupArcher": "아처 푸시업",
+  "@pushupArcher": {
+    "description": "아처 푸시업 이름"
+  },
+
+  "pushupPike": "파이크 푸시업",
+  "@pushupPike": {
+    "description": "파이크 푸시업 이름"
+  },
+
+  "pushupClap": "박수 푸시업",
+  "@pushupClap": {
+    "description": "박수 푸시업 이름"
+  },
+
+  "pushupOneArm": "원핸드 푸시업",
+  "@pushupOneArm": {
+    "description": "원핸드 푸시업 이름"
+  },
+
+  "pushupStandardDesc": "모든 차드의 시작점. 완벽한 기본기가 진짜 강함이다, 만삣삐!",
+  "@pushupStandardDesc": {
+    "description": "기본 푸시업 설명"
+  },
+
+  "pushupKneeDesc": "입문자도 할 수 있다! 무릎 대고 하는 거 부끄러워하지 마라, 만삣삐!",
+  "@pushupKneeDesc": {
+    "description": "무릎 푸시업 설명"
+  },
+
+  "pushupInclineDesc": "경사면을 이용해서 난이도 조절! 계단이나 벤치면 충분하다, 만삣삐!",
+  "@pushupInclineDesc": {
+    "description": "인클라인 푸시업 설명"
+  },
+
+  "pushupWideGripDesc": "와이드하게 벌려서 가슴을 더 넓게! 진짜 차드 가슴을 만들어라!",
+  "@pushupWideGripDesc": {
+    "description": "와이드 그립 푸시업 설명"
+  },
+
+  "pushupDiamondDesc": "삼두근 집중 공략! 다이아몬드 모양이 진짜 차드의 상징이다!",
+  "@pushupDiamondDesc": {
+    "description": "다이아몬드 푸시업 설명"
+  },
+
+  "pushupDeclineDesc": "발을 높게 올려서 강도 업! 어깨와 상체 근육을 제대로 자극한다!",
+  "@pushupDeclineDesc": {
+    "description": "디클라인 푸시업 설명"
+  },
+
+  "pushupArcherDesc": "한쪽씩 집중하는 고급 기술! 균형감각과 코어가 필요하다, 만삣삐!",
+  "@pushupArcherDesc": {
+    "description": "아처 푸시업 설명"
+  },
+
+  "pushupPikeDesc": "어깨 집중 공략! 핸드스탠드 푸시업의 전 단계다!",
+  "@pushupPikeDesc": {
+    "description": "파이크 푸시업 설명"
+  },
+
+  "pushupClapDesc": "박수치면서 하는 폭발적인 파워! 진짜 차드만이 할 수 있다!",
+  "@pushupClapDesc": {
+    "description": "박수 푸시업 설명"
+  },
+
+  "pushupOneArmDesc": "원핸드 푸시업은 차드의 완성형이다! 이거 한 번이라도 하면 진짜 기가 차드 인정!",
+  "@pushupOneArmDesc": {
+    "description": "원핸드 푸시업 설명"
+  },
+
+  "chadDescription": "💪 차드 설명",
+  "@chadDescription": {
+    "description": "차드 설명 섹션 제목"
+  },
+
+  "chadAdvice": "🔥 차드의 조언",
+  "@chadAdvice": {
+    "description": "차드 조언 섹션 제목"
+  },
+
+  "chadMotivationStandard": "기본이 제일 중요하다, 만삣삐! 완벽한 폼으로 하나하나 쌓아가면 진짜 차드가 된다!",
+  "@chadMotivationStandard": {
+    "description": "기본 푸시업에 대한 차드 격려"
+  },
+
+  "chadMotivationKnee": "시작이 반이다! 무릎 푸시업도 제대로 하면 금방 일반 푸시업으로 갈 수 있어!",
+  "@chadMotivationKnee": {
+    "description": "무릎 푸시업에 대한 차드 격려"
+  },
+
+  "chadMotivationIncline": "단계적으로 올라가는 것이 차드의 길이다! 각도를 점점 낮춰가면서 도전해봐!",
+  "@chadMotivationIncline": {
+    "description": "인클라인 푸시업에 대한 차드 격려"
+  },
+
+  "chadMotivationWideGrip": "가슴을 활짝 펴고 차드의 기운을 받아라! 넓은 가슴이 진짜 차드의 상징이다!",
+  "@chadMotivationWideGrip": {
+    "description": "와이드 그립 푸시업에 대한 차드 격려"
+  },
+
+  "chadMotivationDiamond": "다이아몬드처럼 귀한 네 삼두근을 만들어라! 팔 근육 폭발하는 기분을 느껴봐!",
+  "@chadMotivationDiamond": {
+    "description": "다이아몬드 푸시업에 대한 차드 격려"
+  },
+
+  "chadMotivationDecline": "높은 곳을 향해 도전하는 것이 차드다! 어깨와 상체가 불타오르는 걸 느껴봐!",
+  "@chadMotivationDecline": {
+    "description": "디클라인 푸시업에 대한 차드 격려"
+  },
+
+  "chadMotivationArcher": "균형과 집중력이 필요한 고급 기술! 한쪽씩 완벽하게 해내면 진짜 차드 인정!",
+  "@chadMotivationArcher": {
+    "description": "아처 푸시업에 대한 차드 격려"
+  },
+
+  "chadMotivationPike": "핸드스탠드의 첫걸음! 어깨 근육이 터져나갈 것 같은 기분을 만끽해라!",
+  "@chadMotivationPike": {
+    "description": "파이크 푸시업에 대한 차드 격려"
+  },
+
+  "chadMotivationClap": "폭발적인 파워로 박수를 쳐라! 이거 되면 너도 진짜 차드다, fxxk yeah!",
+  "@chadMotivationClap": {
+    "description": "박수 푸시업에 대한 차드 격려"
+  },
+
+  "chadMotivationOneArm": "원핸드 푸시업은 차드의 완성형이다! 이거 한 번이라도 하면 진짜 기가 차드 인정, fxxk yeah!",
+  "@chadMotivationOneArm": {
+    "description": "원핸드 푸시업에 대한 차드 격려"
+  },
+
+  "chadMotivationDefault": "차드의 길은 험하지만 그래서 더 가치있다! 포기하지 마라, 만삣삐!",
+  "@chadMotivationDefault": {
+    "description": "기본 차드 격려 메시지"
   }
 }

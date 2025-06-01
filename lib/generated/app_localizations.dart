@@ -998,28 +998,28 @@ abstract class AppLocalizations {
   /// **'💥 PUSHUP MASTER 되기 💥'**
   String get tutorialButton;
 
-  /// 초급 난이도
+  /// 푸시업 초급 난이도
   ///
   /// In ko, this message translates to:
-  /// **'🔥 FUTURE EMPEROR - 시작하는 ALPHA들 🔥'**
+  /// **'푸시 - 시작하는 만삣삐들'**
   String get difficultyBeginner;
 
-  /// 중급 난이도
+  /// 푸시업 중급 난이도
   ///
   /// In ko, this message translates to:
-  /// **'⚡ ALPHA RISING - 성장하는 BEAST들 ⚡'**
+  /// **'알파 지망생 - 성장하는 차드들'**
   String get difficultyIntermediate;
 
-  /// 고급 난이도
+  /// 푸시업 상급 난이도
   ///
   /// In ko, this message translates to:
-  /// **'👑 EMPEROR MODE - 강력한 CHAD들 👑'**
+  /// **'차드 - 강력한 기가들'**
   String get difficultyAdvanced;
 
-  /// 극한 난이도
+  /// 푸시업 극한 난이도
   ///
   /// In ko, this message translates to:
-  /// **'🚀 ULTRA GIGA CHAD - 전설의 GODLIKE 영역 🚀'**
+  /// **'기가 차드 - 전설의 영역'**
   String get difficultyExtreme;
 
   /// 타겟 근육 - 가슴
@@ -1145,7 +1145,7 @@ abstract class AppLocalizations {
   /// 무릎 푸시업 설명
   ///
   /// In ko, this message translates to:
-  /// **'차드 여정의 첫 걸음. 부끄러워하지 마라, 모든 전설은 여기서 시작된다!'**
+  /// **'입문자도 할 수 있다! 무릎 대고 하는 거 부끄러워하지 마라, 만삣삐!'**
   String get pushupKneeDesc;
 
   /// 무릎 푸시업 효과
@@ -1187,7 +1187,7 @@ abstract class AppLocalizations {
   /// 인클라인 푸시업 설명
   ///
   /// In ko, this message translates to:
-  /// **'높은 곳에 손을 올리고 하는 푸시업. 계단을 올라가듯 차드로 진화한다!'**
+  /// **'경사면을 이용해서 난이도 조절! 계단이나 벤치면 충분하다, 만삣삐!'**
   String get pushupInclineDesc;
 
   /// 인클라인 푸시업 효과
@@ -1229,7 +1229,7 @@ abstract class AppLocalizations {
   /// 와이드 그립 푸시업 설명
   ///
   /// In ko, this message translates to:
-  /// **'손 간격을 넓혀서 가슴을 더 넓게 만드는 푸시업. 차드의 가슴판을 키운다!'**
+  /// **'와이드하게 벌려서 가슴을 더 넓게! 진짜 차드 가슴을 만들어라!'**
   String get pushupWideGripDesc;
 
   /// 와이드 그립 푸시업 효과
@@ -1271,7 +1271,7 @@ abstract class AppLocalizations {
   /// 다이아몬드 푸시업 설명
   ///
   /// In ko, this message translates to:
-  /// **'손가락으로 다이아몬드를 만들어 하는 푸시업. 삼두근을 다이아몬드처럼 단단하게!'**
+  /// **'삼두근 집중 공략! 다이아몬드 모양이 진짜 차드의 상징이다!'**
   String get pushupDiamondDesc;
 
   /// 다이아몬드 푸시업 효과
@@ -1313,7 +1313,7 @@ abstract class AppLocalizations {
   /// 디클라인 푸시업 설명
   ///
   /// In ko, this message translates to:
-  /// **'발을 높이 올리고 하는 푸시업. 중력을 이겨내는 진짜 차드들의 운동!'**
+  /// **'발을 높게 올려서 강도 업! 어깨와 상체 근육을 제대로 자극한다!'**
   String get pushupDeclineDesc;
 
   /// 디클라인 푸시업 효과
@@ -1355,7 +1355,7 @@ abstract class AppLocalizations {
   /// 아처 푸시업 설명
   ///
   /// In ko, this message translates to:
-  /// **'활을 당기듯 한쪽으로 기울여 하는 푸시업. 정확성과 파워를 동시에!'**
+  /// **'한쪽씩 집중하는 고급 기술! 균형감각과 코어가 필요하다, 만삣삐!'**
   String get pushupArcherDesc;
 
   /// 아처 푸시업 효과
@@ -1397,7 +1397,7 @@ abstract class AppLocalizations {
   /// 파이크 푸시업 설명
   ///
   /// In ko, this message translates to:
-  /// **'역삼각형 자세로 하는 푸시업. 어깨를 바위로 만드는 차드의 비밀!'**
+  /// **'어깨 집중 공략! 핸드스탠드 푸시업의 전 단계다!'**
   String get pushupPikeDesc;
 
   /// 파이크 푸시업 효과
@@ -1439,7 +1439,7 @@ abstract class AppLocalizations {
   /// 박수 푸시업 설명
   ///
   /// In ko, this message translates to:
-  /// **'폭발적인 힘으로 박수를 치는 푸시업. 진짜 파워는 여기서 증명된다!'**
+  /// **'박수치면서 하는 폭발적인 파워! 진짜 차드만이 할 수 있다!'**
   String get pushupClapDesc;
 
   /// 박수 푸시업 효과
@@ -1481,7 +1481,7 @@ abstract class AppLocalizations {
   /// 원핸드 푸시업 설명
   ///
   /// In ko, this message translates to:
-  /// **'한 손으로만 하는 궁극의 푸시업. 기가 차드만이 도달할 수 있는 영역!'**
+  /// **'원핸드 푸시업은 차드의 완성형이다! 이거 한 번이라도 하면 진짜 기가 차드 인정!'**
   String get pushupOneArmDesc;
 
   /// 원핸드 푸시업 효과
@@ -4406,10 +4406,10 @@ abstract class AppLocalizations {
   /// **'챌린지 실패'**
   String get challengeFailed;
 
-  /// Challenge started message
+  /// 챌린지 시작 메시지
   ///
   /// In ko, this message translates to:
-  /// **'챌린지 시작!'**
+  /// **'챌린지가 시작되었습니다! 🔥'**
   String get challengeStarted;
 
   /// Challenge abandoned message
@@ -5035,6 +5035,228 @@ abstract class AppLocalizations {
   /// In ko, this message translates to:
   /// **'저장소 권한이 필요합니다. 설정에서 허용해주세요.'**
   String get permissionStorageMessage;
+
+  /// 챌린지 시작 불가 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'챌린지를 시작할 수 없습니다.'**
+  String get challengeCannotStart;
+
+  /// 챌린지 포기 확인 제목
+  ///
+  /// In ko, this message translates to:
+  /// **'챌린지 포기'**
+  String get challengeGiveUpTitle;
+
+  /// 챌린지 포기 확인 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'정말로 이 챌린지를 포기하시겠습니까?'**
+  String get challengeGiveUpMessage;
+
+  /// 챌린지 포기 완료 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'챌린지를 포기했습니다.'**
+  String get challengeGaveUp;
+
+  /// 챌린지 화면 제목
+  ///
+  /// In ko, this message translates to:
+  /// **'챌린지'**
+  String get challengeTitle;
+
+  /// 완료된 챌린지 탭
+  ///
+  /// In ko, this message translates to:
+  /// **'완료'**
+  String get challengeTabCompleted;
+
+  /// 사용 가능한 챌린지 없음 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'사용 가능한 챌린지가 없습니다'**
+  String get noChallengesAvailable;
+
+  /// 챌린지 해금 안내 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'더 많은 운동을 완료하여 새로운 챌린지를 해금하세요!'**
+  String get unlockMoreChallenges;
+
+  /// 진행 중인 챌린지 없음 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'진행 중인 챌린지가 없습니다'**
+  String get noActiveChallenges;
+
+  /// 새 챌린지 시작 안내 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'새로운 챌린지를 시작해보세요!'**
+  String get startNewChallenge;
+
+  /// 완료된 챌린지 없음 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'완료된 챌린지가 없습니다'**
+  String get noCompletedChallenges;
+
+  /// 첫 챌린지 완료 안내 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'첫 번째 챌린지를 완료해보세요!'**
+  String get completeFirstChallenge;
+
+  /// 푸시업 튜토리얼 화면 제목
+  ///
+  /// In ko, this message translates to:
+  /// **'차드 푸시업 도장'**
+  String get pushupTutorialTitle;
+
+  /// 푸시업 튜토리얼 화면 부제목
+  ///
+  /// In ko, this message translates to:
+  /// **'진짜 차드들은 자세부터 다르다! 💪'**
+  String get pushupTutorialSubtitle;
+
+  /// 기본 푸시업 이름
+  ///
+  /// In ko, this message translates to:
+  /// **'기본 푸시업'**
+  String get pushupStandard;
+
+  /// 무릎 푸시업 이름
+  ///
+  /// In ko, this message translates to:
+  /// **'무릎 푸시업'**
+  String get pushupKnee;
+
+  /// 인클라인 푸시업 이름
+  ///
+  /// In ko, this message translates to:
+  /// **'인클라인 푸시업'**
+  String get pushupIncline;
+
+  /// 와이드 그립 푸시업 이름
+  ///
+  /// In ko, this message translates to:
+  /// **'와이드 그립 푸시업'**
+  String get pushupWideGrip;
+
+  /// 다이아몬드 푸시업 이름
+  ///
+  /// In ko, this message translates to:
+  /// **'다이아몬드 푸시업'**
+  String get pushupDiamond;
+
+  /// 디클라인 푸시업 이름
+  ///
+  /// In ko, this message translates to:
+  /// **'디클라인 푸시업'**
+  String get pushupDecline;
+
+  /// 아처 푸시업 이름
+  ///
+  /// In ko, this message translates to:
+  /// **'아처 푸시업'**
+  String get pushupArcher;
+
+  /// 파이크 푸시업 이름
+  ///
+  /// In ko, this message translates to:
+  /// **'파이크 푸시업'**
+  String get pushupPike;
+
+  /// 박수 푸시업 이름
+  ///
+  /// In ko, this message translates to:
+  /// **'박수 푸시업'**
+  String get pushupClap;
+
+  /// 원핸드 푸시업 이름
+  ///
+  /// In ko, this message translates to:
+  /// **'원핸드 푸시업'**
+  String get pushupOneArm;
+
+  /// 차드 설명 섹션 제목
+  ///
+  /// In ko, this message translates to:
+  /// **'💪 차드 설명'**
+  String get chadDescription;
+
+  /// 차드 조언 섹션 제목
+  ///
+  /// In ko, this message translates to:
+  /// **'🔥 차드의 조언'**
+  String get chadAdvice;
+
+  /// 기본 푸시업에 대한 차드 격려
+  ///
+  /// In ko, this message translates to:
+  /// **'기본이 제일 중요하다, 만삣삐! 완벽한 폼으로 하나하나 쌓아가면 진짜 차드가 된다!'**
+  String get chadMotivationStandard;
+
+  /// 무릎 푸시업에 대한 차드 격려
+  ///
+  /// In ko, this message translates to:
+  /// **'시작이 반이다! 무릎 푸시업도 제대로 하면 금방 일반 푸시업으로 갈 수 있어!'**
+  String get chadMotivationKnee;
+
+  /// 인클라인 푸시업에 대한 차드 격려
+  ///
+  /// In ko, this message translates to:
+  /// **'단계적으로 올라가는 것이 차드의 길이다! 각도를 점점 낮춰가면서 도전해봐!'**
+  String get chadMotivationIncline;
+
+  /// 와이드 그립 푸시업에 대한 차드 격려
+  ///
+  /// In ko, this message translates to:
+  /// **'가슴을 활짝 펴고 차드의 기운을 받아라! 넓은 가슴이 진짜 차드의 상징이다!'**
+  String get chadMotivationWideGrip;
+
+  /// 다이아몬드 푸시업에 대한 차드 격려
+  ///
+  /// In ko, this message translates to:
+  /// **'다이아몬드처럼 귀한 네 삼두근을 만들어라! 팔 근육 폭발하는 기분을 느껴봐!'**
+  String get chadMotivationDiamond;
+
+  /// 디클라인 푸시업에 대한 차드 격려
+  ///
+  /// In ko, this message translates to:
+  /// **'높은 곳을 향해 도전하는 것이 차드다! 어깨와 상체가 불타오르는 걸 느껴봐!'**
+  String get chadMotivationDecline;
+
+  /// 아처 푸시업에 대한 차드 격려
+  ///
+  /// In ko, this message translates to:
+  /// **'균형과 집중력이 필요한 고급 기술! 한쪽씩 완벽하게 해내면 진짜 차드 인정!'**
+  String get chadMotivationArcher;
+
+  /// 파이크 푸시업에 대한 차드 격려
+  ///
+  /// In ko, this message translates to:
+  /// **'핸드스탠드의 첫걸음! 어깨 근육이 터져나갈 것 같은 기분을 만끽해라!'**
+  String get chadMotivationPike;
+
+  /// 박수 푸시업에 대한 차드 격려
+  ///
+  /// In ko, this message translates to:
+  /// **'폭발적인 파워로 박수를 쳐라! 이거 되면 너도 진짜 차드다, fxxk yeah!'**
+  String get chadMotivationClap;
+
+  /// 원핸드 푸시업에 대한 차드 격려
+  ///
+  /// In ko, this message translates to:
+  /// **'원핸드 푸시업은 차드의 완성형이다! 이거 한 번이라도 하면 진짜 기가 차드 인정, fxxk yeah!'**
+  String get chadMotivationOneArm;
+
+  /// 기본 차드 격려 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'차드의 길은 험하지만 그래서 더 가치있다! 포기하지 마라, 만삣삐!'**
+  String get chadMotivationDefault;
 }
 
 class _AppLocalizationsDelegate
