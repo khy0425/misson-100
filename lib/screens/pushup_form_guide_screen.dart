@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import '../generated/app_localizations.dart';
 import '../models/pushup_form_guide.dart';
 import '../services/pushup_form_guide_service.dart';
 import '../services/chad_encouragement_service.dart';
@@ -1378,9 +1379,9 @@ class _PushupFormGuideScreenState extends State<PushupFormGuideScreen>
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text(
-              '확인',
-              style: TextStyle(color: Color(0xFF4DABF7)),
+            child: Text(
+              AppLocalizations.of(context)!.confirm,
+              style: const TextStyle(color: Color(0xFF4DABF7)),
             ),
           ),
         ],
