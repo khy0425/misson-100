@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../generated/app_localizations.dart';
 import '../services/data_backup_service.dart';
 import '../services/backup_scheduler.dart';
 
@@ -170,7 +171,7 @@ class _BackupScreenState extends State<BackupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('백업 관리'),
+        title: Text(AppLocalizations.of(context)!.backupManagement),
         backgroundColor: Colors.blue[600],
         foregroundColor: Colors.white,
         actions: [
@@ -188,8 +189,8 @@ class _BackupScreenState extends State<BackupScreen> {
 
   Widget _buildBackupContent() {
     if (_backupStatus == null) {
-      return const Center(
-        child: Text('백업 상태를 불러올 수 없습니다'),
+      return Center(
+        child: Text(AppLocalizations.of(context)!.errorLoadingData),
       );
     }
 
