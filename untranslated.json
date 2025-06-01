@@ -14,7 +14,6 @@
     "cannotOpenEmail",
     "cannotOpenGithub",
     "appVersion",
-    "builtWithFlutter",
-    "setRepsDisplayFormat"
+    "builtWithFlutter"
   ]
 }

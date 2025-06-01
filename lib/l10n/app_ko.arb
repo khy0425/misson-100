@@ -3196,5 +3196,156 @@
   "setRepsDisplayFormat": "세트 × 횟수",
   "@setRepsDisplayFormat": {
     "description": "세트 수 및 횟수 표시 형식"
+  },
+
+  "weeksRemaining": "{weeks}주 남음",
+  "@weeksRemaining": {
+    "description": "진화까지 남은 주차",
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "weekProgress": "{current}/{total} 주차",
+  "@weekProgress": {
+    "description": "전체 프로그램 진행률",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "thisWeekProgress": "이번 주 ({current}주차)",
+  "@thisWeekProgress": {
+    "description": "이번 주 진행률 표시",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      }
+    }
+  },
+  "weeksCompleted": "{completed}/{total} 주 완료",
+  "@weeksCompleted": {
+    "description": "완료된 주차 수",
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "todayWorkoutCompleted": "🎉 오늘 운동 완료! 🎉",
+  "@todayWorkoutCompleted": {
+    "description": "오늘 운동 완료 축하 메시지"
+  },
+  "totalPushups": "총 푸시업",
+  "@totalPushups": {
+    "description": "총 푸시업 수 통계 제목"
+  },
+  "completionRate": "완료율",
+  "@completionRate": {
+    "description": "운동 완료율 통계 제목"
+  },
+  "workoutTime": "운동 시간",
+  "@workoutTime": {
+    "description": "운동 시간 통계 제목"
+  },
+  "remainingGoal": "남은 목표",
+  "@remainingGoal": {
+    "description": "남은 목표 통계 제목"
+  },
+  "perfectPushupForm": "완벽한 푸시업 자세",
+  "@perfectPushupForm": {
+    "description": "푸시업 자세 가이드 제목"
+  },
+  "setRepFormat": "{setIndex}세트: {reps}개",
+  "@setRepFormat": {
+    "description": "세트별 목표 횟수 표시",
+    "placeholders": {
+      "setIndex": {
+        "type": "int"
+      },
+      "reps": {
+        "type": "int"
+      }
+    }
+  },
+  "completedFormat": "완료: {totalReps}개 / {totalSets}세트",
+  "@completedFormat": {
+    "description": "완료된 운동 표시",
+    "placeholders": {
+      "totalReps": {
+        "type": "int"
+      },
+      "totalSets": {
+        "type": "int"
+      }
+    }
+  },
+  "goalFormat": "목표: {totalReps}개 / {totalSets}세트",
+  "@goalFormat": {
+    "description": "목표 운동 표시",
+    "placeholders": {
+      "totalReps": {
+        "type": "int"
+      },
+      "totalSets": {
+        "type": "int"
+      }
+    }
+  },
+  "restDayChampionTitle": "🔥 진짜 챔피언의 선택",
+  "@restDayChampionTitle": {
+    "description": "휴식일 챔피언 모드 제목"
+  },
+  "restDayDescription": "오늘은 프로그램상 휴식일이지만...\n진짜 챔피언들은 쉬지 않는다! 🔥\n\n추가 챌린지를 진행하시겠습니까?",
+  "@restDayDescription": {
+    "description": "휴식일 설명 메시지"
+  },
+  "challengeMode": "챌린지 모드",
+  "@challengeMode": {
+    "description": "챌린지 모드"
+  },
+  "challengeModeDescription": "그냥 기본 운동? 아니면 진짜 챔피언 모드? 🚀\n\n⚡ 챌린지 모드 ON 하면:\n• 더 높은 난이도\n• 보너스 포인트 획득 🏆",
+  "@challengeModeDescription": {
+    "description": "챌린지 모드 설명"
+  },
+  "challengeModeOn": "챌린지 모드 ON! 🔥",
+  "@challengeModeOn": {
+    "description": "챌린지 모드 활성화 버튼"
+  },
+  "challengeModeActivated": "🔥 챌린지 모드 활성화! 정신력을 시험해보자! 💪",
+  "@challengeModeActivated": {
+    "description": "챌린지 모드 활성화 메시지"
+  },
+  "workoutAlreadyCompleted": "오늘의 운동은 이미 완료했습니다! 💪",
+  "@workoutAlreadyCompleted": {
+    "description": "운동 이미 완료 메시지"
+  },
+  "restDayChallenge": "휴식일이라고? 그런 건 약한 놈들이나 하는 거야!\n진짜 챔피언들은 매일이 전쟁이다! 🥊\n\n간단한 추가 챌린지로 너의 정신력을 증명해봐!",
+  "@restDayChallenge": {
+    "description": "휴식일 추가 챌린지 메시지"
+  },
+  "restDayAccept": "휴식일을 받아들이시겠습니까?",
+  "@restDayAccept": {
+    "description": "휴식일 수용 확인 메시지"
+  },
+  "restDayTeasing": "누군가는 100개 푸시업하고 있어! 💪\n\n정말 오늘은 쉬실 건가요?",
+  "@restDayTeasing": {
+    "description": "휴식일 놀리기 메시지"
+  },
+  "noWorkout": "아니다! 운동할래!",
+  "@noWorkout": {
+    "description": "운동하기로 결정 버튼"
+  },
+  "bonusChallenge": "🔥 보너스 챌린지",
+  "@bonusChallenge": {
+    "description": "보너스 챌린지 제목"
   }
 }

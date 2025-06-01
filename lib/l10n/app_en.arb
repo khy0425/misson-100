@@ -3889,5 +3889,160 @@
   "streakBrokenMessage": "Workout streak broken",
   "@streakBrokenMessage": {
     "description": "Workout streak broken message"
+  },
+  "setRepsDisplayFormat": "Sets × Reps",
+  "@setRepsDisplayFormat": {
+    "description": "Set count and reps display format"
+  },
+
+  "weeksRemaining": "{weeks} weeks left",
+  "@weeksRemaining": {
+    "description": "Weeks remaining until evolution",
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "weekProgress": "Week {current}/{total}",
+  "@weekProgress": {
+    "description": "Overall program progress",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "thisWeekProgress": "This Week (Week {current})",
+  "@thisWeekProgress": {
+    "description": "This week progress display",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      }
+    }
+  },
+  "weeksCompleted": "{completed}/{total} weeks completed",
+  "@weeksCompleted": {
+    "description": "Number of completed weeks",
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "todayWorkoutCompleted": "🎉 Today's Workout Complete! 🎉",
+  "@todayWorkoutCompleted": {
+    "description": "Today's workout completion celebration message"
+  },
+  "totalPushups": "Total Push-ups",
+  "@totalPushups": {
+    "description": "Total push-ups statistics title"
+  },
+  "completionRate": "Completion Rate",
+  "@completionRate": {
+    "description": "Workout completion rate statistics title"
+  },
+  "workoutTime": "Workout Time",
+  "@workoutTime": {
+    "description": "Workout time statistics title"
+  },
+  "remainingGoal": "Remaining Goal",
+  "@remainingGoal": {
+    "description": "Remaining goal statistics title"
+  },
+  "perfectPushupForm": "Perfect Push-up Form",
+  "@perfectPushupForm": {
+    "description": "Push-up form guide title"
+  },
+  "setRepFormat": "Set {setIndex}: {reps} reps",
+  "@setRepFormat": {
+    "description": "Set-wise target reps display",
+    "placeholders": {
+      "setIndex": {
+        "type": "int"
+      },
+      "reps": {
+        "type": "int"
+      }
+    }
+  },
+  "completedFormat": "Completed: {totalReps} reps / {totalSets} sets",
+  "@completedFormat": {
+    "description": "Completed workout display",
+    "placeholders": {
+      "totalReps": {
+        "type": "int"
+      },
+      "totalSets": {
+        "type": "int"
+      }
+    }
+  },
+  "goalFormat": "Goal: {totalReps} reps / {totalSets} sets",
+  "@goalFormat": {
+    "description": "Target workout display",
+    "placeholders": {
+      "totalReps": {
+        "type": "int"
+      },
+      "totalSets": {
+        "type": "int"
+      }
+    }
+  },
+  "restDayChampionTitle": "🔥 True Champion's Choice",
+  "@restDayChampionTitle": {
+    "description": "Rest day champion mode title"
+  },
+  "restDayDescription": "Today is a scheduled rest day but...\nTrue champions never rest! 🔥\n\nWould you like to take on an additional challenge?",
+  "@restDayDescription": {
+    "description": "Rest day description message"
+  },
+  "challengeMode": "Challenge Mode",
+  "@challengeMode": {
+    "description": "Challenge mode"
+  },
+  "challengeModeDescription": "Just basic workout? Or true champion mode? 🚀\n\n⚡ Challenge Mode ON gives you:\n• Higher difficulty\n• Bonus points earned 🏆",
+  "@challengeModeDescription": {
+    "description": "Challenge mode description"
+  },
+  "challengeModeOn": "Challenge Mode ON! 🔥",
+  "@challengeModeOn": {
+    "description": "Challenge mode activation button"
+  },
+  "challengeModeActivated": "🔥 Challenge Mode Activated! Let's test your mental strength! 💪",
+  "@challengeModeActivated": {
+    "description": "Challenge mode activation message"
+  },
+  "workoutAlreadyCompleted": "Today's workout is already completed! 💪",
+  "@workoutAlreadyCompleted": {
+    "description": "Workout already completed message"
+  },
+  "restDayChallenge": "Rest day? That's for the weak!\nTrue champions fight every day! 🥊\n\nProve your mental strength with a simple additional challenge!",
+  "@restDayChallenge": {
+    "description": "Rest day additional challenge message"
+  },
+  "restDayAccept": "Would you like to accept the rest day?",
+  "@restDayAccept": {
+    "description": "Rest day acceptance confirmation message"
+  },
+  "restDayTeasing": "Someone is doing 100 push-ups right now! 💪\n\nAre you really going to rest today?",
+  "@restDayTeasing": {
+    "description": "Rest day teasing message"
+  },
+  "noWorkout": "No! I'll work out!",
+  "@noWorkout": {
+    "description": "Decision to workout button"
+  },
+  "bonusChallenge": "🔥 Bonus Challenge",
+  "@bonusChallenge": {
+    "description": "Bonus challenge title"
   }
 }  

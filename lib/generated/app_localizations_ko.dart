@@ -230,7 +230,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get startTodayWorkout => '🚀 오늘의 DOMINATION 시작! 🚀';
 
   @override
-  String get weekProgress => '👑 EMPEROR\'S CONQUEST PROGRESS 👑';
+  String weekProgress(int current, int total) {
+    return '$current/$total 주차';
+  }
 
   @override
   String progressWeekDay(int week, int totalDays, int completedDays) {
@@ -2377,8 +2379,8 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String completedFormat(int reps, int sets) {
-    return '완료됨: $reps회 ($sets세트)';
+  String completedFormat(int totalReps, int totalSets) {
+    return '완료: $totalReps개 / $totalSets세트';
   }
 
   @override
@@ -2387,7 +2389,7 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get todayWorkoutCompleted => '오늘 운동 완료됨! 🎉';
+  String get todayWorkoutCompleted => '🎉 오늘 운동 완료! 🎉';
 
   @override
   String get justWait => '잠깐! 너 진짜 쉴거야?';
@@ -2569,4 +2571,77 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get setRepsDisplayFormat => '세트 × 횟수';
+
+  @override
+  String weeksRemaining(int weeks) {
+    return '$weeks주 남음';
+  }
+
+  @override
+  String thisWeekProgress(int current) {
+    return '이번 주 ($current주차)';
+  }
+
+  @override
+  String weeksCompleted(int completed, int total) {
+    return '$completed/$total 주 완료';
+  }
+
+  @override
+  String get completionRate => '완료율';
+
+  @override
+  String get workoutTime => '운동 시간';
+
+  @override
+  String get remainingGoal => '남은 목표';
+
+  @override
+  String setRepFormat(int setIndex, int reps) {
+    return '$setIndex세트: $reps개';
+  }
+
+  @override
+  String goalFormat(int totalReps, int totalSets) {
+    return '목표: $totalReps개 / $totalSets세트';
+  }
+
+  @override
+  String get restDayChampionTitle => '🔥 진짜 챔피언의 선택';
+
+  @override
+  String get restDayDescription =>
+      '오늘은 프로그램상 휴식일이지만...\n진짜 챔피언들은 쉬지 않는다! 🔥\n\n추가 챌린지를 진행하시겠습니까?';
+
+  @override
+  String get challengeMode => '챌린지 모드';
+
+  @override
+  String get challengeModeDescription =>
+      '그냥 기본 운동? 아니면 진짜 챔피언 모드? 🚀\n\n⚡ 챌린지 모드 ON 하면:\n• 더 높은 난이도\n• 보너스 포인트 획득 🏆';
+
+  @override
+  String get challengeModeOn => '챌린지 모드 ON! 🔥';
+
+  @override
+  String get challengeModeActivated => '🔥 챌린지 모드 활성화! 정신력을 시험해보자! 💪';
+
+  @override
+  String get workoutAlreadyCompleted => '오늘의 운동은 이미 완료했습니다! 💪';
+
+  @override
+  String get restDayChallenge =>
+      '휴식일이라고? 그런 건 약한 놈들이나 하는 거야!\n진짜 챔피언들은 매일이 전쟁이다! 🥊\n\n간단한 추가 챌린지로 너의 정신력을 증명해봐!';
+
+  @override
+  String get restDayAccept => '휴식일을 받아들이시겠습니까?';
+
+  @override
+  String get restDayTeasing => '누군가는 100개 푸시업하고 있어! 💪\n\n정말 오늘은 쉬실 건가요?';
+
+  @override
+  String get noWorkout => '아니다! 운동할래!';
+
+  @override
+  String get bonusChallenge => '🔥 보너스 챌린지';
 }

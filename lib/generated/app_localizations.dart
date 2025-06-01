@@ -506,11 +506,11 @@ abstract class AppLocalizations {
   /// **'🚀 오늘의 DOMINATION 시작! 🚀'**
   String get startTodayWorkout;
 
-  /// 주간 진행 상황 제목
+  /// 전체 프로그램 진행률
   ///
   /// In ko, this message translates to:
-  /// **'👑 EMPEROR\'S CONQUEST PROGRESS 👑'**
-  String get weekProgress;
+  /// **'{current}/{total} 주차'**
+  String weekProgress(int current, int total);
 
   /// 진행 상황 상세
   ///
@@ -2138,7 +2138,7 @@ abstract class AppLocalizations {
   /// **'차드가 된 날들!'**
   String get chadDays;
 
-  /// 총 푸시업 개수
+  /// 총 푸시업 수 통계 제목
   ///
   /// In ko, this message translates to:
   /// **'총 푸시업'**
@@ -2360,7 +2360,7 @@ abstract class AppLocalizations {
   /// **'#차드'**
   String get chadHashtag;
 
-  /// Perfect pushup form title
+  /// 푸시업 자세 가이드 제목
   ///
   /// In ko, this message translates to:
   /// **'완벽한 푸시업 자세'**
@@ -4490,11 +4490,11 @@ abstract class AppLocalizations {
   /// **'{number}세트: {reps}회'**
   String setFormat2(int number, int reps);
 
-  /// Completed workout format
+  /// 완료된 운동 표시
   ///
   /// In ko, this message translates to:
-  /// **'완료됨: {reps}회 ({sets}세트)'**
-  String completedFormat(int reps, int sets);
+  /// **'완료: {totalReps}개 / {totalSets}세트'**
+  String completedFormat(int totalReps, int totalSets);
 
   /// Total workout format
   ///
@@ -4502,10 +4502,10 @@ abstract class AppLocalizations {
   /// **'총 {reps}회 ({sets}세트)'**
   String totalFormat(int reps, int sets);
 
-  /// Today's workout completed message
+  /// 오늘 운동 완료 축하 메시지
   ///
   /// In ko, this message translates to:
-  /// **'오늘 운동 완료됨! 🎉'**
+  /// **'🎉 오늘 운동 완료! 🎉'**
   String get todayWorkoutCompleted;
 
   /// Rest prevention message
@@ -4843,6 +4843,126 @@ abstract class AppLocalizations {
   /// In ko, this message translates to:
   /// **'세트 × 횟수'**
   String get setRepsDisplayFormat;
+
+  /// 진화까지 남은 주차
+  ///
+  /// In ko, this message translates to:
+  /// **'{weeks}주 남음'**
+  String weeksRemaining(int weeks);
+
+  /// 이번 주 진행률 표시
+  ///
+  /// In ko, this message translates to:
+  /// **'이번 주 ({current}주차)'**
+  String thisWeekProgress(int current);
+
+  /// 완료된 주차 수
+  ///
+  /// In ko, this message translates to:
+  /// **'{completed}/{total} 주 완료'**
+  String weeksCompleted(int completed, int total);
+
+  /// 운동 완료율 통계 제목
+  ///
+  /// In ko, this message translates to:
+  /// **'완료율'**
+  String get completionRate;
+
+  /// 운동 시간 통계 제목
+  ///
+  /// In ko, this message translates to:
+  /// **'운동 시간'**
+  String get workoutTime;
+
+  /// 남은 목표 통계 제목
+  ///
+  /// In ko, this message translates to:
+  /// **'남은 목표'**
+  String get remainingGoal;
+
+  /// 세트별 목표 횟수 표시
+  ///
+  /// In ko, this message translates to:
+  /// **'{setIndex}세트: {reps}개'**
+  String setRepFormat(int setIndex, int reps);
+
+  /// 목표 운동 표시
+  ///
+  /// In ko, this message translates to:
+  /// **'목표: {totalReps}개 / {totalSets}세트'**
+  String goalFormat(int totalReps, int totalSets);
+
+  /// 휴식일 챔피언 모드 제목
+  ///
+  /// In ko, this message translates to:
+  /// **'🔥 진짜 챔피언의 선택'**
+  String get restDayChampionTitle;
+
+  /// 휴식일 설명 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'오늘은 프로그램상 휴식일이지만...\n진짜 챔피언들은 쉬지 않는다! 🔥\n\n추가 챌린지를 진행하시겠습니까?'**
+  String get restDayDescription;
+
+  /// 챌린지 모드
+  ///
+  /// In ko, this message translates to:
+  /// **'챌린지 모드'**
+  String get challengeMode;
+
+  /// 챌린지 모드 설명
+  ///
+  /// In ko, this message translates to:
+  /// **'그냥 기본 운동? 아니면 진짜 챔피언 모드? 🚀\n\n⚡ 챌린지 모드 ON 하면:\n• 더 높은 난이도\n• 보너스 포인트 획득 🏆'**
+  String get challengeModeDescription;
+
+  /// 챌린지 모드 활성화 버튼
+  ///
+  /// In ko, this message translates to:
+  /// **'챌린지 모드 ON! 🔥'**
+  String get challengeModeOn;
+
+  /// 챌린지 모드 활성화 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'🔥 챌린지 모드 활성화! 정신력을 시험해보자! 💪'**
+  String get challengeModeActivated;
+
+  /// 운동 이미 완료 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'오늘의 운동은 이미 완료했습니다! 💪'**
+  String get workoutAlreadyCompleted;
+
+  /// 휴식일 추가 챌린지 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'휴식일이라고? 그런 건 약한 놈들이나 하는 거야!\n진짜 챔피언들은 매일이 전쟁이다! 🥊\n\n간단한 추가 챌린지로 너의 정신력을 증명해봐!'**
+  String get restDayChallenge;
+
+  /// 휴식일 수용 확인 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'휴식일을 받아들이시겠습니까?'**
+  String get restDayAccept;
+
+  /// 휴식일 놀리기 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'누군가는 100개 푸시업하고 있어! 💪\n\n정말 오늘은 쉬실 건가요?'**
+  String get restDayTeasing;
+
+  /// 운동하기로 결정 버튼
+  ///
+  /// In ko, this message translates to:
+  /// **'아니다! 운동할래!'**
+  String get noWorkout;
+
+  /// 보너스 챌린지 제목
+  ///
+  /// In ko, this message translates to:
+  /// **'🔥 보너스 챌린지'**
+  String get bonusChallenge;
 }
 
 class _AppLocalizationsDelegate

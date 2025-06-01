@@ -350,13 +350,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             ),
             const SizedBox(height: AppConstants.paddingM),
             Text(
-              '사용자 프로필이 없습니다',
-              style: Theme.of(context).textTheme.titleMedium,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: AppConstants.paddingS),
-            Text(
-              '초기 테스트를 완료하여 프로필을 생성해주세요',
+              Localizations.localeOf(context).languageCode == 'ko' 
+                ? '초기 테스트를 완료하여 프로필을 생성해주세요'
+                : 'Please complete the initial test to create your profile',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: Colors.grey,
               ),
@@ -491,10 +487,12 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 ),
                 const SizedBox(height: AppConstants.paddingS),
                 Text(
-                  '${chadService.getWeeksUntilNextEvolution()}주 남음',
+                  Localizations.localeOf(context).languageCode == 'ko' 
+                    ? '${chadService.getWeeksUntilNextEvolution()}주 남음'
+                    : '${chadService.getWeeksUntilNextEvolution()} weeks left',
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: currentChad.themeColor,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ] else ...[
@@ -586,7 +584,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 borderRadius: BorderRadius.circular(AppConstants.radiusS),
               ),
               child: Text(
-                '${(_todayWorkout!.week ?? 0)}주차 ${(_todayWorkout!.day ?? 0)}일차',
+                Localizations.localeOf(context).languageCode == 'ko' 
+                  ? '${(_todayWorkout!.week ?? 0)}주차 ${(_todayWorkout!.day ?? 0)}일차'
+                  : 'Week ${(_todayWorkout!.week ?? 0)} Day ${(_todayWorkout!.day ?? 0)}',
                 style: theme.textTheme.labelLarge?.copyWith(
                   color: const Color(AppColors.primaryColor),
                   fontWeight: FontWeight.bold,
@@ -623,7 +623,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                     borderRadius: BorderRadius.circular(AppConstants.radiusS),
                   ),
                   child: Text(
-                    '${setIndex}세트: ${reps}개',
+                    Localizations.localeOf(context).languageCode == 'ko' 
+                      ? '${setIndex}세트: ${reps}개'
+                      : 'Set ${setIndex}: ${reps} reps',
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -645,8 +647,12 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 const SizedBox(width: AppConstants.paddingS),
                 Text(
                   _todayCompletedWorkout != null
-                      ? '완료: ${_todayCompletedWorkout!.totalReps}개 / ${(_todayWorkout!.sets as List<dynamic>?)?.length ?? 0}세트'
-                      : '목표: ${(_todayWorkout!.sets as List<dynamic>?)?.fold<int>(0, (sum, set) => sum + (set?.reps as int? ?? 0)) ?? 0}개 / ${(_todayWorkout!.sets as List<dynamic>?)?.length ?? 0}세트',
+                      ? (Localizations.localeOf(context).languageCode == 'ko'
+                          ? '완료: ${_todayCompletedWorkout!.totalReps}개 / ${(_todayWorkout!.sets as List<dynamic>?)?.length ?? 0}세트'
+                          : 'Completed: ${_todayCompletedWorkout!.totalReps} reps / ${(_todayWorkout!.sets as List<dynamic>?)?.length ?? 0} sets')
+                      : (Localizations.localeOf(context).languageCode == 'ko'
+                          ? '목표: ${(_todayWorkout!.sets as List<dynamic>?)?.fold<int>(0, (sum, set) => sum + (set?.reps as int? ?? 0)) ?? 0}개 / ${(_todayWorkout!.sets as List<dynamic>?)?.length ?? 0}세트'
+                          : 'Goal: ${(_todayWorkout!.sets as List<dynamic>?)?.fold<int>(0, (sum, set) => sum + (set?.reps as int? ?? 0)) ?? 0} reps / ${(_todayWorkout!.sets as List<dynamic>?)?.length ?? 0} sets'),
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: _todayCompletedWorkout != null ? Colors.green[700] : Colors.grey,
                     fontWeight: _todayCompletedWorkout != null ? FontWeight.w600 : FontWeight.normal,
@@ -769,7 +775,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                     
                     // 축하 메시지
                     Text(
-                      '🎉 오늘 운동 완료! 🎉',
+                      Localizations.localeOf(context).languageCode == 'ko'
+                        ? '🎉 오늘 운동 완료! 🎉'
+                        : '🎉 Today\'s Workout Complete! 🎉',
                       style: theme.textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: Colors.green[700],
@@ -982,7 +990,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
               ),
               const SizedBox(width: AppConstants.paddingS),
               Text(
-                AppLocalizations.of(context)!.weekProgress,
+                Localizations.localeOf(context).languageCode == 'ko'
+                  ? '프로그램 진행률'
+                  : 'Program Progress',
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: const Color(AppColors.primaryColor),
@@ -1448,8 +1458,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                       '그냥 기본 운동? 아니면 진짜 챔피언 모드? 🚀\n'
                       '너의 한계를 시험해볼 시간이다!\n\n'
                       '⚡ 챌린지 모드 ON 하면:\n'
-                      '• 시간 제한 도전 ⏱️\n'
-                      '• 완벽한 자세 체크 🎯\n'
+                      '• 더 높은 난이도\\n'
                       '• 보너스 포인트 획득 🏆',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         height: 1.4,

@@ -235,7 +235,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get startTodayWorkout => '🚀 START TODAY\'S DOMINATION! 🚀';
 
   @override
-  String get weekProgress => '👑 EMPEROR\'S CONQUEST PROGRESS 👑';
+  String weekProgress(int current, int total) {
+    return 'Week $current/$total';
+  }
 
   @override
   String progressWeekDay(int week, int totalDays, int completedDays) {
@@ -1192,7 +1194,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chadDays => 'Chad days!';
 
   @override
-  String get totalPushups => 'Total Pushups';
+  String get totalPushups => 'Total Push-ups';
 
   @override
   String pushupsCount(int count) {
@@ -1317,7 +1319,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chadHashtag => '#Chad';
 
   @override
-  String get perfectPushupForm => 'Perfect Pushup Form';
+  String get perfectPushupForm => 'Perfect Push-up Form';
 
   @override
   String get pushupVariations => 'Pushup Variations 🔥';
@@ -2501,8 +2503,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String completedFormat(int reps, int sets) {
-    return 'Completed: $reps reps ($sets sets)';
+  String completedFormat(int totalReps, int totalSets) {
+    return 'Completed: $totalReps reps / $totalSets sets';
   }
 
   @override
@@ -2511,7 +2513,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get todayWorkoutCompleted => 'Today\'s workout completed! 🎉';
+  String get todayWorkoutCompleted => '🎉 Today\'s Workout Complete! 🎉';
 
   @override
   String get justWait => 'Wait! Are you really going to rest?';
@@ -2705,5 +2707,81 @@ class AppLocalizationsEn extends AppLocalizations {
   String get journeyChadEvolution => 'Chad Starting the Journey';
 
   @override
-  String get setRepsDisplayFormat => '세트 × 횟수';
+  String get setRepsDisplayFormat => 'Sets × Reps';
+
+  @override
+  String weeksRemaining(int weeks) {
+    return '$weeks weeks left';
+  }
+
+  @override
+  String thisWeekProgress(int current) {
+    return 'This Week (Week $current)';
+  }
+
+  @override
+  String weeksCompleted(int completed, int total) {
+    return '$completed/$total weeks completed';
+  }
+
+  @override
+  String get completionRate => 'Completion Rate';
+
+  @override
+  String get workoutTime => 'Workout Time';
+
+  @override
+  String get remainingGoal => 'Remaining Goal';
+
+  @override
+  String setRepFormat(int setIndex, int reps) {
+    return 'Set $setIndex: $reps reps';
+  }
+
+  @override
+  String goalFormat(int totalReps, int totalSets) {
+    return 'Goal: $totalReps reps / $totalSets sets';
+  }
+
+  @override
+  String get restDayChampionTitle => '🔥 True Champion\'s Choice';
+
+  @override
+  String get restDayDescription =>
+      'Today is a scheduled rest day but...\nTrue champions never rest! 🔥\n\nWould you like to take on an additional challenge?';
+
+  @override
+  String get challengeMode => 'Challenge Mode';
+
+  @override
+  String get challengeModeDescription =>
+      'Just basic workout? Or true champion mode? 🚀\n\n⚡ Challenge Mode ON gives you:\n• Higher difficulty\n• Bonus points earned 🏆';
+
+  @override
+  String get challengeModeOn => 'Challenge Mode ON! 🔥';
+
+  @override
+  String get challengeModeActivated =>
+      '🔥 Challenge Mode Activated! Let\'s test your mental strength! 💪';
+
+  @override
+  String get workoutAlreadyCompleted =>
+      'Today\'s workout is already completed! 💪';
+
+  @override
+  String get restDayChallenge =>
+      'Rest day? That\'s for the weak!\nTrue champions fight every day! 🥊\n\nProve your mental strength with a simple additional challenge!';
+
+  @override
+  String get restDayAccept => 'Would you like to accept the rest day?';
+
+  @override
+  String get restDayTeasing =>
+      'Someone is doing 100 push-ups right now! 💪\n\nAre you really going to rest today?';
+
+  @override
+  String get noWorkout => 'No! I\'ll work out!';
+
+  @override
+  String get bonusChallenge => '🔥 Bonus Challenge';
 }
