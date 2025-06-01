@@ -4963,6 +4963,48 @@ abstract class AppLocalizations {
   /// In ko, this message translates to:
   /// **'🔥 보너스 챌린지'**
   String get bonusChallenge;
+
+  /// 운동 완료 상태
+  ///
+  /// In ko, this message translates to:
+  /// **'완료'**
+  String get workoutCompleted;
+
+  /// 운동 목표 달성
+  ///
+  /// In ko, this message translates to:
+  /// **'달성'**
+  String get workoutAchieved;
+
+  /// 운동 결과 공유 버튼
+  ///
+  /// In ko, this message translates to:
+  /// **'공유하기'**
+  String get shareWorkout;
+
+  /// 공유 실패 오류 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'공유 중 오류가 발생했습니다.'**
+  String get shareError;
+
+  /// 운동 기록 저장 실패 오류 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'운동 기록 저장 중 오류가 발생했습니다. 다시 시도해주세요.'**
+  String get workoutSaveError;
+
+  /// 세트 수 표시
+  ///
+  /// In ko, this message translates to:
+  /// **'{count}세트'**
+  String setCount(int count);
+
+  /// 횟수 표시
+  ///
+  /// In ko, this message translates to:
+  /// **'{count}개'**
+  String repsCount(int count);
 }
 
 class _AppLocalizationsDelegate

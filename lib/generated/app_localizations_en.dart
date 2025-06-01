@@ -2784,4 +2784,30 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bonusChallenge => '🔥 Bonus Challenge';
+
+  @override
+  String get workoutCompleted => 'Completed';
+
+  @override
+  String get workoutAchieved => 'Achieved';
+
+  @override
+  String get shareWorkout => 'Share';
+
+  @override
+  String get shareError => 'An error occurred while sharing.';
+
+  @override
+  String get workoutSaveError =>
+      'An error occurred while saving workout record. Please try again.';
+
+  @override
+  String setCount(int count) {
+    return '$count sets';
+  }
+
+  @override
+  String repsCount(int count) {
+    return '$count reps';
+  }
 }

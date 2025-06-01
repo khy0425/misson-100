@@ -815,9 +815,11 @@ class _WorkoutScreenState extends State<WorkoutScreen>
                           fontSize: 16,
                         ),
                       ),
-                      const Text(
-                        '완료',
-                        style: TextStyle(fontSize: 12),
+                      Text(
+                        Localizations.localeOf(context).languageCode == 'ko'
+                          ? '달성'
+                          : 'Achieved',
+                        style: const TextStyle(fontSize: 12),
                       ),
                     ],
                   ),
@@ -828,7 +830,9 @@ class _WorkoutScreenState extends State<WorkoutScreen>
                         style: TextStyle(fontSize: 20),
                       ),
                       Text(
-                        '${_totalSets}세트',
+                        Localizations.localeOf(context).languageCode == 'ko'
+                          ? '${_totalSets}세트'
+                          : '$_totalSets sets',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -849,7 +853,11 @@ class _WorkoutScreenState extends State<WorkoutScreen>
           TextButton.icon(
             onPressed: () => _shareWorkoutResult(),
             icon: const Icon(Icons.share),
-            label: const Text('공유하기'),
+            label: Text(
+              Localizations.localeOf(context).languageCode == 'ko'
+                ? '공유하기'
+                : 'Share',
+            ),
             style: TextButton.styleFrom(
               foregroundColor: const Color(AppColors.primaryColor),
             ),
@@ -887,8 +895,12 @@ class _WorkoutScreenState extends State<WorkoutScreen>
       debugPrint('공유 오류: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('공유 중 오류가 발생했습니다.'),
+          SnackBar(
+            content: Text(
+              Localizations.localeOf(context).languageCode == 'ko'
+                ? '공유 중 오류가 발생했습니다.'
+                : 'An error occurred while sharing.',
+            ),
             backgroundColor: Colors.red,
           ),
         );

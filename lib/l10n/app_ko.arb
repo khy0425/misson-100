@@ -3347,5 +3347,43 @@
   "bonusChallenge": "🔥 보너스 챌린지",
   "@bonusChallenge": {
     "description": "보너스 챌린지 제목"
+  },
+  "workoutCompleted": "완료",
+  "@workoutCompleted": {
+    "description": "운동 완료 상태"
+  },
+  "workoutAchieved": "달성",
+  "@workoutAchieved": {
+    "description": "운동 목표 달성"
+  },
+  "shareWorkout": "공유하기",
+  "@shareWorkout": {
+    "description": "운동 결과 공유 버튼"
+  },
+  "shareError": "공유 중 오류가 발생했습니다.",
+  "@shareError": {
+    "description": "공유 실패 오류 메시지"
+  },
+  "workoutSaveError": "운동 기록 저장 중 오류가 발생했습니다. 다시 시도해주세요.",
+  "@workoutSaveError": {
+    "description": "운동 기록 저장 실패 오류 메시지"
+  },
+  "setCount": "{count}세트",
+  "@setCount": {
+    "description": "세트 수 표시",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "repsCount": "{count}개",
+  "@repsCount": {
+    "description": "횟수 표시",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

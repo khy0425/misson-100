@@ -2644,4 +2644,29 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get bonusChallenge => '🔥 보너스 챌린지';
+
+  @override
+  String get workoutCompleted => '완료';
+
+  @override
+  String get workoutAchieved => '달성';
+
+  @override
+  String get shareWorkout => '공유하기';
+
+  @override
+  String get shareError => '공유 중 오류가 발생했습니다.';
+
+  @override
+  String get workoutSaveError => '운동 기록 저장 중 오류가 발생했습니다. 다시 시도해주세요.';
+
+  @override
+  String setCount(int count) {
+    return '$count세트';
+  }
+
+  @override
+  String repsCount(int count) {
+    return '$count개';
+  }
 }

@@ -4044,5 +4044,43 @@
   "bonusChallenge": "🔥 Bonus Challenge",
   "@bonusChallenge": {
     "description": "Bonus challenge title"
+  },
+  "workoutCompleted": "Completed",
+  "@workoutCompleted": {
+    "description": "Workout completion status"
+  },
+  "workoutAchieved": "Achieved",
+  "@workoutAchieved": {
+    "description": "Workout goal achieved"
+  },
+  "shareWorkout": "Share",
+  "@shareWorkout": {
+    "description": "Share workout result button"
+  },
+  "shareError": "An error occurred while sharing.",
+  "@shareError": {
+    "description": "Share failure error message"
+  },
+  "workoutSaveError": "An error occurred while saving workout record. Please try again.",
+  "@workoutSaveError": {
+    "description": "Workout record save failure error message"
+  },
+  "setCount": "{count} sets",
+  "@setCount": {
+    "description": "Set count display",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "repsCount": "{count} reps",
+  "@repsCount": {
+    "description": "Reps count display",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }  
