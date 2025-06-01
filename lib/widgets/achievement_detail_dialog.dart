@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../generated/app_localizations.dart';
 import '../models/achievement.dart';
 import '../utils/constants.dart';
 import 'achievement_progress_bar.dart';
@@ -304,9 +305,9 @@ class AchievementDetailDialog extends StatelessWidget {
                       borderRadius: BorderRadius.circular(AppConstants.radiusM),
                     ),
                   ),
-                  child: const Text(
-                    '확인',
-                    style: TextStyle(
+                  child: Text(
+                    AppLocalizations.of(context)!.confirm,
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),

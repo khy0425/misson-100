@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:confetti/confetti.dart';
+import '../generated/app_localizations.dart';
 import '../models/achievement.dart';
 import '../utils/constants.dart';
 
@@ -294,7 +295,7 @@ class _AchievementUnlockAnimationState extends State<AchievementUnlockAnimation>
                                 backgroundColor: _getRarityColor(),
                                 foregroundColor: Colors.white,
                               ),
-                              child: const Text('확인'),
+                              child: Text(AppLocalizations.of(context)!.confirm),
                             ),
                           ],
                         ),
