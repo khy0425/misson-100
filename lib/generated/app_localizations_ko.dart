@@ -2678,4 +2678,11 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get onboardingNext => '다음';
+
+  @override
+  String get permissionNotificationMessage =>
+      '알림 및 저장소 권한이 필요합니다. 설정에서 허용해주세요.';
+
+  @override
+  String get permissionStorageMessage => '저장소 권한이 필요합니다. 설정에서 허용해주세요.';
 }

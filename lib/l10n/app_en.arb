@@ -4094,5 +4094,13 @@
   "onboardingNext": "Next",
   "@onboardingNext": {
     "description": "Onboarding next button"
+  },
+  "permissionNotificationMessage": "Notification and storage permissions are required. Please allow in settings.",
+  "@permissionNotificationMessage": {
+    "description": "Notification and storage permission request message"
+  },
+  "permissionStorageMessage": "Storage permission is required. Please allow in settings.",
+  "@permissionStorageMessage": {
+    "description": "Storage permission request message"
   }
 }  

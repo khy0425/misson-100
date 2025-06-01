@@ -5023,6 +5023,18 @@ abstract class AppLocalizations {
   /// In ko, this message translates to:
   /// **'다음'**
   String get onboardingNext;
+
+  /// 알림 및 저장소 권한 요청 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'알림 및 저장소 권한이 필요합니다. 설정에서 허용해주세요.'**
+  String get permissionNotificationMessage;
+
+  /// 저장소 권한 요청 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'저장소 권한이 필요합니다. 설정에서 허용해주세요.'**
+  String get permissionStorageMessage;
 }
 
 class _AppLocalizationsDelegate

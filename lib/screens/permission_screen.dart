@@ -437,11 +437,15 @@ class _PermissionScreenState extends State<PermissionScreen>
         
         String message = '';
         if (!notificationGranted && !storageGranted) {
-          message = '알림 및 저장소 권한이 필요합니다. 설정에서 허용해주세요.';
+          message = Localizations.localeOf(context).languageCode == 'ko'
+            ? '알림 및 저장소 권한이 필요합니다. 설정에서 허용해주세요.'
+            : 'Notification and storage permissions are required. Please allow in settings.';
         } else if (!notificationGranted) {
           message = AppLocalizations.of(context)!.notificationPermissionDeniedMessage;
         } else {
-          message = '저장소 권한이 필요합니다. 설정에서 허용해주세요.';
+          message = Localizations.localeOf(context).languageCode == 'ko'
+            ? '저장소 권한이 필요합니다. 설정에서 허용해주세요.'
+            : 'Storage permission is required. Please allow in settings.';
         }
         
         if (mounted) {

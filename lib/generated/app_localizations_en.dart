@@ -2819,4 +2819,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingNext => 'Next';
+
+  @override
+  String get permissionNotificationMessage =>
+      'Notification and storage permissions are required. Please allow in settings.';
+
+  @override
+  String get permissionStorageMessage =>
+      'Storage permission is required. Please allow in settings.';
 }

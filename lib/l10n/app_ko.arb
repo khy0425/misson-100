@@ -3397,5 +3397,13 @@
   "onboardingNext": "다음",
   "@onboardingNext": {
     "description": "온보딩 다음 버튼"
+  },
+  "permissionNotificationMessage": "알림 및 저장소 권한이 필요합니다. 설정에서 허용해주세요.",
+  "@permissionNotificationMessage": {
+    "description": "알림 및 저장소 권한 요청 메시지"
+  },
+  "permissionStorageMessage": "저장소 권한이 필요합니다. 설정에서 허용해주세요.",
+  "@permissionStorageMessage": {
+    "description": "저장소 권한 요청 메시지"
   }
 }
