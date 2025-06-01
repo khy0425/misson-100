@@ -1,15 +1,11 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import 'dart:math';
 import '../models/challenge.dart';
 import '../models/user_profile.dart';
-import '../services/database_service.dart';
-import '../services/workout_history_service.dart';
-import '../generated/app_localizations.dart';
 import 'achievement_service.dart';
 import '../services/notification_service.dart';
-import 'package:flutter/material.dart';
 
 /// 챌린지 관리 서비스
 class ChallengeService {

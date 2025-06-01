@@ -1,13 +1,25 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+import 'dart:isolate';
+import 'dart:ui';
+
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/material.dart';
+
+import '../models/user_profile.dart';
+import '../models/workout_session.dart';
+import '../utils/workout_data.dart';
+import 'database_service.dart';
+import 'social_share_service.dart';
+import '../generated/app_localizations.dart';
 import 'workout_history_service.dart';
-import 'dart:convert';
-import 'dart:typed_data';
 
 class NotificationService {
   static final FlutterLocalNotificationsPlugin _notifications = 
