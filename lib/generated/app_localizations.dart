@@ -4988,10 +4988,10 @@ abstract class AppLocalizations {
   /// **'공유 중 오류가 발생했습니다.'**
   String get shareError;
 
-  /// 운동 기록 저장 실패 오류 메시지
+  /// 운동 저장 오류 메시지
   ///
   /// In ko, this message translates to:
-  /// **'운동 기록 저장 중 오류가 발생했습니다. 다시 시도해주세요.'**
+  /// **'운동 저장 중 오류가 발생했습니다.'**
   String get workoutSaveError;
 
   /// 세트 수 표시
@@ -5005,6 +5005,24 @@ abstract class AppLocalizations {
   /// In ko, this message translates to:
   /// **'{count}개'**
   String repsCount(int count);
+
+  /// 온보딩 건너뛰기 버튼
+  ///
+  /// In ko, this message translates to:
+  /// **'건너뛰기'**
+  String get onboardingSkip;
+
+  /// 온보딩 시작하기 버튼
+  ///
+  /// In ko, this message translates to:
+  /// **'시작하기'**
+  String get onboardingStart;
+
+  /// 온보딩 다음 버튼
+  ///
+  /// In ko, this message translates to:
+  /// **'다음'**
+  String get onboardingNext;
 }
 
 class _AppLocalizationsDelegate

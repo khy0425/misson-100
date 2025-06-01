@@ -5,6 +5,7 @@ import '../services/onboarding_service.dart';
 import '../screens/initial_test_screen.dart';
 import '../screens/home_screen.dart';
 import '../screens/permission_screen.dart';
+import '../generated/app_localizations.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -155,7 +156,9 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                     ? TextButton(
                         onPressed: () => onboardingService.skipOnboarding(),
                         child: Text(
-                          '건너뛰기',
+                          Localizations.localeOf(context).languageCode == 'ko'
+                            ? '건너뛰기'
+                            : 'Skip',
                           style: TextStyle(
                             color: Colors.grey[600],
                             fontSize: 16,
@@ -244,7 +247,11 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                     shadowColor: const Color(0xFF4DABF7).withValues(alpha: 0.4),
                   ),
                   child: Text(
-                    step.buttonText ?? '시작하기',
+                    step.buttonText ?? (
+                      Localizations.localeOf(context).languageCode == 'ko'
+                        ? '시작하기'
+                        : 'Get Started'
+                    ),
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -304,7 +311,9 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                     TextButton(
                       onPressed: () => onboardingService.skipOnboarding(),
                       child: Text(
-                        '건너뛰기',
+                        Localizations.localeOf(context).languageCode == 'ko'
+                          ? '건너뛰기'
+                          : 'Skip',
                         style: TextStyle(
                           color: Colors.grey[600],
                           fontSize: 16,
@@ -407,7 +416,11 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                     shadowColor: const Color(0xFF51CF66).withValues(alpha: 0.4),
                   ),
                   child: Text(
-                    step.buttonText ?? '다음',
+                    step.buttonText ?? (
+                      Localizations.localeOf(context).languageCode == 'ko'
+                        ? '다음'
+                        : 'Next'
+                    ),
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -467,7 +480,9 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                     TextButton(
                       onPressed: () => onboardingService.skipOnboarding(),
                       child: Text(
-                        '건너뛰기',
+                        Localizations.localeOf(context).languageCode == 'ko'
+                          ? '건너뛰기'
+                          : 'Skip',
                         style: TextStyle(
                           color: Colors.grey[600],
                           fontSize: 16,

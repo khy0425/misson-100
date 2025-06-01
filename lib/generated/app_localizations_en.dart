@@ -2810,4 +2810,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String repsCount(int count) {
     return '$count reps';
   }
+
+  @override
+  String get onboardingSkip => 'Skip';
+
+  @override
+  String get onboardingStart => 'Get Started';
+
+  @override
+  String get onboardingNext => 'Next';
 }

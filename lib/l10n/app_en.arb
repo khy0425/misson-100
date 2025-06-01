@@ -4082,5 +4082,17 @@
         "type": "int"
       }
     }
+  },
+  "onboardingSkip": "Skip",
+  "@onboardingSkip": {
+    "description": "Onboarding skip button"
+  },
+  "onboardingStart": "Get Started",
+  "@onboardingStart": {
+    "description": "Onboarding start button"
+  },
+  "onboardingNext": "Next",
+  "@onboardingNext": {
+    "description": "Onboarding next button"
   }
 }  
