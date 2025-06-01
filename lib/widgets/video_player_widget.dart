@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import '../generated/app_localizations.dart';
 
 /// 푸시업 폼 가이드용 커스텀 비디오 플레이어 위젯
 class VideoPlayerWidget extends StatefulWidget {
@@ -225,16 +226,16 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   Widget _buildLoadingWidget() {
     return Container(
       color: const Color(0xFF2A2A2A),
-      child: const Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircularProgressIndicator(
+          const CircularProgressIndicator(
             color: Color(0xFF4DABF7),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             '비디오 로딩 중...',
-            style: TextStyle(
+            style: const TextStyle(
               color: Color(0xFF4DABF7),
               fontSize: 14,
             ),
@@ -278,7 +279,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           ElevatedButton.icon(
             onPressed: _initializeVideo,
             icon: const Icon(Icons.refresh, size: 16),
-            label: const Text('다시 시도'),
+            label: Text(AppLocalizations.of(context)!.retryButton),
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF4DABF7),
               foregroundColor: Colors.white,
