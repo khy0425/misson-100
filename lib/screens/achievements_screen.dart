@@ -142,7 +142,7 @@ class _AchievementsScreenState extends State<AchievementsScreen>
     for (final achievement in newlyUnlocked) {
       _showAchievementUnlockAnimation(achievement);
       // 여러 업적이 동시에 달성된 경우 순차적으로 표시
-      await Future.delayed(const Duration(seconds: 4));
+      await Future<void>.delayed(const Duration(seconds: 4));
     }
   }
 

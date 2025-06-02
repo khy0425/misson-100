@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'generated/app_localizations.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:meta/meta.dart';
 import 'utils/constants.dart';
 import 'screens/main_navigation_screen.dart';
 import 'screens/permission_screen.dart';
@@ -19,6 +21,7 @@ import 'services/chad_image_service.dart';
 import 'services/achievement_service.dart';
 import 'services/database_service.dart';
 import 'screens/initial_test_screen.dart';
+import 'services/streak_service.dart';
 // MemoryManager import 제거됨
 
 void main() async {
@@ -46,7 +49,7 @@ void main() async {
     // 초기화 후 상태 확인
     final totalCount = await AchievementService.getTotalCount();
     final unlockedCount = await AchievementService.getUnlockedCount();
-    debugPrint('✅ 업적 서비스 초기화 완료 - 총 ${totalCount}개 업적, ${unlockedCount}개 잠금해제');
+    debugPrint('✅ 업적 서비스 초기화 완료 - 총 $totalCount개 업적, $unlockedCount개 잠금해제');
   } catch (e, stackTrace) {
     debugPrint('❌ 업적 서비스 초기화 오류: $e');
     debugPrint('스택 트레이스: $stackTrace');
@@ -69,9 +72,9 @@ void main() async {
   await chadEvolutionService.initialize();
   
   // Chad 이미지 프리로드 (백그라운드에서 실행)
-  chadEvolutionService.preloadAllImages(targetSize: 200).catchError((e) {
+  unawaited(chadEvolutionService.preloadAllImages(targetSize: 200).catchError((Object e) {
     debugPrint('Chad 이미지 프리로드 오류: $e');
-  });
+  }));
 
   runApp(
     MultiProvider(
