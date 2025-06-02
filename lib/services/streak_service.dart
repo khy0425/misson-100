@@ -262,7 +262,7 @@ class StreakService {
       if (_currentStreak >= threshold && !_unlockedMilestones.contains(threshold)) {
         _unlockedMilestones.add(threshold);
         await _saveStreakData();
-        debugPrint('스트릭 마일스톤 달성: ${threshold}일');
+        debugPrint('스트릭 마일스톤 달성: $threshold일');
         
         // 마일스톤 달성 알림 (추후 구현)
         // await _notifyMilestoneAchieved(threshold);
@@ -377,7 +377,7 @@ class StreakService {
       default:
         return {
           'title': '스트릭 마스터',
-          'description': '${milestone}일 연속 운동 달성!',
+          'description': '$milestone일 연속 운동 달성!',
           'icon': '🎯',
           'reward': 'Chad 레벨 +1',
         };

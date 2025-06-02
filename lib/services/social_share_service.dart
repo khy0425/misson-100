@@ -28,7 +28,6 @@ class SocialShareService {
   /// 일일 운동 공유 메시지 가져오기 (다국어 지원)
   static String _getDailyWorkoutMessage(AppLocalizations l10n, int currentDay, int pushupCount, String levelName) {
     final locale = l10n.localeName;
-    final appName = _getAppName(l10n);
     final downloadMessage = _getDownloadMessage(l10n);
     
     if (locale == 'ko') {
@@ -36,7 +35,7 @@ class SocialShareService {
 🔥💀 또 하나의 전설이 탄생했다! 💀🔥
 
 ⚡ Day $currentDay - 차드의 정복은 멈추지 않는다!
-💪 푸시업: ${pushupCount}개 (평범한 인간들은 따라올 수 없다, 만삣삐!)
+💪 푸시업: $pushupCount개 (평범한 인간들은 따라올 수 없다, 만삣삐!)
 👑 현재 레벨: $levelName
 
 매일매일 더 강해지는 ALPHA EMPEROR! 💥
@@ -50,7 +49,7 @@ $downloadMessage
 🔥💀 ANOTHER LEGEND IS BORN! 💀🔥
 
 ⚡ Day $currentDay - THE CHAD CONQUEST NEVER STOPS!
-💪 Push-ups: ${pushupCount} reps (ORDINARY HUMANS CAN'T FOLLOW!)
+💪 Push-ups: $pushupCount reps (ORDINARY HUMANS CAN'T FOLLOW!)
 👑 Current Level: $levelName
 
 GETTING STRONGER EVERY DAY AS AN ALPHA EMPEROR! 💥
@@ -74,8 +73,8 @@ $downloadMessage
 $levelEmoji💥 LEVEL UP! 또 하나의 한계를 박살냈다! 💥$levelEmoji
 
 🎉 새로운 레벨: $levelName
-📅 총 정복일: ${totalDays}일
-💪 총 파워: ${totalPushups}개
+📅 총 정복일: $totalDays일
+💪 총 파워: $totalPushups개
 
 차드의 여정은 계속된다! 약자들은 도망가라! 💪
 
@@ -87,8 +86,8 @@ $downloadMessage
 $levelEmoji💥 LEVEL UP! ANOTHER LIMIT DESTROYED! 💥$levelEmoji
 
 🎉 New Level: $levelName
-📅 Total Conquest Days: ${totalDays} days
-💪 Total Power: ${totalPushups} reps
+📅 Total Conquest Days: $totalDays days
+💪 Total Power: $totalPushups reps
 
 THE CHAD JOURNEY CONTINUES! WEAKLINGS RUN AWAY! 💪
 
@@ -109,7 +108,7 @@ $downloadMessage
 
 ✨ $achievementTitle
 📝 $achievementDescription
-🎯 획득 XP: ${xpReward}점
+🎯 획득 XP: $xpReward점
 
 한 걸음씩 ALPHA EMPEROR에 가까워지고 있다, 만삣삐! 💪
 
@@ -122,7 +121,7 @@ $downloadMessage
 
 ✨ $achievementTitle
 📝 $achievementDescription
-🎯 XP Gained: ${xpReward} points
+🎯 XP Gained: $xpReward points
 
 GETTING CLOSER TO ALPHA EMPEROR STEP BY STEP! 💪
 
@@ -144,8 +143,8 @@ $downloadMessage
 📊💀 $appName 주간 정복 리포트 💀📊
 
 📅 Week $weekNumber
-✅ 정복일: ${completedDays}일
-💪 총 파워: ${totalPushups}개
+✅ 정복일: $completedDays일
+💪 총 파워: $totalPushups개
 📈 진행률: ${progressPercentage.toStringAsFixed(1)}%
 
 $progressBar
@@ -160,8 +159,8 @@ $downloadMessage
 📊💀 $appName Weekly Conquest Report 💀📊
 
 📅 Week $weekNumber
-✅ Conquest Days: ${completedDays} days
-💪 Total Power: ${totalPushups} reps
+✅ Conquest Days: $completedDays days
+💪 Total Power: $totalPushups reps
 📈 Progress: ${progressPercentage.toStringAsFixed(1)}%
 
 $progressBar
@@ -185,8 +184,8 @@ $downloadMessage
 
 💪 푸시업 100개 연속 - 불가능을 가능으로! 💪
 
-📅 총 소요일: ${duration}일 (인간의 한계를 뛰어넘었다, 만삣삐!)
-🏆 완료 세션: ${totalDays}회 (포기란 없었다!)
+📅 총 소요일: $duration일 (인간의 한계를 뛰어넘었다, 만삣삐!)
+🏆 완료 세션: $totalDays회 (포기란 없었다!)
 🔥 진정한 기가차드 등극! 🔥
 
 베이비차드에서 시작해서...
@@ -204,8 +203,8 @@ $downloadMessage
 
 💪 100 Push-ups Consecutive - IMPOSSIBLE MADE POSSIBLE! 💪
 
-📅 Total Duration: ${duration} days (BEYOND HUMAN LIMITS!)
-🏆 Completed Sessions: ${totalDays} times (NO GIVING UP!)
+📅 Total Duration: $duration days (BEYOND HUMAN LIMITS!)
+🏆 Completed Sessions: $totalDays times (NO GIVING UP!)
 🔥 TRUE GIGA CHAD ASCENSION! 🔥
 
 Started as a baby chad...
@@ -354,8 +353,6 @@ $downloadMessage
     try {
       final l10n = AppLocalizations.of(context)!;
       final levelName = _getLevelName(level, l10n);
-      final appName = _getAppName(l10n);
-      final downloadMessage = _getDownloadMessage(l10n);
       
       final message = _getDailyWorkoutMessage(l10n, currentDay, pushupCount, levelName);
 
@@ -378,9 +375,6 @@ $downloadMessage
     try {
       final l10n = AppLocalizations.of(context)!;
       final levelName = _getLevelName(newLevel, l10n);
-      final levelEmoji = _getLevelEmoji(newLevel);
-      final appName = _getAppName(l10n);
-      final downloadMessage = _getDownloadMessage(l10n);
       
       final message = _getLevelUpMessage(l10n, newLevel, totalDays, totalPushups);
 
@@ -402,8 +396,6 @@ $downloadMessage
   }) async {
     try {
       final l10n = AppLocalizations.of(context)!;
-      final appName = _getAppName(l10n);
-      final downloadMessage = _getDownloadMessage(l10n);
       
       final message = _getAchievementMessage(l10n, achievementTitle, achievementDescription, xpReward);
 
@@ -426,9 +418,6 @@ $downloadMessage
   }) async {
     try {
       final l10n = AppLocalizations.of(context)!;
-      final appName = _getAppName(l10n);
-      final downloadMessage = _getDownloadMessage(l10n);
-      final progressBar = _generateProgressBar(progressPercentage);
       
       final message = _getWeeklyProgressMessage(l10n, weekNumber, completedDays, totalPushups, progressPercentage);
 
@@ -449,8 +438,6 @@ $downloadMessage
   }) async {
     try {
       final l10n = AppLocalizations.of(context)!;
-      final appName = _getAppName(l10n);
-      final downloadMessage = _getDownloadMessage(l10n);
       final duration = DateTime.now().difference(startDate).inDays;
       
       final message = _get100AchievementMessage(l10n, totalDays, duration);
@@ -471,8 +458,6 @@ $downloadMessage
   }) async {
     try {
       final l10n = AppLocalizations.of(context)!;
-      final appName = _getAppName(l10n);
-      final downloadMessage = _getDownloadMessage(l10n);
       
       final message = _getFriendChallengeMessage(l10n, userName);
 
@@ -492,8 +477,6 @@ $downloadMessage
   }) async {
     try {
       final l10n = AppLocalizations.of(context)!;
-      final appName = _getAppName(l10n);
-      final downloadMessage = _getDownloadMessage(l10n);
       
       final message = _getMotivationMessage(l10n, motivationMessage);
 

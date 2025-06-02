@@ -21,12 +21,12 @@ Future<void> fixMainDartImports() async {
 
     // 존재하지 않는 import 제거/수정
     content = content.replaceAll(
-      "import 'package:flutter_gen/gen_l10n/app_localizations.dart';",
-      "// AppLocalizations import 제거됨",
+      'import \'package:flutter_gen/gen_l10n/app_localizations.dart\';',
+      '// AppLocalizations import 제거됨',
     );
     content = content.replaceAll(
-      "import 'services/memory_manager.dart';",
-      "// MemoryManager import 제거됨",
+      'import \'services/memory_manager.dart\';',
+      '// MemoryManager import 제거됨',
     );
 
     // AppLocalizations 관련 코드 제거/수정

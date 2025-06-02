@@ -424,7 +424,7 @@ class AchievementService {
         _endPerformanceTimer('batch_updates', batchTimer);
       }
 
-      debugPrint('✅ 업적 체크 완료: ${processedAchievements}개 처리, ${newlyUnlocked.length}개 새로 잠금 해제');
+      debugPrint('✅ 업적 체크 완료: $processedAchievements개 처리, ${newlyUnlocked.length}개 새로 잠금 해제');
       
       // 성능 통계 출력
       if (_enablePerformanceLogging) {
@@ -1008,7 +1008,7 @@ class AchievementService {
       case 'total_workout_time_600':
       case 'total_workout_time_1200':
         final totalMinutes = workouts.fold<int>(0, (sum, workout) => sum + workout.duration.inMinutes);
-        debugPrint('총 운동 시간: ${totalMinutes}분');
+        debugPrint('총 운동 시간: $totalMinutes분');
         return totalMinutes;
 
       // 주간 운동 횟수 (최근 7일)
@@ -1017,7 +1017,7 @@ class AchievementService {
         final now = DateTime.now();
         final weekAgo = now.subtract(const Duration(days: 7));
         final weeklyWorkouts = workouts.where((w) => w.date.isAfter(weekAgo)).length;
-        debugPrint('주간 운동 횟수: ${weeklyWorkouts}회');
+        debugPrint('주간 운동 횟수: $weeklyWorkouts회');
         return weeklyWorkouts;
 
       // 월간 운동 횟수 (최근 30일)
@@ -1026,7 +1026,7 @@ class AchievementService {
         final now = DateTime.now();
         final monthAgo = now.subtract(const Duration(days: 30));
         final monthlyWorkouts = workouts.where((w) => w.date.isAfter(monthAgo)).length;
-        debugPrint('월간 운동 횟수: ${monthlyWorkouts}회');
+        debugPrint('월간 운동 횟수: $monthlyWorkouts회');
         return monthlyWorkouts;
 
       // 튜토리얼 조회 관련 업적
@@ -1068,7 +1068,7 @@ class AchievementService {
       
       if (totalCount != expectedCount) {
         validation['isValid'] = false;
-        (validation['issues'] as List<String>).add('업적 개수 불일치: 예상 ${expectedCount}개, 실제 ${totalCount}개');
+        (validation['issues'] as List<String>).add('업적 개수 불일치: 예상 $expectedCount개, 실제 $totalCount개');
       }
 
       // 3. 중복 ID 확인
@@ -1187,7 +1187,7 @@ class AchievementService {
             achievement.toMap(),
             conflictAlgorithm: ConflictAlgorithm.ignore,
           );
-          debugPrint('✅ 누락된 업적 추가: ${achievement.id}');
+          debugPrint('✅ 누락된 업적 추가: $achievement.id');
         }
       }
 

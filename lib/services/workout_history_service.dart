@@ -294,7 +294,7 @@ class WorkoutHistoryService {
         whereArgs: [1],
       );
       
-      debugPrint('🧹 완료된 세션 정리: ${deletedCount}개 삭제');
+      debugPrint('🧹 완료된 세션 정리: $deletedCount개 삭제');
       
     } catch (e) {
       debugPrint('❌ 세션 정리 오류: $e');
@@ -434,11 +434,11 @@ class WorkoutHistoryService {
       
       // 연속 운동 스트릭 확인 및 격려 알림
       final streak = await getCurrentStreak();
-      debugPrint('🔥 현재 연속 운동 스트릭: ${streak}일');
+      debugPrint('🔥 현재 연속 운동 스트릭: $streak일');
       
       if (streak >= 3 && streak % 3 == 0) {
         await NotificationService.showStreakEncouragement(streak);
-        debugPrint('🏆 스트릭 격려 알림 전송: ${streak}일 연속');
+        debugPrint('🏆 스트릭 격려 알림 전송: $streak일 연속');
       }
       
       debugPrint('✅ 운동 기록 저장 완료: ${history.date} - 달력 업데이트 신호 전송 및 오늘 리마인더 취소');

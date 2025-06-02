@@ -4,7 +4,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'generated/app_localizations.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'utils/theme.dart';
 import 'utils/constants.dart';
 import 'screens/main_navigation_screen.dart';
 import 'screens/permission_screen.dart';

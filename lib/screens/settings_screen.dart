@@ -864,7 +864,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(
-                          "필수",
+                          '필수',
                           style: const TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
@@ -881,7 +881,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(
-                          "권장",
+                          '권장',
                           style: const TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
@@ -912,7 +912,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        "활성화됨",
+                        '활성화됨',
                         style: TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w500,
@@ -976,20 +976,20 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
             },
           ),
           _buildTapSetting(
-            "테마 색상",
-            "앱의 메인 색상을 변경합니다 (현재: ${themeService.themeColor.name})",
+            '테마 색상',
+            '앱의 메인 색상을 변경합니다 (현재: ${themeService.themeColor.name})',
             Icons.palette,
             () => _showThemeColorDialog(themeService),
           ),
           _buildTapSetting(
-            "글자 크기",
-            "앱의 글자 크기를 조정합니다",
+            '글자 크기',
+            '앱의 글자 크기를 조정합니다',
             Icons.text_fields,
             () => _showFontScaleDialog(themeService),
           ),
           _buildSwitchSetting(
-            "애니메이션",
-            "앱의 애니메이션 효과를 활성화/비활성화합니다",
+            '애니메이션',
+            '앱의 애니메이션 효과를 활성화/비활성화합니다',
             themeService.animationsEnabled,
             Icons.animation,
             (value) async {
@@ -1005,8 +1005,8 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
             },
           ),
           _buildSwitchSetting(
-            "고대비 모드",
-            "시각적 접근성을 위한 고대비 모드를 활성화합니다",
+            '고대비 모드',
+            '시각적 접근성을 위한 고대비 모드를 활성화합니다',
             themeService.highContrastMode,
             Icons.contrast,
             (value) async {
@@ -1428,7 +1428,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
           children: [
             const Icon(Icons.warning, color: Colors.red),
             const SizedBox(width: 8),
-            Text("데이터 초기화 확인"),
+            Text('데이터 초기화 확인'),
           ],
         ),
         content: const Column(

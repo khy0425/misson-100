@@ -305,25 +305,9 @@ class PermissionService {
         // Android 13+ (API 33+) - 파일 선택기 사용으로 권한 불필요
         debugPrint('📱 Android 13+ 감지 - 파일 선택기 사용');
         return PermissionStatus.granted;
-      } else if (sdkInt >= 30) {
-        // Android 11-12 (API 30-32) - MANAGE_EXTERNAL_STORAGE 권한 시도
-        debugPrint('📱 Android 11-12 감지 - MANAGE_EXTERNAL_STORAGE 권한 요청');
-        final manageStatus = await Permission.manageExternalStorage.status;
-        
-        if (!manageStatus.isGranted) {
-          final result = await Permission.manageExternalStorage.request();
-          if (result.isGranted) {
-            return result;
-          }
-        } else {
-          return manageStatus;
-        }
-        
-        // MANAGE_EXTERNAL_STORAGE가 거부되면 일반 저장소 권한으로 폴백
-        return await Permission.storage.request();
       } else {
-        // Android 10 이하 - 일반 저장소 권한
-        debugPrint('📱 Android 10 이하 감지 - 일반 저장소 권한 요청');
+        // Android 12 이하 - 일반 저장소 권한만 사용
+        debugPrint('📱 Android 12 이하 감지 - 일반 저장소 권한 요청');
         return await Permission.storage.request();
       }
     } catch (e) {
@@ -343,16 +327,8 @@ class PermissionService {
       if (sdkInt >= 33) {
         // Android 13+ - 파일 선택기 사용으로 권한 불필요
         return PermissionStatus.granted;
-      } else if (sdkInt >= 30) {
-        // Android 11-12 - MANAGE_EXTERNAL_STORAGE 우선 확인
-        final manageStatus = await Permission.manageExternalStorage.status;
-        if (manageStatus.isGranted) {
-          return manageStatus;
-        }
-        // 없으면 일반 저장소 권한 확인
-        return await Permission.storage.status;
       } else {
-        // Android 10 이하 - 일반 저장소 권한
+        // Android 12 이하 - 일반 저장소 권한 확인
         return await Permission.storage.status;
       }
     } catch (e) {
