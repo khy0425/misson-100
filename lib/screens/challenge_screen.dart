@@ -123,41 +123,14 @@ class _ChallengeScreenState extends State<ChallengeScreen>
   }
 
   Future<void> _abandonChallenge(String challengeId) async {
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(AppLocalizations.of(context)!.challengeGiveUpTitle),
-        content: Text(AppLocalizations.of(context)!.challengeGiveUpMessage),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: Text(AppLocalizations.of(context)!.cancel),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: Text(AppLocalizations.of(context)!.challengeAbandonButton),
-          ),
-        ],
-      ),
-    );
-
-    if (confirmed == true) {
-      try {
-        final success = await _challengeService.abandonChallenge(challengeId);
-        if (success) {
-          await _loadChallenges();
-          if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(AppLocalizations.of(context)!.challengeGaveUp),
-                backgroundColor: Colors.orange,
-              ),
-            );
-          }
-        }
-      } catch (e) {
-        debugPrint('Error abandoning challenge: $e');
-      }
+    final success = await _challengeService.quitChallenge(challengeId);
+    if (success) {
+      setState(() {
+        _activeChallenges.removeWhere((c) => c.id == challengeId);
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(AppLocalizations.of(context)!.challengeAbandoned)),
+      );
     }
   }
 
@@ -236,8 +209,7 @@ class _ChallengeScreenState extends State<ChallengeScreen>
           final challenge = _availableChallenges[index];
           return ChallengeCard(
             challenge: challenge,
-            onStart: () => _startChallenge(challenge.id),
-            showStartButton: true,
+            onTap: () => _startChallenge(challenge.id),
           );
         },
       ),
@@ -277,8 +249,7 @@ class _ChallengeScreenState extends State<ChallengeScreen>
             children: [
               ChallengeCard(
                 challenge: challenge,
-                onAbandon: () => _abandonChallenge(challenge.id),
-                showAbandonButton: true,
+                onTap: () => _abandonChallenge(challenge.id),
               ),
               const SizedBox(height: 8),
               ChallengeProgressWidget(

@@ -1,3 +1,112 @@
+/// 챌린지 타입
+enum ChallengeType {
+  consecutiveDays, // 연속 일수
+  singleSession,   // 단일 세션
+  cumulative;      // 누적
+}
+
+/// 챌린지 난이도
+enum ChallengeDifficulty {
+  easy,
+  medium, 
+  hard,
+  extreme;
+
+  String get emoji {
+    switch (this) {
+      case ChallengeDifficulty.easy:
+        return '😊';
+      case ChallengeDifficulty.medium:
+        return '💪';
+      case ChallengeDifficulty.hard:
+        return '🔥';
+      case ChallengeDifficulty.extreme:
+        return '💀';
+    }
+  }
+
+  String get displayName {
+    switch (this) {
+      case ChallengeDifficulty.easy:
+        return '쉬움';
+      case ChallengeDifficulty.medium:
+        return '보통';
+      case ChallengeDifficulty.hard:
+        return '어려움';
+      case ChallengeDifficulty.extreme:
+        return '극한';
+    }
+  }
+}
+
+/// 챌린지 상태
+enum ChallengeStatus {
+  available,  // 참여 가능
+  active,     // 진행 중
+  completed,  // 완료
+  failed,     // 실패
+  locked;     // 잠김
+
+  String get emoji {
+    switch (this) {
+      case ChallengeStatus.available:
+        return '⭐';
+      case ChallengeStatus.active:
+        return '⚡';
+      case ChallengeStatus.completed:
+        return '✅';
+      case ChallengeStatus.failed:
+        return '❌';
+      case ChallengeStatus.locked:
+        return '🔒';
+    }
+  }
+
+  String get displayName {
+    switch (this) {
+      case ChallengeStatus.available:
+        return '참여 가능';
+      case ChallengeStatus.active:
+        return '진행 중';
+      case ChallengeStatus.completed:
+        return '완료';
+      case ChallengeStatus.failed:
+        return '실패';
+      case ChallengeStatus.locked:
+        return '잠김';
+    }
+  }
+}
+
+/// 챌린지 보상
+class ChallengeReward {
+  final String type; // 'badge', 'points', 'feature' 등
+  final String value;
+  final String description;
+
+  const ChallengeReward({
+    required this.type,
+    required this.value,
+    required this.description,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'type': type,
+      'value': value,
+      'description': description,
+    };
+  }
+
+  factory ChallengeReward.fromJson(Map<String, dynamic> json) {
+    return ChallengeReward(
+      type: json['type'] as String? ?? '',
+      value: json['value'] as String? ?? '',
+      description: json['description'] as String? ?? '',
+    );
+  }
+}
+
 class Challenge {
   final String id;
   final String titleKey;
@@ -12,6 +121,22 @@ class Challenge {
   final DateTime? endDate;
   final int currentProgress;
 
+  // 새로운 필드들 추가
+  final String? title;
+  final String? description;
+  final String? detailedDescription;
+  final ChallengeType? type;
+  final ChallengeDifficulty? difficulty;
+  final int? targetValue;
+  final String? targetUnit;
+  final List<String>? prerequisites;
+  final int? estimatedDuration;
+  final List<ChallengeReward>? rewards;
+  final String? iconPath;
+  final ChallengeStatus? status;
+  final DateTime? completionDate;
+  final DateTime? lastUpdatedAt;
+
   const Challenge({
     required this.id,
     required this.titleKey,
@@ -24,7 +149,22 @@ class Challenge {
     required this.isActive,
     this.startDate,
     this.endDate,
-    this.currentProgress = 0,
+    required this.currentProgress,
+    // 새로운 필드들
+    this.title,
+    this.description,
+    this.detailedDescription,
+    this.type,
+    this.difficulty,
+    this.targetValue,
+    this.targetUnit,
+    this.prerequisites,
+    this.estimatedDuration,
+    this.rewards,
+    this.iconPath,
+    this.status,
+    this.completionDate,
+    this.lastUpdatedAt,
   });
 
   /// 진행률 계산 (0.0 ~ 1.0)
@@ -61,7 +201,6 @@ class Challenge {
     return (duration - elapsed).clamp(0, duration);
   }
 
-  /// 챌린지 복사 (일부 속성 변경)
   Challenge copyWith({
     String? id,
     String? titleKey,
@@ -75,6 +214,20 @@ class Challenge {
     DateTime? startDate,
     DateTime? endDate,
     int? currentProgress,
+    String? title,
+    String? description,
+    String? detailedDescription,
+    ChallengeType? type,
+    ChallengeDifficulty? difficulty,
+    int? targetValue,
+    String? targetUnit,
+    List<String>? prerequisites,
+    int? estimatedDuration,
+    List<ChallengeReward>? rewards,
+    String? iconPath,
+    ChallengeStatus? status,
+    DateTime? completionDate,
+    DateTime? lastUpdatedAt,
   }) {
     return Challenge(
       id: id ?? this.id,
@@ -89,11 +242,24 @@ class Challenge {
       startDate: startDate ?? this.startDate,
       endDate: endDate ?? this.endDate,
       currentProgress: currentProgress ?? this.currentProgress,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      detailedDescription: detailedDescription ?? this.detailedDescription,
+      type: type ?? this.type,
+      difficulty: difficulty ?? this.difficulty,
+      targetValue: targetValue ?? this.targetValue,
+      targetUnit: targetUnit ?? this.targetUnit,
+      prerequisites: prerequisites ?? this.prerequisites,
+      estimatedDuration: estimatedDuration ?? this.estimatedDuration,
+      rewards: rewards ?? this.rewards,
+      iconPath: iconPath ?? this.iconPath,
+      status: status ?? this.status,
+      completionDate: completionDate ?? this.completionDate,
+      lastUpdatedAt: lastUpdatedAt ?? this.lastUpdatedAt,
     );
   }
 
-  /// Map으로 변환 (데이터베이스 저장용)
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'id': id,
       'titleKey': titleKey,
@@ -107,28 +273,53 @@ class Challenge {
       'startDate': startDate?.toIso8601String(),
       'endDate': endDate?.toIso8601String(),
       'currentProgress': currentProgress,
+      'title': title,
+      'description': description,
+      'detailedDescription': detailedDescription,
+      'type': type?.name,
+      'difficulty': difficulty?.name,
+      'targetValue': targetValue,
+      'targetUnit': targetUnit,
+      'prerequisites': prerequisites,
+      'estimatedDuration': estimatedDuration,
+      'rewards': rewards?.map((r) => r.toJson()).toList(),
+      'iconPath': iconPath,
+      'status': status?.name,
+      'completionDate': completionDate?.toIso8601String(),
+      'lastUpdatedAt': lastUpdatedAt?.toIso8601String(),
     };
   }
 
-  /// Map에서 생성 (데이터베이스 로드용)
-  factory Challenge.fromMap(Map<String, dynamic> map) {
+  factory Challenge.fromJson(Map<String, dynamic> json) {
     return Challenge(
-      id: map['id'] as String? ?? '',
-      titleKey: map['titleKey'] as String? ?? '',
-      descriptionKey: map['descriptionKey'] as String? ?? '',
-      difficultyKey: map['difficultyKey'] as String? ?? '',
-      duration: map['duration'] as int? ?? 0,
-      targetCount: map['targetCount'] as int? ?? 0,
-      milestones: List<String>.from(map['milestones'] as List<dynamic>? ?? []),
-      rewardKey: map['rewardKey'] as String? ?? '',
-      isActive: map['isActive'] as bool? ?? false,
-      startDate: map['startDate'] != null 
-          ? DateTime.parse(map['startDate'] as String) 
-          : null,
-      endDate: map['endDate'] != null 
-          ? DateTime.parse(map['endDate'] as String) 
-          : null,
-      currentProgress: map['currentProgress'] as int? ?? 0,
+      id: json['id'] as String? ?? '',
+      titleKey: json['titleKey'] as String? ?? '',
+      descriptionKey: json['descriptionKey'] as String? ?? '',
+      difficultyKey: json['difficultyKey'] as String? ?? '',
+      duration: json['duration'] as int? ?? 0,
+      targetCount: json['targetCount'] as int? ?? 0,
+      milestones: List<String>.from(json['milestones'] as List? ?? []),
+      rewardKey: json['rewardKey'] as String? ?? '',
+      isActive: json['isActive'] as bool? ?? false,
+      startDate: json['startDate'] != null ? DateTime.parse(json['startDate'] as String) : null,
+      endDate: json['endDate'] != null ? DateTime.parse(json['endDate'] as String) : null,
+      currentProgress: json['currentProgress'] as int? ?? 0,
+      title: json['title'] as String?,
+      description: json['description'] as String?,
+      detailedDescription: json['detailedDescription'] as String?,
+      type: json['type'] != null ? ChallengeType.values.firstWhere((e) => e.name == (json['type'] as String)) : null,
+      difficulty: json['difficulty'] != null ? ChallengeDifficulty.values.firstWhere((e) => e.name == (json['difficulty'] as String)) : null,
+      targetValue: json['targetValue'] as int?,
+      targetUnit: json['targetUnit'] as String?,
+      prerequisites: json['prerequisites'] != null ? List<String>.from(json['prerequisites'] as List) : null,
+      estimatedDuration: json['estimatedDuration'] as int?,
+      rewards: json['rewards'] != null 
+        ? (json['rewards'] as List).map((r) => ChallengeReward.fromJson(r as Map<String, dynamic>)).toList()
+        : null,
+      iconPath: json['iconPath'] as String?,
+      status: json['status'] != null ? ChallengeStatus.values.firstWhere((e) => e.name == (json['status'] as String)) : null,
+      completionDate: json['completionDate'] != null ? DateTime.parse(json['completionDate'] as String) : null,
+      lastUpdatedAt: json['lastUpdatedAt'] != null ? DateTime.parse(json['lastUpdatedAt'] as String) : null,
     );
   }
 

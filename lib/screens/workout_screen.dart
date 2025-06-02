@@ -693,7 +693,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>
       try {
         final challengeService = ChallengeService();
         await challengeService.initialize();
-        await challengeService.updateChallengesOnWorkoutComplete(totalCompletedReps, _totalSets);
+        await challengeService.updateProgressAfterWorkout(totalCompletedReps, DateTime.now());
         debugPrint('✅ 7단계: 챌린지 업데이트 완료');
       } catch (e) {
         debugPrint('⚠️ 7단계: 챌린지 업데이트 실패: $e');
