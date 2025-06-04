@@ -386,16 +386,15 @@ class _PushupTutorialDetailScreenState
   }
 
   String _getDifficultyName() {
-    final isKorean = Localizations.localeOf(context).languageCode == 'ko';
     switch (widget.pushupType.difficulty) {
       case PushupDifficulty.beginner:
-        return isKorean ? '푸시 - 시작하는 만삣삐들' : AppLocalizations.of(context)!.difficultyBeginner;
+        return AppLocalizations.of(context)!.difficultyBeginner;
       case PushupDifficulty.intermediate:
-        return isKorean ? '알파 지망생 - 성장하는 차드들' : AppLocalizations.of(context)!.difficultyIntermediate;
+        return AppLocalizations.of(context)!.difficultyIntermediate;
       case PushupDifficulty.advanced:
-        return isKorean ? '차드 - 강력한 기가들' : AppLocalizations.of(context)!.difficultyAdvanced;
+        return AppLocalizations.of(context)!.difficultyAdvanced;
       case PushupDifficulty.extreme:
-        return isKorean ? '기가 차드 - 전설의 영역' : AppLocalizations.of(context)!.difficultyExtreme;
+        return AppLocalizations.of(context)!.difficultyExtreme;
     }
   }
 
@@ -415,86 +414,85 @@ class _PushupTutorialDetailScreenState
   }
 
   String _getPushupName(PushupType pushup) {
-    final isKorean = Localizations.localeOf(context).languageCode == 'ko';
     switch (pushup.id) {
       case 'standard':
-        return isKorean ? '기본 푸시업' : AppLocalizations.of(context)!.pushupStandard;
+        return AppLocalizations.of(context)!.pushupStandard;
       case 'knee':
-        return isKorean ? '무릎 푸시업' : AppLocalizations.of(context)!.pushupKnee;
+        return AppLocalizations.of(context)!.pushupKnee;
       case 'incline':
-        return isKorean ? '인클라인 푸시업' : AppLocalizations.of(context)!.pushupIncline;
+        return AppLocalizations.of(context)!.pushupIncline;
       case 'wide_grip':
-        return isKorean ? '와이드 그립 푸시업' : AppLocalizations.of(context)!.pushupWideGrip;
+        return AppLocalizations.of(context)!.pushupWideGrip;
       case 'diamond':
-        return isKorean ? '다이아몬드 푸시업' : AppLocalizations.of(context)!.pushupDiamond;
+        return AppLocalizations.of(context)!.pushupDiamond;
       case 'decline':
-        return isKorean ? '디클라인 푸시업' : AppLocalizations.of(context)!.pushupDecline;
+        return AppLocalizations.of(context)!.pushupDecline;
       case 'archer':
-        return isKorean ? '아처 푸시업' : AppLocalizations.of(context)!.pushupArcher;
+        return AppLocalizations.of(context)!.pushupArcher;
       case 'pike':
-        return isKorean ? '파이크 푸시업' : AppLocalizations.of(context)!.pushupPike;
+        return AppLocalizations.of(context)!.pushupPike;
       case 'clap':
-        return isKorean ? '박수 푸시업' : AppLocalizations.of(context)!.pushupClap;
+        return AppLocalizations.of(context)!.pushupClap;
       case 'one_arm':
-        return isKorean ? '원핸드 푸시업' : AppLocalizations.of(context)!.pushupOneArm;
+        return AppLocalizations.of(context)!.pushupOneArm;
       default:
         return pushup.id;
     }
   }
 
   String _getPushupDescription(PushupType pushup) {
-    final isKorean = Localizations.localeOf(context).languageCode == 'ko';
     switch (pushup.id) {
       case 'standard':
-        return isKorean ? '모든 차드의 시작점. 완벽한 기본기가 진짜 강함이다, 만삣삐!' : AppLocalizations.of(context)!.pushupStandardDesc;
+        return AppLocalizations.of(context)!.pushupStandardDesc;
       case 'knee':
-        return isKorean ? '입문자도 할 수 있다! 무릎 대고 하는 거 부끄러워하지 마라, 만삣삐!' : AppLocalizations.of(context)!.pushupKneeDesc;
+        return AppLocalizations.of(context)!.pushupKneeDesc;
       case 'incline':
-        return isKorean ? '경사면을 이용해서 난이도 조절! 계단이나 벤치면 충분하다, 만삣삐!' : AppLocalizations.of(context)!.pushupInclineDesc;
+        return AppLocalizations.of(context)!.pushupInclineDesc;
       case 'wide_grip':
-        return isKorean ? '와이드하게 벌려서 가슴을 더 넓게! 진짜 차드 가슴을 만들어라!' : AppLocalizations.of(context)!.pushupWideGripDesc;
+        return AppLocalizations.of(context)!.pushupWideGripDesc;
       case 'diamond':
-        return isKorean ? '삼두근 집중 공략! 다이아몬드 모양이 진짜 차드의 상징이다!' : AppLocalizations.of(context)!.pushupDiamondDesc;
+        return AppLocalizations.of(context)!.pushupDiamondDesc;
       case 'decline':
-        return isKorean ? '발을 높게 올려서 강도 업! 어깨와 상체 근육을 제대로 자극한다!' : AppLocalizations.of(context)!.pushupDeclineDesc;
+        return AppLocalizations.of(context)!.pushupDeclineDesc;
       case 'archer':
-        return isKorean ? '한쪽씩 집중하는 고급 기술! 균형감각과 코어가 필요하다, 만삣삐!' : AppLocalizations.of(context)!.pushupArcherDesc;
+        return AppLocalizations.of(context)!.pushupArcherDesc;
       case 'pike':
-        return isKorean ? '어깨 집중 공략! 핸드스탠드 푸시업의 전 단계다!' : AppLocalizations.of(context)!.pushupPikeDesc;
+        return AppLocalizations.of(context)!.pushupPikeDesc;
       case 'clap':
-        return isKorean ? '박수치면서 하는 폭발적인 파워! 진짜 차드만이 할 수 있다!' : AppLocalizations.of(context)!.pushupClapDesc;
+        return AppLocalizations.of(context)!.pushupClapDesc;
       case 'one_arm':
-        return isKorean ? '원핸드 푸시업은 차드의 완성형이다! 이거 한 번이라도 하면 진짜 기가 차드 인정!' : AppLocalizations.of(context)!.pushupOneArmDesc;
+        return AppLocalizations.of(context)!.pushupOneArmDesc;
       default:
-        return isKorean ? '차드를 위한 특별한 푸시업' : 'Special pushup for chads';
+        return Localizations.localeOf(context).languageCode == 'ko'
+          ? '차드를 위한 특별한 푸시업' 
+          : 'Special pushup for chads';
     }
   }
 
   String _getChadMotivation(PushupType pushup) {
-    final isKorean = Localizations.localeOf(context).languageCode == 'ko';
     switch (pushup.id) {
       case 'standard':
-        return isKorean ? '기본이 제일 중요하다, 만삣삐! 완벽한 폼으로 하나하나 쌓아가면 진짜 차드가 된다!' : AppLocalizations.of(context)!.chadMotivationStandard;
+        return AppLocalizations.of(context)!.chadMotivationStandard;
       case 'knee':
-        return isKorean ? '시작이 반이다! 무릎 푸시업도 제대로 하면 금방 일반 푸시업으로 갈 수 있어!' : AppLocalizations.of(context)!.chadMotivationKnee;
+        return AppLocalizations.of(context)!.chadMotivationKnee;
       case 'incline':
-        return isKorean ? '단계적으로 올라가는 것이 차드의 길이다! 각도를 점점 낮춰가면서 도전해봐!' : AppLocalizations.of(context)!.chadMotivationIncline;
+        return AppLocalizations.of(context)!.chadMotivationIncline;
       case 'wide_grip':
-        return isKorean ? '가슴을 활짝 펴고 차드의 기운을 받아라! 넓은 가슴이 진짜 차드의 상징이다!' : AppLocalizations.of(context)!.chadMotivationWideGrip;
+        return AppLocalizations.of(context)!.chadMotivationWideGrip;
       case 'diamond':
-        return isKorean ? '다이아몬드처럼 귀한 네 삼두근을 만들어라! 팔 근육 폭발하는 기분을 느껴봐!' : AppLocalizations.of(context)!.chadMotivationDiamond;
+        return AppLocalizations.of(context)!.chadMotivationDiamond;
       case 'decline':
-        return isKorean ? '높은 곳을 향해 도전하는 것이 차드다! 어깨와 상체가 불타오르는 걸 느껴봐!' : AppLocalizations.of(context)!.chadMotivationDecline;
+        return AppLocalizations.of(context)!.chadMotivationDecline;
       case 'archer':
-        return isKorean ? '균형과 집중력이 필요한 고급 기술! 한쪽씩 완벽하게 해내면 진짜 차드 인정!' : AppLocalizations.of(context)!.chadMotivationArcher;
+        return AppLocalizations.of(context)!.chadMotivationArcher;
       case 'pike':
-        return isKorean ? '핸드스탠드의 첫걸음! 어깨 근육이 터져나갈 것 같은 기분을 만끽해라!' : AppLocalizations.of(context)!.chadMotivationPike;
+        return AppLocalizations.of(context)!.chadMotivationPike;
       case 'clap':
-        return isKorean ? '폭발적인 파워로 박수를 쳐라! 이거 되면 너도 진짜 차드다, fxxk yeah!' : AppLocalizations.of(context)!.chadMotivationClap;
+        return AppLocalizations.of(context)!.chadMotivationClap;
       case 'one_arm':
-        return isKorean ? '원핸드 푸시업은 차드의 완성형이다! 이거 한 번이라도 하면 진짜 기가 차드 인정, fxxk yeah!' : AppLocalizations.of(context)!.chadMotivationOneArm;
+        return AppLocalizations.of(context)!.chadMotivationOneArm;
       default:
-        return isKorean ? '차드의 길은 험하지만 그래서 더 가치있다! 포기하지 마라, 만삣삐!' : AppLocalizations.of(context)!.chadMotivationDefault;
+        return AppLocalizations.of(context)!.chadMotivationDefault;
     }
   }
 

@@ -109,16 +109,10 @@ class _BackupScreenState extends State<BackupScreen> {
 
   /// 백업 복원
   Future<void> _restoreBackup() async {
-    final confirmed = await _showConfirmDialog(
-      '백업 복원',
-      '현재 데이터가 모두 삭제되고 백업 데이터로 복원됩니다.\n계속하시겠습니까?',
-    );
-    
-    if (!confirmed) return;
-    
     setState(() => _isRestoringBackup = true);
     
     try {
+      final context = this.context; // BuildContext를 미리 캡처
       final success = await _backupService.restoreFromBackup(
         context: context,
       );
@@ -132,7 +126,7 @@ class _BackupScreenState extends State<BackupScreen> {
     } catch (e) {
       _showErrorSnackBar('백업 복원 중 오류 발생: $e');
     } finally {
-      setState(() => _isRestoringBackup = false);
+      if (mounted) setState(() => _isRestoringBackup = false);
     }
   }
 
@@ -171,7 +165,7 @@ class _BackupScreenState extends State<BackupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.backupManagement),
+        title: Text(AppLocalizations.of(context).backupManagement),
         backgroundColor: Colors.blue[600],
         foregroundColor: Colors.white,
         actions: [
@@ -190,7 +184,7 @@ class _BackupScreenState extends State<BackupScreen> {
   Widget _buildBackupContent() {
     if (_backupStatus == null) {
       return Center(
-        child: Text(AppLocalizations.of(context)!.errorLoadingData),
+        child: Text(AppLocalizations.of(context).errorLoadingData),
       );
     }
 
@@ -487,11 +481,11 @@ class _BackupScreenState extends State<BackupScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(AppLocalizations.of(context)!.cancel),
+            child: Text(AppLocalizations.of(context).cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, controller.text),
-            child: Text(AppLocalizations.of(context)!.confirm),
+            child: Text(AppLocalizations.of(context).confirm),
           ),
         ],
       ),
@@ -508,11 +502,11 @@ class _BackupScreenState extends State<BackupScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: Text(AppLocalizations.of(context)!.cancel),
+            child: Text(AppLocalizations.of(context).cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: Text(AppLocalizations.of(context)!.confirm),
+            child: Text(AppLocalizations.of(context).confirm),
           ),
         ],
       ),

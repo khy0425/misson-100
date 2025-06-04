@@ -10,12 +10,16 @@ import '../services/workout_history_service.dart';
 import '../services/chad_evolution_service.dart';
 import '../screens/workout_screen.dart';
 import '../screens/settings_screen.dart';
+import '../screens/pushup_tutorial_screen.dart';
+import '../screens/pushup_form_guide_screen.dart';
+import '../screens/progress_tracking_screen.dart';
 import '../models/user_profile.dart';
 import '../models/chad_evolution.dart';
 import '../models/workout_history.dart';
 import '../utils/constants.dart';
 import '../widgets/ad_banner_widget.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import '../utils/chad_translation_helper.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -402,7 +406,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                   borderRadius: BorderRadius.circular(AppConstants.radiusS),
                 ),
                 child: Text(
-                  currentChad.name,
+                  ChadTranslationHelper.getChadName(context, currentChad),
                   style: theme.textTheme.labelMedium?.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -465,7 +469,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                   borderRadius: BorderRadius.circular(AppConstants.radiusS),
                 ),
                 child: Text(
-                  currentChad.description,
+                  ChadTranslationHelper.getChadDescription(context, currentChad),
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: currentChad.themeColor,
                     fontWeight: FontWeight.w600,
@@ -478,7 +482,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
               // 진화 진행률 표시
               if (evolutionState.currentStage != ChadEvolutionStage.doubleChad) ...[
                 Text(
-                  '다음 진화까지',
+                  Localizations.localeOf(context).languageCode == 'ko'
+                    ? '다음 진화까지'
+                    : 'Until Next Evolution',
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: Colors.grey,
                   ),
@@ -507,7 +513,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                     borderRadius: BorderRadius.circular(AppConstants.radiusS),
                   ),
                   child: Text(
-                    '🎉 최고 단계 달성! 🎉',
+                    Localizations.localeOf(context).languageCode == 'ko'
+                      ? '🎉 최고 단계 달성! 🎉'
+                      : '🎉 Maximum Level Achieved! 🎉',
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: Colors.amber[700],
                       fontWeight: FontWeight.bold,
@@ -614,10 +622,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             const SizedBox(height: 8),
 
             // 세트별 목표 표시
-            if (_todayWorkout!.sets != null)
-              ...(((_todayWorkout!.sets as List<dynamic>?) ?? []).asMap().entries.map((entry) {
-                final setIndex = entry.key + 1;
-                final reps = (entry.value as Map<String, dynamic>?)?['reps'] as int?;
+            ...List.generate(
+              (_todayWorkout!.workout as List).length,
+              (index) {
+                final setIndex = index + 1;
+                final reps = (_todayWorkout!.workout as List)[index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 2),
                   child: Row(
@@ -643,7 +652,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                     ],
                   ),
                 );
-              })),
+              },
+            ),
 
             const SizedBox(height: 16),
 
@@ -659,11 +669,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 Text(
                   _todayCompletedWorkout != null
                       ? (Localizations.localeOf(context).languageCode == 'ko'
-                          ? '완료: ${_todayCompletedWorkout!.totalReps}개 / ${(_todayWorkout!.sets as List<dynamic>?)?.length ?? 0}세트'
-                          : 'Completed: ${_todayCompletedWorkout!.totalReps} reps / ${(_todayWorkout!.sets as List<dynamic>?)?.length ?? 0} sets')
+                          ? '완료: ${_todayCompletedWorkout!.totalReps}개 / ${_todayWorkout!.setCount}세트'
+                          : 'Completed: ${_todayCompletedWorkout!.totalReps} reps / ${_todayWorkout!.setCount} sets')
                       : (Localizations.localeOf(context).languageCode == 'ko'
-                          ? '목표: ${(_todayWorkout!.sets as List<dynamic>?)?.fold<int>(0, (sum, set) => sum + (set?.reps as int? ?? 0)) ?? 0}개 / ${(_todayWorkout!.sets as List<dynamic>?)?.length ?? 0}세트'
-                          : 'Goal: ${(_todayWorkout!.sets as List<dynamic>?)?.fold<int>(0, (sum, set) => sum + (set?.reps as int? ?? 0)) ?? 0} reps / ${(_todayWorkout!.sets as List<dynamic>?)?.length ?? 0} sets'),
+                          ? '목표: ${_todayWorkout!.totalReps}개 / ${_todayWorkout!.setCount}세트'
+                          : 'Goal: ${_todayWorkout!.totalReps} reps / ${_todayWorkout!.setCount} sets'),
                   style: TextStyle(
                     color: _todayCompletedWorkout != null ? Colors.green[700] : Colors.grey,
                     fontWeight: _todayCompletedWorkout != null ? FontWeight.w600 : FontWeight.normal,
@@ -937,11 +947,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                       onPressed: () => _showExtraWorkoutChallenge(),
                       icon: Icon(Icons.whatshot, color: Colors.white),
                       label: Text(
-                        '그래도 도전한다! 🔥',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        AppLocalizations.of(context)!.challengeModeOn,
+                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                       ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.orange[600],
@@ -1262,7 +1269,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 ),
                 const SizedBox(width: AppConstants.paddingS),
                 Text(
-                  '완벽한 푸시업 자세',
+                  AppLocalizations.of(context)!.perfectPushupForm,
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -1299,7 +1306,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 ),
                 const SizedBox(width: AppConstants.paddingS),
                 Text(
-                  '진행률 추적',
+                  AppLocalizations.of(context)!.progressTracking,
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -1358,13 +1365,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           width: double.infinity,
           child: ElevatedButton.icon(
             onPressed: () {
-              // SocialShareService.shareFriendChallenge(
-              //   context: context,
-              //   userName: 'ALPHA EMPEROR',
-              // );
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('친구 도전장 기능은 준비 중입니다! 🚀'),
+                SnackBar(
+                  content: Text(Localizations.localeOf(context).languageCode == 'ko'
+                    ? '친구 도전장 기능은 준비 중입니다! 🚀'
+                    : 'Friend challenge feature is coming soon! 🚀'),
                   backgroundColor: Colors.blue,
                 ),
               );
@@ -1422,15 +1427,14 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         
         // 임시: 워크아웃 화면 기능이 준비될 때까지 메시지 표시
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('워크아웃 화면 기능은 준비 중입니다! 🏋️‍♂️'),
+          SnackBar(
+            content: Text(Localizations.localeOf(context).languageCode == 'ko'
+              ? '워크아웃 화면 기능은 준비 중입니다! 🏋️‍♂️'
+              : 'Workout screen feature is coming soon! 🏋️‍♂️'),
             backgroundColor: Colors.orange,
-            duration: Duration(seconds: 2),
+            duration: const Duration(seconds: 2),
           ),
         );
-        
-        // 워크아웃 완료 후 데이터 새로고침
-        await _refreshData();
       }
     } catch (e) {
       // 에러 처리
@@ -1456,7 +1460,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           children: [
             Icon(Icons.local_fire_department, color: Colors.orange[700], size: 28),
             const SizedBox(width: 8),
-            const Text('🔥 준비됐어?'),
+            Text(AppLocalizations.of(context)!.restDayChampionTitle),
           ],
         ),
         content: SingleChildScrollView(
@@ -1490,11 +1494,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      '그냥 기본 운동? 아니면 진짜 챔피언 모드? 🚀\n'
-                      '너의 한계를 시험해볼 시간이다!\n\n'
-                      '⚡ 챌린지 모드 ON 하면:\n'
-                      '• 더 높은 난이도\\n'
-                      '• 보너스 포인트 획득 🏆',
+                      AppLocalizations.of(context)!.challengeModeDescription,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         height: 1.4,
                       ),
@@ -1518,9 +1518,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           ElevatedButton.icon(
             onPressed: () => Navigator.pop(context, true),
             icon: const Icon(Icons.whatshot, color: Colors.white),
-            label: const Text(
-              '챌린지 모드 ON! 🔥',
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            label: Text(
+              AppLocalizations.of(context)!.challengeModeOn,
+              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
             style: ElevatedButton.styleFrom(backgroundColor: Colors.orange[600]),
           ),
@@ -1531,10 +1531,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     // 챌린지 모드 선택에 따른 메시지
     if (result == true) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('🔥 챌린지 모드 활성화! 정신력을 시험해보자! 💪'),
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.challengeModeActivated),
           backgroundColor: Colors.orange,
-          duration: Duration(seconds: 3),
+          duration: const Duration(seconds: 3),
         ),
       );
     }
@@ -1570,55 +1570,21 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Row(
-          children: [
-            Icon(Icons.local_fire_department, color: Colors.orange[700], size: 28),
-            const SizedBox(width: 8),
-            const Text('🔥 진짜 챔피언의 선택'),
-          ],
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.orange.withValues(alpha: 0.1),
-                    Colors.red.withValues(alpha: 0.1),
-                  ],
-                ),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: Colors.orange.withValues(alpha: 0.3),
-                  width: 2,
-                ),
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    '💪 오늘 너의 한계를 시험해볼까?',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.orange[700],
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    '휴식일이라고? 그런 건 약한 놈들이나 하는 거야!\n'
-                    '진짜 챔피언들은 매일이 전쟁이다! 🥊\n\n'
-                    '간단한 추가 챌린지로 너의 정신력을 증명해봐!',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      height: 1.5,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
-          ],
+        title: Text(Localizations.localeOf(context).languageCode == 'ko' 
+          ? '🔥 보너스 챌린지' 
+          : '🔥 Bonus Challenge'),
+        content: Text(
+          Localizations.localeOf(context).languageCode == 'ko' 
+            ? '휴식일 보너스 챌린지! 💪\n\n'
+              '• 플랭크 30초 x 3세트\n'
+              '• 스쿼트 20개 x 2세트\n'
+              '• 푸시업 10개 (완벽한 자세로!)\n\n'
+              '준비됐어? 진짜 챔피언만 할 수 있어! 🏆'
+            : 'Rest Day Bonus Challenge! 💪\n\n'
+              '• Plank 30sec x 3sets\n'
+              '• Squat 20reps x 2sets\n'
+              '• Push-up 10reps (perfect form!)\n\n'
+              'Ready? Only true champions can do this! 🏆'
         ),
         actions: [
           TextButton.icon(
@@ -1760,7 +1726,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('🔥 보너스 챌린지'),
+        title: Text(Localizations.localeOf(context).languageCode == 'ko' 
+          ? '🔥 보너스 챌린지' 
+          : '🔥 Bonus Challenge'),
         content: Text(
           Localizations.localeOf(context).languageCode == 'ko' 
             ? '휴식일 보너스 챌린지! 💪\n\n'
@@ -1779,22 +1747,24 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             onPressed: () {
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('🔥 훌륭해! 진짜 챔피언의 정신력이야! 💪'),
+                SnackBar(
+                  content: Text(Localizations.localeOf(context).languageCode == 'ko'
+                    ? '🔥 훌륭해! 진짜 챔피언의 정신력이야! 💪'
+                    : '🔥 Excellent! That\'s the spirit of a true champion! 💪'),
                   backgroundColor: Colors.orange,
-                  duration: Duration(seconds: 3),
+                  duration: const Duration(seconds: 3),
                 ),
               );
             },
             style: ElevatedButton.styleFrom(backgroundColor: Colors.orange[600]),
-            child: const Text(
-              '시작! 🔥',
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            child: Text(
+              Localizations.localeOf(context).languageCode == 'ko' ? '시작! 🔥' : 'Start! 🔥',
+              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('나중에...'),
+            child: Text(Localizations.localeOf(context).languageCode == 'ko' ? '나중에...' : 'Later...'),
           ),
         ],
       ),
@@ -1811,29 +1781,17 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     }
     
     if (context.mounted) {
-      // await Navigator.of(context).push(
-      //   MaterialPageRoute<void>(builder: (context) => PushupTutorialScreen()),
-      // );
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('푸시업 튜토리얼 기능은 준비 중입니다! 📚'),
-          backgroundColor: Colors.blue,
-        ),
+      await Navigator.of(context).push(
+        MaterialPageRoute<void>(builder: (context) => const PushupTutorialScreen()),
       );
     }
   }
 
   void _openFormGuide(BuildContext context) async {
     if (context.mounted) {
-      // await Navigator.of(context).push(
-      //   MaterialPageRoute<void>(
-      //     builder: (context) => const PushupFormGuideScreen(),
-      //   ),
-      // );
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('푸시업 폼 가이드 기능은 준비 중입니다! 💪'),
-          backgroundColor: Colors.orange,
+      await Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (context) => const PushupFormGuideScreen(),
         ),
       );
     }
@@ -1851,17 +1809,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     }
 
     if (context.mounted) {
-      // await Navigator.of(context).push(
-      //   MaterialPageRoute<void>(
-      //     builder: (context) => ProgressTrackingScreen(
-      //       userProfile: _userProfile!,
-      //     ),
-      //   ),
-      // );
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('진행률 추적 기능은 준비 중입니다! 📊'),
-          backgroundColor: Colors.green,
+      await Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (context) => ProgressTrackingScreen(
+            userProfile: _userProfile!,
+          ),
         ),
       );
     }

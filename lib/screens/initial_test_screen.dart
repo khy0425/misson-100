@@ -8,6 +8,7 @@ import '../models/user_profile.dart';
 import '../services/database_service.dart';
 import '../services/workout_program_service.dart';
 import 'main_navigation_screen.dart';
+import 'workout_schedule_setup_screen.dart';
 
 class InitialTestScreen extends StatefulWidget {
   const InitialTestScreen({super.key});
@@ -124,38 +125,26 @@ class _InitialTestScreenState extends State<InitialTestScreen>
       // 난이도별 초기 푸시업 개수 설정
       final initialMaxReps = _getInitialMaxReps(_selectedLevel!);
 
-      // 사용자 프로필 생성
+      // 사용자 프로필 생성 (임시로 저장, 운동 스케줄 설정 후 완성)
       final userProfile = UserProfile(
         level: _selectedLevel!,
         initialMaxReps: initialMaxReps,
         startDate: DateTime.now(),
         chadLevel: 0, // 시작 레벨
-        reminderEnabled: false,
+        reminderEnabled: false, // 스케줄 설정에서 변경 가능
       );
 
       // 데이터베이스에 사용자 프로필 저장
       final userId = await databaseService.insertUserProfile(userProfile);
+      final userProfileWithId = userProfile.copyWith(id: userId);
 
-      // 사용자 워크아웃 프로그램 초기화
-      final sessionsCreated = await workoutProgramService.initializeUserProgram(
-        userProfile.copyWith(id: userId),
-      );
-
+      // 운동 스케줄 설정 화면으로 이동
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              AppLocalizations.of(context).profileCreated(sessionsCreated),
-            ),
-            backgroundColor: const Color(AppColors.successColor),
-            duration: const Duration(seconds: 2),
-          ),
-        );
-
-        // 홈 화면으로 이동
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => const MainNavigationScreen(),
+            builder: (context) => WorkoutScheduleSetupScreen(
+              userProfile: userProfileWithId,
+            ),
           ),
         );
       }

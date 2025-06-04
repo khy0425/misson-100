@@ -43,22 +43,7 @@ class ChadImageService {
 
   /// Chad 이미지 경로 생성
   String _getChadImagePath(ChadEvolutionStage stage) {
-    switch (stage) {
-      case ChadEvolutionStage.sleepCapChad:
-        return 'assets/images/수면모자차드.jpg';
-      case ChadEvolutionStage.basicChad:
-        return 'assets/images/기본차드.jpg';
-      case ChadEvolutionStage.coffeeChad:
-        return 'assets/images/커피차드.png';
-      case ChadEvolutionStage.frontFacingChad:
-        return 'assets/images/정면차드.jpg';
-      case ChadEvolutionStage.sunglassesChad:
-        return 'assets/images/썬글차드.jpg';
-      case ChadEvolutionStage.glowingEyesChad:
-        return 'assets/images/눈빔차드.jpg';
-      case ChadEvolutionStage.doubleChad:
-        return 'assets/images/더블차드.jpg';
-    }
+    return 'assets/images/chad/${stage.name}.png';
   }
 
   /// 캐시 키 생성
@@ -315,5 +300,24 @@ class ChadImageService {
       _memoryCache.remove(oldestKey);
     }
     debugPrint('메모리 압박으로 인한 Chad 이미지 캐시 정리: $removeCount개 제거');
+  }
+
+  /// Chad 이미지 프로바이더 가져오기 (폴백 처리 포함)
+  static Future<ImageProvider> getChadImageProvider(ChadEvolutionStage stage) async {
+    try {
+      final assetPath = _getChadImagePathStatic(stage);
+      final data = await rootBundle.load(assetPath);
+      return MemoryImage(data.buffer.asUint8List());
+    } catch (e) {
+      debugPrint('Chad 이미지 로드 실패: $e');
+      // 기본 투명 이미지 반환
+      final emptyBytes = Uint8List.fromList([137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2, 0, 0, 0, 144, 119, 83, 222, 0, 0, 0, 12, 73, 68, 65, 84, 8, 23, 99, 248, 15, 0, 1, 1, 1, 0, 24, 221, 141, 219, 0, 0, 0, 0, 73, 69, 78, 68, 174, 66, 96, 130]);
+      return MemoryImage(emptyBytes);
+    }
+  }
+
+  /// Chad 이미지 경로 반환 (static용)
+  static String _getChadImagePathStatic(ChadEvolutionStage stage) {
+    return 'assets/images/chad/${stage.name}.png';
   }
 } 

@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Modify this file to customize your launch splash screen -->
+<!-- Mission: 100 앱의 네이티브 스플래시 화면 -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@android:color/white" />
+    <!-- 배경색 - 앱의 primaryColor와 일치 -->
+    <item android:drawable="@color/splash_background" />
 
-    <!-- You can insert your own image assets here -->
-    <!-- <item>
-        <bitmap
-            android:gravity="center"
-            android:src="@mipmap/launch_image" />
-    </item> -->
+    <!-- 앱 로고/아이콘 -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/primary_color"/>
+            <size android:width="120dp" android:height="120dp"/>
+        </shape>
+    </item>
+    
+    <!-- 피트니스 아이콘 -->
+    <item android:gravity="center">
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent"/>
+            <size android:width="60dp" android:height="60dp"/>
+        </shape>
+    </item>
 </layer-list>

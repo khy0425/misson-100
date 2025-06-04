@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:provider/provider.dart';
 import '../generated/app_localizations.dart';
 import '../models/user_profile.dart';
 import '../models/workout_session.dart';
-import '../models/progress.dart' as progress_model;
 import '../services/workout_program_service.dart';
 import '../services/database_service.dart';
-import '../services/chad_level_manager.dart';
 import '../widgets/ad_banner_widget.dart';
 
 class ProgressTrackingScreen extends StatefulWidget {
@@ -32,8 +29,6 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
   late TabController _tabController;
   late AnimationController _fadeAnimationController;
   late Animation<double> _fadeAnimation;
-  late AnimationController _slideAnimationController;
-  late Animation<Offset> _slideAnimation;
   
   ProgramProgress? _programProgress;
   List<WeeklyProgressData> _weeklyData = [];
@@ -64,18 +59,6 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
       curve: Curves.easeInOut,
     ));
     
-    _slideAnimationController = AnimationController(
-      duration: const Duration(milliseconds: 800),
-      vsync: this,
-    );
-    _slideAnimation = Tween<Offset>(
-      begin: Offset.zero,
-      end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _slideAnimationController,
-      curve: Curves.easeInOut,
-    ));
-    
     _loadProgressData();
   }
 
@@ -83,7 +66,6 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
   void dispose() {
     _tabController.dispose();
     _fadeAnimationController.dispose();
-    _slideAnimationController.dispose();
     super.dispose();
   }
 
@@ -91,7 +73,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
     try {
       setState(() {
         _isLoading = true;
-        _errorMessage = '';
+        _errorMessage = '데이터를 불러오는 중 오류가 발생했습니다';
       });
 
       // 전체 프로그램 진행률 로드
@@ -112,7 +94,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
     } catch (e) {
       setState(() {
         _isLoading = false;
-        _errorMessage = '데이터를 불러오는 중 오류가 발생했습니다: $e';
+        _errorMessage = '데이터를 불러오는 중 오류가 발생했습니다';
       });
     }
   }
@@ -215,7 +197,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
             Tab(text: AppLocalizations.of(context)!.weekly),
             Tab(text: AppLocalizations.of(context)!.calendar),
             Tab(text: AppLocalizations.of(context)!.statistics),
-            const Tab(text: 'Chad 진화'),
+            Tab(text: AppLocalizations.of(context)!.chadEvolution),
           ],
         ),
       ),
@@ -312,17 +294,17 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Row(
+              Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.trending_up,
                     color: Color(0xFF4DABF7),
                     size: 24,
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Text(
-                    '전체 진행률',
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.overallProgress,
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFF4DABF7),
@@ -342,14 +324,14 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '${(_programProgress!.progressPercentage * 100).toStringAsFixed(1)}% 완료',
+                    '${(_programProgress!.progressPercentage * 100).toStringAsFixed(1)}% ${AppLocalizations.of(context)!.completed}',
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   Text(
-                    '${_programProgress!.completedSessions}/${_programProgress!.totalSessions} 세션',
+                    '${_programProgress!.completedSessions}/${_programProgress!.totalSessions} ${AppLocalizations.of(context)!.sessions}',
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey[600],
@@ -362,7 +344,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                 children: [
                   Expanded(
                     child: _buildStatItem(
-                      '완료한 횟수',
+                      AppLocalizations.of(context)!.completedCount,
                       '${_programProgress!.totalCompletedReps}회',
                       Icons.fitness_center,
                       const Color(0xFF51CF66),
@@ -371,7 +353,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                   const SizedBox(width: 16),
                   Expanded(
                     child: _buildStatItem(
-                      '남은 횟수',
+                      AppLocalizations.of(context)!.remainingCount,
                       '${_programProgress!.remainingReps}회',
                       Icons.schedule,
                       const Color(0xFFFFD43B),
@@ -438,9 +420,9 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                '주간 성장 차트',
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.weeklyGrowthChart,
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF4DABF7),
@@ -474,9 +456,9 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                '주차별 상세',
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.weeklyDetails,
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF4DABF7),
@@ -543,7 +525,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '${data.completedSessions}/${data.totalSessions} 세션 완료 • ${data.totalReps}회',
+                  '${data.completedSessions}/${data.totalSessions} ${AppLocalizations.of(context)!.sessionsCompleted} • ${data.totalReps}회',
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.grey[600],
@@ -588,9 +570,9 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      '워크아웃 캘린더',
-                      style: TextStyle(
+                    Text(
+                      AppLocalizations.of(context)!.workoutCalendar,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF4DABF7),
@@ -794,8 +776,8 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                     ),
                     Text(
                       isCompleted 
-                        ? (Localizations.localeOf(context).languageCode == 'ko' ? '완료됨' : 'Completed')
-                        : (Localizations.localeOf(context).languageCode == 'ko' ? '진행 중' : 'In Progress'),
+                        ? AppLocalizations.of(context)!.completed
+                        : AppLocalizations.of(context)!.inProgress,
                       style: TextStyle(
                         fontSize: 14,
                         color: isCompleted ? const Color(0xFF51CF66) : const Color(0xFFFFD43B),
@@ -929,17 +911,17 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Row(
+              Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.analytics,
                     color: Color(0xFF4DABF7),
                     size: 24,
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Text(
-                    '전체 통계',
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.overallStats,
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFF4DABF7),
@@ -959,26 +941,26 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                 childAspectRatio: 1.2,
                 children: [
                   _buildStatCard(
-                    '총 푸시업',
+                    AppLocalizations.of(context)!.totalPushups,
                     '${_programProgress!.totalCompletedReps}회',
                     Icons.fitness_center,
                     const Color(0xFF51CF66),
                   ),
                   _buildStatCard(
-                    '완료 세션',
+                    AppLocalizations.of(context)!.completedSessions,
                     '${_programProgress!.completedSessions}회',
                     Icons.check_circle,
                     const Color(0xFF4DABF7),
                   ),
                   _buildStatCard(
-                    '평균/세션',
+                    AppLocalizations.of(context)!.averagePerSession,
                     '${averageRepsPerDay.toStringAsFixed(1)}회',
                     Icons.trending_up,
                     const Color(0xFFFFD43B),
                   ),
                   _buildStatCard(
                     Localizations.localeOf(context).languageCode == 'ko'
-                      ? '완료율'
+                      ? AppLocalizations.of(context)!.completionRate
                       : 'Completion',
                     '${(completionRate * 100).toStringAsFixed(1)}%',
                     Icons.pie_chart,
@@ -1060,7 +1042,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                   SizedBox(width: 8),
                   Text(
                     'Chad 진화 단계',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFFFFD43B),
@@ -1164,17 +1146,17 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Row(
+              Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.calendar_view_week,
                     color: Color(0xFF51CF66),
                     size: 24,
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Text(
-                    '주간별 성과',
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.weeklyPerformance,
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFF51CF66),
@@ -1224,15 +1206,15 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
     if (isExcellent) {
       statusColor = const Color(0xFF51CF66);
       statusIcon = Icons.star;
-      statusText = '완벽!';
+      statusText = AppLocalizations.of(context)!.perfect;
     } else if (isGood) {
       statusColor = const Color(0xFF4DABF7);
       statusIcon = Icons.thumb_up;
-      statusText = Localizations.localeOf(context).languageCode == 'ko' ? '좋음' : 'Good';
+      statusText = AppLocalizations.of(context)!.good;
     } else {
       statusColor = const Color(0xFFFFD43B);
       statusIcon = Icons.trending_up;
-      statusText = '개선 필요';
+      statusText = AppLocalizations.of(context)!.improvement;
     }
     
     return Container(
@@ -1262,7 +1244,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                   ),
                 ),
                 Text(
-                                       '${data.totalReps}회 완료',
+                  '${data.totalReps}회 완료',
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.grey[600],
@@ -1665,17 +1647,17 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Row(
+            Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.timeline,
                   color: Color(0xFF4DABF7),
                   size: 24,
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Text(
-                  'Chad 진화 단계',
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.chadEvolutionStages,
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF4DABF7),
@@ -1890,17 +1872,17 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Row(
+            Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.military_tech,
                   color: Color(0xFFFF6B6B),
                   size: 24,
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Text(
-                  'Chad 업적',
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.chadAchievements,
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFFFF6B6B),

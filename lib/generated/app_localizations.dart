@@ -677,7 +677,7 @@ abstract class AppLocalizations {
   /// 초급 레벨 설명
   ///
   /// In ko, this message translates to:
-  /// **'🔥 푸시업 여정을 시작하는 미래의 EMPEROR다.\n꾸준한 연습으로 LEGENDARY BEAST로 진화할 수 있어, 만삣삐! 🔥'**
+  /// **'🔥 ROOKIE CHAD. 푸시업 제국의 시작점.\n각성의 여정이 시작되었다. 🔥'**
   String get levelDescRookie;
 
   /// 중급 레벨 설명
@@ -1799,7 +1799,7 @@ abstract class AppLocalizations {
   /// 전설 등급
   ///
   /// In ko, this message translates to:
-  /// **'전설'**
+  /// **'레전더리'**
   String get achievementRarityLegendary;
 
   /// 신화 등급
@@ -2138,7 +2138,7 @@ abstract class AppLocalizations {
   /// **'차드가 된 날들!'**
   String get chadDays;
 
-  /// 총 푸시업 수 통계 제목
+  /// Total pushups label
   ///
   /// In ko, this message translates to:
   /// **'총 푸시업'**
@@ -2198,7 +2198,7 @@ abstract class AppLocalizations {
   /// **'{days}일'**
   String streakDays(int days);
 
-  /// 최고 연속 운동일
+  /// Best record label
   ///
   /// In ko, this message translates to:
   /// **'최고 기록'**
@@ -2252,7 +2252,7 @@ abstract class AppLocalizations {
   /// **'완료'**
   String get completed;
 
-  /// 현재 횟수 표시 텍스트
+  /// Current status label
   ///
   /// In ko, this message translates to:
   /// **'현재'**
@@ -2360,7 +2360,7 @@ abstract class AppLocalizations {
   /// **'#차드'**
   String get chadHashtag;
 
-  /// 푸시업 자세 가이드 제목
+  /// Title for pushup form guide screen
   ///
   /// In ko, this message translates to:
   /// **'완벽한 푸시업 자세'**
@@ -2834,11 +2834,11 @@ abstract class AppLocalizations {
   /// **'설명'**
   String get description;
 
-  /// 업적 진행도 퍼센트
+  /// Percent complete label
   ///
   /// In ko, this message translates to:
-  /// **'{percentage}% 완료'**
-  String percentComplete(int percentage);
+  /// **'완료'**
+  String get percentComplete;
 
   /// 한국어 언어명
   ///
@@ -2990,19 +2990,19 @@ abstract class AppLocalizations {
   /// **'차드 레벨'**
   String get chadLevel;
 
-  /// 진행률 시각화 섹션 제목
+  /// Progress visualization section title
   ///
   /// In ko, this message translates to:
   /// **'진행률 시각화'**
   String get progressVisualization;
 
-  /// 주간 목표 라벨
+  /// Weekly goal label
   ///
   /// In ko, this message translates to:
   /// **'주간 목표'**
   String get weeklyGoal;
 
-  /// 월간 목표 라벨
+  /// Monthly goal label
   ///
   /// In ko, this message translates to:
   /// **'월간 목표'**
@@ -3050,13 +3050,13 @@ abstract class AppLocalizations {
   /// **'범례'**
   String get legend;
 
-  /// 완벽한 운동 완료
+  /// Perfect completion label
   ///
   /// In ko, this message translates to:
-  /// **'완벽'**
+  /// **'완벽!'**
   String get perfect;
 
-  /// 좋은 운동 완료
+  /// Good status
   ///
   /// In ko, this message translates to:
   /// **'좋음'**
@@ -4511,7 +4511,7 @@ abstract class AppLocalizations {
   /// Rest prevention message
   ///
   /// In ko, this message translates to:
-  /// **'잠깐! 너 진짜 쉴거야?'**
+  /// **'오늘은 회복의 날이다. 하지만 선택은 너의 것.'**
   String get justWait;
 
   /// Progress tracking title
@@ -4529,7 +4529,7 @@ abstract class AppLocalizations {
   /// Journey starting chad description
   ///
   /// In ko, this message translates to:
-  /// **'여정을 시작하는 Chad입니다.\n아직 잠이 덜 깬 상태지만 곧 깨어날 것입니다!'**
+  /// **'각성을 시작한 Chad.\n잠재력이 깨어나고 있다.'**
   String get journeyStartingChad;
 
   /// 주차/일차 표시 형식
@@ -4586,16 +4586,16 @@ abstract class AppLocalizations {
   /// **'Chad 진화 격리 알림'**
   String get chadEvolutionQuarantineNotification;
 
-  /// Theme color setting
+  /// 테마 색상 설정 제목
   ///
   /// In ko, this message translates to:
   /// **'테마 색상'**
   String get themeColor;
 
-  /// Font size setting
+  /// 글자 크기 설정 제목
   ///
   /// In ko, this message translates to:
-  /// **'폰트 크기'**
+  /// **'글자 크기'**
   String get fontSize;
 
   /// Animation effect setting
@@ -4724,11 +4724,11 @@ abstract class AppLocalizations {
   /// **'활성화됨'**
   String get activatedStatus;
 
-  /// Theme color setting description
+  /// 테마 색상 설정 설명
   ///
   /// In ko, this message translates to:
-  /// **'앱의 메인 색상을 변경합니다 (현재: {color})'**
-  String themeColorDesc(String color);
+  /// **'앱의 메인 색상을 변경합니다'**
+  String get themeColorDesc;
 
   /// Font scale setting title
   ///
@@ -4742,10 +4742,10 @@ abstract class AppLocalizations {
   /// **'앱 전체의 텍스트 크기를 조정합니다'**
   String get fontScaleDesc;
 
-  /// Animation effects setting title
+  /// 애니메이션 활성화 메시지
   ///
   /// In ko, this message translates to:
-  /// **'애니메이션 효과'**
+  /// **'애니메이션이 활성화되었습니다'**
   String get animationsEnabled;
 
   /// Animation effects setting description
@@ -4862,7 +4862,7 @@ abstract class AppLocalizations {
   /// **'{completed}/{total} 주 완료'**
   String weeksCompleted(int completed, int total);
 
-  /// 운동 완료율 통계 제목
+  /// Completion rate label
   ///
   /// In ko, this message translates to:
   /// **'완료율'**
@@ -5257,6 +5257,906 @@ abstract class AppLocalizations {
   /// In ko, this message translates to:
   /// **'차드의 길은 험하지만 그래서 더 가치있다! 포기하지 마라, 만삣삐!'**
   String get chadMotivationDefault;
+
+  /// Custom workout days setting
+  ///
+  /// In ko, this message translates to:
+  /// **'운동일 설정'**
+  String get customWorkoutDays;
+
+  /// Custom workout days description
+  ///
+  /// In ko, this message translates to:
+  /// **'원하는 요일에 운동하도록 설정하세요'**
+  String get customWorkoutDaysDesc;
+
+  /// Workout day selection title
+  ///
+  /// In ko, this message translates to:
+  /// **'운동 요일 선택'**
+  String get workoutDaySelection;
+
+  /// Select workout days instruction
+  ///
+  /// In ko, this message translates to:
+  /// **'주 3일 운동할 요일을 선택하세요'**
+  String get selectWorkoutDays;
+
+  /// Monday short form
+  ///
+  /// In ko, this message translates to:
+  /// **'월'**
+  String get mondayShort;
+
+  /// Tuesday short form
+  ///
+  /// In ko, this message translates to:
+  /// **'화'**
+  String get tuesdayShort;
+
+  /// Wednesday short form
+  ///
+  /// In ko, this message translates to:
+  /// **'수'**
+  String get wednesdayShort;
+
+  /// Thursday short form
+  ///
+  /// In ko, this message translates to:
+  /// **'목'**
+  String get thursdayShort;
+
+  /// Friday short form
+  ///
+  /// In ko, this message translates to:
+  /// **'금'**
+  String get fridayShort;
+
+  /// Saturday short form
+  ///
+  /// In ko, this message translates to:
+  /// **'토'**
+  String get saturdayShort;
+
+  /// Sunday short form
+  ///
+  /// In ko, this message translates to:
+  /// **'일'**
+  String get sundayShort;
+
+  /// Rest day message for non-workout days
+  ///
+  /// In ko, this message translates to:
+  /// **'오늘은 회복의 날. 진정한 강함은 휴식에서 나온다.'**
+  String get restDayMessage;
+
+  /// 운동일 전용 알림 설정 제목
+  ///
+  /// In ko, this message translates to:
+  /// **'🔥 운동일 전용 알림'**
+  String get workoutDaysOnlyNotifications;
+
+  /// 운동일 전용 알림 설정 설명
+  ///
+  /// In ko, this message translates to:
+  /// **'매일이 아닌 운동일(월,수,금)에만 알림을 받습니다. 휴식일엔 방해받지 않아요!'**
+  String get workoutDaysOnlyNotificationsDesc;
+
+  /// Chad 진화 완료 알림 설정 제목
+  ///
+  /// In ko, this message translates to:
+  /// **'Chad 진화 완료 알림'**
+  String get chadEvolutionNotifications;
+
+  /// Chad 진화 완료 알림 설정 설명
+  ///
+  /// In ko, this message translates to:
+  /// **'Chad가 새로운 단계로 진화했을 때 알림을 받습니다'**
+  String get chadEvolutionNotificationsDesc;
+
+  /// Chad 진화 예고 알림 설정 제목
+  ///
+  /// In ko, this message translates to:
+  /// **'Chad 진화 예고 알림'**
+  String get chadEvolutionPreviewNotifications;
+
+  /// Chad 진화 예고 알림 설정 설명
+  ///
+  /// In ko, this message translates to:
+  /// **'다음 진화까지 1주일 남았을 때 미리 알림을 받습니다'**
+  String get chadEvolutionPreviewNotificationsDesc;
+
+  /// Chad 진화 격려 알림 설정 제목
+  ///
+  /// In ko, this message translates to:
+  /// **'Chad 진화 격려 알림'**
+  String get chadEvolutionEncouragementNotifications;
+
+  /// Chad 진화 격려 알림 설정 설명
+  ///
+  /// In ko, this message translates to:
+  /// **'다음 진화까지 3일 남았을 때 격려 메시지를 받습니다'**
+  String get chadEvolutionEncouragementNotificationsDesc;
+
+  /// 운동 리마인더 비활성화 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'운동 리마인더가 비활성화되었습니다'**
+  String get workoutReminderDisabled;
+
+  /// 운동일 전용 모드 활성화 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'💪 운동일 전용 알림 모드 활성화! 월,수,금에만 알림이 옵니다!'**
+  String get workoutDaysModeActivated;
+
+  /// 매일 알림 모드 변경 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'매일 알림 모드로 변경! 매일 알림 받아요! 📱'**
+  String get dailyNotificationModeChanged;
+
+  /// 글자 크기 설정 설명
+  ///
+  /// In ko, this message translates to:
+  /// **'앱의 글자 크기를 조정합니다'**
+  String get fontSizeDesc;
+
+  /// 애니메이션 설정 제목
+  ///
+  /// In ko, this message translates to:
+  /// **'애니메이션'**
+  String get animations;
+
+  /// 애니메이션 설정 설명
+  ///
+  /// In ko, this message translates to:
+  /// **'앱의 애니메이션 효과를 활성화/비활성화합니다'**
+  String get animationsDesc;
+
+  /// 애니메이션 비활성화 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'애니메이션이 비활성화되었습니다'**
+  String get animationsDisabled;
+
+  /// 고대비 모드 활성화 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'고대비 모드가 활성화되었습니다'**
+  String get highContrastEnabled;
+
+  /// 고대비 모드 비활성화 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'고대비 모드가 비활성화되었습니다'**
+  String get highContrastDisabled;
+
+  /// 테마 색상 선택 다이얼로그 제목
+  ///
+  /// In ko, this message translates to:
+  /// **'테마 색상 선택'**
+  String get themeColorSelection;
+
+  /// 테마 색상 변경 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'테마 색상이 {colorName}로 변경되었습니다'**
+  String themeColorChanged(String colorName);
+
+  /// 필수 권한 라벨
+  ///
+  /// In ko, this message translates to:
+  /// **'필수'**
+  String get required;
+
+  /// 권한 활성화 상태 라벨
+  ///
+  /// In ko, this message translates to:
+  /// **'활성화됨'**
+  String get activated;
+
+  /// 완벽 자세 챌린지 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'🎯 완벽 자세 챌린지 활성화! 대충하면 안 된다! 💪'**
+  String get perfectFormChallenge;
+
+  /// 7일 연속 챌린지 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'🔄 7일 연속 챌린지 시작! 하루라도 빠지면 처음부터! 🚀'**
+  String get sevenDayStreak;
+
+  /// 한계 시험 챌린지 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'💪 오늘 너의 한계를 시험해볼까?'**
+  String get challengeTestYourLimits;
+
+  /// 휴식일 보너스 챌린지 내용
+  ///
+  /// In ko, this message translates to:
+  /// **'휴식일 보너스 챌린지! 💪\n\n• 플랭크 30초 x 3세트\n• 스쿼트 20개 x 2세트\n• 푸시업 10개 (완벽한 자세로!)\n\n준비됐어? 진짜 챔피언만 할 수 있어! 🏆'**
+  String get restDayBonusChallenge;
+
+  /// 챌린지 시작 버튼
+  ///
+  /// In ko, this message translates to:
+  /// **'챌린지 시작! 🔥'**
+  String get startChallenge;
+
+  /// Tab title for step by step guide
+  ///
+  /// In ko, this message translates to:
+  /// **'단계별\n가이드'**
+  String get stepByStepGuide;
+
+  /// Tab title for common mistakes
+  ///
+  /// In ko, this message translates to:
+  /// **'일반적인\n실수'**
+  String get commonMistakes;
+
+  /// Tab title for variation exercises
+  ///
+  /// In ko, this message translates to:
+  /// **'변형\n운동'**
+  String get variationExercises;
+
+  /// Tab title for improvement tips
+  ///
+  /// In ko, this message translates to:
+  /// **'개선\n팁'**
+  String get improvementTips;
+
+  /// Header for 5-step pushup guide
+  ///
+  /// In ko, this message translates to:
+  /// **'올바른 푸시업 자세 5단계'**
+  String get correctPushupForm5Steps;
+
+  /// Subtitle for pushup form guide
+  ///
+  /// In ko, this message translates to:
+  /// **'차드가 알려주는 완벽한 푸시업 폼! 💪'**
+  String get chadPerfectPushupForm;
+
+  /// Button label for list view mode
+  ///
+  /// In ko, this message translates to:
+  /// **'목록 보기'**
+  String get listView;
+
+  /// Button label for swipe view mode
+  ///
+  /// In ko, this message translates to:
+  /// **'스와이프 보기'**
+  String get swipeView;
+
+  /// Quiz button text
+  ///
+  /// In ko, this message translates to:
+  /// **'퀴즈'**
+  String get quiz;
+
+  /// Common mistakes section header
+  ///
+  /// In ko, this message translates to:
+  /// **'이런 실수는 하지 마라!'**
+  String get dontMakeTheseMistakes;
+
+  /// Chad's advice about mistakes
+  ///
+  /// In ko, this message translates to:
+  /// **'차드도 처음엔 실수했다. 하지만 이제는 완벽하지! 🔥'**
+  String get chadMistakesAdvice;
+
+  /// Variations section header
+  ///
+  /// In ko, this message translates to:
+  /// **'난이도별 푸시업 변형'**
+  String get pushupVariationsByDifficulty;
+
+  /// Variations section subtitle
+  ///
+  /// In ko, this message translates to:
+  /// **'초보자부터 차드까지! 단계별로 도전해보자! 🚀'**
+  String get beginnerToChad;
+
+  /// Improvement tips section header
+  ///
+  /// In ko, this message translates to:
+  /// **'차드의 특급 비법'**
+  String get chadSecretTips;
+
+  /// Improvement tips section subtitle
+  ///
+  /// In ko, this message translates to:
+  /// **'이 팁들로 너도 진짜 차드가 될 수 있다! 💎'**
+  String get becomeTrueChadTips;
+
+  /// Step 1 title - start position
+  ///
+  /// In ko, this message translates to:
+  /// **'시작 자세'**
+  String get startPosition;
+
+  /// Step 2 title - descending motion
+  ///
+  /// In ko, this message translates to:
+  /// **'하강 동작'**
+  String get descendingMotion;
+
+  /// Step 3 title - bottom position
+  ///
+  /// In ko, this message translates to:
+  /// **'최하점 자세'**
+  String get bottomPosition;
+
+  /// Step 4 title - ascending motion
+  ///
+  /// In ko, this message translates to:
+  /// **'상승 동작'**
+  String get ascendingMotion;
+
+  /// Step 5 title - finish position
+  ///
+  /// In ko, this message translates to:
+  /// **'완료 자세'**
+  String get finishPosition;
+
+  /// Step 1 description
+  ///
+  /// In ko, this message translates to:
+  /// **'플랭크 자세로 시작하여 손과 발의 위치를 정확히 설정합니다.'**
+  String get startPositionDesc;
+
+  /// Step 2 description
+  ///
+  /// In ko, this message translates to:
+  /// **'팔꿈치를 구부리며 천천히 몸을 아래로 내립니다.'**
+  String get descendingMotionDesc;
+
+  /// Step 3 description
+  ///
+  /// In ko, this message translates to:
+  /// **'가슴이 바닥에 거의 닿는 최하점에서 잠시 정지합니다.'**
+  String get bottomPositionDesc;
+
+  /// Step 4 description
+  ///
+  /// In ko, this message translates to:
+  /// **'팔을 펴며 시작 자세로 돌아갑니다.'**
+  String get ascendingMotionDesc;
+
+  /// Step 5 description
+  ///
+  /// In ko, this message translates to:
+  /// **'시작 자세로 완전히 돌아와 다음 반복을 준비합니다.'**
+  String get finishPositionDesc;
+
+  /// Quiz question 1
+  ///
+  /// In ko, this message translates to:
+  /// **'올바른 푸시업 시작 자세에서 손의 위치는?'**
+  String get correctPushupQuiz1;
+
+  /// Quiz question 2
+  ///
+  /// In ko, this message translates to:
+  /// **'푸시업 중 가장 흔한 실수는?'**
+  String get pushupMistakeQuiz;
+
+  /// Quiz question 3
+  ///
+  /// In ko, this message translates to:
+  /// **'초보자에게 가장 적합한 푸시업 변형은?'**
+  String get beginnerPushupQuiz;
+
+  /// Quiz question 4
+  ///
+  /// In ko, this message translates to:
+  /// **'푸시업 시 올바른 호흡법은?'**
+  String get pushupBreathingQuiz;
+
+  /// Quiz question 5
+  ///
+  /// In ko, this message translates to:
+  /// **'푸시업에서 팔꿈치의 올바른 각도는?'**
+  String get elbowAngleQuiz;
+
+  /// Wrong pose label
+  ///
+  /// In ko, this message translates to:
+  /// **'잘못된 자세'**
+  String get wrongPose;
+
+  /// Correct pose label
+  ///
+  /// In ko, this message translates to:
+  /// **'올바른 자세'**
+  String get correctPose;
+
+  /// Correction method label
+  ///
+  /// In ko, this message translates to:
+  /// **'교정 방법:'**
+  String get correctionMethod;
+
+  /// Beginner level label
+  ///
+  /// In ko, this message translates to:
+  /// **'초급자'**
+  String get beginnerLevel;
+
+  /// Intermediate level label
+  ///
+  /// In ko, this message translates to:
+  /// **'중급자'**
+  String get intermediateLevel;
+
+  /// Advanced level label
+  ///
+  /// In ko, this message translates to:
+  /// **'고급자'**
+  String get advancedLevel;
+
+  /// Instructions label
+  ///
+  /// In ko, this message translates to:
+  /// **'운동 방법'**
+  String get instructions;
+
+  /// Benefits label
+  ///
+  /// In ko, this message translates to:
+  /// **'운동 효과'**
+  String get benefits;
+
+  /// Breathing technique category
+  ///
+  /// In ko, this message translates to:
+  /// **'호흡법'**
+  String get breathingTechnique;
+
+  /// Strength improvement category
+  ///
+  /// In ko, this message translates to:
+  /// **'근력 향상'**
+  String get strengthImprovement;
+
+  /// Recovery category
+  ///
+  /// In ko, this message translates to:
+  /// **'회복'**
+  String get recovery;
+
+  /// Motivation category
+  ///
+  /// In ko, this message translates to:
+  /// **'동기부여'**
+  String get motivation;
+
+  /// Overall progress label
+  ///
+  /// In ko, this message translates to:
+  /// **'전체 진행률'**
+  String get overallProgress;
+
+  /// Sessions label
+  ///
+  /// In ko, this message translates to:
+  /// **'세션'**
+  String get sessions;
+
+  /// Completed count label
+  ///
+  /// In ko, this message translates to:
+  /// **'완료한 횟수'**
+  String get completedCount;
+
+  /// Remaining count label
+  ///
+  /// In ko, this message translates to:
+  /// **'남은 횟수'**
+  String get remainingCount;
+
+  /// Weekly growth chart title
+  ///
+  /// In ko, this message translates to:
+  /// **'주간 성장 차트'**
+  String get weeklyGrowthChart;
+
+  /// Weekly details title
+  ///
+  /// In ko, this message translates to:
+  /// **'주차별 상세'**
+  String get weeklyDetails;
+
+  /// Sessions completed label
+  ///
+  /// In ko, this message translates to:
+  /// **'세션 완료'**
+  String get sessionsCompleted;
+
+  /// Workout calendar title
+  ///
+  /// In ko, this message translates to:
+  /// **'워크아웃 캘린더'**
+  String get workoutCalendar;
+
+  /// Chad evolution stage title
+  ///
+  /// In ko, this message translates to:
+  /// **'Chad 진화단계'**
+  String get chadEvolutionStage;
+
+  /// Completed sessions label
+  ///
+  /// In ko, this message translates to:
+  /// **'완료 세션'**
+  String get completedSessions;
+
+  /// Overall statistics title
+  ///
+  /// In ko, this message translates to:
+  /// **'전체통계'**
+  String get overallStatistics;
+
+  /// Program progress label
+  ///
+  /// In ko, this message translates to:
+  /// **'프로그램 진행률'**
+  String get programProgress;
+
+  /// Reps completed label
+  ///
+  /// In ko, this message translates to:
+  /// **'회 완료'**
+  String get repsCompleted;
+
+  /// Week completed label
+  ///
+  /// In ko, this message translates to:
+  /// **'주차'**
+  String get weekCompleted;
+
+  /// Chad evolution stages label
+  ///
+  /// In ko, this message translates to:
+  /// **'Chad 진화 단계'**
+  String get chadEvolutionStages;
+
+  /// No workouts today message
+  ///
+  /// In ko, this message translates to:
+  /// **'이 날에는 워크아웃이 없습니다'**
+  String get noWorkoutsToday;
+
+  /// In progress status
+  ///
+  /// In ko, this message translates to:
+  /// **'진행 중'**
+  String get inProgress;
+
+  /// Set records label
+  ///
+  /// In ko, this message translates to:
+  /// **'세트별 기록:'**
+  String get setRecords;
+
+  /// Overall statistics label
+  ///
+  /// In ko, this message translates to:
+  /// **'전체 통계'**
+  String get overallStats;
+
+  /// Average per session label
+  ///
+  /// In ko, this message translates to:
+  /// **'평균/세션'**
+  String get averagePerSession;
+
+  /// Weekly performance title
+  ///
+  /// In ko, this message translates to:
+  /// **'주간별 성과'**
+  String get weeklyPerformance;
+
+  /// View all button text
+  ///
+  /// In ko, this message translates to:
+  /// **'전체 보기'**
+  String get viewAll;
+
+  /// Improvement needed status
+  ///
+  /// In ko, this message translates to:
+  /// **'개선 필요'**
+  String get improvementNeeded;
+
+  /// Personal records title
+  ///
+  /// In ko, this message translates to:
+  /// **'개인 기록'**
+  String get personalRecords;
+
+  /// Best week label
+  ///
+  /// In ko, this message translates to:
+  /// **'최고 주차'**
+  String get bestWeek;
+
+  /// Consecutive days label
+  ///
+  /// In ko, this message translates to:
+  /// **'연속 일수'**
+  String get consecutiveDays;
+
+  /// Average score label
+  ///
+  /// In ko, this message translates to:
+  /// **'평균 점수'**
+  String get averageScore;
+
+  /// Rookie Chad title
+  ///
+  /// In ko, this message translates to:
+  /// **'Rookie Chad'**
+  String get rookieChad;
+
+  /// Rising Chad title
+  ///
+  /// In ko, this message translates to:
+  /// **'Rising Chad'**
+  String get risingChad;
+
+  /// Alpha Chad title
+  ///
+  /// In ko, this message translates to:
+  /// **'Alpha Chad'**
+  String get alphaChad;
+
+  /// Sigma Chad title
+  ///
+  /// In ko, this message translates to:
+  /// **'Sigma Chad'**
+  String get sigmaChad;
+
+  /// Giga Chad title
+  ///
+  /// In ko, this message translates to:
+  /// **'Giga Chad'**
+  String get gigaChad;
+
+  /// Ultra Chad title
+  ///
+  /// In ko, this message translates to:
+  /// **'Ultra Chad'**
+  String get ultraChad;
+
+  /// Legendary Chad title
+  ///
+  /// In ko, this message translates to:
+  /// **'Legendary Chad'**
+  String get legendaryChad;
+
+  /// Current Chad state title
+  ///
+  /// In ko, this message translates to:
+  /// **'현재 Chad 상태'**
+  String get currentChadState;
+
+  /// Progress to next level label
+  ///
+  /// In ko, this message translates to:
+  /// **'다음 레벨까지'**
+  String get nextLevel;
+
+  /// Next level progress message
+  ///
+  /// In ko, this message translates to:
+  /// **'다음 레벨까지 30% 남음'**
+  String get nextLevelIn;
+
+  /// Maximum level achieved message
+  ///
+  /// In ko, this message translates to:
+  /// **'최고 레벨 달성!'**
+  String get maxLevelAchieved;
+
+  /// Program start requirement
+  ///
+  /// In ko, this message translates to:
+  /// **'프로그램 시작'**
+  String get programStart;
+
+  /// Week 1 completed requirement
+  ///
+  /// In ko, this message translates to:
+  /// **'1주차 완료'**
+  String get week1Completed;
+
+  /// Week 2 completed requirement
+  ///
+  /// In ko, this message translates to:
+  /// **'2주차 완료'**
+  String get week2Completed;
+
+  /// Week 3 completed requirement
+  ///
+  /// In ko, this message translates to:
+  /// **'3주차 완료'**
+  String get week3Completed;
+
+  /// Week 4 completed requirement
+  ///
+  /// In ko, this message translates to:
+  /// **'4주차 완료'**
+  String get week4Completed;
+
+  /// Week 5 completed requirement
+  ///
+  /// In ko, this message translates to:
+  /// **'5주차 완료'**
+  String get week5Completed;
+
+  /// Week 6 completed requirement
+  ///
+  /// In ko, this message translates to:
+  /// **'6주차 완료'**
+  String get week6Completed;
+
+  /// First step achievement
+  ///
+  /// In ko, this message translates to:
+  /// **'첫 걸음'**
+  String get firstStep;
+
+  /// First workout completed description
+  ///
+  /// In ko, this message translates to:
+  /// **'첫 번째 워크아웃 완료'**
+  String get firstWorkoutCompleted;
+
+  /// One week challenge achievement
+  ///
+  /// In ko, this message translates to:
+  /// **'일주일 챌린지'**
+  String get oneWeekChallenge;
+
+  /// Seven days exercise description
+  ///
+  /// In ko, this message translates to:
+  /// **'7일 연속 운동'**
+  String get sevenDaysExercise;
+
+  /// Hundred pushups achievement
+  ///
+  /// In ko, this message translates to:
+  /// **'백 푸시업'**
+  String get hundredPushups;
+
+  /// Hundred reps in one session description
+  ///
+  /// In ko, this message translates to:
+  /// **'한 세션에 100회 달성'**
+  String get hundredRepsInOneSession;
+
+  /// Perfect week achievement
+  ///
+  /// In ko, this message translates to:
+  /// **'완벽주의자'**
+  String get perfectWeek;
+
+  /// One week completed description
+  ///
+  /// In ko, this message translates to:
+  /// **'한 주 100% 완료'**
+  String get oneWeekCompleted;
+
+  /// Chad achievements title
+  ///
+  /// In ko, this message translates to:
+  /// **'Chad 업적'**
+  String get chadAchievements;
+
+  /// Chad evolution label
+  ///
+  /// In ko, this message translates to:
+  /// **'Chad 진화'**
+  String get chadEvolution;
+
+  /// No data message
+  ///
+  /// In ko, this message translates to:
+  /// **'데이터가 없습니다'**
+  String get noData;
+
+  /// Weekly challenge achievement
+  ///
+  /// In ko, this message translates to:
+  /// **'일주일 챌린지'**
+  String get weeklyChallenge;
+
+  /// Improvement needed label
+  ///
+  /// In ko, this message translates to:
+  /// **'개선 필요'**
+  String get improvement;
+
+  /// Excellent performance label
+  ///
+  /// In ko, this message translates to:
+  /// **'좋음'**
+  String get excellent;
+
+  /// No data available message
+  ///
+  /// In ko, this message translates to:
+  /// **'데이터가 없습니다'**
+  String get noDataAvailable;
+
+  /// First step achievement description
+  ///
+  /// In ko, this message translates to:
+  /// **'첫 번째 워크아웃 완료'**
+  String get firstStepDesc;
+
+  /// Weekly challenge achievement description
+  ///
+  /// In ko, this message translates to:
+  /// **'7일 연속 운동'**
+  String get weeklyChallengeDesc;
+
+  /// Hundred pushups achievement description
+  ///
+  /// In ko, this message translates to:
+  /// **'한 세션에 100회 달성'**
+  String get hundredPushupsDesc;
+
+  /// Perfectionist achievement description
+  ///
+  /// In ko, this message translates to:
+  /// **'한 주 100% 완료'**
+  String get perfectionistDesc;
+
+  /// No workout on this day message
+  ///
+  /// In ko, this message translates to:
+  /// **'이 날에는 워크아웃이 없습니다.'**
+  String get noWorkoutToday;
+
+  /// Remaining progress label
+  ///
+  /// In ko, this message translates to:
+  /// **'남음'**
+  String get remaining;
+
+  /// Workout date format
+  ///
+  /// In ko, this message translates to:
+  /// **'{month}월 {day}일 워크아웃'**
+  String workoutDate(int month, int day);
+
+  /// Week number format
+  ///
+  /// In ko, this message translates to:
+  /// **'{week}주차'**
+  String weekX(int week);
+
+  /// Day number format
+  ///
+  /// In ko, this message translates to:
+  /// **'{day}일차'**
+  String dayX(int day);
+
+  /// Sessions completed format
+  ///
+  /// In ko, this message translates to:
+  /// **'{completed}/{total} 세션 완료 • {reps}회'**
+  String sessionsCompletedFormat(int completed, int total, int reps);
 }
 
 class _AppLocalizationsDelegate

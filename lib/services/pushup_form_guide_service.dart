@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
 import '../models/pushup_form_guide.dart';
 
 /// 푸시업 폼 가이드 데이터를 관리하는 서비스
@@ -8,25 +9,49 @@ class PushupFormGuideService {
   factory PushupFormGuideService() => _instance;
   PushupFormGuideService._internal();
 
-  static const String _dataPath = 'assets/data/pushup_form_guide.json';
-  PushupFormGuideData? _cachedData;
+  static const String _dataPathKo = 'assets/data/pushup_form_guide.json';
+  static const String _dataPathEn = 'assets/data/pushup_form_guide_en.json';
+  
+  PushupFormGuideData? _cachedDataKo;
+  PushupFormGuideData? _cachedDataEn;
 
-  /// JSON 파일에서 푸시업 폼 가이드 데이터를 로드
-  Future<PushupFormGuideData> loadFormGuideData() async {
-    if (_cachedData != null) {
-      return _cachedData!;
-    }
-
-    try {
-      final String jsonString = await rootBundle.loadString(_dataPath);
-      final Map<String, dynamic> jsonData = json.decode(jsonString) as Map<String, dynamic>;
+  /// 현재 언어에 따라 적절한 JSON 파일에서 푸시업 폼 가이드 데이터를 로드
+  Future<PushupFormGuideData> loadFormGuideData(BuildContext context) async {
+    final locale = Localizations.localeOf(context);
+    final isKorean = locale.languageCode == 'ko';
+    
+    if (isKorean) {
+      if (_cachedDataKo != null) {
+        return _cachedDataKo!;
+      }
       
-      _cachedData = _parseFormGuideData(jsonData);
-      return _cachedData!;
-    } catch (e) {
-      // JSON 로드 실패 시 하드코딩된 데이터 사용
-      _cachedData = _getHardcodedData();
-      return _cachedData!;
+      try {
+        final String jsonString = await rootBundle.loadString(_dataPathKo);
+        final Map<String, dynamic> jsonData = json.decode(jsonString) as Map<String, dynamic>;
+        
+        _cachedDataKo = _parseFormGuideData(jsonData);
+        return _cachedDataKo!;
+      } catch (e) {
+        // JSON 로드 실패 시 하드코딩된 데이터 사용
+        _cachedDataKo = _getHardcodedData();
+        return _cachedDataKo!;
+      }
+    } else {
+      if (_cachedDataEn != null) {
+        return _cachedDataEn!;
+      }
+      
+      try {
+        final String jsonString = await rootBundle.loadString(_dataPathEn);
+        final Map<String, dynamic> jsonData = json.decode(jsonString) as Map<String, dynamic>;
+        
+        _cachedDataEn = _parseFormGuideData(jsonData);
+        return _cachedDataEn!;
+      } catch (e) {
+        // JSON 로드 실패 시 하드코딩된 데이터 사용 (영어)
+        _cachedDataEn = _getHardcodedDataEn();
+        return _cachedDataEn!;
+      }
     }
   }
 
@@ -486,5 +511,342 @@ class PushupFormGuideService {
       default:
         return 0xFF4DABF7; // 기본 파란색
     }
+  }
+
+  /// 하드코딩된 데이터 (영어)
+  PushupFormGuideData _getHardcodedDataEn() {
+    return PushupFormGuideData(
+      formSteps: getFormStepsEn(),
+      commonMistakes: getCommonMistakesEn(),
+      variations: getVariationsEn(),
+      improvementTips: getImprovementTipsEn(),
+      quizQuestions: getQuizQuestionsEn(),
+    );
+  }
+
+  /// 영어용 올바른 푸시업 자세의 단계별 가이드를 반환
+  List<FormStep> getFormStepsEn() {
+    return [
+      const FormStep(
+        stepNumber: 1,
+        title: 'Starting Position',
+        description: 'Start in a plank position and set the correct positions for your hands and feet.',
+        imagePath: 'assets/images/form_guide/step1_start_position.png',
+        keyPoints: [
+          'Hands directly under shoulders',
+          'Fingers pointing forward',
+          'Feet shoulder-width apart',
+          'Keep body in straight line',
+        ],
+      ),
+      const FormStep(
+        stepNumber: 2,
+        title: 'Descending Motion',
+        description: 'Bend your elbows and slowly lower your body down.',
+        imagePath: 'assets/images/form_guide/step2_descending.png',
+        keyPoints: [
+          'Bend elbows at 45-degree angle',
+          'Lower until chest nearly touches floor',
+          'Keep core muscles tight',
+          'Inhale while descending',
+        ],
+      ),
+      const FormStep(
+        stepNumber: 3,
+        title: 'Bottom Position',
+        description: 'Pause briefly at the bottom position where your chest nearly touches the floor.',
+        imagePath: 'assets/images/form_guide/step3_bottom_position.png',
+        keyPoints: [
+          'Fist-width gap between chest and floor',
+          'Maintain straight body line',
+          'Keep shoulders and wrists aligned',
+          'Hold for 1-2 seconds',
+        ],
+      ),
+      const FormStep(
+        stepNumber: 4,
+        title: 'Ascending Motion',
+        description: 'Push back up to the starting position by extending your arms.',
+        imagePath: 'assets/images/form_guide/step4_ascending.png',
+        keyPoints: [
+          'Push up powerfully',
+          'Support body with core muscles',
+          'Exhale while ascending',
+          'Fully extend elbows',
+        ],
+      ),
+      const FormStep(
+        stepNumber: 5,
+        title: 'Finish Position',
+        description: 'Return completely to starting position and prepare for the next repetition.',
+        imagePath: 'assets/images/form_guide/step5_finish_position.png',
+        keyPoints: [
+          'Elbows fully extended',
+          'Maintain straight body line',
+          'Stabilize shoulders',
+          'Prepare for next rep',
+        ],
+      ),
+    ];
+  }
+
+  /// 영어용 일반적인 푸시업 실수들을 반환
+  List<CommonMistake> getCommonMistakesEn() {
+    return [
+      const CommonMistake(
+        title: 'Hips too high',
+        description: 'Raising your hips too high reduces core muscle engagement and decreases effectiveness.',
+        wrongImagePath: 'assets/images/mistakes/high_hips_wrong.png',
+        correctImagePath: 'assets/images/mistakes/high_hips_correct.png',
+        severity: 'high',
+        corrections: [
+          'Engage core muscles to maintain straight line',
+          'Check posture in mirror',
+          'Practice plank position to build foundation',
+        ],
+      ),
+      const CommonMistake(
+        title: 'Sagging hips',
+        description: 'Sagging hips puts strain on the lower back and increases injury risk.',
+        wrongImagePath: 'assets/images/mistakes/sagging_hips_wrong.png',
+        correctImagePath: 'assets/images/mistakes/sagging_hips_correct.png',
+        severity: 'high',
+        corrections: [
+          'Contract abs and glutes simultaneously',
+          'Maintain neutral spine position',
+          'Include core strengthening exercises',
+        ],
+      ),
+      const CommonMistake(
+        title: 'Elbows flared too wide',
+        description: 'Flaring elbows to 90 degrees puts stress on shoulders and increases injury risk.',
+        wrongImagePath: 'assets/images/mistakes/wide_elbows_wrong.png',
+        correctImagePath: 'assets/images/mistakes/wide_elbows_correct.png',
+        severity: 'medium',
+        corrections: [
+          'Keep elbows close to body (45-degree angle)',
+          'Stabilize shoulder blades',
+          'Strengthen triceps',
+        ],
+      ),
+      const CommonMistake(
+        title: 'Head forward',
+        description: 'Pushing your head forward creates tension in neck and shoulders and breaks proper form.',
+        wrongImagePath: 'assets/images/mistakes/forward_head_wrong.png',
+        correctImagePath: 'assets/images/mistakes/forward_head_correct.png',
+        severity: 'medium',
+        corrections: [
+          'Keep neck in neutral position',
+          'Look down at floor',
+          'Improve neck flexibility with stretching',
+        ],
+      ),
+      const CommonMistake(
+        title: 'Partial range of motion',
+        description: 'Not lowering enough significantly reduces muscle development benefits.',
+        wrongImagePath: 'assets/images/mistakes/partial_range_wrong.png',
+        correctImagePath: 'assets/images/mistakes/partial_range_correct.png',
+        severity: 'medium',
+        corrections: [
+          'Lower until chest nearly touches floor',
+          'Control movement slowly',
+          'Improve flexibility with stretching',
+        ],
+      ),
+    ];
+  }
+
+  /// 영어용 난이도별 푸시업 변형을 반환
+  List<PushupVariation> getVariationsEn() {
+    return [
+      const PushupVariation(
+        name: 'Knee Push-ups',
+        description: 'Beginner push-ups performed with knees on the ground',
+        difficulty: 'beginner',
+        imagePath: 'assets/images/variations/knee_pushup.png',
+        instructions: [
+          'Start with knees on ground',
+          'Hands directly under shoulders',
+          'Keep straight line from knees to head',
+          'Slowly lower chest toward floor',
+        ],
+        benefits: [
+          'Great for learning proper form',
+          'Gradual upper body strength development',
+          'Lower injury risk',
+        ],
+      ),
+      const PushupVariation(
+        name: 'Incline Push-ups',
+        description: 'Push-ups using bench or stairs for elevation',
+        difficulty: 'beginner',
+        imagePath: 'assets/images/variations/incline_pushup.png',
+        instructions: [
+          'Place hands on bench or stairs',
+          'Keep feet on ground',
+          'Maintain angled body position',
+          'Perform same motion as regular push-ups',
+        ],
+        benefits: [
+          'Adjustable intensity',
+          'Perfect form practice',
+          'Progressive difficulty increase',
+        ],
+      ),
+      const PushupVariation(
+        name: 'Diamond Push-ups',
+        description: 'Advanced push-ups with hands in diamond shape',
+        difficulty: 'advanced',
+        imagePath: 'assets/images/variations/diamond_pushup.png',
+        instructions: [
+          'Form diamond shape with hands under chest',
+          'Create triangle with thumbs and index fingers',
+          'Keep elbows close to body',
+          'Control movement slowly',
+        ],
+        benefits: [
+          'Intense tricep strengthening',
+          'Improved core stability',
+          'Advanced strength development',
+        ],
+      ),
+      const PushupVariation(
+        name: 'One-Arm Push-ups',
+        description: 'Maximum difficulty push-ups using only one arm',
+        difficulty: 'advanced',
+        imagePath: 'assets/images/variations/one_arm_pushup.png',
+        instructions: [
+          'Place one hand behind back',
+          'Spread legs wide for balance',
+          'Minimize body rotation',
+          'Move extremely slowly',
+        ],
+        benefits: [
+          'Maximum strength development',
+          'Improved balance',
+          'Mental toughness building',
+        ],
+      ),
+    ];
+  }
+
+  /// 영어용 개선 팁들을 반환
+  List<ImprovementTip> getImprovementTipsEn() {
+    return [
+      const ImprovementTip(
+        category: 'Breathing',
+        title: 'Proper Breathing Pattern',
+        description: 'Maximize exercise effectiveness and improve endurance through proper breathing.',
+        iconName: 'air',
+        actionItems: [
+          'Inhale slowly while going down',
+          'Exhale powerfully while going up',
+          'Never hold your breath',
+          'Maintain rhythmic breathing',
+        ],
+      ),
+      const ImprovementTip(
+        category: 'Strength',
+        title: 'Progressive Overload',
+        description: 'Gradually increase intensity for continuous strength development.',
+        iconName: 'trending_up',
+        actionItems: [
+          'Increase reps by 2-3 per week',
+          'Progress to harder variations',
+          'Gradually increase sets',
+          'Reduce rest time',
+        ],
+      ),
+      const ImprovementTip(
+        category: 'Recovery',
+        title: 'Proper Rest and Recovery',
+        description: 'Promote muscle growth and prevent injury through adequate rest.',
+        iconName: 'bedtime',
+        actionItems: [
+          '48-hour rest after workouts',
+          'Get adequate sleep (7-8 hours)',
+          'Include stretching and massage',
+          'Focus on nutrition',
+        ],
+      ),
+      const ImprovementTip(
+        category: 'Motivation',
+        title: 'Goal Setting and Tracking',
+        description: 'Maintain consistent motivation through clear goals and progress tracking.',
+        iconName: 'flag',
+        actionItems: [
+          'Set short/long-term goals',
+          'Keep workout journal',
+          'Take progress photos',
+          'Celebrate achievements',
+        ],
+      ),
+    ];
+  }
+
+  /// 영어용 퀴즈 질문들을 반환
+  List<QuizQuestion> getQuizQuestionsEn() {
+    return [
+      const QuizQuestion(
+        question: 'Where should your hands be positioned in the correct push-up starting position?',
+        options: [
+          'Wider than shoulders',
+          'Directly under shoulders',
+          'Narrower than shoulders',
+          'At chest center',
+        ],
+        correctAnswerIndex: 1,
+        explanation: 'Hands should be directly under shoulders to maintain stable form.',
+        category: 'form',
+      ),
+      const QuizQuestion(
+        question: 'What is the most common push-up mistake?',
+        options: [
+          'Elbows flared too wide',
+          'Hips too high',
+          'Head forward',
+          'Partial range of motion',
+        ],
+        correctAnswerIndex: 1,
+        explanation: 'Raising hips too high reduces core muscle engagement and decreases exercise effectiveness.',
+        category: 'mistakes',
+      ),
+      const QuizQuestion(
+        question: 'Which push-up variation is most suitable for beginners?',
+        options: [
+          'Diamond push-ups',
+          'One-arm push-ups',
+          'Knee push-ups',
+          'Clap push-ups',
+        ],
+        correctAnswerIndex: 2,
+        explanation: 'Knee push-ups have lower injury risk and are great for learning proper form.',
+        category: 'variations',
+      ),
+      const QuizQuestion(
+        question: 'What is the correct breathing technique for push-ups?',
+        options: [
+          'Exhale going down, inhale going up',
+          'Inhale going down, exhale going up',
+          'Hold breath throughout',
+          'Breathe rapidly',
+        ],
+        correctAnswerIndex: 1,
+        explanation: 'Inhaling while going down and exhaling while going up is the correct breathing technique.',
+        category: 'tips',
+      ),
+      const QuizQuestion(
+        question: 'What is the correct elbow angle in push-ups?',
+        options: [
+          '90 degrees fully flared',
+          '45 degrees close to body',
+          'Completely against body',
+          'Angle doesn\'t matter',
+        ],
+        correctAnswerIndex: 1,
+        explanation: 'Keeping elbows at 45 degrees prevents shoulder injury and enables effective exercise.',
+        category: 'form',
+      ),
+    ];
   }
 } 

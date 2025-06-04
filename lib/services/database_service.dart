@@ -22,7 +22,12 @@ class DatabaseService {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, 'mission100_chad.db');
 
-    return await openDatabase(path, version: 1, onCreate: _onCreate);
+    return await openDatabase(
+      path, 
+      version: 2, // 버전을 2로 업그레이드
+      onCreate: _onCreate, 
+      onUpgrade: _onUpgrade,
+    );
   }
 
   Future<void> _onCreate(Database db, int version) async {
@@ -35,7 +40,8 @@ class DatabaseService {
         start_date TEXT NOT NULL,
         chad_level INTEGER DEFAULT 0,
         reminder_enabled INTEGER DEFAULT 0,
-        reminder_time TEXT
+        reminder_time TEXT,
+        workout_days TEXT
       )
     ''');
 
@@ -60,6 +66,14 @@ class DatabaseService {
     await db.execute(
       'CREATE INDEX idx_workout_week_day ON workout_session(week, day)',
     );
+  }
+
+  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      // workout_days 컬럼 추가
+      await db.execute('ALTER TABLE user_profile ADD COLUMN workout_days TEXT');
+      debugPrint('✅ 데이터베이스 업그레이드: workout_days 컬럼 추가 완료');
+    }
   }
 
   // UserProfile CRUD 작업

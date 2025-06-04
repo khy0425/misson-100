@@ -185,6 +185,9 @@ class Challenge {
   /// 실패 상태 여부
   bool get isFailed => false; // Assuming no failure status in the new model
 
+  /// 시작 일시 (테스트 호환성을 위한 getter)
+  DateTime? get startedAt => startDate;
+
   /// 남은 진행량
   int get remainingProgress => (targetCount - currentProgress).clamp(0, targetCount);
 
@@ -351,7 +354,7 @@ extension ChallengeDifficultyExtension on String {
       case 'extreme':
         return '극한';
       default:
-        throw Exception("Unknown difficulty: $this");
+        throw Exception('Unknown difficulty: $this');
     }
   }
 
@@ -366,7 +369,7 @@ extension ChallengeDifficultyExtension on String {
       case 'extreme':
         return '🔴';
       default:
-        throw Exception("Unknown difficulty: $this");
+        throw Exception('Unknown difficulty: $this');
     }
   }
 }

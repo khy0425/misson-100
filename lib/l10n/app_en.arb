@@ -561,7 +561,7 @@
     "description": "Giga chad name"
   },
 
-  "levelDescRookie": "🔥 ROOKIE CHAD STARTING PUSHUP JOURNEY TO BECOME FUTURE EMPEROR.\nSTEADY PRACTICE EVOLVES INTO LEGENDARY BEAST! 🔥",
+  "levelDescRookie": "🔥 ROOKIE CHAD. STARTING POINT OF PUSHUP EMPIRE.\nJOURNEY OF AWAKENING HAS BEGUN. 🔥",
   "@levelDescRookie": {
     "description": "Rookie level description"
   },
@@ -3485,7 +3485,7 @@
     "description": "Today's workout completed message"
   },
 
-  "justWait": "Wait! Are you really going to rest?",
+  "justWait": "Today is recovery day. But the choice is yours.",
   "@justWait": {
     "description": "Rest prevention message"
   },
@@ -3505,7 +3505,7 @@
     "description": "Sleepy hat chad name"
   },
 
-  "journeyStartingChad": "Starting your journey Chad.\nStill a bit sleepy but will wake up soon!",
+  "journeyStartingChad": "Chad beginning awakening.\nPotential is stirring.",
   "@journeyStartingChad": {
     "description": "Journey starting chad description"
   },
@@ -4349,5 +4349,984 @@
   "chadMotivationDefault": "The chad path is tough but that makes it more valuable! Don't give up!",
   "@chadMotivationDefault": {
     "description": "Default chad motivation message"
+  },
+
+  "customWorkoutDays": "Workout Days Settings",
+  "@customWorkoutDays": {
+    "description": "Custom workout days setting"
+  },
+
+  "customWorkoutDaysDesc": "Set your preferred workout days",
+  "@customWorkoutDaysDesc": {
+    "description": "Custom workout days description"
+  },
+
+  "workoutDaySelection": "Select Workout Days",
+  "@workoutDaySelection": {
+    "description": "Workout day selection title"
+  },
+
+  "selectWorkoutDays": "Choose 3 days per week for workouts",
+  "@selectWorkoutDays": {
+    "description": "Select workout days instruction"
+  },
+
+  "mondayShort": "Mon",
+  "@mondayShort": {
+    "description": "Monday short form"
+  },
+
+  "tuesdayShort": "Tue",
+  "@tuesdayShort": {
+    "description": "Tuesday short form"
+  },
+
+  "wednesdayShort": "Wed",
+  "@wednesdayShort": {
+    "description": "Wednesday short form"
+  },
+
+  "thursdayShort": "Thu",
+  "@thursdayShort": {
+    "description": "Thursday short form"
+  },
+
+  "fridayShort": "Fri",
+  "@fridayShort": {
+    "description": "Friday short form"
+  },
+
+  "saturdayShort": "Sat",
+  "@saturdayShort": {
+    "description": "Saturday short form"
+  },
+
+  "sundayShort": "Sun",
+  "@sundayShort": {
+    "description": "Sunday short form"
+  },
+
+  "restDayMessage": "Today is recovery day. True strength comes from rest.",
+  "@restDayMessage": {
+    "description": "Rest day message for non-workout days"
+  },
+
+  "workoutDaysOnlyNotifications": "🔥 Workout Days Only Alerts",
+  "@workoutDaysOnlyNotifications": {
+    "description": "Workout days only notification setting title"
+  },
+
+  "workoutDaysOnlyNotificationsDesc": "Receive notifications only on workout days (Mon, Wed, Fri). No disturbance on rest days!",
+  "@workoutDaysOnlyNotificationsDesc": {
+    "description": "Workout days only notification setting description"
+  },
+
+  "chadEvolutionNotifications": "Chad Evolution Complete Alerts",
+  "@chadEvolutionNotifications": {
+    "description": "Chad evolution complete notification setting title"
+  },
+
+  "chadEvolutionNotificationsDesc": "Get notified when Chad evolves to a new stage",
+  "@chadEvolutionNotificationsDesc": {
+    "description": "Chad evolution complete notification setting description"
+  },
+
+  "chadEvolutionPreviewNotifications": "Chad Evolution Preview Alerts",
+  "@chadEvolutionPreviewNotifications": {
+    "description": "Chad evolution preview notification setting title"
+  },
+
+  "chadEvolutionPreviewNotificationsDesc": "Get advance notice when 1 week remains until next evolution",
+  "@chadEvolutionPreviewNotificationsDesc": {
+    "description": "Chad evolution preview notification setting description"
+  },
+
+  "chadEvolutionEncouragementNotifications": "Chad Evolution Encouragement Alerts",
+  "@chadEvolutionEncouragementNotifications": {
+    "description": "Chad evolution encouragement notification setting title"
+  },
+
+  "chadEvolutionEncouragementNotificationsDesc": "Receive encouraging messages when 3 days remain until next evolution",
+  "@chadEvolutionEncouragementNotificationsDesc": {
+    "description": "Chad evolution encouragement notification setting description"
+  },
+
+  "workoutReminderDisabled": "Workout reminder has been disabled",
+  "@workoutReminderDisabled": {
+    "description": "Workout reminder disabled message"
+  },
+
+  "workoutDaysModeActivated": "💪 Workout days only mode activated! Notifications will come only on Mon, Wed, Fri!",
+  "@workoutDaysModeActivated": {
+    "description": "Workout days mode activated message"
+  },
+
+  "dailyNotificationModeChanged": "Switched to daily notification mode! Getting alerts every day! 📱",
+  "@dailyNotificationModeChanged": {
+    "description": "Daily notification mode change message"
+  },
+  "restDayChampionTitle": "Rest Day Champion! 💪",
+  "@restDayChampionTitle": {
+    "description": "Rest day champion title"
+  },
+  "dataBackupProgress": "Backing up data...",
+  "@dataBackupProgress": {
+    "description": "Data backup progress message"
+  },
+  "dataRestoreConfirm": "⚠️ Data Restore",
+  "@dataRestoreConfirm": {
+    "description": "Data restore confirmation title"
+  },
+  "dataRestoreWarning": "Restoring from backup file will delete all current data.\\nDo you really want to continue?",
+  "@dataRestoreWarning": {
+    "description": "Data restore warning message"
+  },
+  "dataRestoreProgress": "Restoring data...",
+  "@dataRestoreProgress": {
+    "description": "Data restore progress message"
+  },
+  "dataRestoreSuccess": "Data restore completed! Please restart the app.",
+  "@dataRestoreSuccess": {
+    "description": "Data restore success message"
+  },
+  "dataRestoreError": "Data restore failed. Please check the backup file.",
+  "@dataRestoreError": {
+    "description": "Data restore error message"
+  },
+  "dataResetConfirm": "Data Reset Confirmation",
+  "@dataResetConfirm": {
+    "description": "Data reset confirmation title"
+  },
+  "dataResetWarning": "The following data will be completely deleted:",
+  "@dataResetWarning": {
+    "description": "Data reset warning message"
+  },
+  "chadEvolutionStatus": "• Chad Evolution Status",
+  "@chadEvolutionStatus": {
+    "description": "Chad evolution status item"
+  },
+  "dataResetProgress": "Resetting data...",
+  "@dataResetProgress": {
+    "description": "Data reset progress message"
+  },
+  "dataResetSuccess": "All data has been successfully reset",
+  "@dataResetSuccess": {
+    "description": "Data reset success message"
+  },
+  "dataResetError": "An error occurred during data reset: {error}",
+  "@dataResetError": {
+    "description": "Data reset error message",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "chadJourneyTagline": "Join the journey to become Chad! 🔥",
+  "@chadJourneyTagline": {
+    "description": "Chad journey tagline"
+  },
+  "sqliteDatabase": "• SQLite Local Database",
+  "@sqliteDatabase": {
+    "description": "SQLite database item"
+  },
+  "restDayChampionTitle": "Rest Day Champion! 💪",
+  "@restDayChampionTitle": {
+    "description": "Rest day champion title"
+  },
+  "themeColor": "Theme Color",
+  "@themeColor": {
+    "description": "Theme color setting title"
+  },
+  "themeColorDesc": "Change the main color of the app",
+  "@themeColorDesc": {
+    "description": "Theme color setting description"
+  },
+  "fontSizeDesc": "Adjust the app's font size",
+  "@fontSizeDesc": {
+    "description": "Font size setting description"
+  },
+  "animations": "Animations",
+  "@animations": {
+    "description": "Animation setting title"
+  },
+  "animationsDesc": "Enable/disable app animation effects",
+  "@animationsDesc": {
+    "description": "Animation setting description"
+  },
+  "animationsEnabled": "Animations have been enabled",
+  "@animationsEnabled": {
+    "description": "Animation enabled message"
+  },
+  "animationsDisabled": "Animations have been disabled",
+  "@animationsDisabled": {
+    "description": "Animation disabled message"
+  },
+  "highContrastMode": "High Contrast Mode",
+  "@highContrastMode": {
+    "description": "High contrast mode setting title"
+  },
+  "highContrastModeDesc": "Enable high contrast mode for visual accessibility",
+  "@highContrastModeDesc": {
+    "description": "High contrast mode setting description"
+  },
+  "highContrastEnabled": "High contrast mode has been enabled",
+  "@highContrastEnabled": {
+    "description": "High contrast mode enabled message"
+  },
+  "highContrastDisabled": "High contrast mode has been disabled",
+  "@highContrastDisabled": {
+    "description": "High contrast mode disabled message"
+  },
+  "themeColorSelection": "Theme Color Selection",
+  "@themeColorSelection": {
+    "description": "Theme color selection dialog title"
+  },
+  "themeColorChanged": "Theme color changed to {colorName}",
+  "@themeColorChanged": {
+    "description": "Theme color change message",
+    "placeholders": {
+      "colorName": {
+        "type": "String"
+      }
+    }
+  },
+  "required": "Required",
+  "@required": {
+    "description": "Required permission label"
+  },
+  "activated": "Activated",
+  "@activated": {
+    "description": "Permission activated status label"
+  },
+  "bonusChallenge": "🔥 Bonus Challenge",
+  "@bonusChallenge": {
+    "description": "Bonus challenge title"
+  },
+  "perfectFormChallenge": "🎯 Perfect Form Challenge activated! No slacking! 💪",
+  "@perfectFormChallenge": {
+    "description": "Perfect form challenge message"
+  },
+  "sevenDayStreak": "🔄 7-day streak challenge started! Miss a day, start over! 🚀",
+  "@sevenDayStreak": {
+    "description": "7-day streak challenge message"
+  },
+  "challengeTestYourLimits": "💪 Ready to test your limits today?",
+  "@challengeTestYourLimits": {
+    "description": "Test limits challenge message"
+  },
+  "restDayBonusChallenge": "Rest Day Bonus Challenge! 💪\n\n• Plank 30s x 3 sets\n• Squats 20 x 2 sets\n• Push-ups 10 (perfect form!)\n\nReady? Only real champions can do this! 🏆",
+  "@restDayBonusChallenge": {
+    "description": "Rest day bonus challenge content"
+  },
+  "startChallenge": "Start! 🔥",
+  "@startChallenge": {
+    "description": "Start challenge button"
+  },
+  "pushupOneArmChad": "🚀 ONE-ARM = CHAD COMPLETION? WRONG! NOW ULTIMATE APEX GOD EMPEROR BIRTH, FXXK YEAH! 🚀",
+  "@pushupOneArmChad": {
+    "description": "Motivational message for one-arm pushups"
+  },
+
+  "perfectPushupForm": "Perfect Pushup Form",
+  "@perfectPushupForm": {
+    "description": "Title for pushup form guide screen"
+  },
+  
+  "stepByStepGuide": "Step-by-Step\nGuide",
+  "@stepByStepGuide": {
+    "description": "Tab title for step by step guide"
+  },
+  
+  "commonMistakes": "Common\nMistakes",
+  "@commonMistakes": {
+    "description": "Tab title for common mistakes"
+  },
+  
+  "variationExercises": "Variation\nExercises", 
+  "@variationExercises": {
+    "description": "Tab title for variation exercises"
+  },
+  
+  "improvementTips": "Improvement\nTips",
+  "@improvementTips": {
+    "description": "Tab title for improvement tips"
+  },
+  
+  "correctPushupForm5Steps": "Correct Pushup Form in 5 Steps",
+  "@correctPushupForm5Steps": {
+    "description": "Header for 5-step pushup guide"
+  },
+  
+  "chadPerfectPushupForm": "Chad's guide to perfect pushup form! 💪",
+  "@chadPerfectPushupForm": {
+    "description": "Subtitle for pushup form guide"
+  },
+  
+  "listView": "List View",
+  "@listView": {
+    "description": "Button label for list view mode"
+  },
+  
+  "swipeView": "Swipe View",
+  "@swipeView": {
+    "description": "Button label for swipe view mode"
+  },
+
+  "chadMotivationStandard": "Basics are most important! Build up one by one with perfect form and you'll become a real chad!",
+  "@chadMotivationStandard": {
+    "description": "Chad motivation for standard pushups"
+  },
+
+  "chadPerfectFormGuide": "Chad's perfect pushup form guide! 💪",
+  "@chadPerfectFormGuide": {
+    "description": "Subtitle for form guide"
+  },
+
+  "listView": "List View",
+  "@listView": {
+    "description": "List view button text"
+  },
+
+  "swipeView": "Swipe View",
+  "@swipeView": {
+    "description": "Swipe view button text"
+  },
+
+  "quiz": "Quiz",
+  "@quiz": {
+    "description": "Quiz button text"
+  },
+
+  "dontMakeTheseMistakes": "Don't Make These Mistakes!",
+  "@dontMakeTheseMistakes": {
+    "description": "Common mistakes section header"
+  },
+
+  "chadMistakesAdvice": "Chad made mistakes at first too. But now he's perfect! 🔥",
+  "@chadMistakesAdvice": {
+    "description": "Chad's advice about mistakes"
+  },
+
+  "pushupVariationsByDifficulty": "Pushup Variations by Difficulty",
+  "@pushupVariationsByDifficulty": {
+    "description": "Variations section header"
+  },
+
+  "beginnerToChad": "From beginner to Chad! Challenge yourself step by step! 🚀",
+  "@beginnerToChad": {
+    "description": "Variations section subtitle"
+  },
+
+  "chadSecretTips": "Chad's Secret Tips",
+  "@chadSecretTips": {
+    "description": "Improvement tips section header"
+  },
+
+  "becomeTrueChadTips": "With these tips, you can become a true Chad too! 💎",
+  "@becomeTrueChadTips": {
+    "description": "Improvement tips section subtitle"
+  },
+
+  "startPosition": "Start Position",
+  "@startPosition": {
+    "description": "Step 1 title - start position"
+  },
+  
+  "descendingMotion": "Descending Motion", 
+  "@descendingMotion": {
+    "description": "Step 2 title - descending motion"
+  },
+  
+  "bottomPosition": "Bottom Position",
+  "@bottomPosition": {
+    "description": "Step 3 title - bottom position"
+  },
+  
+  "ascendingMotion": "Ascending Motion",
+  "@ascendingMotion": {
+    "description": "Step 4 title - ascending motion"
+  },
+  
+  "finishPosition": "Finish Position",
+  "@finishPosition": {
+    "description": "Step 5 title - finish position"
+  },
+
+  "startPositionDesc": "Start with a plank position and accurately set the position of your hands and feet.",
+  "@startPositionDesc": {
+    "description": "Step 1 description"
+  },
+  
+  "descendingMotionDesc": "Bend your elbows and slowly lower your body downward.",
+  "@descendingMotionDesc": {
+    "description": "Step 2 description"
+  },
+  
+  "bottomPositionDesc": "Pause briefly at the lowest point where your chest almost touches the floor.",
+  "@bottomPositionDesc": {
+    "description": "Step 3 description"
+  },
+  
+  "ascendingMotionDesc": "Straighten your arms and return to the starting position.",
+  "@ascendingMotionDesc": {
+    "description": "Step 4 description"
+  },
+  
+  "finishPositionDesc": "Completely return to the starting position and prepare for the next repetition.",
+  "@finishPositionDesc": {
+    "description": "Step 5 description"
+  },
+
+  "correctPushupQuiz1": "What is the correct hand position in a proper pushup starting position?",
+  "@correctPushupQuiz1": {
+    "description": "Quiz question 1"
+  },
+  
+  "pushupMistakeQuiz": "What is the most common mistake during pushups?",
+  "@pushupMistakeQuiz": {
+    "description": "Quiz question 2"
+  },
+  
+  "beginnerPushupQuiz": "What is the most suitable pushup variation for beginners?",
+  "@beginnerPushupQuiz": {
+    "description": "Quiz question 3"
+  },
+  
+  "pushupBreathingQuiz": "What is the correct breathing technique during pushups?",
+  "@pushupBreathingQuiz": {
+    "description": "Quiz question 4"
+  },
+  
+  "elbowAngleQuiz": "What is the correct elbow angle during pushups?",
+  "@elbowAngleQuiz": {
+    "description": "Quiz question 5"
+  },
+
+  "progressVisualization": "Progress Visualization",
+  "@progressVisualization": {
+    "description": "Progress visualization section title"
+  },
+  
+  "weeklyGoal": "Weekly Goal",
+  "@weeklyGoal": {
+    "description": "Weekly goal label"
+  },
+  
+  "monthlyGoal": "Monthly Goal", 
+  "@monthlyGoal": {
+    "description": "Monthly goal label"
+  },
+
+  "wrongPose": "Wrong Pose",
+  "@wrongPose": {
+    "description": "Wrong pose label"
+  },
+  
+  "correctPose": "Correct Pose",
+  "@correctPose": {
+    "description": "Correct pose label"
+  },
+  
+  "correctionMethod": "Correction Method:",
+  "@correctionMethod": {
+    "description": "Correction method label"
+  },
+  
+  "beginnerLevel": "Beginner",
+  "@beginnerLevel": {
+    "description": "Beginner level label"
+  },
+  
+  "intermediateLevel": "Intermediate", 
+  "@intermediateLevel": {
+    "description": "Intermediate level label"
+  },
+  
+  "advancedLevel": "Advanced",
+  "@advancedLevel": {
+    "description": "Advanced level label"
+  },
+  
+  "instructions": "Instructions",
+  "@instructions": {
+    "description": "Instructions label"
+  },
+  
+  "benefits": "Benefits",
+  "@benefits": {
+    "description": "Benefits label"
+  },
+  
+  "breathingTechnique": "Breathing Technique",
+  "@breathingTechnique": {
+    "description": "Breathing technique category"
+  },
+  
+  "strengthImprovement": "Strength Improvement",
+  "@strengthImprovement": {
+    "description": "Strength improvement category"
+  },
+  
+  "recovery": "Recovery",
+  "@recovery": {
+    "description": "Recovery category"
+  },
+  
+  "motivation": "Motivation",
+  "@motivation": {
+    "description": "Motivation category"
+  },
+
+  "overallProgress": "Overall Progress",
+  "@overallProgress": {
+    "description": "Overall progress label"
+  },
+  
+  "percentComplete": "Complete",
+  "@percentComplete": {
+    "description": "Percent complete label"
+  },
+  
+  "sessions": "Sessions",
+  "@sessions": {
+    "description": "Sessions label"
+  },
+  
+  "completedCount": "Completed Count",
+  "@completedCount": {
+    "description": "Completed count label"
+  },
+  
+  "remainingCount": "Remaining Count",
+  "@remainingCount": {
+    "description": "Remaining count label"
+  },
+  
+  "weeklyGrowthChart": "Weekly Growth Chart",
+  "@weeklyGrowthChart": {
+    "description": "Weekly growth chart title"
+  },
+  
+  "weeklyDetails": "Weekly Details",
+  "@weeklyDetails": {
+    "description": "Weekly details title"
+  },
+  
+  "sessionsCompleted": "Sessions Completed",
+  "@sessionsCompleted": {
+    "description": "Sessions completed label"
+  },
+  
+  "workoutCalendar": "Workout Calendar",
+  "@workoutCalendar": {
+    "description": "Workout calendar title"
+  },
+  
+  "chadEvolutionStage": "Chad Evolution Stage",
+  "@chadEvolutionStage": {
+    "description": "Chad evolution stage title"
+  },
+  
+  "completedSessions": "Completed Sessions",
+  "@completedSessions": {
+    "description": "Completed sessions label"
+  },
+  
+  "completionRate": "Completion Rate",
+  "@completionRate": {
+    "description": "Completion rate label"
+  },
+  
+  "overallStatistics": "Overall Statistics",
+  "@overallStatistics": {
+    "description": "Overall statistics title"
+  },
+  
+  "programProgress": "Program Progress",
+  "@programProgress": {
+    "description": "Program progress label"
+  },
+  
+  "repsCompleted": "Reps Completed",
+  "@repsCompleted": {
+    "description": "Reps completed label"
+  },
+  
+  "weekCompleted": "Week",
+  "@weekCompleted": {
+    "description": "Week completed label"
+  },
+
+  "chadEvolutionStages": "Chad Evolution Stages",
+  "@chadEvolutionStages": {
+    "description": "Chad evolution stages title"
+  },
+  
+  "noWorkoutsToday": "No workouts on this day",
+  "@noWorkoutsToday": {
+    "description": "No workouts today message"
+  },
+  
+  "inProgress": "In Progress",
+  "@inProgress": {
+    "description": "In progress status"
+  },
+  
+  "setRecords": "Set Records:",
+  "@setRecords": {
+    "description": "Set records label"
+  },
+  
+  "overallStats": "Overall Statistics",
+  "@overallStats": {
+    "description": "Overall statistics label"
+  },
+  
+  "totalPushups": "Total Pushups",
+  "@totalPushups": {
+    "description": "Total pushups label"
+  },
+  
+  "averagePerSession": "Avg/Session",
+  "@averagePerSession": {
+    "description": "Average per session label"
+  },
+  
+  "weeklyPerformance": "Weekly Performance",
+  "@weeklyPerformance": {
+    "description": "Weekly performance label"
+  },
+  
+  "viewAll": "View All",
+  "@viewAll": {
+    "description": "View all button text"
+  },
+  
+  "perfect": "Perfect!",
+  "@perfect": {
+    "description": "Perfect status"
+  },
+  
+  "good": "Good",
+  "@good": {
+    "description": "Good status"
+  },
+  
+  "improvementNeeded": "Needs Improvement",
+  "@improvementNeeded": {
+    "description": "Improvement needed status"
+  },
+  
+  "personalRecords": "Personal Records",
+  "@personalRecords": {
+    "description": "Personal records label"
+  },
+  
+  "bestRecord": "Best Record",
+  "@bestRecord": {
+    "description": "Best record label"
+  },
+  
+  "bestWeek": "Best Week",
+  "@bestWeek": {
+    "description": "Best week label"
+  },
+  
+  "consecutiveDays": "Consecutive Days",
+  "@consecutiveDays": {
+    "description": "Consecutive days label"
+  },
+  
+  "averageScore": "Average Score",
+  "@averageScore": {
+    "description": "Average score label"
+  },
+  
+  "rookieChad": "Rookie Chad",
+  "@rookieChad": {
+    "description": "Rookie Chad title"
+  },
+  
+  "risingChad": "Rising Chad",
+  "@risingChad": {
+    "description": "Rising Chad title"
+  },
+  
+  "alphaChad": "Alpha Chad",
+  "@alphaChad": {
+    "description": "Alpha Chad title"
+  },
+  
+  "sigmaChad": "Sigma Chad",
+  "@sigmaChad": {
+    "description": "Sigma Chad title"
+  },
+  
+  "gigaChad": "Giga Chad",
+  "@gigaChad": {
+    "description": "Giga Chad title"
+  },
+  
+  "ultraChad": "Ultra Chad",
+  "@ultraChad": {
+    "description": "Ultra Chad title"
+  },
+  
+  "legendaryChad": "Legendary Chad",
+  "@legendaryChad": {
+    "description": "Legendary Chad title"
+  },
+  
+  "currentChadState": "Current Chad State",
+  "@currentChadState": {
+    "description": "Current Chad state label"
+  },
+  
+  "nextLevel": "Next Level",
+  "@nextLevel": {
+    "description": "Next level label"
+  },
+  
+  "nextLevelIn": "30% remaining to next level",
+  "@nextLevelIn": {
+    "description": "Next level progress message"
+  },
+  
+  "maxLevelAchieved": "Max Level Achieved!",
+  "@maxLevelAchieved": {
+    "description": "Max level achieved message"
+  },
+  
+  "programStart": "Program Start",
+  "@programStart": {
+    "description": "Program start requirement"
+  },
+  
+  "week1Completed": "Week 1 Completed",
+  "@week1Completed": {
+    "description": "Week 1 completed requirement"
+  },
+  
+  "week2Completed": "Week 2 Completed",
+  "@week2Completed": {
+    "description": "Week 2 completed requirement"
+  },
+  
+  "week3Completed": "Week 3 Completed",
+  "@week3Completed": {
+    "description": "Week 3 completed requirement"
+  },
+  
+  "week4Completed": "Week 4 Completed",
+  "@week4Completed": {
+    "description": "Week 4 completed requirement"
+  },
+  
+  "week5Completed": "Week 5 Completed",
+  "@week5Completed": {
+    "description": "Week 5 completed requirement"
+  },
+  
+  "week6Completed": "Week 6 Completed",
+  "@week6Completed": {
+    "description": "Week 6 completed requirement"
+  },
+  
+  "current": "Current",
+  "@current": {
+    "description": "Current status label"
+  },
+  
+  "firstStep": "First Step",
+  "@firstStep": {
+    "description": "First step achievement"
+  },
+  
+  "firstWorkoutCompleted": "First workout completed",
+  "@firstWorkoutCompleted": {
+    "description": "First workout completed description"
+  },
+  
+  "oneWeekChallenge": "One Week Challenge",
+  "@oneWeekChallenge": {
+    "description": "One week challenge achievement"
+  },
+  
+  "sevenDaysExercise": "7 consecutive days",
+  "@sevenDaysExercise": {
+    "description": "Seven days exercise description"
+  },
+  
+  "hundredPushups": "Hundred Pushups",
+  "@hundredPushups": {
+    "description": "Hundred pushups achievement"
+  },
+  
+  "hundredRepsInOneSession": "100 reps in one session",
+  "@hundredRepsInOneSession": {
+    "description": "Hundred reps in one session description"
+  },
+  
+  "perfectWeek": "Perfectionist",
+  "@perfectWeek": {
+    "description": "Perfect week achievement"
+  },
+  
+  "oneWeekCompleted": "One week 100% completed",
+  "@oneWeekCompleted": {
+    "description": "One week completed description"
+  },
+  
+  "chadAchievements": "Chad Achievements",
+  "@chadAchievements": {
+    "description": "Chad achievements label"
+  },
+  
+  "noData": "No data available",
+  "@noData": {
+    "description": "No data message"
+  },
+  
+  "chadEvolution": "Chad Evolution",
+  "@chadEvolution": {
+    "description": "Chad evolution label"
+  },
+  "completionRate": "Completion Rate",
+  "@completionRate": {
+    "description": "Completion rate label"
+  },
+  "personalRecords": "Personal Records",
+  "@personalRecords": {
+    "description": "Personal records title"
+  },
+  "bestRecord": "Best Record",
+  "@bestRecord": {
+    "description": "Best record label"
+  },
+  "bestWeek": "Best Week",
+  "@bestWeek": {
+    "description": "Best week label"
+  },
+  "consecutiveDays": "Consecutive Days",
+  "@consecutiveDays": {
+    "description": "Consecutive days label"
+  },
+  "weeklyChallenge": "Weekly Challenge",
+  "@weeklyChallenge": {
+    "description": "Weekly challenge achievement"
+  },
+  "weeklyPerformance": "Weekly Performance",
+  "@weeklyPerformance": {
+    "description": "Weekly performance title"
+  },
+  "improvement": "Needs Improvement",
+  "@improvement": {
+    "description": "Improvement needed label"
+  },
+  "perfect": "Perfect!",
+  "@perfect": {
+    "description": "Perfect completion label"
+  },
+  "excellent": "Good",
+  "@excellent": {
+    "description": "Excellent performance label"
+  },
+  "noDataAvailable": "No data available",
+  "@noDataAvailable": {
+    "description": "No data available message"
+  },
+  "currentChadState": "Current Chad State",
+  "@currentChadState": {
+    "description": "Current Chad state title"
+  },
+  "chadAchievements": "Chad Achievements",
+  "@chadAchievements": {
+    "description": "Chad achievements title"
+  },
+  "firstStepDesc": "Complete first workout",
+  "@firstStepDesc": {
+    "description": "First step achievement description"
+  },
+  "weeklyChallengeDesc": "Exercise for 7 consecutive days",
+  "@weeklyChallengeDesc": {
+    "description": "Weekly challenge achievement description"
+  },
+  "hundredPushupsDesc": "Achieve 100 reps in one session",
+  "@hundredPushupsDesc": {
+    "description": "Hundred pushups achievement description"
+  },
+  "perfectionistDesc": "Complete one week 100%",
+  "@perfectionistDesc": {
+    "description": "Perfectionist achievement description"
+  },
+  "maxLevelAchieved": "Maximum level achieved!",
+  "@maxLevelAchieved": {
+    "description": "Maximum level achieved message"
+  },
+  "noWorkoutToday": "No workout on this day.",
+  "@noWorkoutToday": {
+    "description": "No workout on this day message"
+  },
+  "totalPushups": "Total Pushups",
+  "@totalPushups": {
+    "description": "Total pushups label"
+  },
+  "nextLevel": "Until next level",
+  "@nextLevel": {
+    "description": "Progress to next level label"
+  },
+  "remaining": "remaining",
+  "@remaining": {
+    "description": "Remaining progress label"
+  },
+  "workoutDate": "{month}/{day} Workout",
+  "@workoutDate": {
+    "description": "Workout date format",
+    "placeholders": {
+      "month": {
+        "type": "int"
+      },
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "weekX": "Week {week}",
+  "@weekX": {
+    "description": "Week number format",
+    "placeholders": {
+      "week": {
+        "type": "int"
+      }
+    }
+  },
+  "dayX": "Day {day}",
+  "@dayX": {
+    "description": "Day number format",
+    "placeholders": {
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "sessionsCompletedFormat": "{completed}/{total} sessions completed • {reps} reps",
+  "@sessionsCompletedFormat": {
+    "description": "Sessions completed format",
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "reps": {
+        "type": "int"
+      }
+    }
+  },
+  "viewAll": "View All",
+  "@viewAll": {
+    "description": "View all button text"
   }
 }  

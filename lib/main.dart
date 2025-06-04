@@ -5,7 +5,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'generated/app_localizations.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:meta/meta.dart';
 import 'utils/constants.dart';
 import 'screens/main_navigation_screen.dart';
 import 'screens/permission_screen.dart';
@@ -20,73 +19,153 @@ import 'services/chad_evolution_service.dart';
 import 'services/chad_image_service.dart';
 import 'services/achievement_service.dart';
 import 'services/database_service.dart';
+import 'services/challenge_service.dart';
 import 'screens/initial_test_screen.dart';
-import 'services/streak_service.dart';
 // MemoryManager import 제거됨
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // 화면 방향 고정 (세로)
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
-
-  // AdMob 초기화
-  await AdService.initialize();
-
-  // 알림 서비스 초기화
-  await NotificationService.initialize();
-  await NotificationService.createNotificationChannels();
-  await ChadImageService().initialize();
-
-  // 업적 서비스 초기화
   try {
-    debugPrint('🚀 업적 서비스 초기화 시작...');
-    await AchievementService.initialize();
+    // 화면 방향 고정 (세로) - 필수
+    await SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
+    // 즉시 필요한 서비스들만 동기 초기화
     
-    // 초기화 후 상태 확인
-    final totalCount = await AchievementService.getTotalCount();
-    final unlockedCount = await AchievementService.getUnlockedCount();
-    debugPrint('✅ 업적 서비스 초기화 완료 - 총 $totalCount개 업적, $unlockedCount개 잠금해제');
+    // 테마 서비스 초기화 (UI 렌더링에 필요)
+    final themeService = ThemeService();
+    await themeService.initialize();
+    debugPrint('✅ ThemeService 초기화 완료');
+
+    // 로케일 서비스 초기화 (다국어 지원에 필요)
+    final localeNotifier = LocaleNotifier();
+    await localeNotifier.loadLocale();
+    debugPrint('✅ LocaleService 초기화 완료');
+
+    // 온보딩 서비스 초기화 (첫 화면 결정에 필요)
+    final onboardingService = OnboardingService();
+    await onboardingService.initialize();
+    debugPrint('✅ OnboardingService 초기화 완료');
+
+    // Chad 진화 서비스 초기화 (메인 UI에 필요)
+    final chadEvolutionService = ChadEvolutionService();
+    await chadEvolutionService.initialize();
+    debugPrint('✅ ChadEvolutionService 초기화 완료');
+
+    debugPrint('🚀 앱 기본 초기화 완료 - 빠른 시작!');
+
+    runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider.value(value: themeService),
+          ChangeNotifierProvider.value(value: localeNotifier),
+          ChangeNotifierProvider.value(value: onboardingService),
+          ChangeNotifierProvider.value(value: chadEvolutionService),
+        ],
+        child: const MissionApp(),
+      ),
+    );
+
+    // 나머지 서비스들은 백그라운드에서 초기화 (non-blocking)
+    _initializeBackgroundServices();
+
   } catch (e, stackTrace) {
-    debugPrint('❌ 업적 서비스 초기화 오류: $e');
+    debugPrint('🚨 앱 초기화 중 치명적인 오류 발생: $e');
     debugPrint('스택 트레이스: $stackTrace');
+    
+    // 앱이 완전히 중단되지 않도록 기본 앱으로 실행
+    runApp(
+      MaterialApp(
+        title: 'Mission: 100',
+        home: Scaffold(
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.error, size: 64, color: Colors.red),
+                const SizedBox(height: 16),
+                const Text(
+                  '앱 초기화 중 오류가 발생했습니다.',
+                  style: TextStyle(fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  '오류: $e',
+                  style: const TextStyle(fontSize: 14, color: Colors.grey),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    debugPrint('앱 재시작 시도');
+                    // 앱 재시작 로직
+                  },
+                  child: const Text('다시 시도'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
+}
 
-  // 테마 서비스 초기화
-  final themeService = ThemeService();
-  await themeService.initialize();
+// 백그라운드에서 나머지 서비스들을 초기화하는 함수
+void _initializeBackgroundServices() {
+  // 광고 서비스 초기화 (백그라운드)
+  AdService.initialize().then((_) {
+    debugPrint('✅ AdService 백그라운드 초기화 완료');
+  }).catchError((e) {
+    debugPrint('❌ AdService 초기화 오류: $e');
+  });
 
-  // 로케일 서비스 초기화
-  final localeNotifier = LocaleNotifier();
-  await localeNotifier.loadLocale();
+  // 알림 서비스 초기화 (백그라운드)
+  NotificationService.initialize().then((_) async {
+    await NotificationService.createNotificationChannels();
+    debugPrint('✅ NotificationService 백그라운드 초기화 완료');
+  }).catchError((e) {
+    debugPrint('❌ NotificationService 초기화 오류: $e');
+  });
 
-  // 온보딩 서비스 초기화
-  final onboardingService = OnboardingService();
-  await onboardingService.initialize();
+  // Chad 이미지 서비스 초기화 (백그라운드)
+  ChadImageService().initialize().then((_) {
+    debugPrint('✅ ChadImageService 백그라운드 초기화 완료');
+  }).catchError((e) {
+    debugPrint('❌ ChadImageService 초기화 오류: $e');
+  });
 
-  // Chad 진화 서비스 초기화
-  final chadEvolutionService = ChadEvolutionService();
-  await chadEvolutionService.initialize();
-  
-  // Chad 이미지 프리로드 (백그라운드에서 실행)
-  unawaited(chadEvolutionService.preloadAllImages(targetSize: 200).catchError((Object e) {
-    debugPrint('Chad 이미지 프리로드 오류: $e');
-  }));
+  // 업적 서비스 초기화 (백그라운드)
+  Future.delayed(const Duration(milliseconds: 500), () {
+    AchievementService.initialize().then((_) async {
+      final totalCount = await AchievementService.getTotalCount();
+      final unlockedCount = await AchievementService.getUnlockedCount();
+      debugPrint('✅ 업적 서비스 백그라운드 초기화 완료 - 총 $totalCount개 업적, $unlockedCount개 잠금해제');
+    }).catchError((e) {
+      debugPrint('❌ 업적 서비스 초기화 오류: $e');
+    });
+  });
 
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider.value(value: themeService),
-        ChangeNotifierProvider.value(value: localeNotifier),
-        ChangeNotifierProvider.value(value: onboardingService),
-        ChangeNotifierProvider.value(value: chadEvolutionService),
-      ],
-      child: const MissionApp(),
-    ),
-  );
+  // 챌린지 서비스 초기화 (백그라운드)
+  Future.delayed(const Duration(milliseconds: 700), () {
+    ChallengeService().initialize().then((_) {
+      debugPrint('✅ 챌린지 서비스 백그라운드 초기화 완료');
+    }).catchError((e) {
+      debugPrint('❌ 챌린지 서비스 초기화 오류: $e');
+    });
+  });
+
+  // Chad 이미지 프리로드 (더 늦게, 메모리 부담 줄이기)
+  Future.delayed(const Duration(seconds: 2), () {
+    final chadEvolutionService = ChadEvolutionService();
+    chadEvolutionService.preloadAllImages(targetSize: 150).catchError((e) {
+      debugPrint('Chad 이미지 프리로드 오류: $e');
+    });
+  });
 }
 
 // 로케일 변경을 위한 Notifier
@@ -104,6 +183,10 @@ class LocaleNotifier extends ChangeNotifier {
   }
 
   Future<void> loadLocale() async {
+    // 로케일 자동 초기화는 스플래시 화면에서 처리
+    // await LocaleService.initializeLocale();
+    
+    // 설정된 언어 불러오기
     _locale = await LocaleService.getLocale();
     notifyListeners();
   }
@@ -196,7 +279,7 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
 
     _animationController = AnimationController(
-      duration: const Duration(milliseconds: 2500),
+      duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
 
@@ -227,13 +310,33 @@ class _SplashScreenState extends State<SplashScreen>
   void _startAnimation() async {
     await _animationController.forward();
 
-    // 2초 대기 후 초기 설정 확인
-    await Future<void>.delayed(const Duration(seconds: 1));
+    if (!mounted) return;
 
-    if (mounted) {
+    try {
+      // 0단계: 스마트 언어 탐지 (앱 실행할 때마다)
+      debugPrint('🌐 스마트 언어 탐지 시작...');
+      try {
+        await LocaleService.initializeLocale();
+        debugPrint('🌐 스마트 언어 탐지 완료');
+        
+        // 언어 변경이 있었다면 LocaleNotifier 업데이트
+        if (mounted) {
+          final localeNotifier = Provider.of<LocaleNotifier>(context, listen: false);
+          await localeNotifier.loadLocale();
+        }
+      } catch (e) {
+        debugPrint('🌐 스마트 언어 탐지 오류: $e (기존 설정 유지)');
+      }
+      
       // 1단계: 온보딩 완료 여부 확인 (최우선)
-      final isOnboardingCompleted = await OnboardingService.isOnboardingCompleted();
-      debugPrint('온보딩 완료 여부: $isOnboardingCompleted');
+      bool isOnboardingCompleted = false;
+      try {
+        isOnboardingCompleted = await OnboardingService.isOnboardingCompleted();
+        debugPrint('온보딩 완료 여부: $isOnboardingCompleted');
+      } catch (e) {
+        debugPrint('온보딩 서비스 확인 오류: $e (기본값: false 사용)');
+        isOnboardingCompleted = false;
+      }
       
       if (!isOnboardingCompleted) {
         // 온보딩이 완료되지 않았으면 온보딩 화면으로
@@ -246,21 +349,23 @@ class _SplashScreenState extends State<SplashScreen>
         return;
       }
       
-      // 2단계: 권한 확인 (온보딩 완료 후)
-      final hasNotificationPermission = await NotificationService.hasPermission();
+      // 2단계: 권한 확인 (온보딩 완료 후) - 병렬 처리로 속도 향상
+      final permissionFutures = await Future.wait([
+        NotificationService.hasPermission().catchError((e) {
+          debugPrint('알림 권한 확인 오류: $e');
+          return false;
+        }),
+        PermissionService.getStoragePermissionStatus().then((status) => 
+          status == PermissionStatus.granted).catchError((e) {
+          debugPrint('저장소 권한 확인 오류: $e');
+          return false;
+        }),
+      ]);
       
-      // 저장소 권한 확인 (PermissionService 사용)
-      bool hasStoragePermission = false;
-      try {
-        final storageStatus = await PermissionService.getStoragePermissionStatus();
-        hasStoragePermission = storageStatus == PermissionStatus.granted;
-      } catch (e) {
-        debugPrint('저장소 권한 확인 오류: $e');
-        hasStoragePermission = false;
-      }
-      
-      // 모든 권한이 허용되었는지 확인
+      final hasNotificationPermission = permissionFutures[0];
+      final hasStoragePermission = permissionFutures[1];
       final hasAllPermissions = hasNotificationPermission && hasStoragePermission;
+      
       debugPrint('권한 상태 - 알림: $hasNotificationPermission, 저장소: $hasStoragePermission');
       
       if (!hasAllPermissions) {
@@ -282,7 +387,7 @@ class _SplashScreenState extends State<SplashScreen>
         hasUserProfile = userProfile != null;
         debugPrint('UserProfile 존재 여부: $hasUserProfile');
       } catch (e) {
-        debugPrint('UserProfile 확인 오류: $e');
+        debugPrint('UserProfile 확인 오류: $e (기본값: false 사용)');
         hasUserProfile = false;
       }
       
@@ -302,6 +407,16 @@ class _SplashScreenState extends State<SplashScreen>
       if (mounted) {
         await Navigator.of(context).pushReplacement(
           MaterialPageRoute<void>(builder: (context) => const MainNavigationScreen()),
+        );
+      }
+    } catch (e, stackTrace) {
+      debugPrint('🚨 스플래시 화면 초기화 중 치명적인 오류 발생: $e');
+      debugPrint('스택 트레이스: $stackTrace');
+      
+      // 오류가 발생했을 때 온보딩 화면으로 안전하게 이동
+      if (mounted) {
+        await Navigator.of(context).pushReplacement(
+          MaterialPageRoute<void>(builder: (context) => const OnboardingScreen()),
         );
       }
     }

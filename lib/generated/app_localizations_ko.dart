@@ -325,7 +325,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get levelDescRookie =>
-      '🔥 푸시업 여정을 시작하는 미래의 EMPEROR다.\n꾸준한 연습으로 LEGENDARY BEAST로 진화할 수 있어, 만삣삐! 🔥';
+      '🔥 ROOKIE CHAD. 푸시업 제국의 시작점.\n각성의 여정이 시작되었다. 🔥';
 
   @override
   String get levelDescRising =>
@@ -972,7 +972,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get achievementRarityEpic => '에픽';
 
   @override
-  String get achievementRarityLegendary => '전설';
+  String get achievementRarityLegendary => '레전더리';
 
   @override
   String get achievementRarityMythic => '신화';
@@ -1526,9 +1526,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get description => '설명';
 
   @override
-  String percentComplete(int percentage) {
-    return '$percentage% 완료';
-  }
+  String get percentComplete => '완료';
 
   @override
   String get koreanLanguage => '한국어';
@@ -1639,7 +1637,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get legend => '범례';
 
   @override
-  String get perfect => '완벽';
+  String get perfect => '완벽!';
 
   @override
   String get good => '좋음';
@@ -2393,7 +2391,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get todayWorkoutCompleted => '🎉 오늘 운동 완료! 🎉';
 
   @override
-  String get justWait => '잠깐! 너 진짜 쉴거야?';
+  String get justWait => '오늘은 회복의 날이다. 하지만 선택은 너의 것.';
 
   @override
   String get progressTracking => '진행률 추적';
@@ -2402,8 +2400,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get sleepyHatChad => '수면모자 Chad';
 
   @override
-  String get journeyStartingChad =>
-      '여정을 시작하는 Chad입니다.\n아직 잠이 덜 깬 상태지만 곧 깨어날 것입니다!';
+  String get journeyStartingChad => '각성을 시작한 Chad.\n잠재력이 깨어나고 있다.';
 
   @override
   String weekDayFormat(int week, int day) {
@@ -2438,7 +2435,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get themeColor => '테마 색상';
 
   @override
-  String get fontSize => '폰트 크기';
+  String get fontSize => '글자 크기';
 
   @override
   String get animationEffect => '애니메이션 효과';
@@ -2510,9 +2507,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get activatedStatus => '활성화됨';
 
   @override
-  String themeColorDesc(String color) {
-    return '앱의 메인 색상을 변경합니다 (현재: $color)';
-  }
+  String get themeColorDesc => '앱의 메인 색상을 변경합니다';
 
   @override
   String get fontScale => '글자 크기';
@@ -2521,7 +2516,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get fontScaleDesc => '앱 전체의 텍스트 크기를 조정합니다';
 
   @override
-  String get animationsEnabled => '애니메이션 효과';
+  String get animationsEnabled => '애니메이션이 활성화되었습니다';
 
   @override
   String get animationsEnabledDesc => '앱 전체의 애니메이션 효과를 켜거나 끕니다';
@@ -2806,4 +2801,469 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get chadMotivationDefault => '차드의 길은 험하지만 그래서 더 가치있다! 포기하지 마라, 만삣삐!';
+
+  @override
+  String get customWorkoutDays => '운동일 설정';
+
+  @override
+  String get customWorkoutDaysDesc => '원하는 요일에 운동하도록 설정하세요';
+
+  @override
+  String get workoutDaySelection => '운동 요일 선택';
+
+  @override
+  String get selectWorkoutDays => '주 3일 운동할 요일을 선택하세요';
+
+  @override
+  String get mondayShort => '월';
+
+  @override
+  String get tuesdayShort => '화';
+
+  @override
+  String get wednesdayShort => '수';
+
+  @override
+  String get thursdayShort => '목';
+
+  @override
+  String get fridayShort => '금';
+
+  @override
+  String get saturdayShort => '토';
+
+  @override
+  String get sundayShort => '일';
+
+  @override
+  String get restDayMessage => '오늘은 회복의 날. 진정한 강함은 휴식에서 나온다.';
+
+  @override
+  String get workoutDaysOnlyNotifications => '🔥 운동일 전용 알림';
+
+  @override
+  String get workoutDaysOnlyNotificationsDesc =>
+      '매일이 아닌 운동일(월,수,금)에만 알림을 받습니다. 휴식일엔 방해받지 않아요!';
+
+  @override
+  String get chadEvolutionNotifications => 'Chad 진화 완료 알림';
+
+  @override
+  String get chadEvolutionNotificationsDesc => 'Chad가 새로운 단계로 진화했을 때 알림을 받습니다';
+
+  @override
+  String get chadEvolutionPreviewNotifications => 'Chad 진화 예고 알림';
+
+  @override
+  String get chadEvolutionPreviewNotificationsDesc =>
+      '다음 진화까지 1주일 남았을 때 미리 알림을 받습니다';
+
+  @override
+  String get chadEvolutionEncouragementNotifications => 'Chad 진화 격려 알림';
+
+  @override
+  String get chadEvolutionEncouragementNotificationsDesc =>
+      '다음 진화까지 3일 남았을 때 격려 메시지를 받습니다';
+
+  @override
+  String get workoutReminderDisabled => '운동 리마인더가 비활성화되었습니다';
+
+  @override
+  String get workoutDaysModeActivated =>
+      '💪 운동일 전용 알림 모드 활성화! 월,수,금에만 알림이 옵니다!';
+
+  @override
+  String get dailyNotificationModeChanged => '매일 알림 모드로 변경! 매일 알림 받아요! 📱';
+
+  @override
+  String get fontSizeDesc => '앱의 글자 크기를 조정합니다';
+
+  @override
+  String get animations => '애니메이션';
+
+  @override
+  String get animationsDesc => '앱의 애니메이션 효과를 활성화/비활성화합니다';
+
+  @override
+  String get animationsDisabled => '애니메이션이 비활성화되었습니다';
+
+  @override
+  String get highContrastEnabled => '고대비 모드가 활성화되었습니다';
+
+  @override
+  String get highContrastDisabled => '고대비 모드가 비활성화되었습니다';
+
+  @override
+  String get themeColorSelection => '테마 색상 선택';
+
+  @override
+  String themeColorChanged(String colorName) {
+    return '테마 색상이 $colorName로 변경되었습니다';
+  }
+
+  @override
+  String get required => '필수';
+
+  @override
+  String get activated => '활성화됨';
+
+  @override
+  String get perfectFormChallenge => '🎯 완벽 자세 챌린지 활성화! 대충하면 안 된다! 💪';
+
+  @override
+  String get sevenDayStreak => '🔄 7일 연속 챌린지 시작! 하루라도 빠지면 처음부터! 🚀';
+
+  @override
+  String get challengeTestYourLimits => '💪 오늘 너의 한계를 시험해볼까?';
+
+  @override
+  String get restDayBonusChallenge =>
+      '휴식일 보너스 챌린지! 💪\n\n• 플랭크 30초 x 3세트\n• 스쿼트 20개 x 2세트\n• 푸시업 10개 (완벽한 자세로!)\n\n준비됐어? 진짜 챔피언만 할 수 있어! 🏆';
+
+  @override
+  String get startChallenge => '챌린지 시작! 🔥';
+
+  @override
+  String get stepByStepGuide => '단계별\n가이드';
+
+  @override
+  String get commonMistakes => '일반적인\n실수';
+
+  @override
+  String get variationExercises => '변형\n운동';
+
+  @override
+  String get improvementTips => '개선\n팁';
+
+  @override
+  String get correctPushupForm5Steps => '올바른 푸시업 자세 5단계';
+
+  @override
+  String get chadPerfectPushupForm => '차드가 알려주는 완벽한 푸시업 폼! 💪';
+
+  @override
+  String get listView => '목록 보기';
+
+  @override
+  String get swipeView => '스와이프 보기';
+
+  @override
+  String get quiz => '퀴즈';
+
+  @override
+  String get dontMakeTheseMistakes => '이런 실수는 하지 마라!';
+
+  @override
+  String get chadMistakesAdvice => '차드도 처음엔 실수했다. 하지만 이제는 완벽하지! 🔥';
+
+  @override
+  String get pushupVariationsByDifficulty => '난이도별 푸시업 변형';
+
+  @override
+  String get beginnerToChad => '초보자부터 차드까지! 단계별로 도전해보자! 🚀';
+
+  @override
+  String get chadSecretTips => '차드의 특급 비법';
+
+  @override
+  String get becomeTrueChadTips => '이 팁들로 너도 진짜 차드가 될 수 있다! 💎';
+
+  @override
+  String get startPosition => '시작 자세';
+
+  @override
+  String get descendingMotion => '하강 동작';
+
+  @override
+  String get bottomPosition => '최하점 자세';
+
+  @override
+  String get ascendingMotion => '상승 동작';
+
+  @override
+  String get finishPosition => '완료 자세';
+
+  @override
+  String get startPositionDesc => '플랭크 자세로 시작하여 손과 발의 위치를 정확히 설정합니다.';
+
+  @override
+  String get descendingMotionDesc => '팔꿈치를 구부리며 천천히 몸을 아래로 내립니다.';
+
+  @override
+  String get bottomPositionDesc => '가슴이 바닥에 거의 닿는 최하점에서 잠시 정지합니다.';
+
+  @override
+  String get ascendingMotionDesc => '팔을 펴며 시작 자세로 돌아갑니다.';
+
+  @override
+  String get finishPositionDesc => '시작 자세로 완전히 돌아와 다음 반복을 준비합니다.';
+
+  @override
+  String get correctPushupQuiz1 => '올바른 푸시업 시작 자세에서 손의 위치는?';
+
+  @override
+  String get pushupMistakeQuiz => '푸시업 중 가장 흔한 실수는?';
+
+  @override
+  String get beginnerPushupQuiz => '초보자에게 가장 적합한 푸시업 변형은?';
+
+  @override
+  String get pushupBreathingQuiz => '푸시업 시 올바른 호흡법은?';
+
+  @override
+  String get elbowAngleQuiz => '푸시업에서 팔꿈치의 올바른 각도는?';
+
+  @override
+  String get wrongPose => '잘못된 자세';
+
+  @override
+  String get correctPose => '올바른 자세';
+
+  @override
+  String get correctionMethod => '교정 방법:';
+
+  @override
+  String get beginnerLevel => '초급자';
+
+  @override
+  String get intermediateLevel => '중급자';
+
+  @override
+  String get advancedLevel => '고급자';
+
+  @override
+  String get instructions => '운동 방법';
+
+  @override
+  String get benefits => '운동 효과';
+
+  @override
+  String get breathingTechnique => '호흡법';
+
+  @override
+  String get strengthImprovement => '근력 향상';
+
+  @override
+  String get recovery => '회복';
+
+  @override
+  String get motivation => '동기부여';
+
+  @override
+  String get overallProgress => '전체 진행률';
+
+  @override
+  String get sessions => '세션';
+
+  @override
+  String get completedCount => '완료한 횟수';
+
+  @override
+  String get remainingCount => '남은 횟수';
+
+  @override
+  String get weeklyGrowthChart => '주간 성장 차트';
+
+  @override
+  String get weeklyDetails => '주차별 상세';
+
+  @override
+  String get sessionsCompleted => '세션 완료';
+
+  @override
+  String get workoutCalendar => '워크아웃 캘린더';
+
+  @override
+  String get chadEvolutionStage => 'Chad 진화단계';
+
+  @override
+  String get completedSessions => '완료 세션';
+
+  @override
+  String get overallStatistics => '전체통계';
+
+  @override
+  String get programProgress => '프로그램 진행률';
+
+  @override
+  String get repsCompleted => '회 완료';
+
+  @override
+  String get weekCompleted => '주차';
+
+  @override
+  String get chadEvolutionStages => 'Chad 진화 단계';
+
+  @override
+  String get noWorkoutsToday => '이 날에는 워크아웃이 없습니다';
+
+  @override
+  String get inProgress => '진행 중';
+
+  @override
+  String get setRecords => '세트별 기록:';
+
+  @override
+  String get overallStats => '전체 통계';
+
+  @override
+  String get averagePerSession => '평균/세션';
+
+  @override
+  String get weeklyPerformance => '주간별 성과';
+
+  @override
+  String get viewAll => '전체 보기';
+
+  @override
+  String get improvementNeeded => '개선 필요';
+
+  @override
+  String get personalRecords => '개인 기록';
+
+  @override
+  String get bestWeek => '최고 주차';
+
+  @override
+  String get consecutiveDays => '연속 일수';
+
+  @override
+  String get averageScore => '평균 점수';
+
+  @override
+  String get rookieChad => 'Rookie Chad';
+
+  @override
+  String get risingChad => 'Rising Chad';
+
+  @override
+  String get alphaChad => 'Alpha Chad';
+
+  @override
+  String get sigmaChad => 'Sigma Chad';
+
+  @override
+  String get gigaChad => 'Giga Chad';
+
+  @override
+  String get ultraChad => 'Ultra Chad';
+
+  @override
+  String get legendaryChad => 'Legendary Chad';
+
+  @override
+  String get currentChadState => '현재 Chad 상태';
+
+  @override
+  String get nextLevel => '다음 레벨까지';
+
+  @override
+  String get nextLevelIn => '다음 레벨까지 30% 남음';
+
+  @override
+  String get maxLevelAchieved => '최고 레벨 달성!';
+
+  @override
+  String get programStart => '프로그램 시작';
+
+  @override
+  String get week1Completed => '1주차 완료';
+
+  @override
+  String get week2Completed => '2주차 완료';
+
+  @override
+  String get week3Completed => '3주차 완료';
+
+  @override
+  String get week4Completed => '4주차 완료';
+
+  @override
+  String get week5Completed => '5주차 완료';
+
+  @override
+  String get week6Completed => '6주차 완료';
+
+  @override
+  String get firstStep => '첫 걸음';
+
+  @override
+  String get firstWorkoutCompleted => '첫 번째 워크아웃 완료';
+
+  @override
+  String get oneWeekChallenge => '일주일 챌린지';
+
+  @override
+  String get sevenDaysExercise => '7일 연속 운동';
+
+  @override
+  String get hundredPushups => '백 푸시업';
+
+  @override
+  String get hundredRepsInOneSession => '한 세션에 100회 달성';
+
+  @override
+  String get perfectWeek => '완벽주의자';
+
+  @override
+  String get oneWeekCompleted => '한 주 100% 완료';
+
+  @override
+  String get chadAchievements => 'Chad 업적';
+
+  @override
+  String get chadEvolution => 'Chad 진화';
+
+  @override
+  String get noData => '데이터가 없습니다';
+
+  @override
+  String get weeklyChallenge => '일주일 챌린지';
+
+  @override
+  String get improvement => '개선 필요';
+
+  @override
+  String get excellent => '좋음';
+
+  @override
+  String get noDataAvailable => '데이터가 없습니다';
+
+  @override
+  String get firstStepDesc => '첫 번째 워크아웃 완료';
+
+  @override
+  String get weeklyChallengeDesc => '7일 연속 운동';
+
+  @override
+  String get hundredPushupsDesc => '한 세션에 100회 달성';
+
+  @override
+  String get perfectionistDesc => '한 주 100% 완료';
+
+  @override
+  String get noWorkoutToday => '이 날에는 워크아웃이 없습니다.';
+
+  @override
+  String get remaining => '남음';
+
+  @override
+  String workoutDate(int month, int day) {
+    return '$month월 $day일 워크아웃';
+  }
+
+  @override
+  String weekX(int week) {
+    return '$week주차';
+  }
+
+  @override
+  String dayX(int day) {
+    return '$day일차';
+  }
+
+  @override
+  String sessionsCompletedFormat(int completed, int total, int reps) {
+    return '$completed/$total 세션 완료 • $reps회';
+  }
 }

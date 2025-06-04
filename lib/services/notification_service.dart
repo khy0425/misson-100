@@ -815,7 +815,7 @@ class NotificationService {
       
       // 운동일 전용 알림 설정 확인
       final prefs = await SharedPreferences.getInstance();
-      final workoutDaysOnly = prefs.getBool('workout_days_only_notifications') ?? false;
+      final workoutDaysOnly = prefs.getBool('workout_days_only_notifications') ?? true;
       
       debugPrint('📊 운동 리마인더 스케줄링 권한 상태:');
       debugPrint('  - 기본 알림: $hasNotificationPermission');
@@ -1615,6 +1615,114 @@ class NotificationService {
       debugPrint('⏰ 시간 확인 후 알림 표시: $title');
     } else {
       debugPrint('⏳ 아직 알림 시간이 아님: ${targetTime.toString()}');
+    }
+  }
+
+  /// 운동 요일별 리마인드 알림 스케줄링
+  static Future<void> scheduleWorkoutReminders({
+    required List<int> weekdays, // DateTime.monday = 1, ... DateTime.sunday = 7
+    required int hour,
+    required int minute,
+  }) async {
+    try {
+      await initialize();
+      
+      // 기존 운동 리마인드 알림들 모두 취소
+      await cancelWorkoutReminders();
+      
+      // 각 요일에 대해 알림 스케줄링
+      for (int i = 0; i < weekdays.length; i++) {
+        final weekday = weekdays[i];
+        final notificationId = 1000 + weekday; // 운동 리마인드용 ID (1001~1007)
+        
+        // 다음 해당 요일의 날짜 계산
+        final now = DateTime.now();
+        final currentWeekday = now.weekday;
+        
+        int daysUntilTarget = weekday - currentWeekday;
+        if (daysUntilTarget <= 0) {
+          daysUntilTarget += 7; // 다음 주로 이동
+        }
+        
+        final targetDate = now.add(Duration(days: daysUntilTarget));
+        final scheduledTime = DateTime(
+          targetDate.year,
+          targetDate.month,
+          targetDate.day,
+          hour,
+          minute,
+        );
+        
+        // 알림 내용 설정
+        final weekdayNames = {
+          1: {'ko': '월요일', 'en': 'Monday'},
+          2: {'ko': '화요일', 'en': 'Tuesday'},
+          3: {'ko': '수요일', 'en': 'Wednesday'},
+          4: {'ko': '목요일', 'en': 'Thursday'},
+          5: {'ko': '금요일', 'en': 'Friday'},
+          6: {'ko': '토요일', 'en': 'Saturday'},
+          7: {'ko': '일요일', 'en': 'Sunday'},
+        };
+        
+        // 현재 로케일에 따라 메시지 설정 (간단히 한국어로 고정)
+        final weekdayName = weekdayNames[weekday]?['ko'] ?? '운동일';
+        final title = '🔥 Chad, 운동 시간이다!';
+        final body = '오늘은 $weekdayName! 진짜 챔피언이 되려면 지금 일어나라! 💪';
+        
+        // 알림 세부 설정
+        const notificationDetails = NotificationDetails(
+          android: AndroidNotificationDetails(
+            'workout_reminder',
+            'Workout Reminders',
+            channelDescription: '운동 리마인드 알림',
+            importance: Importance.high,
+            priority: Priority.high,
+            icon: '@mipmap/ic_launcher',
+            playSound: true,
+            enableVibration: true,
+            largeIcon: DrawableResourceAndroidBitmap('@mipmap/ic_launcher'),
+          ),
+          iOS: DarwinNotificationDetails(
+            presentAlert: true,
+            presentBadge: true,
+            presentSound: true,
+            sound: 'default',
+          ),
+        );
+        
+        // 안전한 알림 스케줄링
+        final success = await _safeScheduleNotification(
+          id: notificationId,
+          title: title,
+          body: body,
+          scheduledDate: scheduledTime,
+          notificationDetails: notificationDetails,
+        );
+        
+        if (success) {
+          debugPrint('✅ 운동 리마인드 스케줄링 성공: $weekdayName (${scheduledTime.toString()})');
+        } else {
+          debugPrint('⚠️ 운동 리마인드 스케줄링 실패: $weekdayName');
+        }
+      }
+      
+      debugPrint('🎯 총 ${weekdays.length}개 운동 리마인드 스케줄링 완료');
+    } catch (e) {
+      debugPrint('❌ 운동 리마인드 스케줄링 오류: $e');
+      rethrow;
+    }
+  }
+
+  /// 운동 리마인드 알림들 취소
+  static Future<void> cancelWorkoutReminders() async {
+    try {
+      // 운동 리마인드 알림 ID 범위: 1001~1007
+      for (int i = 1001; i <= 1007; i++) {
+        await _notifications.cancel(i);
+      }
+      debugPrint('🗑️ 기존 운동 리마인드 알림들 취소 완료');
+    } catch (e) {
+      debugPrint('⚠️ 운동 리마인드 알림 취소 오류: $e');
     }
   }
 }

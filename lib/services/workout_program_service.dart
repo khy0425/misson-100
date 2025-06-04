@@ -371,6 +371,18 @@ class ProgramProgress {
   /// 남은 횟수
   int get remainingReps => programTarget - totalCompletedReps;
 
+  /// 완료된 주차 수 (weeklyProgress에서 가져옴)
+  int get completedWeeks => weeklyProgress.completedWeeks;
+
+  /// 전체 주차 수 (고정값 6주)
+  int get totalWeeks => 6;
+
+  /// 이번 주 완료된 운동일 수
+  int get completedDaysThisWeek => weeklyProgress.completedDaysThisWeek;
+
+  /// 이번 주 총 운동일 수
+  int get totalDaysThisWeek => weeklyProgress.totalDaysThisWeek;
+
   @override
   String toString() {
     return 'ProgramProgress(sessions: $completedSessions/$totalSessions, reps: $totalCompletedReps/$programTarget, ${(progressPercentage * 100).toStringAsFixed(1)}%)';

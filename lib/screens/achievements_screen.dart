@@ -231,10 +231,10 @@ class _AchievementsScreenState extends State<AchievementsScreen>
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             )
-          : LinearGradient(
-              colors: [
-                const Color(0xFF2196F3), // 밝은 파란색
-                const Color(0xFF1976D2), // 진한 파란색
+          : const LinearGradient(
+              colors: <Color>[
+                Color(0xFF2196F3), // 밝은 파란색
+                Color(0xFF1976D2), // 진한 파란색
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -251,7 +251,7 @@ class _AchievementsScreenState extends State<AchievementsScreen>
       child: Column(
         children: [
           Text(
-            '🏆 ${AppLocalizations.of(context)!.achievements}',
+            '🏆 ${AppLocalizations.of(context).achievements}',
             style: theme.textTheme.headlineSmall?.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -266,7 +266,7 @@ class _AchievementsScreenState extends State<AchievementsScreen>
                 child: _buildStatItem(
                   icon: Icons.emoji_events,
                   value: '$_unlockedCount/$_totalCount',
-                  label: AppLocalizations.of(context)!.unlockedAchievements(_unlockedCount),
+                  label: AppLocalizations.of(context).unlockedAchievements(_unlockedCount),
                   color: Colors.amber,
                 ),
               ),
@@ -274,7 +274,7 @@ class _AchievementsScreenState extends State<AchievementsScreen>
                 child: _buildStatItem(
                   icon: Icons.star,
                   value: '$_totalXP XP',
-                  label: AppLocalizations.of(context)!.totalExperience,
+                  label: AppLocalizations.of(context).totalExperience,
                   color: Colors.white,
                 ),
               ),
@@ -371,12 +371,12 @@ class _AchievementsScreenState extends State<AchievementsScreen>
           ),
           Text(
             rarity == AchievementRarity.common
-                ? AppLocalizations.of(context)!.common
+                ? AppLocalizations.of(context).common
                 : rarity == AchievementRarity.rare
-                ? AppLocalizations.of(context)!.rare
+                ? AppLocalizations.of(context).rare
                 : rarity == AchievementRarity.epic
-                ? AppLocalizations.of(context)!.epic
-                : AppLocalizations.of(context)!.legendary,
+                ? AppLocalizations.of(context).epic
+                : AppLocalizations.of(context).legendary,
             style: theme.textTheme.bodySmall?.copyWith(
               color: Colors.white70,
               fontSize: 10,
@@ -408,8 +408,8 @@ class _AchievementsScreenState extends State<AchievementsScreen>
           fontSize: 14,
         ),
         tabs: [
-          Tab(text: '${AppLocalizations.of(context)!.unlockedAchievements(_unlockedAchievements.length)}'),
-          Tab(text: '${AppLocalizations.of(context)!.lockedAchievements(_lockedAchievements.length)}'),
+          Tab(text: AppLocalizations.of(context).unlockedAchievements(_unlockedAchievements.length)),
+          Tab(text: AppLocalizations.of(context).lockedAchievements(_lockedAchievements.length)),
         ],
       ),
     );
@@ -419,8 +419,8 @@ class _AchievementsScreenState extends State<AchievementsScreen>
     if (_unlockedAchievements.isEmpty) {
       return _buildEmptyState(
         icon: Icons.emoji_events_outlined,
-        title: AppLocalizations.of(context)!.noAchievementsYet,
-        message: AppLocalizations.of(context)!.startWorkoutForAchievements,
+        title: AppLocalizations.of(context).noAchievementsYet,
+        message: AppLocalizations.of(context).startWorkoutForAchievements,
       );
     }
 
@@ -444,8 +444,8 @@ class _AchievementsScreenState extends State<AchievementsScreen>
     if (_lockedAchievements.isEmpty) {
       return _buildEmptyState(
         icon: Icons.lock_outline,
-        title: AppLocalizations.of(context)!.allAchievementsUnlocked,
-        message: AppLocalizations.of(context)!.congratulationsChad,
+        title: AppLocalizations.of(context).allAchievementsUnlocked,
+        message: AppLocalizations.of(context).congratulationsChad,
       );
     }
 
@@ -501,11 +501,9 @@ class _AchievementsScreenState extends State<AchievementsScreen>
     );
   }
 
-
-
   /// 업적 상세 정보 다이얼로그 표시
   void _showAchievementDetail(Achievement achievement) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AchievementDetailDialog(achievement: achievement),
     );

@@ -334,7 +334,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get levelDescRookie =>
-      '🔥 ROOKIE CHAD STARTING PUSHUP JOURNEY TO BECOME FUTURE EMPEROR.\nSTEADY PRACTICE EVOLVES INTO LEGENDARY BEAST! 🔥';
+      '🔥 ROOKIE CHAD. STARTING POINT OF PUSHUP EMPIRE.\nJOURNEY OF AWAKENING HAS BEGUN. 🔥';
 
   @override
   String get levelDescRising =>
@@ -1193,7 +1193,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chadDays => 'Chad days!';
 
   @override
-  String get totalPushups => 'Total Push-ups';
+  String get totalPushups => 'Total Pushups';
 
   @override
   String pushupsCount(int count) {
@@ -1318,7 +1318,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chadHashtag => '#Chad';
 
   @override
-  String get perfectPushupForm => 'Perfect Push-up Form';
+  String get perfectPushupForm => 'Perfect Pushup Form';
 
   @override
   String get pushupVariations => 'Pushup Variations 🔥';
@@ -1462,7 +1462,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Are you sure you want to delete all data? This action cannot be undone.';
 
   @override
-  String get dataResetConfirm => '정말로 모든 데이터를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.';
+  String get dataResetConfirm => 'Data Reset Confirmation';
 
   @override
   String get dataResetComingSoon => '데이터 초기화 기능은 곧 제공될 예정입니다.';
@@ -1580,9 +1580,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get description => 'Description';
 
   @override
-  String percentComplete(int percentage) {
-    return '$percentage% complete';
-  }
+  String get percentComplete => 'Complete';
 
   @override
   String get koreanLanguage => 'Korean';
@@ -1699,7 +1697,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get legend => 'Legend';
 
   @override
-  String get perfect => 'Perfect';
+  String get perfect => 'Perfect!';
 
   @override
   String get good => 'Good';
@@ -2515,7 +2513,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get todayWorkoutCompleted => '🎉 Today\'s Workout Complete! 🎉';
 
   @override
-  String get justWait => 'Wait! Are you really going to rest?';
+  String get justWait => 'Today is recovery day. But the choice is yours.';
 
   @override
   String get progressTracking => 'Progress Tracking';
@@ -2525,7 +2523,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get journeyStartingChad =>
-      'Starting your journey Chad.\nStill a bit sleepy but will wake up soon!';
+      'Chad beginning awakening.\nPotential is stirring.';
 
   @override
   String weekDayFormat(int week, int day) {
@@ -2642,9 +2640,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get activatedStatus => 'Activated';
 
   @override
-  String themeColorDesc(String color) {
-    return 'Change the app\'s primary color (Current: $color)';
-  }
+  String get themeColorDesc => 'Change the main color of the app';
 
   @override
   String get fontScale => 'Font Size';
@@ -2653,7 +2649,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fontScaleDesc => 'Adjust text size throughout the app';
 
   @override
-  String get animationsEnabled => 'Animation Effects';
+  String get animationsEnabled => 'Animations have been enabled';
 
   @override
   String get animationsEnabledDesc =>
@@ -2743,7 +2739,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get restDayChampionTitle => '🔥 True Champion\'s Choice';
+  String get restDayChampionTitle => 'Rest Day Champion! 💪';
 
   @override
   String get restDayDescription =>
@@ -2951,4 +2947,490 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get chadMotivationDefault =>
       'The chad path is tough but that makes it more valuable! Don\'t give up!';
+
+  @override
+  String get customWorkoutDays => 'Workout Days Settings';
+
+  @override
+  String get customWorkoutDaysDesc => 'Set your preferred workout days';
+
+  @override
+  String get workoutDaySelection => 'Select Workout Days';
+
+  @override
+  String get selectWorkoutDays => 'Choose 3 days per week for workouts';
+
+  @override
+  String get mondayShort => 'Mon';
+
+  @override
+  String get tuesdayShort => 'Tue';
+
+  @override
+  String get wednesdayShort => 'Wed';
+
+  @override
+  String get thursdayShort => 'Thu';
+
+  @override
+  String get fridayShort => 'Fri';
+
+  @override
+  String get saturdayShort => 'Sat';
+
+  @override
+  String get sundayShort => 'Sun';
+
+  @override
+  String get restDayMessage =>
+      'Today is recovery day. True strength comes from rest.';
+
+  @override
+  String get workoutDaysOnlyNotifications => '🔥 Workout Days Only Alerts';
+
+  @override
+  String get workoutDaysOnlyNotificationsDesc =>
+      'Receive notifications only on workout days (Mon, Wed, Fri). No disturbance on rest days!';
+
+  @override
+  String get chadEvolutionNotifications => 'Chad Evolution Complete Alerts';
+
+  @override
+  String get chadEvolutionNotificationsDesc =>
+      'Get notified when Chad evolves to a new stage';
+
+  @override
+  String get chadEvolutionPreviewNotifications =>
+      'Chad Evolution Preview Alerts';
+
+  @override
+  String get chadEvolutionPreviewNotificationsDesc =>
+      'Get advance notice when 1 week remains until next evolution';
+
+  @override
+  String get chadEvolutionEncouragementNotifications =>
+      'Chad Evolution Encouragement Alerts';
+
+  @override
+  String get chadEvolutionEncouragementNotificationsDesc =>
+      'Receive encouraging messages when 3 days remain until next evolution';
+
+  @override
+  String get workoutReminderDisabled => 'Workout reminder has been disabled';
+
+  @override
+  String get workoutDaysModeActivated =>
+      '💪 Workout days only mode activated! Notifications will come only on Mon, Wed, Fri!';
+
+  @override
+  String get dailyNotificationModeChanged =>
+      'Switched to daily notification mode! Getting alerts every day! 📱';
+
+  @override
+  String get fontSizeDesc => 'Adjust the app\'s font size';
+
+  @override
+  String get animations => 'Animations';
+
+  @override
+  String get animationsDesc => 'Enable/disable app animation effects';
+
+  @override
+  String get animationsDisabled => 'Animations have been disabled';
+
+  @override
+  String get highContrastEnabled => 'High contrast mode has been enabled';
+
+  @override
+  String get highContrastDisabled => 'High contrast mode has been disabled';
+
+  @override
+  String get themeColorSelection => 'Theme Color Selection';
+
+  @override
+  String themeColorChanged(String colorName) {
+    return 'Theme color changed to $colorName';
+  }
+
+  @override
+  String get required => 'Required';
+
+  @override
+  String get activated => 'Activated';
+
+  @override
+  String get perfectFormChallenge =>
+      '🎯 Perfect Form Challenge activated! No slacking! 💪';
+
+  @override
+  String get sevenDayStreak =>
+      '🔄 7-day streak challenge started! Miss a day, start over! 🚀';
+
+  @override
+  String get challengeTestYourLimits => '💪 Ready to test your limits today?';
+
+  @override
+  String get restDayBonusChallenge =>
+      'Rest Day Bonus Challenge! 💪\n\n• Plank 30s x 3 sets\n• Squats 20 x 2 sets\n• Push-ups 10 (perfect form!)\n\nReady? Only real champions can do this! 🏆';
+
+  @override
+  String get startChallenge => 'Start! 🔥';
+
+  @override
+  String get stepByStepGuide => 'Step-by-Step\nGuide';
+
+  @override
+  String get commonMistakes => 'Common\nMistakes';
+
+  @override
+  String get variationExercises => 'Variation\nExercises';
+
+  @override
+  String get improvementTips => 'Improvement\nTips';
+
+  @override
+  String get correctPushupForm5Steps => 'Correct Pushup Form in 5 Steps';
+
+  @override
+  String get chadPerfectPushupForm =>
+      'Chad\'s guide to perfect pushup form! 💪';
+
+  @override
+  String get listView => 'List View';
+
+  @override
+  String get swipeView => 'Swipe View';
+
+  @override
+  String get quiz => 'Quiz';
+
+  @override
+  String get dontMakeTheseMistakes => 'Don\'t Make These Mistakes!';
+
+  @override
+  String get chadMistakesAdvice =>
+      'Chad made mistakes at first too. But now he\'s perfect! 🔥';
+
+  @override
+  String get pushupVariationsByDifficulty => 'Pushup Variations by Difficulty';
+
+  @override
+  String get beginnerToChad =>
+      'From beginner to Chad! Challenge yourself step by step! 🚀';
+
+  @override
+  String get chadSecretTips => 'Chad\'s Secret Tips';
+
+  @override
+  String get becomeTrueChadTips =>
+      'With these tips, you can become a true Chad too! 💎';
+
+  @override
+  String get startPosition => 'Start Position';
+
+  @override
+  String get descendingMotion => 'Descending Motion';
+
+  @override
+  String get bottomPosition => 'Bottom Position';
+
+  @override
+  String get ascendingMotion => 'Ascending Motion';
+
+  @override
+  String get finishPosition => 'Finish Position';
+
+  @override
+  String get startPositionDesc =>
+      'Start with a plank position and accurately set the position of your hands and feet.';
+
+  @override
+  String get descendingMotionDesc =>
+      'Bend your elbows and slowly lower your body downward.';
+
+  @override
+  String get bottomPositionDesc =>
+      'Pause briefly at the lowest point where your chest almost touches the floor.';
+
+  @override
+  String get ascendingMotionDesc =>
+      'Straighten your arms and return to the starting position.';
+
+  @override
+  String get finishPositionDesc =>
+      'Completely return to the starting position and prepare for the next repetition.';
+
+  @override
+  String get correctPushupQuiz1 =>
+      'What is the correct hand position in a proper pushup starting position?';
+
+  @override
+  String get pushupMistakeQuiz =>
+      'What is the most common mistake during pushups?';
+
+  @override
+  String get beginnerPushupQuiz =>
+      'What is the most suitable pushup variation for beginners?';
+
+  @override
+  String get pushupBreathingQuiz =>
+      'What is the correct breathing technique during pushups?';
+
+  @override
+  String get elbowAngleQuiz =>
+      'What is the correct elbow angle during pushups?';
+
+  @override
+  String get wrongPose => 'Wrong Pose';
+
+  @override
+  String get correctPose => 'Correct Pose';
+
+  @override
+  String get correctionMethod => 'Correction Method:';
+
+  @override
+  String get beginnerLevel => 'Beginner';
+
+  @override
+  String get intermediateLevel => 'Intermediate';
+
+  @override
+  String get advancedLevel => 'Advanced';
+
+  @override
+  String get instructions => 'Instructions';
+
+  @override
+  String get benefits => 'Benefits';
+
+  @override
+  String get breathingTechnique => 'Breathing Technique';
+
+  @override
+  String get strengthImprovement => 'Strength Improvement';
+
+  @override
+  String get recovery => 'Recovery';
+
+  @override
+  String get motivation => 'Motivation';
+
+  @override
+  String get overallProgress => 'Overall Progress';
+
+  @override
+  String get sessions => 'Sessions';
+
+  @override
+  String get completedCount => 'Completed Count';
+
+  @override
+  String get remainingCount => 'Remaining Count';
+
+  @override
+  String get weeklyGrowthChart => 'Weekly Growth Chart';
+
+  @override
+  String get weeklyDetails => 'Weekly Details';
+
+  @override
+  String get sessionsCompleted => 'Sessions Completed';
+
+  @override
+  String get workoutCalendar => 'Workout Calendar';
+
+  @override
+  String get chadEvolutionStage => 'Chad Evolution Stage';
+
+  @override
+  String get completedSessions => 'Completed Sessions';
+
+  @override
+  String get overallStatistics => 'Overall Statistics';
+
+  @override
+  String get programProgress => 'Program Progress';
+
+  @override
+  String get repsCompleted => 'Reps Completed';
+
+  @override
+  String get weekCompleted => 'Week';
+
+  @override
+  String get chadEvolutionStages => 'Chad Evolution Stages';
+
+  @override
+  String get noWorkoutsToday => 'No workouts on this day';
+
+  @override
+  String get inProgress => 'In Progress';
+
+  @override
+  String get setRecords => 'Set Records:';
+
+  @override
+  String get overallStats => 'Overall Statistics';
+
+  @override
+  String get averagePerSession => 'Avg/Session';
+
+  @override
+  String get weeklyPerformance => 'Weekly Performance';
+
+  @override
+  String get viewAll => 'View All';
+
+  @override
+  String get improvementNeeded => 'Needs Improvement';
+
+  @override
+  String get personalRecords => 'Personal Records';
+
+  @override
+  String get bestWeek => 'Best Week';
+
+  @override
+  String get consecutiveDays => 'Consecutive Days';
+
+  @override
+  String get averageScore => 'Average Score';
+
+  @override
+  String get rookieChad => 'Rookie Chad';
+
+  @override
+  String get risingChad => 'Rising Chad';
+
+  @override
+  String get alphaChad => 'Alpha Chad';
+
+  @override
+  String get sigmaChad => 'Sigma Chad';
+
+  @override
+  String get gigaChad => 'Giga Chad';
+
+  @override
+  String get ultraChad => 'Ultra Chad';
+
+  @override
+  String get legendaryChad => 'Legendary Chad';
+
+  @override
+  String get currentChadState => 'Current Chad State';
+
+  @override
+  String get nextLevel => 'Until next level';
+
+  @override
+  String get nextLevelIn => '30% remaining to next level';
+
+  @override
+  String get maxLevelAchieved => 'Maximum level achieved!';
+
+  @override
+  String get programStart => 'Program Start';
+
+  @override
+  String get week1Completed => 'Week 1 Completed';
+
+  @override
+  String get week2Completed => 'Week 2 Completed';
+
+  @override
+  String get week3Completed => 'Week 3 Completed';
+
+  @override
+  String get week4Completed => 'Week 4 Completed';
+
+  @override
+  String get week5Completed => 'Week 5 Completed';
+
+  @override
+  String get week6Completed => 'Week 6 Completed';
+
+  @override
+  String get firstStep => 'First Step';
+
+  @override
+  String get firstWorkoutCompleted => 'First workout completed';
+
+  @override
+  String get oneWeekChallenge => 'One Week Challenge';
+
+  @override
+  String get sevenDaysExercise => '7 consecutive days';
+
+  @override
+  String get hundredPushups => 'Hundred Pushups';
+
+  @override
+  String get hundredRepsInOneSession => '100 reps in one session';
+
+  @override
+  String get perfectWeek => 'Perfectionist';
+
+  @override
+  String get oneWeekCompleted => 'One week 100% completed';
+
+  @override
+  String get chadAchievements => 'Chad Achievements';
+
+  @override
+  String get chadEvolution => 'Chad Evolution';
+
+  @override
+  String get noData => 'No data available';
+
+  @override
+  String get weeklyChallenge => 'Weekly Challenge';
+
+  @override
+  String get improvement => 'Needs Improvement';
+
+  @override
+  String get excellent => 'Good';
+
+  @override
+  String get noDataAvailable => 'No data available';
+
+  @override
+  String get firstStepDesc => 'Complete first workout';
+
+  @override
+  String get weeklyChallengeDesc => 'Exercise for 7 consecutive days';
+
+  @override
+  String get hundredPushupsDesc => 'Achieve 100 reps in one session';
+
+  @override
+  String get perfectionistDesc => 'Complete one week 100%';
+
+  @override
+  String get noWorkoutToday => 'No workout on this day.';
+
+  @override
+  String get remaining => 'remaining';
+
+  @override
+  String workoutDate(int month, int day) {
+    return '$month/$day Workout';
+  }
+
+  @override
+  String weekX(int week) {
+    return 'Week $week';
+  }
+
+  @override
+  String dayX(int day) {
+    return 'Day $day';
+  }
+
+  @override
+  String sessionsCompletedFormat(int completed, int total, int reps) {
+    return '$completed/$total sessions completed • $reps reps';
+  }
 }

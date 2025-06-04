@@ -150,15 +150,15 @@ class _ChallengeScreenState extends State<ChallengeScreen>
           controller: _tabController,
           tabs: [
             Tab(
-              text: AppLocalizations.of(context)!.challengesAvailable,
+              text: '${AppLocalizations.of(context)!.challengesAvailable} (${_availableChallenges.length})',
               icon: const Icon(Icons.play_arrow),
             ),
             Tab(
-              text: AppLocalizations.of(context)!.challengesActive,
+              text: '${AppLocalizations.of(context)!.challengesActive} (${_activeChallenges.length})',
               icon: const Icon(Icons.timer),
             ),
             Tab(
-              text: AppLocalizations.of(context)!.challengeTabCompleted,
+              text: '${AppLocalizations.of(context)!.challengeTabCompleted} (${_completedChallenges.length})',
               icon: const Icon(Icons.check_circle),
             ),
           ],

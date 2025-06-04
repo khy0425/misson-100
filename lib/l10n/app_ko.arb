@@ -429,7 +429,7 @@
   "@levelNameGiga": {
     "description": "최고급 차드 이름"
   },
-  "levelDescRookie": "🔥 푸시업 여정을 시작하는 미래의 EMPEROR다.\n꾸준한 연습으로 LEGENDARY BEAST로 진화할 수 있어, 만삣삐! 🔥",
+  "levelDescRookie": "🔥 ROOKIE CHAD. 푸시업 제국의 시작점.\n각성의 여정이 시작되었다. 🔥",
   "@levelDescRookie": {
     "description": "초급 레벨 설명"
   },
@@ -1197,7 +1197,7 @@
   "@achievementRarityEpic": {
     "description": "에픽 등급"
   },
-  "achievementRarityLegendary": "전설",
+  "achievementRarityLegendary": "레전더리",
   "@achievementRarityLegendary": {
     "description": "전설 등급"
   },
@@ -2771,7 +2771,7 @@
     "description": "Today's workout completed message"
   },
 
-  "justWait": "잠깐! 너 진짜 쉴거야?",
+  "justWait": "오늘은 회복의 날이다. 하지만 선택은 너의 것.",
   "@justWait": {
     "description": "Rest prevention message"
   },
@@ -2791,7 +2791,7 @@
     "description": "Sleepy hat chad name"
   },
 
-  "journeyStartingChad": "여정을 시작하는 Chad입니다.\n아직 잠이 덜 깬 상태지만 곧 깨어날 것입니다!",
+  "journeyStartingChad": "각성을 시작한 Chad.\n잠재력이 깨어나고 있다.",
   "@journeyStartingChad": {
     "description": "Journey starting chad description"
   },
@@ -2854,7 +2854,7 @@
     "description": "Theme color setting"
   },
 
-  "fontSize": "폰트 크기",
+  "fontSize": "글자 크기",
   "@fontSize": {
     "description": "Font size setting"
   },
@@ -3652,5 +3652,898 @@
   "chadMotivationDefault": "차드의 길은 험하지만 그래서 더 가치있다! 포기하지 마라, 만삣삐!",
   "@chadMotivationDefault": {
     "description": "기본 차드 격려 메시지"
+  },
+
+  "allowNotificationPermission": "알림 권한 허용하기",
+  "@allowNotificationPermission": {
+    "description": "Allow notification permission button"
+  },
+
+  "customWorkoutDays": "운동일 설정",
+  "@customWorkoutDays": {
+    "description": "Custom workout days setting"
+  },
+
+  "customWorkoutDaysDesc": "원하는 요일에 운동하도록 설정하세요",
+  "@customWorkoutDaysDesc": {
+    "description": "Custom workout days description"
+  },
+
+  "workoutDaySelection": "운동 요일 선택",
+  "@workoutDaySelection": {
+    "description": "Workout day selection title"
+  },
+
+  "selectWorkoutDays": "주 3일 운동할 요일을 선택하세요",
+  "@selectWorkoutDays": {
+    "description": "Select workout days instruction"
+  },
+
+  "mondayShort": "월",
+  "@mondayShort": {
+    "description": "Monday short form"
+  },
+
+  "tuesdayShort": "화",
+  "@tuesdayShort": {
+    "description": "Tuesday short form"
+  },
+
+  "wednesdayShort": "수",
+  "@wednesdayShort": {
+    "description": "Wednesday short form"
+  },
+
+  "thursdayShort": "목",
+  "@thursdayShort": {
+    "description": "Thursday short form"
+  },
+
+  "fridayShort": "금",
+  "@fridayShort": {
+    "description": "Friday short form"
+  },
+
+  "saturdayShort": "토",
+  "@saturdayShort": {
+    "description": "Saturday short form"
+  },
+
+  "sundayShort": "일",
+  "@sundayShort": {
+    "description": "Sunday short form"
+  },
+
+  "restDayMessage": "오늘은 회복의 날. 진정한 강함은 휴식에서 나온다.",
+  "@restDayMessage": {
+    "description": "Rest day message for non-workout days"
+  },
+  "restDayChallenge": "휴식일이라고? 그런 건 약한 놈들이나 하는 거야!\n진짜 챔피언들은 매일이 전쟁이다! 🥊\n\n간단한 추가 챌린지로 너의 정신력을 증명해봐!",
+  "@restDayChallenge": {
+    "description": "휴식일 추가 챌린지 메시지"
+  },
+  "workoutDaysOnlyNotifications": "🔥 운동일 전용 알림",
+  "@workoutDaysOnlyNotifications": {
+    "description": "운동일 전용 알림 설정 제목"
+  },
+  "workoutDaysOnlyNotificationsDesc": "매일이 아닌 운동일(월,수,금)에만 알림을 받습니다. 휴식일엔 방해받지 않아요!",
+  "@workoutDaysOnlyNotificationsDesc": {
+    "description": "운동일 전용 알림 설정 설명"
+  },
+  "chadEvolutionNotifications": "Chad 진화 완료 알림",
+  "@chadEvolutionNotifications": {
+    "description": "Chad 진화 완료 알림 설정 제목"
+  },
+  "chadEvolutionNotificationsDesc": "Chad가 새로운 단계로 진화했을 때 알림을 받습니다",
+  "@chadEvolutionNotificationsDesc": {
+    "description": "Chad 진화 완료 알림 설정 설명"
+  },
+  "chadEvolutionPreviewNotifications": "Chad 진화 예고 알림",
+  "@chadEvolutionPreviewNotifications": {
+    "description": "Chad 진화 예고 알림 설정 제목"
+  },
+  "chadEvolutionPreviewNotificationsDesc": "다음 진화까지 1주일 남았을 때 미리 알림을 받습니다",
+  "@chadEvolutionPreviewNotificationsDesc": {
+    "description": "Chad 진화 예고 알림 설정 설명"
+  },
+  "chadEvolutionEncouragementNotifications": "Chad 진화 격려 알림",
+  "@chadEvolutionEncouragementNotifications": {
+    "description": "Chad 진화 격려 알림 설정 제목"
+  },
+  "chadEvolutionEncouragementNotificationsDesc": "다음 진화까지 3일 남았을 때 격려 메시지를 받습니다",
+  "@chadEvolutionEncouragementNotificationsDesc": {
+    "description": "Chad 진화 격려 알림 설정 설명"
+  },
+  "workoutReminderDisabled": "운동 리마인더가 비활성화되었습니다",
+  "@workoutReminderDisabled": {
+    "description": "운동 리마인더 비활성화 메시지"
+  },
+  "workoutDaysModeActivated": "💪 운동일 전용 알림 모드 활성화! 월,수,금에만 알림이 옵니다!",
+  "@workoutDaysModeActivated": {
+    "description": "운동일 전용 모드 활성화 메시지"
+  },
+  "dailyNotificationModeChanged": "매일 알림 모드로 변경! 매일 알림 받아요! 📱",
+  "@dailyNotificationModeChanged": {
+    "description": "매일 알림 모드 변경 메시지"
+  },
+  "themeColor": "테마 색상",
+  "@themeColor": {
+    "description": "테마 색상 설정 제목"
+  },
+  "themeColorDesc": "앱의 메인 색상을 변경합니다",
+  "@themeColorDesc": {
+    "description": "테마 색상 설정 설명"
+  },
+  "fontSize": "글자 크기",
+  "@fontSize": {
+    "description": "글자 크기 설정 제목"
+  },
+  "fontSizeDesc": "앱의 글자 크기를 조정합니다",
+  "@fontSizeDesc": {
+    "description": "글자 크기 설정 설명"
+  },
+  "animations": "애니메이션",
+  "@animations": {
+    "description": "애니메이션 설정 제목"
+  },
+  "animationsDesc": "앱의 애니메이션 효과를 활성화/비활성화합니다",
+  "@animationsDesc": {
+    "description": "애니메이션 설정 설명"
+  },
+  "animationsEnabled": "애니메이션이 활성화되었습니다",
+  "@animationsEnabled": {
+    "description": "애니메이션 활성화 메시지"
+  },
+  "animationsDisabled": "애니메이션이 비활성화되었습니다",
+  "@animationsDisabled": {
+    "description": "애니메이션 비활성화 메시지"
+  },
+  "highContrastModeDesc": "시각적 접근성을 위한 고대비 모드를 활성화합니다",
+  "@highContrastModeDesc": {
+    "description": "High contrast mode setting description"
+  },
+  "highContrastEnabled": "고대비 모드가 활성화되었습니다",
+  "@highContrastEnabled": {
+    "description": "고대비 모드 활성화 메시지"
+  },
+  "highContrastDisabled": "고대비 모드가 비활성화되었습니다",
+  "@highContrastDisabled": {
+    "description": "고대비 모드 비활성화 메시지"
+  },
+  "themeColorSelection": "테마 색상 선택",
+  "@themeColorSelection": {
+    "description": "테마 색상 선택 다이얼로그 제목"
+  },
+  "themeColorChanged": "테마 색상이 {colorName}로 변경되었습니다",
+  "@themeColorChanged": {
+    "description": "테마 색상 변경 메시지",
+    "placeholders": {
+      "colorName": {
+        "type": "String"
+      }
+    }
+  },
+  "required": "필수",
+  "@required": {
+    "description": "필수 권한 라벨"
+  },
+  "activated": "활성화됨",
+  "@activated": {
+    "description": "권한 활성화 상태 라벨"
+  },
+  "bonusChallenge": "🔥 보너스 챌린지",
+  "@bonusChallenge": {
+    "description": "보너스 챌린지 제목"
+  },
+  "perfectFormChallenge": "🎯 완벽 자세 챌린지 활성화! 대충하면 안 된다! 💪",
+  "@perfectFormChallenge": {
+    "description": "완벽 자세 챌린지 메시지"
+  },
+  "sevenDayStreak": "🔄 7일 연속 챌린지 시작! 하루라도 빠지면 처음부터! 🚀",
+  "@sevenDayStreak": {
+    "description": "7일 연속 챌린지 메시지"
+  },
+  "challengeTestYourLimits": "💪 오늘 너의 한계를 시험해볼까?",
+  "@challengeTestYourLimits": {
+    "description": "한계 시험 챌린지 메시지"
+  },
+  "restDayBonusChallenge": "휴식일 보너스 챌린지! 💪\n\n• 플랭크 30초 x 3세트\n• 스쿼트 20개 x 2세트\n• 푸시업 10개 (완벽한 자세로!)\n\n준비됐어? 진짜 챔피언만 할 수 있어! 🏆",
+  "@restDayBonusChallenge": {
+    "description": "휴식일 보너스 챌린지 내용"
+  },
+  "startChallenge": "챌린지 시작! 🔥",
+  "@startChallenge": {
+    "description": "챌린지 시작 버튼"
+  },
+
+  "perfectPushupForm": "완벽한 푸시업 자세",
+  "@perfectPushupForm": {
+    "description": "Title for pushup form guide screen"
+  },
+  
+  "stepByStepGuide": "단계별\n가이드",
+  "@stepByStepGuide": {
+    "description": "Tab title for step by step guide"
+  },
+  
+  "commonMistakes": "일반적인\n실수",
+  "@commonMistakes": {
+    "description": "Tab title for common mistakes"
+  },
+  
+  "variationExercises": "변형\n운동", 
+  "@variationExercises": {
+    "description": "Tab title for variation exercises"
+  },
+  
+  "improvementTips": "개선\n팁",
+  "@improvementTips": {
+    "description": "Tab title for improvement tips"
+  },
+  
+  "correctPushupForm5Steps": "올바른 푸시업 자세 5단계",
+  "@correctPushupForm5Steps": {
+    "description": "Header for 5-step pushup guide"
+  },
+  
+  "chadPerfectPushupForm": "차드가 알려주는 완벽한 푸시업 폼! 💪",
+  "@chadPerfectPushupForm": {
+    "description": "Subtitle for pushup form guide"
+  },
+  
+  "listView": "목록 보기",
+  "@listView": {
+    "description": "Button label for list view mode"
+  },
+  
+  "swipeView": "스와이프 보기",
+  "@swipeView": {
+    "description": "Button label for swipe view mode"
+  },
+  
+  "quiz": "퀴즈",
+  "@quiz": {
+    "description": "Quiz button text"
+  },
+  
+  "dontMakeTheseMistakes": "이런 실수는 하지 마라!",
+  "@dontMakeTheseMistakes": {
+    "description": "Common mistakes section header"
+  },
+  
+  "chadMistakesAdvice": "차드도 처음엔 실수했다. 하지만 이제는 완벽하지! 🔥",
+  "@chadMistakesAdvice": {
+    "description": "Chad's advice about mistakes"
+  },
+  
+  "pushupVariationsByDifficulty": "난이도별 푸시업 변형",
+  "@pushupVariationsByDifficulty": {
+    "description": "Variations section header"
+  },
+  
+  "beginnerToChad": "초보자부터 차드까지! 단계별로 도전해보자! 🚀",
+  "@beginnerToChad": {
+    "description": "Variations section subtitle"
+  },
+  
+  "chadSecretTips": "차드의 특급 비법",
+  "@chadSecretTips": {
+    "description": "Improvement tips section header"
+  },
+  
+  "becomeTrueChadTips": "이 팁들로 너도 진짜 차드가 될 수 있다! 💎",
+  "@becomeTrueChadTips": {
+    "description": "Improvement tips section subtitle"
+  },
+
+  "startPosition": "시작 자세",
+  "@startPosition": {
+    "description": "Step 1 title - start position"
+  },
+  
+  "descendingMotion": "하강 동작", 
+  "@descendingMotion": {
+    "description": "Step 2 title - descending motion"
+  },
+  
+  "bottomPosition": "최하점 자세",
+  "@bottomPosition": {
+    "description": "Step 3 title - bottom position"
+  },
+  
+  "ascendingMotion": "상승 동작",
+  "@ascendingMotion": {
+    "description": "Step 4 title - ascending motion"
+  },
+  
+  "finishPosition": "완료 자세",
+  "@finishPosition": {
+    "description": "Step 5 title - finish position"
+  },
+
+  "startPositionDesc": "플랭크 자세로 시작하여 손과 발의 위치를 정확히 설정합니다.",
+  "@startPositionDesc": {
+    "description": "Step 1 description"
+  },
+  
+  "descendingMotionDesc": "팔꿈치를 구부리며 천천히 몸을 아래로 내립니다.",
+  "@descendingMotionDesc": {
+    "description": "Step 2 description"
+  },
+  
+  "bottomPositionDesc": "가슴이 바닥에 거의 닿는 최하점에서 잠시 정지합니다.",
+  "@bottomPositionDesc": {
+    "description": "Step 3 description"
+  },
+  
+  "ascendingMotionDesc": "팔을 펴며 시작 자세로 돌아갑니다.",
+  "@ascendingMotionDesc": {
+    "description": "Step 4 description"
+  },
+  
+  "finishPositionDesc": "시작 자세로 완전히 돌아와 다음 반복을 준비합니다.",
+  "@finishPositionDesc": {
+    "description": "Step 5 description"
+  },
+
+  "correctPushupQuiz1": "올바른 푸시업 시작 자세에서 손의 위치는?",
+  "@correctPushupQuiz1": {
+    "description": "Quiz question 1"
+  },
+  
+  "pushupMistakeQuiz": "푸시업 중 가장 흔한 실수는?",
+  "@pushupMistakeQuiz": {
+    "description": "Quiz question 2"
+  },
+  
+  "beginnerPushupQuiz": "초보자에게 가장 적합한 푸시업 변형은?",
+  "@beginnerPushupQuiz": {
+    "description": "Quiz question 3"
+  },
+  
+  "pushupBreathingQuiz": "푸시업 시 올바른 호흡법은?",
+  "@pushupBreathingQuiz": {
+    "description": "Quiz question 4"
+  },
+  
+  "elbowAngleQuiz": "푸시업에서 팔꿈치의 올바른 각도는?",
+  "@elbowAngleQuiz": {
+    "description": "Quiz question 5"
+  },
+
+  "progressVisualization": "진행률 시각화",
+  "@progressVisualization": {
+    "description": "Progress visualization section title"
+  },
+  
+  "weeklyGoal": "주간 목표",
+  "@weeklyGoal": {
+    "description": "Weekly goal label"
+  },
+  
+  "monthlyGoal": "월간 목표", 
+  "@monthlyGoal": {
+    "description": "Monthly goal label"
+  },
+
+  "wrongPose": "잘못된 자세",
+  "@wrongPose": {
+    "description": "Wrong pose label"
+  },
+  
+  "correctPose": "올바른 자세",
+  "@correctPose": {
+    "description": "Correct pose label"
+  },
+  
+  "correctionMethod": "교정 방법:",
+  "@correctionMethod": {
+    "description": "Correction method label"
+  },
+  
+  "beginnerLevel": "초급자",
+  "@beginnerLevel": {
+    "description": "Beginner level label"
+  },
+  
+  "intermediateLevel": "중급자", 
+  "@intermediateLevel": {
+    "description": "Intermediate level label"
+  },
+  
+  "advancedLevel": "고급자",
+  "@advancedLevel": {
+    "description": "Advanced level label"
+  },
+  
+  "instructions": "운동 방법",
+  "@instructions": {
+    "description": "Instructions label"
+  },
+  
+  "benefits": "운동 효과",
+  "@benefits": {
+    "description": "Benefits label"
+  },
+  
+  "breathingTechnique": "호흡법",
+  "@breathingTechnique": {
+    "description": "Breathing technique category"
+  },
+  
+  "strengthImprovement": "근력 향상",
+  "@strengthImprovement": {
+    "description": "Strength improvement category"
+  },
+  
+  "recovery": "회복",
+  "@recovery": {
+    "description": "Recovery category"
+  },
+  
+  "motivation": "동기부여",
+  "@motivation": {
+    "description": "Motivation category"
+  },
+
+  "overallProgress": "전체 진행률",
+  "@overallProgress": {
+    "description": "Overall progress label"
+  },
+  
+  "percentComplete": "완료",
+  "@percentComplete": {
+    "description": "Percent complete label"
+  },
+  
+  "sessions": "세션",
+  "@sessions": {
+    "description": "Sessions label"
+  },
+  
+  "completedCount": "완료한 횟수",
+  "@completedCount": {
+    "description": "Completed count label"
+  },
+  
+  "remainingCount": "남은 횟수",
+  "@remainingCount": {
+    "description": "Remaining count label"
+  },
+  
+  "weeklyGrowthChart": "주간 성장 차트",
+  "@weeklyGrowthChart": {
+    "description": "Weekly growth chart title"
+  },
+  
+  "weeklyDetails": "주차별 상세",
+  "@weeklyDetails": {
+    "description": "Weekly details title"
+  },
+  
+  "sessionsCompleted": "세션 완료",
+  "@sessionsCompleted": {
+    "description": "Sessions completed label"
+  },
+  
+  "workoutCalendar": "워크아웃 캘린더",
+  "@workoutCalendar": {
+    "description": "Workout calendar title"
+  },
+  
+  "chadEvolutionStage": "Chad 진화단계",
+  "@chadEvolutionStage": {
+    "description": "Chad evolution stage title"
+  },
+  
+  "completedSessions": "완료 세션",
+  "@completedSessions": {
+    "description": "Completed sessions label"
+  },
+  
+  "completionRate": "완료율",
+  "@completionRate": {
+    "description": "Completion rate label"
+  },
+  
+  "overallStatistics": "전체통계",
+  "@overallStatistics": {
+    "description": "Overall statistics title"
+  },
+  
+  "programProgress": "프로그램 진행률",
+  "@programProgress": {
+    "description": "Program progress label"
+  },
+  
+  "repsCompleted": "회 완료",
+  "@repsCompleted": {
+    "description": "Reps completed label"
+  },
+  
+  "weekCompleted": "주차",
+  "@weekCompleted": {
+    "description": "Week completed label"
+  },
+
+  "chadEvolutionStages": "Chad 진화 단계",
+  "@chadEvolutionStages": {
+    "description": "Chad evolution stages title"
+  },
+  
+  "noWorkoutsToday": "이 날에는 워크아웃이 없습니다",
+  "@noWorkoutsToday": {
+    "description": "No workouts today message"
+  },
+  
+  "inProgress": "진행 중",
+  "@inProgress": {
+    "description": "In progress status"
+  },
+  
+  "setRecords": "세트별 기록:",
+  "@setRecords": {
+    "description": "Set records label"
+  },
+  
+  "overallStats": "전체 통계",
+  "@overallStats": {
+    "description": "Overall statistics label"
+  },
+  
+  "totalPushups": "총 푸시업",
+  "@totalPushups": {
+    "description": "Total pushups label"
+  },
+  
+  "averagePerSession": "평균/세션",
+  "@averagePerSession": {
+    "description": "Average per session label"
+  },
+  
+  "weeklyPerformance": "주간별 성과",
+  "@weeklyPerformance": {
+    "description": "Weekly performance label"
+  },
+  
+  "viewAll": "전체 보기",
+  "@viewAll": {
+    "description": "View all button text"
+  },
+  
+  "perfect": "완벽!",
+  "@perfect": {
+    "description": "Perfect status"
+  },
+  
+  "good": "좋음",
+  "@good": {
+    "description": "Good status"
+  },
+  
+  "improvementNeeded": "개선 필요",
+  "@improvementNeeded": {
+    "description": "Improvement needed status"
+  },
+  
+  "personalRecords": "개인 기록",
+  "@personalRecords": {
+    "description": "Personal records label"
+  },
+  
+  "bestRecord": "최고 기록",
+  "@bestRecord": {
+    "description": "Best record label"
+  },
+  
+  "bestWeek": "최고 주차",
+  "@bestWeek": {
+    "description": "Best week label"
+  },
+  
+  "consecutiveDays": "연속 일수",
+  "@consecutiveDays": {
+    "description": "Consecutive days label"
+  },
+  
+  "averageScore": "평균 점수",
+  "@averageScore": {
+    "description": "Average score label"
+  },
+  
+  "rookieChad": "Rookie Chad",
+  "@rookieChad": {
+    "description": "Rookie Chad title"
+  },
+  
+  "risingChad": "Rising Chad",
+  "@risingChad": {
+    "description": "Rising Chad title"
+  },
+  
+  "alphaChad": "Alpha Chad",
+  "@alphaChad": {
+    "description": "Alpha Chad title"
+  },
+  
+  "sigmaChad": "Sigma Chad",
+  "@sigmaChad": {
+    "description": "Sigma Chad title"
+  },
+  
+  "gigaChad": "Giga Chad",
+  "@gigaChad": {
+    "description": "Giga Chad title"
+  },
+  
+  "ultraChad": "Ultra Chad",
+  "@ultraChad": {
+    "description": "Ultra Chad title"
+  },
+  
+  "legendaryChad": "Legendary Chad",
+  "@legendaryChad": {
+    "description": "Legendary Chad title"
+  },
+  
+  "currentChadState": "현재 Chad 상태",
+  "@currentChadState": {
+    "description": "Current Chad state label"
+  },
+  
+  "nextLevel": "다음 레벨",
+  "@nextLevel": {
+    "description": "Next level label"
+  },
+  
+  "nextLevelIn": "다음 레벨까지 30% 남음",
+  "@nextLevelIn": {
+    "description": "Next level progress message"
+  },
+  
+  "maxLevelAchieved": "최고 레벨 달성!",
+  "@maxLevelAchieved": {
+    "description": "Max level achieved message"
+  },
+  
+  "programStart": "프로그램 시작",
+  "@programStart": {
+    "description": "Program start requirement"
+  },
+  
+  "week1Completed": "1주차 완료",
+  "@week1Completed": {
+    "description": "Week 1 completed requirement"
+  },
+  
+  "week2Completed": "2주차 완료",
+  "@week2Completed": {
+    "description": "Week 2 completed requirement"
+  },
+  
+  "week3Completed": "3주차 완료",
+  "@week3Completed": {
+    "description": "Week 3 completed requirement"
+  },
+  
+  "week4Completed": "4주차 완료",
+  "@week4Completed": {
+    "description": "Week 4 completed requirement"
+  },
+  
+  "week5Completed": "5주차 완료",
+  "@week5Completed": {
+    "description": "Week 5 completed requirement"
+  },
+  
+  "week6Completed": "6주차 완료",
+  "@week6Completed": {
+    "description": "Week 6 completed requirement"
+  },
+  
+  "current": "현재",
+  "@current": {
+    "description": "Current status label"
+  },
+  
+  "firstStep": "첫 걸음",
+  "@firstStep": {
+    "description": "First step achievement"
+  },
+  
+  "firstWorkoutCompleted": "첫 번째 워크아웃 완료",
+  "@firstWorkoutCompleted": {
+    "description": "First workout completed description"
+  },
+  
+  "oneWeekChallenge": "일주일 챌린지",
+  "@oneWeekChallenge": {
+    "description": "One week challenge achievement"
+  },
+  
+  "sevenDaysExercise": "7일 연속 운동",
+  "@sevenDaysExercise": {
+    "description": "Seven days exercise description"
+  },
+  
+  "hundredPushups": "백 푸시업",
+  "@hundredPushups": {
+    "description": "Hundred pushups achievement"
+  },
+  
+  "hundredRepsInOneSession": "한 세션에 100회 달성",
+  "@hundredRepsInOneSession": {
+    "description": "Hundred reps in one session description"
+  },
+  
+  "perfectWeek": "완벽주의자",
+  "@perfectWeek": {
+    "description": "Perfect week achievement"
+  },
+  
+  "oneWeekCompleted": "한 주 100% 완료",
+  "@oneWeekCompleted": {
+    "description": "One week completed description"
+  },
+  
+  "chadAchievements": "Chad 업적",
+  "@chadAchievements": {
+    "description": "Chad achievements label"
+  },
+  
+  "chadEvolution": "Chad 진화",
+  "@chadEvolution": {
+    "description": "Chad evolution label"
+  },
+  
+  "chadEvolutionStages": "Chad 진화 단계",
+  "@chadEvolutionStages": {
+    "description": "Chad evolution stages label"
+  },
+  
+  "noData": "데이터가 없습니다",
+  "@noData": {
+    "description": "No data message"
+  },
+  "completionRate": "완료율",
+  "@completionRate": {
+    "description": "Completion rate label"
+  },
+  "personalRecords": "개인 기록",
+  "@personalRecords": {
+    "description": "Personal records title"
+  },
+  "bestRecord": "최고 기록",
+  "@bestRecord": {
+    "description": "Best record label"
+  },
+  "bestWeek": "최고 주차",
+  "@bestWeek": {
+    "description": "Best week label"
+  },
+  "consecutiveDays": "연속 일수",
+  "@consecutiveDays": {
+    "description": "Consecutive days label"
+  },
+  "weeklyChallenge": "일주일 챌린지",
+  "@weeklyChallenge": {
+    "description": "Weekly challenge achievement"
+  },
+  "weeklyPerformance": "주간별 성과",
+  "@weeklyPerformance": {
+    "description": "Weekly performance title"
+  },
+  "improvement": "개선 필요",
+  "@improvement": {
+    "description": "Improvement needed label"
+  },
+  "perfect": "완벽!",
+  "@perfect": {
+    "description": "Perfect completion label"
+  },
+  "excellent": "좋음",
+  "@excellent": {
+    "description": "Excellent performance label"
+  },
+  "noDataAvailable": "데이터가 없습니다",
+  "@noDataAvailable": {
+    "description": "No data available message"
+  },
+  "currentChadState": "현재 Chad 상태",
+  "@currentChadState": {
+    "description": "Current Chad state title"
+  },
+  "chadAchievements": "Chad 업적",
+  "@chadAchievements": {
+    "description": "Chad achievements title"
+  },
+  "firstStepDesc": "첫 번째 워크아웃 완료",
+  "@firstStepDesc": {
+    "description": "First step achievement description"
+  },
+  "weeklyChallenge": "일주일 챌린지",
+  "@weeklyChallenge": {
+    "description": "Weekly challenge achievement"
+  },
+  "weeklyChallengeDesc": "7일 연속 운동",
+  "@weeklyChallengeDesc": {
+    "description": "Weekly challenge achievement description"
+  },
+  "hundredPushupsDesc": "한 세션에 100회 달성",
+  "@hundredPushupsDesc": {
+    "description": "Hundred pushups achievement description"
+  },
+  "perfectionistDesc": "한 주 100% 완료",
+  "@perfectionistDesc": {
+    "description": "Perfectionist achievement description"
+  },
+  "maxLevelAchieved": "최고 레벨 달성!",
+  "@maxLevelAchieved": {
+    "description": "Maximum level achieved message"
+  },
+  "noWorkoutToday": "이 날에는 워크아웃이 없습니다.",
+  "@noWorkoutToday": {
+    "description": "No workout on this day message"
+  },
+  "totalPushups": "총 푸시업",
+  "@totalPushups": {
+    "description": "Total pushups label"
+  },
+  "nextLevel": "다음 레벨까지",
+  "@nextLevel": {
+    "description": "Progress to next level label"
+  },
+  "remaining": "남음",
+  "@remaining": {
+    "description": "Remaining progress label"
+  },
+  "workoutDate": "{month}월 {day}일 워크아웃",
+  "@workoutDate": {
+    "description": "Workout date format",
+    "placeholders": {
+      "month": {
+        "type": "int"
+      },
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "weekX": "{week}주차",
+  "@weekX": {
+    "description": "Week number format",
+    "placeholders": {
+      "week": {
+        "type": "int"
+      }
+    }
+  },
+  "dayX": "{day}일차",
+  "@dayX": {
+    "description": "Day number format",
+    "placeholders": {
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "sessionsCompletedFormat": "{completed}/{total} 세션 완료 • {reps}회",
+  "@sessionsCompletedFormat": {
+    "description": "Sessions completed format",
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "reps": {
+        "type": "int"
+      }
+    }
+  },
+  "viewAll": "전체 보기",
+  "@viewAll": {
+    "description": "View all button text"
   }
 }

@@ -1,0 +1,365 @@
+{
+  "formSteps": [
+    {
+      "stepNumber": 1,
+      "title": "Starting Position",
+      "description": "Start in a plank position and set the correct positions for your hands and feet.",
+      "imagePath": "assets/images/form_guide/step1_start_position.png",
+      "keyPoints": [
+        "Hands directly under shoulders",
+        "Fingers pointing forward",
+        "Feet shoulder-width apart",
+        "Keep body in straight line"
+      ],
+      "animationPath": null,
+      "videoUrl": null,
+      "videoAssetPath": null
+    },
+    {
+      "stepNumber": 2,
+      "title": "Descending Motion",
+      "description": "Bend your elbows and slowly lower your body down.",
+      "imagePath": "assets/images/form_guide/step2_descending.png",
+      "keyPoints": [
+        "Bend elbows at 45-degree angle",
+        "Lower until chest nearly touches floor",
+        "Keep core muscles tight",
+        "Inhale while descending"
+      ],
+      "animationPath": null,
+      "videoUrl": "https://example.com/pushup_descending.mp4",
+      "videoAssetPath": null
+    },
+    {
+      "stepNumber": 3,
+      "title": "Bottom Position",
+      "description": "Pause briefly at the bottom position where your chest nearly touches the floor.",
+      "imagePath": "assets/images/form_guide/step3_bottom_position.png",
+      "keyPoints": [
+        "Fist-width gap between chest and floor",
+        "Maintain straight body line",
+        "Keep shoulders and wrists aligned",
+        "Hold for 1-2 seconds"
+      ],
+      "animationPath": null,
+      "videoUrl": null,
+      "videoAssetPath": null
+    },
+    {
+      "stepNumber": 4,
+      "title": "Ascending Motion",
+      "description": "Push back up to the starting position by extending your arms.",
+      "imagePath": "assets/images/form_guide/step4_ascending.png",
+      "keyPoints": [
+        "Push up powerfully",
+        "Support body with core muscles",
+        "Exhale while ascending",
+        "Fully extend elbows"
+      ],
+      "animationPath": null,
+      "videoUrl": "https://example.com/pushup_ascending.mp4",
+      "videoAssetPath": null
+    },
+    {
+      "stepNumber": 5,
+      "title": "Finish Position",
+      "description": "Return completely to starting position and prepare for the next repetition.",
+      "imagePath": "assets/images/form_guide/step5_finish_position.png",
+      "keyPoints": [
+        "Elbows fully extended",
+        "Maintain straight body line",
+        "Stabilize shoulders",
+        "Prepare for next rep"
+      ],
+      "animationPath": null,
+      "videoUrl": null,
+      "videoAssetPath": null
+    }
+  ],
+  "commonMistakes": [
+    {
+      "title": "Hips too high",
+      "description": "Raising your hips too high reduces core muscle engagement and decreases effectiveness.",
+      "wrongImagePath": "assets/images/mistakes/high_hips_wrong.png",
+      "correctImagePath": "assets/images/mistakes/high_hips_correct.png",
+      "severity": "high",
+      "corrections": [
+        "Engage core muscles to maintain straight line",
+        "Check posture in mirror",
+        "Practice plank position to build foundation"
+      ]
+    },
+    {
+      "title": "Sagging hips",
+      "description": "Sagging hips puts strain on the lower back and increases injury risk.",
+      "wrongImagePath": "assets/images/mistakes/sagging_hips_wrong.png",
+      "correctImagePath": "assets/images/mistakes/sagging_hips_correct.png",
+      "severity": "high",
+      "corrections": [
+        "Contract abs and glutes simultaneously",
+        "Maintain neutral spine position",
+        "Include core strengthening exercises"
+      ]
+    },
+    {
+      "title": "Elbows flared too wide",
+      "description": "Flaring elbows to 90 degrees puts stress on shoulders and increases injury risk.",
+      "wrongImagePath": "assets/images/mistakes/wide_elbows_wrong.png",
+      "correctImagePath": "assets/images/mistakes/wide_elbows_correct.png",
+      "severity": "medium",
+      "corrections": [
+        "Keep elbows close to body (45-degree angle)",
+        "Stabilize shoulder blades",
+        "Strengthen triceps"
+      ]
+    },
+    {
+      "title": "Head forward",
+      "description": "Pushing your head forward creates tension in neck and shoulders and breaks proper form.",
+      "wrongImagePath": "assets/images/mistakes/forward_head_wrong.png",
+      "correctImagePath": "assets/images/mistakes/forward_head_correct.png",
+      "severity": "medium",
+      "corrections": [
+        "Keep neck in neutral position",
+        "Look down at floor",
+        "Improve neck flexibility with stretching"
+      ]
+    },
+    {
+      "title": "Partial range of motion",
+      "description": "Not lowering enough significantly reduces muscle development benefits.",
+      "wrongImagePath": "assets/images/mistakes/partial_range_wrong.png",
+      "correctImagePath": "assets/images/mistakes/partial_range_correct.png",
+      "severity": "medium",
+      "corrections": [
+        "Lower until chest nearly touches floor",
+        "Control movement slowly",
+        "Improve flexibility with stretching"
+      ]
+    }
+  ],
+  "variations": [
+    {
+      "name": "Knee Push-ups",
+      "description": "Beginner push-ups performed with knees on the ground",
+      "difficulty": "beginner",
+      "imagePath": "assets/images/variations/knee_pushup.png",
+      "instructions": [
+        "Start with knees on ground",
+        "Hands directly under shoulders",
+        "Keep straight line from knees to head",
+        "Slowly lower chest toward floor"
+      ],
+      "benefits": [
+        "Great for learning proper form",
+        "Gradual upper body strength development",
+        "Lower injury risk"
+      ]
+    },
+    {
+      "name": "Incline Push-ups",
+      "description": "Push-ups using bench or stairs for elevation",
+      "difficulty": "beginner",
+      "imagePath": "assets/images/variations/incline_pushup.png",
+      "instructions": [
+        "Place hands on bench or stairs",
+        "Keep feet on ground",
+        "Maintain angled body position",
+        "Perform same motion as regular push-ups"
+      ],
+      "benefits": [
+        "Adjustable intensity",
+        "Perfect form practice",
+        "Progressive difficulty increase"
+      ]
+    },
+    {
+      "name": "Diamond Push-ups",
+      "description": "Advanced push-ups with hands in diamond shape",
+      "difficulty": "advanced",
+      "imagePath": "assets/images/variations/diamond_pushup.png",
+      "instructions": [
+        "Form diamond shape with hands under chest",
+        "Create triangle with thumbs and index fingers",
+        "Keep elbows close to body",
+        "Control movement slowly"
+      ],
+      "benefits": [
+        "Intense tricep strengthening",
+        "Improved core stability",
+        "Advanced strength development"
+      ]
+    },
+    {
+      "name": "One-Arm Push-ups",
+      "description": "Maximum difficulty push-ups using only one arm",
+      "difficulty": "advanced",
+      "imagePath": "assets/images/variations/one_arm_pushup.png",
+      "instructions": [
+        "Place one hand behind back",
+        "Spread legs wide for balance",
+        "Minimize body rotation",
+        "Move extremely slowly"
+      ],
+      "benefits": [
+        "Maximum strength development",
+        "Improved balance",
+        "Mental toughness building"
+      ]
+    }
+  ],
+  "improvementTips": [
+    {
+      "category": "Breathing",
+      "title": "Proper Breathing Pattern",
+      "description": "Maximize exercise effectiveness and improve endurance through proper breathing.",
+      "iconName": "air",
+      "actionItems": [
+        "Inhale slowly while going down",
+        "Exhale powerfully while going up",
+        "Never hold your breath",
+        "Maintain rhythmic breathing"
+      ]
+    },
+    {
+      "category": "Strength",
+      "title": "Progressive Overload",
+      "description": "Gradually increase intensity for continuous strength development.",
+      "iconName": "trending_up",
+      "actionItems": [
+        "Increase reps by 2-3 per week",
+        "Progress to harder variations",
+        "Gradually increase sets",
+        "Reduce rest time"
+      ]
+    },
+    {
+      "category": "Recovery",
+      "title": "Proper Rest and Recovery",
+      "description": "Promote muscle growth and prevent injury through adequate rest.",
+      "iconName": "bedtime",
+      "actionItems": [
+        "48-hour rest after workouts",
+        "Get adequate sleep (7-8 hours)",
+        "Include stretching and massage",
+        "Focus on nutrition"
+      ]
+    },
+    {
+      "category": "Motivation",
+      "title": "Goal Setting and Tracking",
+      "description": "Maintain consistent motivation through clear goals and progress tracking.",
+      "iconName": "flag",
+      "actionItems": [
+        "Set short/long-term goals",
+        "Keep workout journal",
+        "Take progress photos",
+        "Celebrate achievements"
+      ]
+    }
+  ],
+  "quizQuestions": [
+    {
+      "question": "Where should your hands be positioned in the correct push-up starting position?",
+      "options": [
+        "Wider than shoulders",
+        "Directly under shoulders",
+        "Narrower than shoulders",
+        "At chest center"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Hands should be directly under shoulders to maintain stable form.",
+      "category": "form"
+    },
+    {
+      "question": "What is the most common push-up mistake?",
+      "options": [
+        "Elbows flared too wide",
+        "Hips too high",
+        "Head forward",
+        "Partial range of motion"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Raising hips too high reduces core muscle engagement and decreases exercise effectiveness.",
+      "category": "mistakes"
+    },
+    {
+      "question": "Which push-up variation is most suitable for beginners?",
+      "options": [
+        "Diamond push-ups",
+        "One-arm push-ups",
+        "Knee push-ups",
+        "Clap push-ups"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Knee push-ups have lower injury risk and are great for learning proper form.",
+      "category": "variations"
+    },
+    {
+      "question": "What is the correct breathing technique for push-ups?",
+      "options": [
+        "Exhale going down, inhale going up",
+        "Inhale going down, exhale going up",
+        "Hold breath throughout",
+        "Breathe rapidly"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Inhaling while going down and exhaling while going up is the correct breathing technique.",
+      "category": "tips"
+    },
+    {
+      "question": "What is the correct elbow angle in push-ups?",
+      "options": [
+        "90 degrees fully flared",
+        "45 degrees close to body",
+        "Completely against body",
+        "Angle doesn't matter"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Keeping elbows at 45 degrees prevents shoulder injury and enables effective exercise.",
+      "category": "form"
+    },
+    {
+      "question": "What is the role of core muscles in push-ups?",
+      "options": [
+        "Assist arm muscles",
+        "Maintain straight body line",
+        "Help with breathing",
+        "Maintain balance"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Core muscles play a key role in maintaining proper form by keeping the body in a straight line.",
+      "category": "form"
+    },
+    {
+      "question": "How can you prevent the mistake of head forward during push-ups?",
+      "options": [
+        "Look at ceiling",
+        "Look at floor",
+        "Look forward",
+        "Close eyes"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Looking at the floor naturally keeps the neck in a neutral position.",
+      "category": "mistakes"
+    },
+    {
+      "question": "Which is the most difficult push-up variation for advanced practitioners?",
+      "options": [
+        "Diamond push-ups",
+        "One-arm push-ups",
+        "Incline push-ups",
+        "Wide push-ups"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "One-arm push-ups have the highest difficulty as you must support body weight with only one arm.",
+      "category": "variations"
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2024-12-27",
+    "language": "en",
+    "author": "Mission 100 Team"
+  }
+} 

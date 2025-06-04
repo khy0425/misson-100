@@ -32,12 +32,30 @@ class _PushupFormGuideScreenState extends State<PushupFormGuideScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
+    
+    // 기본 데이터로 초기화 (로딩 중에도 화면이 표시되도록)
     _guideData = _formGuideService.getFormGuideData();
-
-    // 화면 로드 후 격려 메시지 표시
+    
+    // 화면 로드 후 언어별 데이터 로드 및 격려 메시지 표시
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadData();
       _encouragementService.maybeShowEncouragement(context);
     });
+  }
+
+  /// 현재 언어에 따라 폼 가이드 데이터를 로드
+  Future<void> _loadData() async {
+    try {
+      final languageSpecificData = await _formGuideService.loadFormGuideData(context);
+      if (mounted) {
+        setState(() {
+          _guideData = languageSpecificData;
+        });
+      }
+    } catch (e) {
+      // 오류 발생 시 기본 하드코딩된 데이터 사용 (이미 설정되어 있음)
+      // 추가 처리가 필요한 경우 여기에 작성
+    }
   }
 
   @override
@@ -59,9 +77,9 @@ class _PushupFormGuideScreenState extends State<PushupFormGuideScreen>
       appBar: AppBar(
         backgroundColor: const Color(0xFF0D0D0D),
         foregroundColor: Colors.white,
-        title: const Text(
-          '완벽한 푸시업 자세',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        title: Text(
+          AppLocalizations.of(context)!.perfectPushupForm,
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         bottom: TabBar(
@@ -74,39 +92,39 @@ class _PushupFormGuideScreenState extends State<PushupFormGuideScreen>
           tabs: [
             Semantics(
               label: AccessibilityUtils.createTabLabel(
-                title: '단계별 가이드',
+                title: AppLocalizations.of(context)!.stepByStepGuide.replaceAll('\n', ' '),
                 position: 1,
                 total: 4,
                 isSelected: _tabController.index == 0,
               ),
-              child: const Tab(text: '단계별\n가이드'),
+              child: Tab(text: AppLocalizations.of(context)!.stepByStepGuide),
             ),
             Semantics(
               label: AccessibilityUtils.createTabLabel(
-                title: '일반적인 실수',
+                title: AppLocalizations.of(context)!.commonMistakes.replaceAll('\n', ' '),
                 position: 2,
                 total: 4,
                 isSelected: _tabController.index == 1,
               ),
-              child: const Tab(text: '일반적인\n실수'),
+              child: Tab(text: AppLocalizations.of(context)!.commonMistakes),
             ),
             Semantics(
               label: AccessibilityUtils.createTabLabel(
-                title: '변형 운동',
+                title: AppLocalizations.of(context)!.variationExercises.replaceAll('\n', ' '),
                 position: 3,
                 total: 4,
                 isSelected: _tabController.index == 2,
               ),
-              child: const Tab(text: '변형\n운동'),
+              child: Tab(text: AppLocalizations.of(context)!.variationExercises),
             ),
             Semantics(
               label: AccessibilityUtils.createTabLabel(
-                title: '개선 팁',
+                title: AppLocalizations.of(context)!.improvementTips.replaceAll('\n', ' '),
                 position: 4,
                 total: 4,
                 isSelected: _tabController.index == 3,
               ),
-              child: const Tab(text: '개선\n팁'),
+              child: Tab(text: AppLocalizations.of(context)!.improvementTips),
             ),
           ],
         ),
@@ -145,8 +163,8 @@ class _PushupFormGuideScreenState extends State<PushupFormGuideScreen>
               children: [
                 // 헤더
                 _buildSectionHeader(
-                  '올바른 푸시업 자세 5단계',
-                  '차드가 알려주는 완벽한 푸시업 폼! 💪',
+                  AppLocalizations.of(context)!.correctPushupForm5Steps,
+                  AppLocalizations.of(context)!.chadPerfectPushupForm,
                   Icons.fitness_center,
                   const Color(0xFF4DABF7),
                 ),
@@ -168,7 +186,7 @@ class _PushupFormGuideScreenState extends State<PushupFormGuideScreen>
                         child: ElevatedButton.icon(
                           onPressed: () => setState(() => _isStepViewMode = false),
                           icon: const Icon(Icons.list, size: 18),
-                          label: const Text('목록 보기'),
+                          label: Text(AppLocalizations.of(context)!.listView),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: !_isStepViewMode 
                                 ? const Color(0xFF4DABF7) 
@@ -192,7 +210,7 @@ class _PushupFormGuideScreenState extends State<PushupFormGuideScreen>
                         child: ElevatedButton.icon(
                           onPressed: () => setState(() => _isStepViewMode = true),
                           icon: const Icon(Icons.swipe, size: 18),
-                          label: const Text('스와이프 보기'),
+                          label: Text(AppLocalizations.of(context)!.swipeView),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: _isStepViewMode 
                                 ? const Color(0xFF4DABF7) 
@@ -214,7 +232,7 @@ class _PushupFormGuideScreenState extends State<PushupFormGuideScreen>
                       child: ElevatedButton.icon(
                         onPressed: _showQuiz,
                         icon: const Icon(Icons.quiz, size: 18),
-                        label: const Text('퀴즈'),
+                        label: Text(AppLocalizations.of(context)!.quiz),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF51CF66),
                           foregroundColor: Colors.white,
@@ -249,8 +267,8 @@ class _PushupFormGuideScreenState extends State<PushupFormGuideScreen>
           children: [
             // 헤더
             _buildSectionHeader(
-              '이런 실수는 하지 마라!',
-              '차드도 처음엔 실수했다. 하지만 이제는 완벽하지! 🔥',
+              AppLocalizations.of(context)!.dontMakeTheseMistakes,
+              AppLocalizations.of(context)!.chadMistakesAdvice,
               Icons.warning,
               const Color(0xFFFF6B6B),
             ),
@@ -280,8 +298,8 @@ class _PushupFormGuideScreenState extends State<PushupFormGuideScreen>
           children: [
             // 헤더
             _buildSectionHeader(
-              '난이도별 푸시업 변형',
-              '초보자부터 차드까지! 단계별로 도전해보자! 🚀',
+              AppLocalizations.of(context)!.pushupVariationsByDifficulty,
+              AppLocalizations.of(context)!.beginnerToChad,
               Icons.trending_up,
               const Color(0xFF51CF66),
             ),
@@ -308,8 +326,8 @@ class _PushupFormGuideScreenState extends State<PushupFormGuideScreen>
           children: [
             // 헤더
             _buildSectionHeader(
-              '차드의 특급 비법',
-              '이 팁들로 너도 진짜 차드가 될 수 있다! 💎',
+              AppLocalizations.of(context)!.chadSecretTips,
+              AppLocalizations.of(context)!.becomeTrueChadTips,
               Icons.lightbulb,
               const Color(0xFFFFD43B),
             ),
@@ -470,15 +488,15 @@ class _PushupFormGuideScreenState extends State<PushupFormGuideScreen>
                             child: const Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.close,
                                   color: Color(0xFFFF6B6B),
                                   size: 24,
                                 ),
-                                SizedBox(height: 4),
+                                const SizedBox(height: 4),
                                 Text(
                                   '잘못된 자세',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Color(0xFFFF6B6B),
                                     fontSize: 10,
                                   ),
@@ -509,10 +527,10 @@ class _PushupFormGuideScreenState extends State<PushupFormGuideScreen>
                                   color: Color(0xFF51CF66),
                                   size: 24,
                                 ),
-                                SizedBox(height: 4),
+                                const SizedBox(height: 4),
                                 Text(
                                   '올바른 자세',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Color(0xFF51CF66),
                                     fontSize: 10,
                                   ),
@@ -529,9 +547,9 @@ class _PushupFormGuideScreenState extends State<PushupFormGuideScreen>
                 const SizedBox(height: 16),
 
                 // 교정 방법
-                const Text(
-                  '교정 방법:',
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.correctionMethod,
+                  style: const TextStyle(
                     color: Color(0xFF51CF66),
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -580,9 +598,9 @@ class _PushupFormGuideScreenState extends State<PushupFormGuideScreen>
 
     final difficulties = ['beginner', 'intermediate', 'advanced'];
     final difficultyNames = {
-      'beginner': '초급자',
-      'intermediate': '중급자',
-      'advanced': '고급자',
+      'beginner': AppLocalizations.of(context)!.beginnerLevel,
+      'intermediate': AppLocalizations.of(context)!.intermediateLevel,
+      'advanced': AppLocalizations.of(context)!.advancedLevel,
     };
 
     return difficulties.expand((difficulty) {
@@ -712,9 +730,9 @@ class _PushupFormGuideScreenState extends State<PushupFormGuideScreen>
               const SizedBox(height: 12),
 
               // 실행 방법
-              const Text(
-                '실행 방법:',
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.instructions,
+                style: const TextStyle(
                   color: Color(0xFF4DABF7),
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
@@ -749,9 +767,9 @@ class _PushupFormGuideScreenState extends State<PushupFormGuideScreen>
               const SizedBox(height: 8),
 
               // 효과
-              const Text(
-                '효과:',
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.benefits,
+                style: const TextStyle(
                   color: Color(0xFF51CF66),
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
@@ -859,9 +877,9 @@ class _PushupFormGuideScreenState extends State<PushupFormGuideScreen>
               const SizedBox(height: 12),
 
               // 실행 항목들
-              const Text(
-                '실행 방법:',
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.instructions,
+                style: const TextStyle(
                   color: Color(0xFF4DABF7),
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
@@ -952,7 +970,7 @@ class _PushupFormGuideScreenState extends State<PushupFormGuideScreen>
                 Semantics(
                   excludeSemantics: true,
                   child: LinearProgressIndicator(
-                    value: (_currentStepIndex + 1) / _guideData.formSteps.length,
+                    value: (_currentStepIndex + 1) / (_guideData.formSteps.length),
                     backgroundColor: Colors.grey.withValues(alpha: 0.3),
                     valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF4DABF7)),
                   ),

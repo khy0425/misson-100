@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Mission: 100 앱 색상 정의 -->
+    <color name="splash_background">#FFFFFF</color>
+    <color name="primary_color">#FF6B6B</color>
+    <color name="accent_color">#4ECDC4</color>
+</resources> 

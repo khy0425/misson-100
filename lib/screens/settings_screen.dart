@@ -35,7 +35,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
   bool _chadEvolutionNotifications = true;
   bool _chadEvolutionPreviewNotifications = true;
   bool _chadEvolutionEncouragementNotifications = true;
-  bool _workoutDaysOnlyNotifications = false;
+  bool _workoutDaysOnlyNotifications = true;
   DifficultyLevel _currentDifficulty = DifficultyLevel.beginner;
   Locale _currentLocale = LocaleService.koreanLocale;
   TimeOfDay _reminderTime = const TimeOfDay(hour: 19, minute: 0); // 기본 오후 7시
@@ -134,7 +134,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
       _chadEvolutionNotifications = prefs.getBool('chad_evolution_notifications') ?? true;
       _chadEvolutionPreviewNotifications = prefs.getBool('chad_evolution_preview_notifications') ?? true;
       _chadEvolutionEncouragementNotifications = prefs.getBool('chad_evolution_encouragement_notifications') ?? true;
-      _workoutDaysOnlyNotifications = prefs.getBool('workout_days_only_notifications') ?? false;
+      _workoutDaysOnlyNotifications = prefs.getBool('workout_days_only_notifications') ?? true;
       _currentDifficulty = difficulty;
       _currentLocale = locale;
       _reminderTime = TimeOfDay(hour: hour, minute: minute);
@@ -481,15 +481,15 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
             
             if (mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
+                SnackBar(
                   content: Row(
                     children: [
-                      Icon(Icons.notifications_off, color: Colors.white),
-                      SizedBox(width: 8),
-                      Text('운동 리마인더가 비활성화되었습니다'),
+                      const Icon(Icons.notifications_off, color: Colors.white),
+                      const SizedBox(width: 8),
+                      Text(AppLocalizations.of(context)!.workoutReminderDisabled),
                     ],
                   ),
-                  duration: Duration(seconds: 2),
+                  duration: const Duration(seconds: 2),
                 ),
               );
             }
@@ -499,8 +499,8 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
       ),
       // 운동일 기반 알림 설정 추가
       _buildNotificationToggle(
-        '🔥 운동일 전용 알림',
-        '매일이 아닌 운동일(월,수,금)에만 알림을 받습니다. 휴식일엔 방해받지 않아요!',
+        AppLocalizations.of(context)!.workoutDaysOnlyNotifications,
+        AppLocalizations.of(context)!.workoutDaysOnlyNotificationsDesc,
         _workoutDaysOnlyNotifications,
         Icons.event_note,
         (value) async {
@@ -509,29 +509,29 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
           
           if (value) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
+              SnackBar(
                 content: Row(
                   children: [
-                    Icon(Icons.fitness_center, color: Colors.white),
-                    SizedBox(width: 8),
-                    Text('💪 운동일 전용 알림 모드 활성화! 월,수,금에만 알림이 옵니다!'),
+                    const Icon(Icons.fitness_center, color: Colors.white),
+                    const SizedBox(width: 8),
+                    Text(AppLocalizations.of(context)!.workoutDaysModeActivated),
                   ],
                 ),
                 backgroundColor: Colors.orange,
-                duration: Duration(seconds: 3),
+                duration: const Duration(seconds: 3),
               ),
             );
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
+              SnackBar(
                 content: Row(
                   children: [
-                    Icon(Icons.notifications, color: Colors.white),
-                    SizedBox(width: 8),
-                    Text('📅 매일 알림 모드로 변경되었습니다'),
+                    const Icon(Icons.notifications, color: Colors.white),
+                    const SizedBox(width: 8),
+                    Text(AppLocalizations.of(context)!.dailyNotificationModeChanged),
                   ],
                 ),
-                duration: Duration(seconds: 2),
+                duration: const Duration(seconds: 2),
               ),
             );
           }
@@ -540,8 +540,8 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
       ),
       // Chad Evolution 알림 설정들 추가
       _buildNotificationToggle(
-        'Chad 진화 완료 알림',
-        'Chad가 새로운 단계로 진화했을 때 알림을 받습니다',
+        AppLocalizations.of(context)!.chadEvolutionNotifications,
+        AppLocalizations.of(context)!.chadEvolutionNotificationsDesc,
         _chadEvolutionNotifications,
         Icons.auto_awesome,
         (value) async {
@@ -554,8 +554,8 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         enabled: _pushNotifications,
       ),
       _buildNotificationToggle(
-        'Chad 진화 예고 알림',
-        '다음 진화까지 1주일 남았을 때 미리 알림을 받습니다',
+        AppLocalizations.of(context)!.chadEvolutionPreviewNotifications,
+        AppLocalizations.of(context)!.chadEvolutionPreviewNotificationsDesc,
         _chadEvolutionPreviewNotifications,
         Icons.preview,
         (value) async {
@@ -568,8 +568,8 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         enabled: _pushNotifications,
       ),
       _buildNotificationToggle(
-        'Chad 진화 격려 알림',
-        '다음 진화까지 3일 남았을 때 격려 메시지를 받습니다',
+        AppLocalizations.of(context)!.chadEvolutionEncouragementNotifications,
+        AppLocalizations.of(context)!.chadEvolutionEncouragementNotificationsDesc,
         _chadEvolutionEncouragementNotifications,
         Icons.favorite,
         (value) async {
@@ -864,7 +864,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(
-                          '필수',
+                          Localizations.localeOf(context).languageCode == 'ko' ? '필수' : 'Required',
                           style: const TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
@@ -881,7 +881,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(
-                          '권장',
+                          Localizations.localeOf(context).languageCode == 'ko' ? '권장' : 'Recommended',
                           style: const TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
@@ -912,7 +912,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        '활성화됨',
+                        Localizations.localeOf(context).languageCode == 'ko' ? '활성화됨' : 'Activated',
                         style: TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w500,
@@ -976,20 +976,20 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
             },
           ),
           _buildTapSetting(
-            '테마 색상',
-            '앱의 메인 색상을 변경합니다 (현재: ${themeService.themeColor.name})',
+            AppLocalizations.of(context)!.themeColor,
+            '${AppLocalizations.of(context)!.themeColorDesc} (현재: ${themeService.themeColor.name})',
             Icons.palette,
             () => _showThemeColorDialog(themeService),
           ),
           _buildTapSetting(
-            '글자 크기',
-            '앱의 글자 크기를 조정합니다',
+            Localizations.localeOf(context).languageCode == 'ko' ? '글자 크기' : 'Font Size',
+            Localizations.localeOf(context).languageCode == 'ko' ? '앱의 글자 크기를 조정합니다' : 'Adjust the app\'s font size',
             Icons.text_fields,
             () => _showFontScaleDialog(themeService),
           ),
           _buildSwitchSetting(
-            '애니메이션',
-            '앱의 애니메이션 효과를 활성화/비활성화합니다',
+            Localizations.localeOf(context).languageCode == 'ko' ? '애니메이션' : 'Animations',
+            Localizations.localeOf(context).languageCode == 'ko' ? '앱의 애니메이션 효과를 활성화/비활성화합니다' : 'Enable/disable app animation effects',
             themeService.animationsEnabled,
             Icons.animation,
             (value) async {
@@ -997,7 +997,13 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
               if (mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text(value ? '애니메이션이 활성화되었습니다' : '애니메이션이 비활성화되었습니다'),
+                    content: Text(value 
+                      ? (Localizations.localeOf(context).languageCode == 'ko' 
+                          ? '애니메이션이 활성화되었습니다' 
+                          : 'Animations have been enabled')
+                      : (Localizations.localeOf(context).languageCode == 'ko' 
+                          ? '애니메이션이 비활성화되었습니다' 
+                          : 'Animations have been disabled')),
                     duration: const Duration(seconds: 2),
                   ),
                 );
@@ -1005,8 +1011,8 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
             },
           ),
           _buildSwitchSetting(
-            '고대비 모드',
-            '시각적 접근성을 위한 고대비 모드를 활성화합니다',
+            Localizations.localeOf(context).languageCode == 'ko' ? '고대비 모드' : 'High Contrast Mode',
+            Localizations.localeOf(context).languageCode == 'ko' ? '시각적 접근성을 위한 고대비 모드를 활성화합니다' : 'Enable high contrast mode for visual accessibility',
             themeService.highContrastMode,
             Icons.contrast,
             (value) async {
@@ -1014,7 +1020,13 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
               if (mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text(value ? '고대비 모드가 활성화되었습니다' : '고대비 모드가 비활성화되었습니다'),
+                    content: Text(value 
+                      ? (Localizations.localeOf(context).languageCode == 'ko' 
+                          ? '고대비 모드가 활성화되었습니다' 
+                          : 'High contrast mode has been enabled')
+                      : (Localizations.localeOf(context).languageCode == 'ko' 
+                          ? '고대비 모드가 비활성화되었습니다' 
+                          : 'High contrast mode has been disabled')),
                     duration: const Duration(seconds: 2),
                   ),
                 );
@@ -1279,11 +1291,12 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
       showDialog<void>(
         context: context,
         barrierDismissible: false,
-        builder: (context) => const AlertDialog(
-          content: Row(
+        builder: (context) => AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              CircularProgressIndicator(),
-              SizedBox(width: 16),
+              const CircularProgressIndicator(),
+              const SizedBox(height: 16),
               Text('데이터를 백업하는 중...'),
             ],
           ),
@@ -1368,11 +1381,12 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
       showDialog<void>(
         context: context,
         barrierDismissible: false,
-        builder: (context) => const AlertDialog(
-          content: Row(
+        builder: (context) => AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              CircularProgressIndicator(),
-              SizedBox(width: 16),
+              const CircularProgressIndicator(),
+              const SizedBox(height: 16),
               Text('데이터를 복원하는 중...'),
             ],
           ),
@@ -1485,11 +1499,12 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
       showDialog<void>(
         context: context,
         barrierDismissible: false,
-        builder: (context) => const AlertDialog(
-          content: Row(
+        builder: (context) => AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              CircularProgressIndicator(),
-              SizedBox(width: 16),
+              const CircularProgressIndicator(),
+              const SizedBox(height: 16),
               Text('데이터를 초기화하는 중...'),
             ],
           ),
@@ -2168,11 +2183,14 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
   }
 
   /// 라이선스 페이지 표시
-  void _showLicensePage() {
+  void _showLicensePage() async {
+    // 패키지 정보 가져오기
+    final packageInfo = await PackageInfo.fromPlatform();
+    
     showLicensePage(
       context: context,
       applicationName: 'Mission: 100',
-      applicationVersion: '1.0.0',
+      applicationVersion: packageInfo.version, // pubspec.yaml에서 읽어온 실제 버전 사용
       applicationIcon: Container(
         width: 64,
         height: 64,
@@ -2186,7 +2204,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
           color: Colors.white,
         ),
       ),
-      applicationLegalese: '© 2024 Mission 100 Chad Pushup\n차드가 되는 여정을 함께하세요! 💪',
+      applicationLegalese: '© 2024 Mission 100 Chad Pushup\n차드가 되는 여정을 함께하세요! 💪\n\n버전: ${packageInfo.version} (빌드: ${packageInfo.buildNumber})',
     );
   }
 
