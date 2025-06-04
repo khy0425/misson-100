@@ -39,7 +39,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
   bool _isLoading = true;
   String _errorMessage = '';
   
-  // 캘린??관???�태
+  // 캘린??관???�태
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   Map<DateTime, List<WorkoutSession>> _workoutEvents = {};
@@ -50,7 +50,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
     
-    // ?�니메이??컨트롤러 초기??
+    // ?�니메이??컨트롤러 초기??
     _fadeAnimationController = AnimationController(
       duration: const Duration(milliseconds: 800),
       vsync: this,
@@ -93,25 +93,25 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
         _errorMessage = '';
       });
 
-      // ?�체 ?�로그램 진행�?로드
+      // ?�체 ?�로그램 진행�?로드
       _programProgress = await _workoutService.getProgramProgress(widget.userProfile);
 
-      // 주간�??�이??로드
+      // 주간�??�이??로드
       await _loadWeeklyData();
       
-      // 캘린???�이??로드
+      // 캘린???�이??로드
       await _loadCalendarData();
 
       setState(() {
         _isLoading = false;
       });
       
-      // ?�이??로딩 ?�료 ???�이?�인 ?�니메이???�작
+      // ?�이??로딩 ?�료 ???�이?�인 ?�니메이???�작
       _fadeAnimationController.forward();
     } catch (e) {
       setState(() {
         _isLoading = false;
-        _errorMessage = '?�이?��? 불러?�는 �??�류가 발생?�습?�다: $e';
+        _errorMessage = '?�이?��? 불러?�는 �??�류가 발생?�습?�다: $e';
       });
     }
   }
@@ -122,7 +122,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
     for (int week = 1; week <= 6; week++) {
       final sessions = await _databaseService.getWorkoutSessionsByWeek(week);
       final completedSessions = sessions.where((s) => s.isCompleted).length;
-      const totalSessions = 3; // 주당 3???�동
+      const totalSessions = 3; // 주당 3???�동
       final completionRate = completedSessions / totalSessions;
       
       final totalReps = sessions
@@ -143,10 +143,10 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
 
   Future<void> _loadCalendarData() async {
     try {
-      // 모든 ?�크?�웃 ?�션 로드
+      // 모든 ?�크?�웃 ?�션 로드
       final allSessions = await _databaseService.getAllWorkoutSessions();
       
-      // ?�짜별로 그룹??
+      // ?�짜별로 그룹??
       final Map<DateTime, List<WorkoutSession>> events = {};
       
       for (final session in allSessions) {
@@ -164,12 +164,12 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
       
       _workoutEvents = events;
       
-      // ?�늘 ?�짜가 ?�택?�어 ?�다�??�당 ?�짜???�크?�웃 로드
+      // ?�늘 ?�짜가 ?�택?�어 ?�다�??�당 ?�짜???�크?�웃 로드
       if (_selectedDay != null) {
         _selectedDayWorkouts = _getWorkoutsForDay(_selectedDay!);
       }
     } catch (e) {
-      debugPrint('캘린???�이??로드 ?�류: $e');
+      debugPrint('캘린???�이??로드 ?�류: $e');
     }
   }
 
@@ -197,7 +197,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
       backgroundColor: isDark ? const Color(0xFF0D0D0D) : Colors.grey[50],
       appBar: AppBar(
         title: const Text(
-          '진행�?추적',
+          '진행�?추적',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
@@ -211,9 +211,9 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
           labelColor: const Color(0xFF4DABF7),
           unselectedLabelColor: isDark ? Colors.grey[400] : Colors.grey[600],
           tabs: const [
-            Tab(text: '주간 ?�장'),
+            Tab(text: '주간 ?�장'),
             Tab(text: '캘린??),
-            Tab(text: '?�계'),
+            Tab(text: '?�계'),
             Tab(text: 'Chad 진화'),
           ],
         ),
@@ -264,7 +264,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
               backgroundColor: const Color(0xFF4DABF7),
               foregroundColor: Colors.white,
             ),
-            child: const Text('?�시 ?�도'),
+            child: const Text('?�시 ?�도'),
           ),
         ],
       ),
@@ -320,7 +320,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                   ),
                   SizedBox(width: 8),
                   Text(
-                    '?�체 진행�?,
+                    '?�체 진행�?,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -341,14 +341,14 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '${(_programProgress!.progressPercentage * 100).toStringAsFixed(1)}% ?�료',
+                    '${(_programProgress!.progressPercentage * 100).toStringAsFixed(1)}% ?�료',
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   Text(
-                    '${_programProgress!.completedSessions}/${_programProgress!.totalSessions} ?�션',
+                    '${_programProgress!.completedSessions}/${_programProgress!.totalSessions} ?�션',
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey[600],
@@ -361,7 +361,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                 children: [
                   Expanded(
                     child: _buildStatItem(
-                      '?�료???�수',
+                      '?�료???�수',
                       '${_programProgress!.totalCompletedReps}??,
                       Icons.fitness_center,
                       const Color(0xFF51CF66),
@@ -370,7 +370,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                   const SizedBox(width: 16),
                   Expanded(
                     child: _buildStatItem(
-                      '?��? ?�수',
+                      '?��? ?�수',
                       '${_programProgress!.remainingReps}??,
                       Icons.schedule,
                       const Color(0xFFFFD43B),
@@ -438,7 +438,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                '주간 ?�장 차트',
+                '주간 ?�장 차트',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -474,7 +474,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                '주차�??�세',
+                '주차�??�세',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -542,7 +542,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '${data.completedSessions}/${data.totalSessions} ?�션 ?�료 ??${data.totalReps}??,
+                  '${data.completedSessions}/${data.totalSessions} ?�션 ?�료 ??${data.totalReps}??,
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.grey[600],
@@ -573,7 +573,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 캘린???�젯
+          // 캘린???�젯
           AnimatedContainer(
             duration: const Duration(milliseconds: 600),
             curve: Curves.easeOutBack,
@@ -588,7 +588,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      '?�크?�웃 캘린??,
+                      '?�크?�웃 캘린??,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -603,6 +603,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                       selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
                       eventLoader: _getWorkoutsForDay,
                       onDaySelected: _onDaySelected,
+                      locale: Localizations.localeOf(context).toString(),
                       calendarStyle: CalendarStyle(
                         outsideDaysVisible: false,
                         weekendTextStyle: TextStyle(
@@ -662,7 +663,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
           
           const SizedBox(height: 20),
           
-          // ?�택???�짜???�크?�웃 ?�보
+          // ?�택???�짜???�크?�웃 ?�보
           if (_selectedDay != null) _buildSelectedDayWorkouts(),
           
           const SizedBox(height: 80), // 광고 공간
@@ -697,7 +698,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    '${_selectedDay!.month}??${_selectedDay!.day}???�크?�웃',
+                    '${_selectedDay!.month}??${_selectedDay!.day}???�크?�웃',
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -724,7 +725,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                       ),
                       SizedBox(width: 8),
                       Text(
-                        '???�에???�크?�웃???�습?�다.',
+                        '???�에???�크?�웃???�습?�다.',
                         style: TextStyle(
                           color: Colors.grey,
                           fontSize: 14,
@@ -785,14 +786,14 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${session.week}주차 - ${session.day}?�차',
+                      '${session.week}주차 - ${session.day}?�차',
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     Text(
-                      isCompleted ? '?�료?? : '진행 �?,
+                      isCompleted ? '?�료?? : '진행 �?,
                       style: TextStyle(
                         fontSize: 14,
                         color: isCompleted ? const Color(0xFF51CF66) : const Color(0xFFFFD43B),
@@ -815,7 +816,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                       ),
                     ),
                     Text(
-                      '${session.totalSets}?�트',
+                      '${session.totalSets}?�트',
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey[600],
@@ -832,7 +833,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
             const Divider(),
             const SizedBox(height: 8),
             const Text(
-              '?�트�?기록:',
+              '?�트�?기록:',
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
@@ -855,7 +856,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Text(
-                                         '$setIndex?�트: $reps??,
+                                         '$setIndex?�트: $reps??,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 12,
@@ -878,17 +879,17 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ?�체 ?�계 ?�약
+          // ?�체 ?�계 ?�약
           _buildOverallStatsCard(),
           
           const SizedBox(height: 20),
           
-          // Chad 진화 ?�계
+          // Chad 진화 ?�계
           _buildChadEvolutionCard(),
           
           const SizedBox(height: 20),
           
-          // 주간�??�과
+          // 주간�??�과
           _buildWeeklyPerformanceCard(),
           
           const SizedBox(height: 20),
@@ -908,7 +909,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
     
     if (_programProgress == null) return const SizedBox.shrink();
 
-    // ?�체 ?�계 계산
+    // ?�체 ?�계 계산
     final averageRepsPerDay = _programProgress!.totalCompletedReps / 
         (_programProgress!.completedSessions > 0 ? _programProgress!.completedSessions : 1);
     final completionRate = _programProgress!.progressPercentage;
@@ -935,7 +936,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                   ),
                   SizedBox(width: 8),
                   Text(
-                    '?�체 ?�계',
+                    '?�체 ?�계',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -946,7 +947,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
               ),
               const SizedBox(height: 20),
               
-              // ?�계 그리??
+              // ?�계 그리??
               GridView.count(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -956,25 +957,25 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                 childAspectRatio: 1.2,
                 children: [
                   _buildStatCard(
-                    '�??�시??,
+                    '�??�시??,
                     '${_programProgress!.totalCompletedReps}??,
                     Icons.fitness_center,
                     const Color(0xFF51CF66),
                   ),
                   _buildStatCard(
-                    '?�료 ?�션',
+                    '?�료 ?�션',
                     '${_programProgress!.completedSessions}??,
                     Icons.check_circle,
                     const Color(0xFF4DABF7),
                   ),
                   _buildStatCard(
-                    '?�균/?�션',
+                    '?�균/?�션',
                     '${averageRepsPerDay.toStringAsFixed(1)}??,
                     Icons.trending_up,
                     const Color(0xFFFFD43B),
                   ),
                   _buildStatCard(
-                    '?�료??,
+                    '?�료??,
                     '${(completionRate * 100).toStringAsFixed(1)}%',
                     Icons.pie_chart,
                     const Color(0xFFFF6B6B),
@@ -1032,6 +1033,19 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     
+    // ChadLevelManager?�서 ?�바�?차드 ?�보 가?�오�?
+    final chadManager = Provider.of<ChadLevelManager>(context);
+    final currentStage = chadManager.currentStage;
+    final nextStage = chadManager.nextStage;
+    final isMaxLevel = chadManager.isMaxLevel;
+    
+    // 진행�?계산
+    double progressToNext = 0.0;
+    if (!isMaxLevel && _programProgress != null) {
+      // ChadLevelManager???�제 진행�??�용
+      progressToNext = chadManager.getEvolutionProgress(_buildDummyProgress());
+    }
+
     return AnimatedContainer(
       duration: const Duration(milliseconds: 900),
       curve: Curves.easeOutBack,
@@ -1054,7 +1068,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                   ),
                   SizedBox(width: 8),
                   Text(
-                    'Chad 진화 ?�계',
+                    'Chad 진화 ?�계',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -1067,7 +1081,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
               
               Row(
                 children: [
-                  // Chad ?��?지
+                  // Chad ?��?지
                   Container(
                     width: 80,
                     height: 80,
@@ -1084,7 +1098,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: Image.asset(
-                        'assets/images/기본차드.jpg', // ?�재 Chad ?�벨??맞는 ?��?지
+                        'assets/images/기본차드.jpg', // ?�재 Chad ?�벨??맞는 ?��?지
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -1097,7 +1111,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Chad ?�벨 ${widget.userProfile.chadLevel + 1}',
+                          'Chad ?�벨 ${widget.userProfile.chadLevel + 1}',
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -1106,7 +1120,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          '기�?차드�?진화 �?..',
+                          '기�?차드�?진화 �?..',
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey[600],
@@ -1114,9 +1128,9 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                         ),
                         const SizedBox(height: 12),
                         
-                        // ?�음 ?�벨까�???진행�?
+                        // ?�음 ?�벨까�???진행�?
                         LinearProgressIndicator(
-                          value: 0.7, // ?�시 �? ?�제로는 계산 ?�요
+                          value: 0.7, // ?�시 �? ?�제로는 계산 ?�요
                           backgroundColor: Colors.grey.withValues(alpha: 0.3),
                           valueColor: const AlwaysStoppedAnimation<Color>(
                             Color(0xFFFFD43B),
@@ -1124,7 +1138,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          '?�음 ?�벨까�? 30% ?�음',
+                          '?�음 ?�벨까�? 30% ?�음',
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.grey[600],
@@ -1168,7 +1182,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                   ),
                   SizedBox(width: 8),
                   Text(
-                    '주간�??�과',
+                    '주간�??�과',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -1179,7 +1193,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
               ),
               const SizedBox(height: 16),
               
-              // 주간�??�과 리스??
+              // 주간�??�과 리스??
               ..._weeklyData.take(3).map((data) => _buildWeeklyPerformanceItem(data)),
               
               if (_weeklyData.length > 3) ...[
@@ -1187,11 +1201,11 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                 Center(
                   child: TextButton(
                     onPressed: () {
-                      // ?�체 주간 ?�이??보기
-                      _tabController.animateTo(0); // 주간 ?�장 ??���??�동
+                      // ?�체 주간 ?�이??보기
+                      _tabController.animateTo(0); // 주간 ?�장 ??���??�동
                     },
                     child: const Text(
-                      '?�체 보기',
+                      '?�체 보기',
                       style: TextStyle(
                         color: Color(0xFF51CF66),
                         fontWeight: FontWeight.w600,
@@ -1219,7 +1233,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
     if (isExcellent) {
       statusColor = const Color(0xFF51CF66);
       statusIcon = Icons.star;
-      statusText = '?�벽!';
+      statusText = '?�벽!';
     } else if (isGood) {
       statusColor = const Color(0xFF4DABF7);
       statusIcon = Icons.thumb_up;
@@ -1227,7 +1241,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
     } else {
       statusColor = const Color(0xFFFFD43B);
       statusIcon = Icons.trending_up;
-      statusText = '개선 ?�요';
+      statusText = '개선 ?�요';
     }
     
     return Container(
@@ -1257,7 +1271,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                   ),
                 ),
                 Text(
-                                       '${data.totalReps}???�료',
+                                       '${data.totalReps}???�료',
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.grey[600],
@@ -1296,7 +1310,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     
-    // 개인 기록 계산 (?�시 ?�이??
+    // 개인 기록 계산 (?�시 ?�이??
     final maxRepsInSession = _weeklyData.isNotEmpty 
         ? _weeklyData.map((w) => w.totalReps).reduce((a, b) => a > b ? a : b)
         : 0;
@@ -1365,8 +1379,8 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                 children: [
                   Expanded(
                     child: _buildRecordItem(
-                      '?�속 ?�수',
-                      '7??, // ?�시 �?
+                      '?�속 ?�수',
+                      '7??, // ?�시 �?
                       Icons.local_fire_department,
                       const Color(0xFFFF6B6B),
                     ),
@@ -1374,8 +1388,8 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                   const SizedBox(width: 16),
                   Expanded(
                     child: _buildRecordItem(
-                      '?�균 ?�수',
-                      '85??, // ?�시 �?
+                      '?�균 ?�수',
+                      '85??, // ?�시 �?
                       Icons.grade,
                       const Color(0xFF4DABF7),
                     ),
@@ -1435,17 +1449,17 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ?�재 Chad ?�태
+          // ?�재 Chad ?�태
           _buildCurrentChadCard(),
           
           const SizedBox(height: 20),
           
-          // Chad 진화 ?�계
+          // Chad 진화 ?�계
           _buildChadEvolutionStages(),
           
           const SizedBox(height: 20),
           
-          // Chad ?�적
+          // Chad ?�적
           _buildChadAchievements(),
           
           const SizedBox(height: 80), // 광고 공간
@@ -1458,16 +1472,16 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     
-    // ChadLevelManager?�서 ?�바�?차드 ?�보 가?�오�?
+    // ChadLevelManager?�서 ?�바�?차드 ?�보 가?�오�?
     final chadManager = Provider.of<ChadLevelManager>(context);
     final currentStage = chadManager.currentStage;
     final nextStage = chadManager.nextStage;
     final isMaxLevel = chadManager.isMaxLevel;
     
-    // 진행�?계산
+    // 진행�?계산
     double progressToNext = 0.0;
     if (!isMaxLevel && _programProgress != null) {
-      // ChadLevelManager???�제 진행�??�용
+      // ChadLevelManager???�제 진행�??�용
       progressToNext = chadManager.getEvolutionProgress(_buildDummyProgress());
     }
 
@@ -1493,7 +1507,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                   ),
                   SizedBox(width: 8),
                   Text(
-                    '?�재 Chad ?�태',
+                    '?�재 Chad ?�태',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -1506,7 +1520,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
               
               Row(
                 children: [
-                  // ?�재 Chad ?��?지
+                  // ?�재 Chad ?��?지
                   Container(
                     width: 100,
                     height: 100,
@@ -1554,10 +1568,10 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                         ),
                         const SizedBox(height: 16),
                         
-                        // ?�음 ?�벨 진행�?
+                        // ?�음 ?�벨 진행�?
                         if (!isMaxLevel && nextStage != null) ...[
                           Text(
-                            '?�음 ?�벨: ${nextStage.name}',
+                            '?�음 ?�벨: ${nextStage.name}',
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.grey[600],
@@ -1573,7 +1587,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            '${(progressToNext * 100).toInt()}% ?�료',
+                            '${(progressToNext * 100).toInt()}% ?�료',
                             style: TextStyle(
                               fontSize: 12,
                               color: Colors.grey[600],
@@ -1598,7 +1612,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                                 ),
                                 SizedBox(width: 8),
                                 Text(
-                                  '최고 ?�벨 ?�성!',
+                                  '최고 ?�벨 ?�성!',
                                   style: TextStyle(
                                     color: Color(0xFFFFD43B),
                                     fontWeight: FontWeight.w600,
@@ -1624,7 +1638,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     
-    // ChadLevelManager?�서 ?�바�?차드 ?�보 가?�오�?
+    // ChadLevelManager?�서 ?�바�?차드 ?�보 가?�오�?
     final chadManager = Provider.of<ChadLevelManager>(context);
     final allStages = ChadStageInfo.allStages;
 
@@ -1650,7 +1664,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                   ),
                   SizedBox(width: 8),
                   Text(
-                    'Chad 진화 ?�계',
+                    'Chad 진화 ?�계',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -1661,7 +1675,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
               ),
               const SizedBox(height: 20),
               
-              // Chad 진화 ?�계??
+              // Chad 진화 ?�계??
               ...allStages.asMap().entries.map((entry) {
                 final index = entry.key;
                 final stage = entry.value;
@@ -1682,7 +1696,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
       children: [
         Row(
           children: [
-            // Chad ?��?지
+            // Chad ?��?지
             Container(
               width: 60,
               height: 60,
@@ -1744,7 +1758,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                             border: Border.all(color: stage.themeColor.withValues(alpha: 0.3)),
                           ),
                           child: Text(
-                            '?�재',
+                            '?�재',
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w600,
@@ -1758,8 +1772,8 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                   const SizedBox(height: 4),
                   Text(
                     stage.requiredWeeks == 0 
-                        ? '?�로그램 ?�작'
-                        : '${stage.requiredWeeks}주차 ?�료',
+                        ? '?�로그램 ?�작'
+                        : '${stage.requiredWeeks}주차 ?�료',
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.grey[600],
@@ -1776,7 +1790,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          '?�제??,
+                          '?�제??,
                           style: TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.w600,
@@ -1810,17 +1824,17 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
     );
   }
 
-  // ?��? Progress 객체 ?�성 (ChadLevelManager 계산??
+  // ?��? Progress 객체 ?�성 (ChadLevelManager 계산??
   progress_model.Progress _buildDummyProgress() {
     if (_programProgress == null) {
       return progress_model.Progress();
     }
     
-    // ?�제 ?�이?��? 기반?�로 Progress 객체 ?�성
+    // ?�제 ?�이?��? 기반?�로 Progress 객체 ?�성
     return progress_model.Progress(
       weeklyProgress: List.generate(6, (index) {
         final week = index + 1;
-        // ?�재 ?�로그램 진행률을 기반?�로 주차�??�료 ?�태 추정
+        // ?�재 ?�로그램 진행률을 기반?�로 주차�??�료 ?�태 추정
         final weekProgress = (_programProgress!.progressPercentage * 6);
         final isCompleted = weekProgress >= week;
         
@@ -1837,32 +1851,32 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     
-    // ?�적 ?�이??(?�시)
+    // ?�적 ?�이??(?�시)
     final achievements = [
       {
-        'title': '�?걸음',
-        'description': '�?번째 ?�크?�웃 ?�료',
+        'title': '�?걸음',
+        'description': '�?번째 ?�크?�웃 ?�료',
         'icon': Icons.play_arrow,
         'color': const Color(0xFF51CF66),
         'isUnlocked': true,
       },
       {
-        'title': '?�주??챌린지',
-        'description': '7???�속 ?�동',
+        'title': '?�주??챌린지',
+        'description': '7???�속 ?�동',
         'icon': Icons.calendar_view_week,
         'color': const Color(0xFF4DABF7),
         'isUnlocked': true,
       },
       {
-        'title': '�??�시??,
-        'description': '???�션??100???�성',
+        'title': '�??�시??,
+        'description': '???�션??100???�성',
         'icon': Icons.fitness_center,
         'color': const Color(0xFFFFD43B),
         'isUnlocked': false,
       },
       {
-        'title': '?�벽주의??,
-        'description': '??�?100% ?�료',
+        'title': '?�벽주의??,
+        'description': '??�?100% ?�료',
         'icon': Icons.star,
         'color': const Color(0xFFFF6B6B),
         'isUnlocked': false,
@@ -1888,7 +1902,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                 ),
                 SizedBox(width: 8),
                 Text(
-                  'Chad ?�적',
+                  'Chad ?�적',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -1986,7 +2000,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
   }
 }
 
-/// 주간 진행�??�이??모델
+/// 주간 진행�??�이??모델
 class WeeklyProgressData {
   final int week;
   final double completionRate;
@@ -2003,7 +2017,7 @@ class WeeklyProgressData {
   });
 }
 
-/// 주간 ?�장 차트 ?�젯
+/// 주간 ?�장 차트 ?�젯
 class WeeklyGrowthChart extends StatefulWidget {
   final List<WeeklyProgressData> weeklyData;
 
@@ -2036,7 +2050,7 @@ class _WeeklyGrowthChartState extends State<WeeklyGrowthChart>
       curve: Curves.easeInOut,
     ));
     
-    // 차트 ?�니메이???�작
+    // 차트 ?�니메이???�작
     _animationController.forward();
   }
 
@@ -2051,7 +2065,7 @@ class _WeeklyGrowthChartState extends State<WeeklyGrowthChart>
     if (widget.weeklyData.isEmpty) {
       return const Center(
         child: Text(
-          '?�이?��? ?�습?�다',
+          '?�이?��? ?�습?�다',
           style: TextStyle(
             fontSize: 16,
             color: Colors.grey,
@@ -2108,7 +2122,7 @@ class _WeeklyGrowthChartState extends State<WeeklyGrowthChart>
                         );
                         return SideTitleWidget(
                           axisSide: meta.axisSide,
-                          child: Text('${value.toInt()}�?, style: style),
+                          child: Text('${value.toInt()}�?, style: style),
                         );
                       },
                     ),
@@ -2183,7 +2197,7 @@ class _WeeklyGrowthChartState extends State<WeeklyGrowthChart>
                           (data) => data.week == barSpot.x.toInt(),
                         );
                         return LineTooltipItem(
-                          '${weekData.week}주차\n${(weekData.completionRate * 100).toInt()}% ?�료\n${weekData.completedSessions}/${weekData.totalSessions} ?�션',
+                          '${weekData.week}주차\n${(weekData.completionRate * 100).toInt()}% ?�료\n${weekData.completedSessions}/${weekData.totalSessions} ?�션',
                           const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

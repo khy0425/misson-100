@@ -375,6 +375,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
           calendarFormat: _calendarFormat,
           eventLoader: _getEventsForDay,
           startingDayOfWeek: StartingDayOfWeek.monday,
+          locale: Localizations.localeOf(context).toString(),
           selectedDayPredicate: (day) {
             return isSameDay(_selectedDay, day);
           },

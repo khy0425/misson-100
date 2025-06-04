@@ -28,14 +28,19 @@ class LocaleService {
   static Locale _getSystemBasedLocale() {
     final systemLocales = WidgetsBinding.instance.platformDispatcher.locales;
     
+    debugPrint('🌐 시스템 언어 목록: ${systemLocales.map((l) => '${l.languageCode}_${l.countryCode}').join(', ')}');
+    
     // 시스템 언어 중 한국어가 있으면 한국어 선택
     for (final locale in systemLocales) {
+      debugPrint('🌐 확인 중인 언어: ${locale.languageCode}_${locale.countryCode}');
       if (locale.languageCode == 'ko') {
+        debugPrint('🌐 ✅ 한국어 발견! 한국어로 설정');
         return koreanLocale;
       }
     }
     
     // 한국어가 없으면 영어 선택
+    debugPrint('🌐 ❌ 한국어 없음. 영어로 설정');
     return englishLocale;
   }
 
@@ -50,11 +55,21 @@ class LocaleService {
   static Future<void> initializeLocale() async {
     final prefs = await SharedPreferences.getInstance();
     final wasManuallySet = prefs.getBool(_localeSetKey) ?? false;
+    final currentLocaleCode = prefs.getString(_localeKey);
+    
+    debugPrint('🌐 언어 초기화 시작');
+    debugPrint('🌐 현재 저장된 언어: $currentLocaleCode');
+    debugPrint('🌐 수동 설정 여부: $wasManuallySet');
     
     // 수동으로 설정된 적이 없다면 시스템 언어 기반으로 자동 설정
     if (!wasManuallySet) {
+      debugPrint('🌐 자동 언어 탐지 수행');
       final systemLocale = _getSystemBasedLocale();
+      debugPrint('🌐 탐지된 언어: ${systemLocale.languageCode}');
       await setLocale(systemLocale, manuallySet: false);
+      debugPrint('🌐 언어 설정 완료: ${systemLocale.languageCode}');
+    } else {
+      debugPrint('🌐 수동 설정된 언어 유지: $currentLocaleCode');
     }
   }
 

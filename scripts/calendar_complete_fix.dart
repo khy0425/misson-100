@@ -1,5 +1,12 @@
 // ignore_for_file: avoid_print
 import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:table_calendar/table_calendar.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import '../utils/constants.dart';
+import '../models/workout_history.dart';
+import '../services/workout_history_service.dart';
+import '../services/ad_service.dart';
 
 void main() async {
   print('📅 CALENDAR SCREEN 완전 복구 작전! 📅');
@@ -134,6 +141,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                     calendarFormat: _calendarFormat,
                     eventLoader: _getEventsForDay,
                     startingDayOfWeek: StartingDayOfWeek.monday,
+                    locale: Localizations.localeOf(context).toString(),
                     selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
                     onDaySelected: (selectedDay, focusedDay) {
                       if (!isSameDay(_selectedDay, selectedDay)) {

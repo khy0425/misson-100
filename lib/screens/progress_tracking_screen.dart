@@ -586,6 +586,7 @@ class _ProgressTrackingScreenState extends State<ProgressTrackingScreen>
                       selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
                       eventLoader: _getWorkoutsForDay,
                       onDaySelected: _onDaySelected,
+                      locale: Localizations.localeOf(context).toString(),
                       calendarStyle: CalendarStyle(
                         outsideDaysVisible: false,
                         weekendTextStyle: TextStyle(
