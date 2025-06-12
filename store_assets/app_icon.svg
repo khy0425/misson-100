@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- 배경 그라데이션 -->
+  <defs>
+    <radialGradient id="bgGradient" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" style="stop-color:#FFB000;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF6B35;stop-opacity:1" />
+    </radialGradient>
+    
+    <!-- 근육 그라데이션 -->
+    <linearGradient id="muscleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#333333;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1a1a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 글로우 효과 -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- 그림자 효과 -->
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- 배경 원 -->
+  <circle cx="256" cy="256" r="240" fill="url(#bgGradient)" filter="url(#shadow)"/>
+  
+  <!-- 내부 하이라이트 원 -->
+  <circle cx="256" cy="256" r="220" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.3"/>
+  
+  <!-- Chad 실루엣 (상체) -->
+  <g transform="translate(256, 280)">
+    <!-- 몸통 -->
+    <ellipse cx="0" cy="0" rx="60" ry="80" fill="url(#muscleGradient)" filter="url(#glow)"/>
+    
+    <!-- 가슴근육 정의 -->
+    <ellipse cx="-20" cy="-30" rx="25" ry="20" fill="#2a2a2a" opacity="0.8"/>
+    <ellipse cx="20" cy="-30" rx="25" ry="20" fill="#2a2a2a" opacity="0.8"/>
+    
+    <!-- 복근 라인 -->
+    <rect x="-3" y="-20" width="6" height="40" fill="#333" opacity="0.6"/>
+    <rect x="-15" y="-10" width="8" height="15" fill="#333" opacity="0.4"/>
+    <rect x="7" y="-10" width="8" height="15" fill="#333" opacity="0.4"/>
+    <rect x="-15" y="10" width="8" height="15" fill="#333" opacity="0.4"/>
+    <rect x="7" y="10" width="8" height="15" fill="#333" opacity="0.4"/>
+  </g>
+  
+  <!-- 팔/운동 동작 표현 -->
+  <g transform="translate(256, 200)">
+    <!-- 왼팔 -->
+    <ellipse cx="-80" cy="20" rx="15" ry="35" fill="url(#muscleGradient)" transform="rotate(-30 -80 20)"/>
+    <circle cx="-95" cy="5" r="12" fill="url(#muscleGradient)"/> <!-- 어깨 -->
+    
+    <!-- 오른팔 -->
+    <ellipse cx="80" cy="20" rx="15" ry="35" fill="url(#muscleGradient)" transform="rotate(30 80 20)"/>
+    <circle cx="95" cy="5" r="12" fill="url(#muscleGradient)"/> <!-- 어깨 -->
+  </g>
+  
+  <!-- 푸쉬업 바 또는 덤벨 (양손) -->
+  <g transform="translate(256, 320)">
+    <!-- 왼쪽 덤벨 -->
+    <rect x="-120" y="-5" width="30" height="10" rx="5" fill="#666" filter="url(#shadow)"/>
+    <circle cx="-125" cy="0" r="8" fill="#444"/>
+    <circle cx="-85" cy="0" r="8" fill="#444"/>
+    
+    <!-- 오른쪽 덤벨 -->
+    <rect x="90" y="-5" width="30" height="10" rx="5" fill="#666" filter="url(#shadow)"/>
+    <circle cx="85" cy="0" r="8" fill="#444"/>
+    <circle cx="125" cy="0" r="8" fill="#444"/>
+  </g>
+  
+  <!-- 상단 텍스트 "100" -->
+  <g transform="translate(256, 120)">
+    <text x="0" y="0" font-family="Arial Black, sans-serif" font-size="48" font-weight="900" 
+          text-anchor="middle" fill="#FFFFFF" filter="url(#glow)">100</text>
+    <!-- 텍스트 외곽선 -->
+    <text x="0" y="0" font-family="Arial Black, sans-serif" font-size="48" font-weight="900" 
+          text-anchor="middle" fill="none" stroke="#000" stroke-width="2" opacity="0.5">100</text>
+  </g>
+  
+  <!-- 하단 텍스트 "PUSH" -->
+  <g transform="translate(256, 420)">
+    <text x="0" y="0" font-family="Arial Black, sans-serif" font-size="24" font-weight="900" 
+          text-anchor="middle" fill="#FFFFFF" filter="url(#glow)">PUSH</text>
+    <!-- 텍스트 외곽선 -->
+    <text x="0" y="0" font-family="Arial Black, sans-serif" font-size="24" font-weight="900" 
+          text-anchor="middle" fill="none" stroke="#000" stroke-width="1" opacity="0.5">PUSH</text>
+  </g>
+  
+  <!-- 장식적 요소들 -->
+  <!-- 파워 라인들 -->
+  <g opacity="0.3">
+    <path d="M 100 200 Q 150 250 100 300" stroke="#FFFFFF" stroke-width="3" fill="none"/>
+    <path d="M 412 200 Q 362 250 412 300" stroke="#FFFFFF" stroke-width="3" fill="none"/>
+    <path d="M 200 100 Q 250 150 300 100" stroke="#FFFFFF" stroke-width="3" fill="none"/>
+    <path d="M 200 412 Q 250 362 300 412" stroke="#FFFFFF" stroke-width="3" fill="none"/>
+  </g>
+  
+  <!-- 별/스타 장식 -->
+  <g opacity="0.6">
+    <polygon points="150,150 155,160 165,160 157,167 160,177 150,172 140,177 143,167 135,160 145,160" fill="#FFFFFF"/>
+    <polygon points="362,150 367,160 377,160 369,167 372,177 362,172 352,177 355,167 347,160 357,160" fill="#FFFFFF"/>
+    <polygon points="150,362 155,372 165,372 157,379 160,389 150,384 140,389 143,379 135,372 145,372" fill="#FFFFFF"/>
+    <polygon points="362,362 367,372 377,372 369,379 372,389 362,384 352,389 355,379 347,372 357,372" fill="#FFFFFF"/>
+  </g>
+</svg> 

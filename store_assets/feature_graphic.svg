@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="500" viewBox="0 0 1024 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- 배경 그라데이션 -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#000000;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#1a1a1a;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#FFB000;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#FF6B35;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 텍스트 그라데이션 -->
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FFB000;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#FFFFFF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFB000;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Chad 실루엣 그라데이션 -->
+    <linearGradient id="chadGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#333333;stop-opacity:0.9" />
+      <stop offset="50%" style="stop-color:#1a1a1a;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#000000;stop-opacity:0.9" />
+    </linearGradient>
+    
+    <!-- 글로우 효과 -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- 강한 글로우 효과 -->
+    <filter id="strongGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- 그림자 효과 -->
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+  
+  <!-- 배경 -->
+  <rect width="1024" height="500" fill="url(#bgGradient)"/>
+  
+  <!-- 배경 패턴/텍스처 -->
+  <g opacity="0.1">
+    <!-- 다이아몬드 패턴 -->
+    <pattern id="diamond" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <polygon points="20,5 35,20 20,35 5,20" fill="#FFFFFF" opacity="0.3"/>
+    </pattern>
+    <rect width="1024" height="500" fill="url(#diamond)"/>
+  </g>
+  
+  <!-- 왼쪽 Chad 실루엣 -->
+  <g transform="translate(200, 250)">
+    <!-- 몸통 -->
+    <ellipse cx="0" cy="0" rx="80" ry="120" fill="url(#chadGradient)" filter="url(#shadow)"/>
+    
+    <!-- 가슴근육 -->
+    <ellipse cx="-30" cy="-40" rx="35" ry="25" fill="#2a2a2a" opacity="0.8"/>
+    <ellipse cx="30" cy="-40" rx="35" ry="25" fill="#2a2a2a" opacity="0.8"/>
+    
+    <!-- 복근 정의 -->
+    <rect x="-5" y="-30" width="10" height="60" fill="#333" opacity="0.6"/>
+    <rect x="-25" y="-15" width="12" height="20" fill="#333" opacity="0.4"/>
+    <rect x="13" y="-15" width="12" height="20" fill="#333" opacity="0.4"/>
+    <rect x="-25" y="15" width="12" height="20" fill="#333" opacity="0.4"/>
+    <rect x="13" y="15" width="12" height="20" fill="#333" opacity="0.4"/>
+    
+    <!-- 팔들 -->
+    <ellipse cx="-100" cy="-20" rx="20" ry="50" fill="url(#chadGradient)" transform="rotate(-20 -100 -20)"/>
+    <ellipse cx="100" cy="-20" rx="20" ry="50" fill="url(#chadGradient)" transform="rotate(20 100 -20)"/>
+    
+    <!-- 어깨 -->
+    <circle cx="-80" cy="-50" r="18" fill="url(#chadGradient)"/>
+    <circle cx="80" cy="-50" r="18" fill="url(#chadGradient)"/>
+  </g>
+  
+  <!-- 메인 타이틀 "PUSHUP MASTER" -->
+  <g transform="translate(512, 120)">
+    <text x="0" y="0" font-family="Arial Black, sans-serif" font-size="56" font-weight="900" 
+          text-anchor="middle" fill="url(#textGradient)" filter="url(#strongGlow)">PUSHUP MASTER</text>
+    <!-- 텍스트 외곽선 -->
+    <text x="0" y="0" font-family="Arial Black, sans-serif" font-size="56" font-weight="900" 
+          text-anchor="middle" fill="none" stroke="#000" stroke-width="3" opacity="0.7">PUSHUP MASTER</text>
+  </g>
+  
+  <!-- 부제목 "100개의 푸쉬업으로 최강 Chad가 되어라!" -->
+  <g transform="translate(512, 180)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="28" font-weight="700" 
+          text-anchor="middle" fill="#FFFFFF" filter="url(#glow)">100개의 푸쉬업으로 최강 Chad가 되어라!</text>
+    <!-- 텍스트 외곽선 -->
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="28" font-weight="700" 
+          text-anchor="middle" fill="none" stroke="#000" stroke-width="1" opacity="0.5">100개의 푸쉬업으로 최강 Chad가 되어라!</text>
+  </g>
+  
+  <!-- 중앙 "100" 강조 -->
+  <g transform="translate(512, 280)">
+    <!-- 배경 원 -->
+    <circle cx="0" cy="0" r="60" fill="#FFB000" opacity="0.8" filter="url(#strongGlow)"/>
+    <circle cx="0" cy="0" r="55" fill="none" stroke="#FFFFFF" stroke-width="3" opacity="0.6"/>
+    
+    <!-- "100" 텍스트 -->
+    <text x="0" y="15" font-family="Arial Black, sans-serif" font-size="48" font-weight="900" 
+          text-anchor="middle" fill="#FFFFFF" filter="url(#glow)">100</text>
+    <text x="0" y="15" font-family="Arial Black, sans-serif" font-size="48" font-weight="900" 
+          text-anchor="middle" fill="none" stroke="#000" stroke-width="2" opacity="0.5">100</text>
+  </g>
+  
+  <!-- 하단 특징 텍스트들 -->
+  <g transform="translate(512, 380)">
+    <text x="-200" y="0" font-family="Arial, sans-serif" font-size="18" font-weight="600" 
+          text-anchor="middle" fill="#FFFFFF">6주 프로그램</text>
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="18" font-weight="600" 
+          text-anchor="middle" fill="#FFFFFF">개인 맞춤형</text>
+    <text x="200" y="0" font-family="Arial, sans-serif" font-size="18" font-weight="600" 
+          text-anchor="middle" fill="#FFFFFF">Chad 진화</text>
+  </g>
+  
+  <!-- 오른쪽 덤벨/피트니스 요소들 -->
+  <g transform="translate(800, 250)">
+    <!-- 덤벨 -->
+    <rect x="-40" y="-8" width="80" height="16" rx="8" fill="#666" filter="url(#shadow)"/>
+    <circle cx="-48" cy="0" r="20" fill="#444"/>
+    <circle cx="48" cy="0" r="20" fill="#444"/>
+    <circle cx="-48" cy="0" r="15" fill="#333"/>
+    <circle cx="48" cy="0" r="15" fill="#333"/>
+    
+    <!-- 장식적 플레이트들 -->
+    <circle cx="-48" cy="0" r="8" fill="#FFB000" opacity="0.8"/>
+    <circle cx="48" cy="0" r="8" fill="#FFB000" opacity="0.8"/>
+  </g>
+  
+  <!-- 장식적 요소들 -->
+  <!-- 파워 라인들 -->
+  <g opacity="0.4">
+    <path d="M 50 100 Q 100 150 50 200" stroke="#FFB000" stroke-width="4" fill="none"/>
+    <path d="M 974 100 Q 924 150 974 200" stroke="#FFB000" stroke-width="4" fill="none"/>
+    <path d="M 50 300 Q 100 350 50 400" stroke="#FFB000" stroke-width="4" fill="none"/>
+    <path d="M 974 300 Q 924 350 974 400" stroke="#FFB000" stroke-width="4" fill="none"/>
+  </g>
+  
+  <!-- 별/스타 장식들 -->
+  <g opacity="0.7">
+    <polygon points="100,80 108,95 123,95 111,105 116,120 100,112 84,120 89,105 77,95 92,95" fill="#FFB000"/>
+    <polygon points="924,80 932,95 947,95 935,105 940,120 924,112 908,120 913,105 901,95 916,95" fill="#FFB000"/>
+    <polygon points="100,420 108,435 123,435 111,445 116,460 100,452 84,460 89,445 77,435 92,435" fill="#FFB000"/>
+    <polygon points="924,420 932,435 947,435 935,445 940,460 924,452 908,460 913,445 901,435 916,435" fill="#FFB000"/>
+  </g>
+  
+  <!-- 하단 Call-to-Action 영역 -->
+  <g transform="translate(512, 450)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="20" font-weight="600" 
+          text-anchor="middle" fill="#FFFFFF" opacity="0.9">지금 바로 시작하고 진정한 Chad가 되어보세요!</text>
+  </g>
+</svg> 
