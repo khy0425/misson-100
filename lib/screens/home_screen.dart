@@ -8,6 +8,7 @@ import '../services/workout_program_service.dart';
 import '../services/notification_service.dart';
 import '../services/workout_history_service.dart';
 import '../services/chad_evolution_service.dart';
+import '../services/achievement_service.dart';
 import '../screens/workout_screen.dart';
 import '../screens/settings_screen.dart';
 import '../screens/pushup_tutorial_screen.dart';
@@ -38,6 +39,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   WorkoutHistory? _todayCompletedWorkout; // 실제 모델 사용
   bool _isLoading = true;
   String? _errorMessage;
+  
+  // 업적 통계
+  int _totalXP = 0;
+  int _unlockedCount = 0;
+  int _totalCount = 0;
   
   // 반응형 디자인을 위한 변수들
   bool get _isTablet => MediaQuery.of(context).size.width > 600;
@@ -104,18 +110,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     }
   }
 
-  Future<void> _refreshAllServiceData() async {
-    try {
-      debugPrint('홈 화면 데이터 새로고침 시작');
-      
-      // 모든 서비스 데이터 새로고침
-      await _loadUserData();
-      
-      debugPrint('홈 화면 데이터 새로고침 완료');
-    } catch (e) {
-      debugPrint('홈 화면 데이터 새로고침 오류: $e');
-    }
-  }
+
 
   // 운동 저장 시 호출될 콜백 메서드
   void _onWorkoutSaved() {
@@ -127,6 +122,28 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     }
   }
 
+  // 업적 통계 로드
+  Future<void> _loadAchievementStats() async {
+    try {
+      debugPrint('🏆 업적 통계 로드 시작');
+      
+      _totalXP = await AchievementService.getTotalXP();
+      _unlockedCount = await AchievementService.getUnlockedCount();
+      _totalCount = await AchievementService.getTotalCount();
+      
+      debugPrint('📊 업적 통계:');
+      debugPrint('  - 총 XP: $_totalXP');
+      debugPrint('  - 달성한 업적: $_unlockedCount/$_totalCount');
+      
+    } catch (e) {
+      debugPrint('❌ 업적 통계 로드 오류: $e');
+      // 오류 시 기본값 유지
+      _totalXP = 0;
+      _unlockedCount = 0;
+      _totalCount = 0;
+    }
+  }
+
   Future<void> _loadUserData() async {
     try {
       setState(() {
@@ -134,8 +151,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         _errorMessage = null;
       });
 
+      debugPrint('🏠 홈 화면: 사용자 데이터 로드 시작');
+
       // 사용자 프로필 로드
       _userProfile = await _databaseService.getUserProfile();
+      debugPrint('👤 사용자 프로필 로드 완료: ${_userProfile?.level.displayName}');
       
       if (_userProfile != null) {
         // 프로그램이 초기화되지 않았다면 초기화
@@ -143,20 +163,42 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           _userProfile!.id ?? 1,
         );
         
+        debugPrint('🔧 프로그램 초기화 상태: $isInitialized');
+        
         if (!isInitialized) {
+          debugPrint('🔧 프로그램 초기화 중...');
           await _workoutProgramService.initializeUserProgram(_userProfile!);
+          debugPrint('✅ 프로그램 초기화 완료');
         }
 
         // 오늘의 워크아웃과 진행 상황 로드
+        debugPrint('📅 오늘의 워크아웃 로드 중...');
         _todayWorkout = await _workoutProgramService.getTodayWorkout(_userProfile!);
+        debugPrint('📅 오늘의 워크아웃: ${_todayWorkout?.week}주차 ${_todayWorkout?.day}일차');
+        
+        debugPrint('📊 프로그램 진행률 로드 중...');
         _programProgress = await _workoutProgramService.getProgramProgress(_userProfile!);
+        debugPrint('📊 프로그램 진행률:');
+        debugPrint('  - 현재 주차: ${_programProgress?.weeklyProgress.currentWeek}');
+        debugPrint('  - 완료된 세션: ${_programProgress?.completedSessions}/${_programProgress?.totalSessions}');
+        debugPrint('  - 전체 진행률: ${(_programProgress?.progressPercentage ?? 0) * 100}%');
         
         // 오늘 완료된 운동 기록 확인
+        debugPrint('🏋️ 오늘 완료된 운동 기록 확인 중...');
         _todayCompletedWorkout = await WorkoutHistoryService.getWorkoutByDate(DateTime.now());
+        debugPrint('🏋️ 오늘 완료된 운동: ${_todayCompletedWorkout != null ? '있음' : '없음'}');
+        
+        // 업적 통계 로드
+        await _loadAchievementStats();
+        
+        debugPrint('✅ 홈 화면: 모든 데이터 로드 완료');
+      } else {
+        debugPrint('❌ 사용자 프로필이 null입니다');
       }
     } catch (e) {
       _errorMessage = e.toString();
-      debugPrint('홈 스크린 데이터 로드 오류: $e');
+      debugPrint('❌ 홈 스크린 데이터 로드 오류: $e');
+      debugPrint('❌ 스택 트레이스: ${StackTrace.current}');
     } finally {
       if (mounted) {
         setState(() {
@@ -167,7 +209,99 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   }
 
   Future<void> _refreshData() async {
+    debugPrint('🔄 홈 화면: 데이터 새로고침 시작');
     await _loadUserData();
+    debugPrint('✅ 홈 화면: 데이터 새로고침 완료');
+  }
+
+  // 포괄적인 서비스 데이터 새로고침 (7단계)
+  Future<void> _refreshAllServiceData() async {
+    try {
+      debugPrint('🔄 포괄적인 서비스 데이터 새로고침 시작 (7단계)');
+      
+      setState(() {
+        _isLoading = true;
+        _errorMessage = null;
+      });
+
+      // 1단계: 사용자 프로필 새로고침
+      debugPrint('1️⃣ 사용자 프로필 새로고침');
+      _userProfile = await _databaseService.getUserProfile();
+      
+      if (_userProfile != null) {
+        // 2단계: 프로그램 초기화 확인 및 재초기화
+        debugPrint('2️⃣ 프로그램 초기화 상태 확인');
+        final isInitialized = await _workoutProgramService.isProgramInitialized(
+          _userProfile!.id ?? 1,
+        );
+        
+        if (!isInitialized) {
+          debugPrint('🔧 프로그램 재초기화 중...');
+          await _workoutProgramService.initializeUserProgram(_userProfile!);
+        }
+
+        // 3단계: 오늘의 워크아웃 새로고침
+        debugPrint('3️⃣ 오늘의 워크아웃 새로고침');
+        _todayWorkout = await _workoutProgramService.getTodayWorkout(_userProfile!);
+        
+        // 4단계: 프로그램 진행률 새로고침
+        debugPrint('4️⃣ 프로그램 진행률 새로고침');
+        _programProgress = await _workoutProgramService.getProgramProgress(_userProfile!);
+        
+        // 5단계: 오늘 완료된 운동 기록 새로고침
+        debugPrint('5️⃣ 오늘 완료된 운동 기록 새로고침');
+        _todayCompletedWorkout = await WorkoutHistoryService.getWorkoutByDate(DateTime.now());
+        
+        // 6단계: 업적 통계 새로고침
+        debugPrint('6️⃣ 업적 통계 새로고침');
+        await _loadAchievementStats();
+        
+        // 7단계: UI 상태 업데이트
+        debugPrint('7️⃣ UI 상태 업데이트');
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
+        
+        debugPrint('✅ 포괄적인 서비스 데이터 새로고침 완료');
+        
+        // 새로고침 완료 메시지 표시
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                Localizations.localeOf(context).languageCode == 'ko'
+                  ? '데이터가 새로고침되었습니다'
+                  : 'Data refreshed successfully',
+              ),
+              duration: const Duration(seconds: 2),
+              backgroundColor: const Color(AppColors.primaryColor),
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      debugPrint('❌ 포괄적인 데이터 새로고침 오류: $e');
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+          _errorMessage = '데이터 새로고침 중 오류가 발생했습니다: $e';
+        });
+        
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              Localizations.localeOf(context).languageCode == 'ko'
+                ? '데이터 새로고침 중 오류가 발생했습니다'
+                : 'Error occurred while refreshing data',
+            ),
+            duration: const Duration(seconds: 3),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
   }
 
   bool _isTestEnvironment() {
@@ -219,12 +353,16 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         centerTitle: true,
         automaticallyImplyLeading: false,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: _refreshData,
-            tooltip: Localizations.localeOf(context).languageCode == 'ko'
-              ? '새로고침'
-              : 'Refresh',
+          GestureDetector(
+            onTap: _refreshData,
+            onLongPress: _refreshAllServiceData,
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              child: Icon(
+                Icons.refresh,
+                color: theme.appBarTheme.iconTheme?.color ?? theme.iconTheme.color,
+              ),
+            ),
           ),
         ],
       ),
@@ -261,6 +399,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                         
                         // 진행 상황 카드
                         _buildProgressCard(context, theme, isDark),
+                        
+                        const SizedBox(height: AppConstants.paddingL),
+                        
+                        // 업적 통계 카드
+                        _buildAchievementStatsCard(context, theme),
                         
                         const SizedBox(height: AppConstants.paddingL),
                         
@@ -986,8 +1129,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   }
 
   Widget _buildProgressCard(BuildContext context, ThemeData theme, bool isDark) {
-    if (_programProgress == null) return const SizedBox.shrink();
-
     return Container(
       padding: const EdgeInsets.all(AppConstants.paddingL),
       decoration: BoxDecoration(
@@ -1025,110 +1166,163 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           ),
           const SizedBox(height: AppConstants.paddingM),
           
-          // 전체 프로그램 진행률
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: theme.cardColor,
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.1),
-                  blurRadius: 4,
-                  offset: const Offset(0, 2),
-                ),
-              ],
+          // 프로그램 진행률 내용
+          if (_programProgress == null) 
+            _buildProgressLoadingOrError(context, theme)
+          else
+            _buildProgressContent(context, theme),
+          
+          const SizedBox(height: AppConstants.paddingM),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProgressLoadingOrError(BuildContext context, ThemeData theme) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: theme.cardColor,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: Colors.orange.withValues(alpha: 0.3),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        children: [
+          Icon(
+            Icons.info_outline,
+            color: Colors.orange[600],
+            size: 48,
+          ),
+          const SizedBox(height: 12),
+          Text(
+            Localizations.localeOf(context).languageCode == 'ko'
+              ? '프로그램 데이터를 불러오는 중...'
+              : 'Loading program data...',
+            style: theme.textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.w600,
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    const Icon(Icons.track_changes, color: Color(AppColors.primaryColor)),
-                    const SizedBox(width: 8),
-                    Text(
-                      Localizations.localeOf(context).languageCode == 'ko'
-                        ? '전체 프로그램 진행도'
-                        : 'Overall Program Progress',
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  Localizations.localeOf(context).languageCode == 'ko'
-                    ? '${_programProgress!.completedWeeks}/${_programProgress!.totalWeeks} 주차'
-                    : '${_programProgress!.completedWeeks}/${_programProgress!.totalWeeks} weeks',
-                  style: theme.textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                LinearProgressIndicator(
-                  value: (_programProgress!.totalWeeks as num? ?? 0) > 0
-                      ? ((_programProgress!.completedWeeks ?? 0) as num).toDouble() / (_programProgress!.totalWeeks as num).toDouble()
-                      : 0.0,
-                  backgroundColor: Colors.grey[300],
-                  valueColor: const AlwaysStoppedAnimation<Color>(Color(AppColors.primaryColor)),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  Localizations.localeOf(context).languageCode == 'ko'
-                    ? '이번 주 (${_programProgress!.completedWeeks}주차)'
-                    : 'This Week (Week ${_programProgress!.completedWeeks})',
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      '${_programProgress!.completedDaysThisWeek}/${_programProgress!.totalDaysThisWeek}',
-                      style: theme.textTheme.bodyMedium,
-                    ),
-                    Text(
-                      Localizations.localeOf(context).languageCode == 'ko'
-                        ? '${_programProgress!.completedWeeks}/${_programProgress!.totalWeeks} 주 완료'
-                        : '${_programProgress!.completedWeeks}/${_programProgress!.totalWeeks} weeks completed',
-                      style: theme.textTheme.bodySmall,
-                    ),
-                  ],
-                ),
-              ],
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 8),
+          Text(
+            Localizations.localeOf(context).languageCode == 'ko'
+              ? '새로고침 버튼을 눌러보세요\n(길게 누르면 전체 새로고침)'
+              : 'Try the refresh button\n(Long press for full refresh)',
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: Colors.grey[600],
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 12),
+          ElevatedButton.icon(
+            onPressed: _refreshAllServiceData,
+            icon: const Icon(Icons.refresh, size: 18),
+            label: Text(
+              Localizations.localeOf(context).languageCode == 'ko'
+                ? '전체 새로고침'
+                : 'Full Refresh',
+              style: const TextStyle(fontSize: 14),
+            ),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(AppColors.primaryColor),
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
             ),
           ),
+        ],
+      ),
+    );
+  }
 
-          const SizedBox(height: 20),
+  Widget _buildProgressContent(BuildContext context, ThemeData theme) {
+    final currentWeek = _programProgress?.weeklyProgress.currentWeek ?? 1;
+    final totalWeeks = _programProgress?.totalWeeks ?? 6;
+    final progressPercentage = _programProgress?.progressPercentage ?? 0.0;
+    final completedDaysThisWeek = _programProgress?.completedDaysThisWeek ?? 0;
+    final totalDaysThisWeek = _programProgress?.totalDaysThisWeek ?? 3;
+    final completedSessions = _programProgress?.completedSessions ?? 0;
+    final totalSessions = _programProgress?.totalSessions ?? 18;
 
-          // 통계 카드들
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: theme.cardColor,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.1),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
           Row(
             children: [
-              Expanded(
-                child: _buildStatCard(
-                  context,
-                  Localizations.localeOf(context).languageCode == 'ko'
-                    ? '총 푸시업'
-                    : 'Total Push-ups',
-                  '${_programProgress!.totalCompletedReps}회',
-                  Icons.fitness_center,
-                  const Color(AppColors.primaryColor),
+              const Icon(Icons.track_changes, color: Color(AppColors.primaryColor)),
+              const SizedBox(width: 8),
+              Text(
+                Localizations.localeOf(context).languageCode == 'ko'
+                  ? '전체 프로그램 진행도'
+                  : 'Overall Program Progress',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: _buildStatCard(
-                  context,
-                  Localizations.localeOf(context).languageCode == 'ko'
-                    ? '남은 목표'
-                    : 'Remaining Goal',
-                  '${(100 - ((_programProgress!.totalCompletedReps ?? 0) as num)).toInt()}회',
-                  Icons.flag,
-                  Colors.orange,
-                ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Text(
+            Localizations.localeOf(context).languageCode == 'ko'
+              ? '$currentWeek/$totalWeeks 주차'
+              : '$currentWeek/$totalWeeks weeks',
+            style: theme.textTheme.bodyLarge?.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: 8),
+          LinearProgressIndicator(
+            value: progressPercentage.clamp(0.0, 1.0),
+            backgroundColor: Colors.grey[300],
+            valueColor: const AlwaysStoppedAnimation<Color>(Color(AppColors.primaryColor)),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            '${(progressPercentage * 100).toStringAsFixed(1)}%',
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: Colors.grey[600],
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            Localizations.localeOf(context).languageCode == 'ko'
+              ? '이번 주 (${currentWeek}주차)'
+              : 'This Week (Week $currentWeek)',
+            style: theme.textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '$completedDaysThisWeek/$totalDaysThisWeek',
+                style: theme.textTheme.bodyMedium,
+              ),
+              Text(
+                Localizations.localeOf(context).languageCode == 'ko'
+                  ? '$completedSessions/$totalSessions 세션 완료'
+                  : '$completedSessions/$totalSessions sessions completed',
+                style: theme.textTheme.bodySmall,
               ),
             ],
           ),
@@ -1202,6 +1396,83 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildAchievementStatsCard(BuildContext context, ThemeData theme) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Container(
+      padding: const EdgeInsets.all(AppConstants.paddingL),
+      decoration: BoxDecoration(
+        color: Color(isDark ? AppColors.surfaceDark : AppColors.surfaceLight),
+        borderRadius: BorderRadius.circular(AppConstants.radiusL),
+        boxShadow: [
+          BoxShadow(
+            color: (isDark ? Colors.black : Colors.grey).withValues(alpha: 0.1),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.emoji_events,
+                color: Colors.amber,
+                size: 24,
+              ),
+              const SizedBox(width: AppConstants.paddingS),
+              Text(
+                Localizations.localeOf(context).languageCode == 'ko'
+                  ? '업적 현황'
+                  : 'Achievements',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.amber,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppConstants.paddingM),
+          
+          // 업적 통계
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _buildAchievementStat(
+                context,
+                Localizations.localeOf(context).languageCode == 'ko'
+                  ? '달성한 업적'
+                  : 'Unlocked',
+                '$_unlockedCount/$_totalCount',
+                Icons.military_tech,
+                Colors.amber,
+              ),
+              _buildAchievementStat(
+                context,
+                Localizations.localeOf(context).languageCode == 'ko'
+                  ? '총 경험치'
+                  : 'Total XP',
+                '$_totalXP XP',
+                Icons.star,
+                Colors.purple,
+              ),
+              _buildAchievementStat(
+                context,
+                Localizations.localeOf(context).languageCode == 'ko'
+                  ? '완료율'
+                  : 'Completion',
+                _totalCount > 0 ? '${((_unlockedCount / _totalCount) * 100).toStringAsFixed(0)}%' : '0%',
+                Icons.percent,
+                Colors.green,
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -1416,25 +1687,39 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     try {
       // 워크아웃 화면으로 이동
       if (context.mounted) {
-        // await Navigator.of(context).push(
-        //   MaterialPageRoute<void>(
-        //     builder: (context) => WorkoutScreen(
-        //       userProfile: _userProfile!,
-        //       workoutData: _todayWorkout!,
-        //     ),
-        //   ),
-        // );
-        
-        // 임시: 워크아웃 화면 기능이 준비될 때까지 메시지 표시
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(Localizations.localeOf(context).languageCode == 'ko'
-              ? '워크아웃 화면 기능은 준비 중입니다! 🏋️‍♂️'
-              : 'Workout screen feature is coming soon! 🏋️‍♂️'),
-            backgroundColor: Colors.orange,
-            duration: const Duration(seconds: 2),
+        // 워크아웃 화면으로 이동 후 결과 받기
+        final result = await Navigator.of(context).push(
+          MaterialPageRoute<bool>(
+            builder: (context) => WorkoutScreen(
+              userProfile: _userProfile!,
+              workoutData: _todayWorkout!,
+            ),
           ),
         );
+        
+        // 운동 완료 시 홈 화면 데이터 새로고침
+        if (result == true) {
+          debugPrint('🏠 홈 화면: 운동 완료 결과 받음, 강력한 데이터 새로고침 시작');
+          
+          // 1초 대기 후 데이터 새로고침 (운동 데이터 저장 완료 대기)
+          await Future.delayed(const Duration(seconds: 1));
+          
+          // 강력한 새로고침 실행
+          await _refreshAllServiceData();
+          
+          // 성공 메시지 표시
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  '🎉 운동 완료! 진행률이 업데이트되었습니다.'
+                ),
+                backgroundColor: Colors.green,
+                duration: const Duration(seconds: 3),
+              ),
+            );
+          }
+        }
       }
     } catch (e) {
       // 에러 처리

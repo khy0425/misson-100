@@ -15,6 +15,7 @@ import '../services/workout_history_service.dart';
 import '../services/permission_service.dart';
 import '../services/ad_service.dart';
 import '../widgets/achievement_celebration_dialog.dart';
+import '../widgets/multiple_achievements_dialog.dart';
 import '../models/achievement.dart';
 import 'home_screen.dart';
 import 'calendar_screen.dart';
@@ -62,14 +63,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         
         AchievementService.setOnAchievementUnlocked(() {
           if (mounted) {
-            debugPrint('🎯 업적 달성 콜백 호출 - 이벤트 확인 시작');
+            debugPrint('🎯 업적 달성 콜백 호출 - 데이터만 새로고침 (다이얼로그는 워크아웃 완료 시에만)');
             _refreshAllData();
-            // 업적 달성 시 즉시 이벤트 확인
-            Future.delayed(const Duration(milliseconds: 300), () {
-              if (mounted) {
-                _checkPendingAchievementEvents();
-              }
-            });
+            // 업적 다이얼로그는 워크아웃 완료 다이얼로그에서 처리하므로 여기서는 표시하지 않음
           }
         });
         
@@ -126,11 +122,11 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       _selectedIndex = index;
     });
     
-    // 화면 전환 시 업적 이벤트 확인 (특히 홈 화면으로 돌아올 때)
+    // 화면 전환 시 데이터만 새로고침 (업적 다이얼로그는 워크아웃에서만 표시)
     if (index == 0) { // 홈 화면
       Future.delayed(const Duration(milliseconds: 500), () {
         if (mounted) {
-          _checkPendingAchievementEvents();
+          _refreshAllData();
         }
       });
     }
@@ -146,62 +142,102 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       debugPrint('🎯 대기 중인 업적 이벤트: ${events.length}개');
       
       if (events.isNotEmpty && mounted) {
-        // 첫 번째 이벤트 표시
-        final event = events.first;
-        debugPrint('🏆 업적 이벤트 처리: ${event}');
-        
-        // 이벤트에서 실제 업적 데이터 읽기
-        final achievementId = event['id'] as String? ?? '';
-        final titleKey = event['titleKey'] as String? ?? 'achievementDefaultTitle';
-        final descriptionKey = event['descriptionKey'] as String? ?? 'achievementDefaultDesc';
-        final motivationKey = event['motivationKey'] as String? ?? 'achievementDefaultMotivation';
-        final rarityStr = event['rarity'] as String? ?? 'common';
-        final xpReward = event['xpReward'] as int? ?? 0;
-        final typeStr = event['type'] as String? ?? 'first';
-        final targetValue = event['targetValue'] as int? ?? 1;
-        
-        // 업적 타입 파싱
-        AchievementType type = AchievementType.first;
-        try {
-          type = AchievementType.values.firstWhere(
-            (t) => t.toString().split('.').last == typeStr,
-            orElse: () => AchievementType.first,
-          );
-        } catch (e) {
-          debugPrint('⚠️ 업적 타입 파싱 실패: $typeStr, 기본값 사용');
+        // 다중 업적 달성 시 통합 다이얼로그 표시
+        if (events.length > 1) {
+          debugPrint('🎉 다중 업적 달성 감지: ${events.length}개 - 통합 다이얼로그 표시');
+          
+          // 모든 이벤트를 Achievement 객체로 변환
+          final List<Achievement> achievements = [];
+          for (final event in events) {
+            final achievement = _createAchievementFromEvent(event);
+            if (achievement != null) {
+              achievements.add(achievement);
+            }
+          }
+          
+          if (achievements.isNotEmpty) {
+            // 통합 다이얼로그 표시
+            showDialog<void>(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) => MultipleAchievementsDialog(
+                achievements: achievements,
+                onDismiss: () async {
+                  // 모든 이벤트 클리어
+                  await AchievementService.clearPendingAchievementEvents();
+                  debugPrint('✅ 모든 업적 이벤트 클리어 완료');
+                },
+              ),
+            );
+          }
+        } else {
+          // 단일 업적 달성 시 개별 다이얼로그 표시
+          final event = events.first;
+          debugPrint('🏆 단일 업적 이벤트 처리: ${event}');
+          
+          final achievement = _createAchievementFromEvent(event);
+          if (achievement != null) {
+            debugPrint('✨ 개별 업적 다이얼로그 표시: ${achievement.titleKey}');
+            
+            // 개별 다이얼로그 표시
+            showDialog<void>(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) => AchievementCelebrationDialog(
+                achievement: achievement,
+                onDismiss: () {
+                  // 표시된 이벤트 제거 후 다음 이벤트 확인
+                  _removeFirstEventAndCheckNext();
+                },
+              ),
+            );
+          }
         }
-        
-        // Achievement 객체 생성 (실제 데이터 사용)
-        final achievement = Achievement(
-          id: achievementId,
-          titleKey: titleKey,
-          descriptionKey: descriptionKey,
-          motivationKey: motivationKey,
-          type: type,
-          rarity: _parseRarity(rarityStr),
-          targetValue: targetValue,
-          xpReward: xpReward,
-          icon: _getAchievementIcon(type),
-        );
-        
-        debugPrint('✨ 업적 다이얼로그 표시: ${titleKey}');
-        
-        // 다이얼로그 표시
-        showDialog<void>(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) => AchievementCelebrationDialog(
-            achievement: achievement,
-            onDismiss: () {
-              // 표시된 이벤트 제거 후 다음 이벤트 확인
-              _removeFirstEventAndCheckNext();
-            },
-          ),
-        );
       }
     } catch (e, stackTrace) {
       debugPrint('❌ 업적 이벤트 확인 오류: $e');
       debugPrint('스택 트레이스: $stackTrace');
+    }
+  }
+
+  // 이벤트 데이터에서 Achievement 객체 생성
+  Achievement? _createAchievementFromEvent(Map<String, dynamic> event) {
+    try {
+      final achievementId = event['id'] as String? ?? '';
+      final titleKey = event['titleKey'] as String? ?? 'achievementDefaultTitle';
+      final descriptionKey = event['descriptionKey'] as String? ?? 'achievementDefaultDesc';
+      final motivationKey = event['motivationKey'] as String? ?? 'achievementDefaultMotivation';
+      final rarityStr = event['rarity'] as String? ?? 'common';
+      final xpReward = event['xpReward'] as int? ?? 0;
+      final typeStr = event['type'] as String? ?? 'first';
+      final targetValue = event['targetValue'] as int? ?? 1;
+      
+      // 업적 타입 파싱
+      AchievementType type = AchievementType.first;
+      try {
+        type = AchievementType.values.firstWhere(
+          (t) => t.toString().split('.').last == typeStr,
+          orElse: () => AchievementType.first,
+        );
+      } catch (e) {
+        debugPrint('⚠️ 업적 타입 파싱 실패: $typeStr, 기본값 사용');
+      }
+      
+      // Achievement 객체 생성
+      return Achievement(
+        id: achievementId,
+        titleKey: titleKey,
+        descriptionKey: descriptionKey,
+        motivationKey: motivationKey,
+        type: type,
+        rarity: _parseRarity(rarityStr),
+        targetValue: targetValue,
+        xpReward: xpReward,
+        icon: _getAchievementIcon(type),
+      );
+    } catch (e) {
+      debugPrint('❌ Achievement 객체 생성 실패: $e');
+      return null;
     }
   }
 

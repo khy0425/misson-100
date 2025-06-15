@@ -13,6 +13,7 @@ import '../services/workout_program_service.dart';
 import '../services/workout_history_service.dart';
 import '../models/workout_history.dart';
 import '../services/achievement_service.dart';
+import '../models/achievement.dart';
 import '../services/social_share_service.dart';
 import '../services/motivational_message_service.dart';
 import '../services/streak_service.dart';
@@ -21,6 +22,7 @@ import '../widgets/ad_banner_widget.dart';
 import '../services/notification_service.dart';
 import '../services/database_service.dart';
 import '../models/workout_session.dart';
+import '../widgets/multiple_achievements_dialog.dart';
 
 
 class WorkoutScreen extends StatefulWidget {
@@ -72,6 +74,9 @@ class _WorkoutScreenState extends State<WorkoutScreen>
 
   // 워크아웃 프로그램 서비스
   final WorkoutProgramService _workoutProgramService = WorkoutProgramService();
+  
+  // 업적 관리
+  List<Achievement> _newlyUnlockedAchievements = [];
 
   @override
   void initState() {
@@ -456,10 +461,10 @@ class _WorkoutScreenState extends State<WorkoutScreen>
     }
   }
 
-  /// 운동 중 실시간 업적 체크
+  /// 운동 중 실시간 업적 체크 (로그만 출력, 실제 업적 체크는 운동 완료시에만)
   Future<void> _checkAchievementsDuringWorkout() async {
     try {
-      debugPrint('🏆 운동 중 업적 체크 시작');
+      debugPrint('📊 운동 중 진행 상황 체크 시작');
       
       // 현재까지 완료된 총 횟수 계산
       final currentTotalReps = _completedReps.fold(0, (sum, reps) => sum + reps);
@@ -477,62 +482,34 @@ class _WorkoutScreenState extends State<WorkoutScreen>
         debugPrint('⏱️ 운동 경과 시간: ${workoutDuration.inMinutes}분 ${workoutDuration.inSeconds % 60}초');
       }
       
-      // 특정 업적 조건 체크
-      bool shouldUpdateAchievements = false;
-      
-      // 1. 50개 달성 체크
+      // 업적 조건 달성 로그만 출력 (실제 업적 업데이트는 운동 완료 시에만)
       if (currentTotalReps >= 50) {
-        debugPrint('🎯 50개 달성 조건 만족: $currentTotalReps개');
-        shouldUpdateAchievements = true;
+        debugPrint('🎯 50개 달성 조건 만족: $currentTotalReps개 (업적 체크는 운동 완료 시)');
       }
       
-      // 2. 100개 달성 체크
       if (currentTotalReps >= 100) {
-        debugPrint('🎯 100개 달성 조건 만족: $currentTotalReps개');
-        shouldUpdateAchievements = true;
+        debugPrint('🎯 100개 달성 조건 만족: $currentTotalReps개 (업적 체크는 운동 완료 시)');
       }
       
-      // 3. 목표 초과달성 체크 (150% 이상)
       if (completionRate >= 1.5) {
-        debugPrint('🎯 목표 150% 초과달성 조건 만족: ${(completionRate * 100).toStringAsFixed(1)}%');
-        shouldUpdateAchievements = true;
+        debugPrint('🎯 목표 150% 초과달성 조건 만족: ${(completionRate * 100).toStringAsFixed(1)}% (업적 체크는 운동 완료 시)');
       }
       
-      // 4. 목표 200% 달성 체크
       if (completionRate >= 2.0) {
-        debugPrint('🎯 목표 200% 달성 조건 만족: ${(completionRate * 100).toStringAsFixed(1)}%');
-        shouldUpdateAchievements = true;
+        debugPrint('🎯 목표 200% 달성 조건 만족: ${(completionRate * 100).toStringAsFixed(1)}% (업적 체크는 운동 완료 시)');
       }
       
-      // 5. 스피드 데몬 체크 (5분 이내 50개)
       if (currentTotalReps >= 50 && workoutDuration.inMinutes <= 5) {
-        debugPrint('🎯 스피드 데몬 조건 만족: ${workoutDuration.inMinutes}분 내 $currentTotalReps개');
-        shouldUpdateAchievements = true;
+        debugPrint('🎯 스피드 데몬 조건 만족: ${workoutDuration.inMinutes}분 내 $currentTotalReps개 (업적 체크는 운동 완료 시)');
       }
       
-      // 6. 지구력 왕 체크 (30분 이상 운동)
       if (workoutDuration.inMinutes >= 30) {
-        debugPrint('🎯 지구력 왕 조건 만족: ${workoutDuration.inMinutes}분 운동');
-        shouldUpdateAchievements = true;
-      }
-      
-      // 업적 업데이트 필요 시 실행
-      if (shouldUpdateAchievements) {
-        debugPrint('🔄 운동 중 업적 업데이트 실행');
-        final newlyUnlocked = await AchievementService.checkAndUpdateAchievements();
-        
-        if (newlyUnlocked.isNotEmpty) {
-          debugPrint('✨ 운동 중 새로 달성한 업적: ${newlyUnlocked.length}개');
-          for (final achievement in newlyUnlocked) {
-            debugPrint('🏆 업적 달성: ${achievement.titleKey}');
-          }
-        }
+        debugPrint('🎯 지구력 왕 조건 만족: ${workoutDuration.inMinutes}분 운동 (업적 체크는 운동 완료 시)');
       }
       
     } catch (e, stackTrace) {
-      debugPrint('⚠️ 운동 중 업적 체크 실패: $e');
+      debugPrint('⚠️ 운동 중 진행 상황 체크 실패: $e');
       debugPrint('스택 트레이스: $stackTrace');
-      // 업적 체크 실패해도 운동은 계속 진행
     }
   }
 
@@ -667,14 +644,22 @@ class _WorkoutScreenState extends State<WorkoutScreen>
         debugPrint('⚠️ 4단계: 알림 취소 실패: $e');
       }
 
-      // 5단계: 업적 체크 및 업데이트
+      // 5단계: 업적 체크 및 업데이트 (한 번에 모든 업적 체크)
+      List<Achievement> newlyUnlockedAchievements = [];
       try {
-        debugPrint('🏆 5단계: 업적 체크 시작');
-        final newlyUnlocked = await AchievementService.checkAndUpdateAchievements();
-        debugPrint('✅ 5단계: 업적 업데이트 완료 - 새로 잠금해제: ${newlyUnlocked.length}개');
+        debugPrint('🏆 5단계: 운동 완료 후 업적 체크 시작');
+        newlyUnlockedAchievements = await AchievementService.checkAndUpdateAchievements();
+        debugPrint('✅ 5단계: 업적 업데이트 완료 - 새로 잠금해제: ${newlyUnlockedAchievements.length}개');
         
-        for (final achievement in newlyUnlocked) {
+        for (final achievement in newlyUnlockedAchievements) {
           debugPrint('✨ 새 업적: ${achievement.titleKey}');
+        }
+        
+        // 새로 달성한 업적이 있다면 저장해두고 완료 다이얼로그에서 표시
+        if (newlyUnlockedAchievements.isNotEmpty) {
+          setState(() {
+            _newlyUnlockedAchievements = newlyUnlockedAchievements;
+          });
         }
       } catch (e, stackTrace) {
         debugPrint('⚠️ 5단계: 업적 업데이트 실패: $e');
@@ -741,12 +726,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>
       }
     }
 
-    // 워크아웃 완료 시 전면 광고 표시 (50% 확률)
-    if (DateTime.now().millisecondsSinceEpoch % 2 == 0) {
-      await AdService.instance.showInterstitialAd();
-    }
-
-    // 3초 후 완료 다이얼로그 표시
+    // 3초 후 완료 다이얼로그 표시 (광고는 다이얼로그에서 처리)
     Timer(const Duration(seconds: 3), () {
       if (mounted) {
         setState(() {
@@ -851,6 +831,86 @@ class _WorkoutScreenState extends State<WorkoutScreen>
                 ],
               ),
             ),
+            
+            // 새로 달성한 업적 표시
+            if (_newlyUnlockedAchievements.isNotEmpty) ...[
+              const SizedBox(height: 16),
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.amber.withValues(alpha: 0.1),
+                      Colors.orange.withValues(alpha: 0.1),
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: Colors.amber.withValues(alpha: 0.5),
+                    width: 2,
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.emoji_events,
+                          color: Colors.amber,
+                          size: 24,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          '🎉 새로 달성한 업적!',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.amber[800],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    ...(_newlyUnlockedAchievements.map((achievement) => 
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4),
+                        child: Row(
+                          children: [
+                            Icon(
+                              achievement.icon,
+                              size: 20,
+                              color: achievement.getRarityColor(),
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    achievement.titleKey,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  Text(
+                                    achievement.descriptionKey,
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.grey[600],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ).toList()),
+                  ],
+                ),
+              ),
+            ],
           ],
         ),
         actions: [
@@ -867,9 +927,34 @@ class _WorkoutScreenState extends State<WorkoutScreen>
             ),
           ),
           ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              Navigator.of(context).pop(); // 홈으로 돌아가기
+            onPressed: () async {
+              Navigator.of(context).pop(); // 완료 다이얼로그 닫기
+              
+              // 새로 달성한 업적이 있으면 통합 업적 다이얼로그 표시
+              if (_newlyUnlockedAchievements.isNotEmpty) {
+                await showDialog<void>(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (context) => MultipleAchievementsDialog(
+                    achievements: _newlyUnlockedAchievements,
+                    onDismiss: () async {
+                      // 광고 표시 (50% 확률)
+                      if (DateTime.now().millisecondsSinceEpoch % 2 == 0) {
+                        await AdService.instance.showInterstitialAd();
+                      }
+                      
+                      // 홈으로 돌아가면서 완료 결과 전달
+                      Navigator.of(context).pop(true);
+                    },
+                  ),
+                );
+              } else {
+                // 업적이 없으면 바로 광고 후 홈으로
+                if (DateTime.now().millisecondsSinceEpoch % 2 == 0) {
+                  await AdService.instance.showInterstitialAd();
+                }
+                Navigator.of(context).pop(true);
+              }
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(AppColors.primaryColor),
